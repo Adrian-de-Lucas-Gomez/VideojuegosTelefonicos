@@ -1,0 +1,7 @@
+rootProject.name = "Practica2_Moviles_Intento3"
+include ':androidGame'
+include ':engine'
+include ':logic'
+include ':androidEngine'
+include ':pcGame'
+include ':pcEngine'
