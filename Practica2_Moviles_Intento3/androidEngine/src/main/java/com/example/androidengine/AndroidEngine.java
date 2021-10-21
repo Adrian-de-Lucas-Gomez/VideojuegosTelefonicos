@@ -9,7 +9,9 @@ public class AndroidEngine implements Engine {
     public AndroidGraphics getGraphics(){
         return graphics;
     }
-    public Input getInput(){
-
+    public AndroidInput getInput(){
+        return input;
     }
+
+    private AndroidInput input;
 }

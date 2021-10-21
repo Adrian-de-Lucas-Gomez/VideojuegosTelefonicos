@@ -3,8 +3,8 @@ package com.example.engine;
 import java.util.List;
 
 public interface Input {
-    class TouchEvent{
+    abstract class TouchEvent{
 
     }
-    List<TouchEvent> getTouchEvents();
+    //abstract List<TouchEvent> getTouchEvents();
 }
