@@ -8,7 +8,6 @@ public class Tile{
     }
 
     //Getters & Setters
-
     public void changeType(){
         if(_type == TileType.Unknown) _type = TileType.Dot;
         else if(_type == TileType.Dot) _type = TileType.Wall;

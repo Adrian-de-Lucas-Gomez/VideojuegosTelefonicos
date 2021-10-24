@@ -14,10 +14,9 @@ enum TileType{
     Unknown, Dot, Wall, Value //Nunca debería ser value. No se cuando lo utiliza
 }
 
-enum Directions{
-    Left, Right, Up, Down
-}
-
+// enum Directions{
+//     Left, Right, Up, Down
+// }
 
 public class App extends JFrame{
 
@@ -32,6 +31,7 @@ public class App extends JFrame{
             System.out.print("\033[H\033[2J");
             System.out.flush();
             board.handleInput(c);
+            board.update();
             board.paint();
         }
     }

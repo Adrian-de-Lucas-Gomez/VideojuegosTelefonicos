@@ -1,3 +1,5 @@
+import java.util.Vector;
+
 public class Board{
 
     public Board(int size){
@@ -5,7 +7,7 @@ public class Board{
         _full = new int[][]{{1, 2, -1, 2}, {-1, 3, 4, 4}, {1, -1, 3, 3}, {1, -1, 2, -1}};
         _empty = new int[][]{{0, 2, 0, 0}, {-1, 0, 4, 0}, {0, 0, 3, 3}, {1, 0, 2, 0}};
         _tiles = new Tile[4][4];
-
+        _directions = new Direction[]{new Direction(-1, 0), new Direction(1, 0), new Direction(0, 1), new Direction(0, -1)};
         TileType type;
         for(int k = 0; k < size; k++){
             for(int l = 0; l < size; l++){
@@ -72,11 +74,47 @@ public class Board{
     }
 
     public boolean update(){
+        System.out.println(getVisibleTiles(_posX, _posY));
         return false;
     }
+
+    private int getVisibleTiles(int x, int y){
+        if(isTileValid(x, y)){
+            if (_tiles[y][x].getType() == TileType.Dot || _tiles[y][x].getType() == TileType.Value){
+                int visibleTiles = 1; //Se cuenta a ella misma
+                for(int k = 0; k < _directions.length; k++){
+                    visibleTiles += getVisibleTilesAux(x + _directions[k].getX(), y + _directions[k].getY(), _directions[k]);
+                }
+                return visibleTiles;
+            }
+        }
+        return 0; //Si es unknown o muro devuelve 0
+    }
+
+    private int getVisibleTilesAux(int x, int y, Direction dir){
+        if(isTileValid(x, y)){
+            if (_tiles[y][x].getType() == TileType.Dot || _tiles[y][x].getType() == TileType.Value){
+                return 1 + getVisibleTilesAux(x + dir.getX(), y + dir.getY(), dir);
+            }
+        }
+        return 0;
+    }
+
+    private boolean isTileValid(int x, int y){
+        return(x >= 0 && x < _size && y >= 0 && y < _size);
+    }
+
+    // private Direction getDir(Directions dir){
+    //     if(dir == Directions.Down) return new Direction(0, 1);
+    //     else if(dir == Directions.Up) return new Direction(0, -1);
+    //     else if(dir == Directions.Left) return new Direction(-1, 0);
+    //     else return new Direction(1, 0); //Right
+    // }    
+
     private int _posX = 0, _posY = 0;
     private int[][] _full;
     private int[][] _empty;
     private Tile[][] _tiles;
+    private Direction[] _directions;
     private int _size;
 }
