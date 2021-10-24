@@ -31,7 +31,7 @@ public class App extends JFrame{
             char c = sc.next().charAt(0);
             System.out.print("\033[H\033[2J");
             System.out.flush();
-            board.update(c);
+            board.handleInput(c);
             board.paint();
         }
     }
