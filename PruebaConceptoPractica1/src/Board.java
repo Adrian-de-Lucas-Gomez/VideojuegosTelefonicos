@@ -111,9 +111,10 @@ public class Board{
     }
 
     private HintType getHint(int x, int y){
-        if(_tiles[_posY][_posX].getType() == TileType.Value && getVisibleTiles(_posX, _posY) > _tiles[_posY][_posX].getValue()){
-            System.out.println("Esta casilla ve demasiadas fichas.");
-        }
+        if(_tiles[_posY][_posX].getType() == TileType.Value && getVisibleTiles(_posX, _posY) > _tiles[_posY][_posX].getValue()) return HintType.TooManyVisible;
+        
+
+        return HintType.None;
     }
 
     private int getVisibleTilesAux(int x, int y, Direction dir){
