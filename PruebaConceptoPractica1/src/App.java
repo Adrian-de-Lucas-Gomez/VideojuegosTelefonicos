@@ -10,14 +10,6 @@ import java.util.Scanner;
 import java.io.FileInputStream;
 
 
-enum TileType{
-    Unknown, Dot, Wall, Value //Nunca debería ser value. No se cuando lo utiliza
-}
-
-// enum Directions{
-//     Left, Right, Up, Down
-// }
-
 public class App extends JFrame{
 
 	public static void main(String[] args) {

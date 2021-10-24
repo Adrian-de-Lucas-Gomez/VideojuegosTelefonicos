@@ -23,7 +23,7 @@ public class Tile{
     }
 
     private TileType _type = TileType.Value;
-    private int _x = 0;
+    private int _x = 0; //Revisar si hace falta la posición. Por lógica no debería. En un futuro podría representar la posición en pantalla pero no estoy seguro.
     private int _y = 0;
     private int _value = 0;
 }

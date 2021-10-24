@@ -1,5 +1,13 @@
 import java.util.Vector;
 
+enum TileType{
+    Unknown, Dot, Wall, Value //Nunca debería ser value. No se cuando lo utiliza
+}
+
+enum HintType{
+    TooManyVisible, TileSeesAllRequired, None
+}
+
 public class Board{
 
     public Board(int size){
@@ -74,14 +82,25 @@ public class Board{
     }
 
     public boolean update(){
-        System.out.println(getVisibleTiles(_posX, _posY));
+        System.out.println("La casilla ve: " + Integer.toString(getVisibleTiles(_posX, _posY)) + " casillas.");
+        HintType hint = getHint(_posX, _posY);
+        switch (hint) {
+            case TooManyVisible:
+                System.out.println("This tile sees too many dots.");
+                break;
+            case TileSeesAllRequired:
+                System.out.println("This tile sees all necessary dots.");
+                break;
+            default:
+                break;
+        }
         return false;
     }
 
     private int getVisibleTiles(int x, int y){
         if(isTileValid(x, y)){
             if (_tiles[y][x].getType() == TileType.Dot || _tiles[y][x].getType() == TileType.Value){
-                int visibleTiles = 1; //Se cuenta a ella misma
+                int visibleTiles = 0; //Se cuenta a ella misma
                 for(int k = 0; k < _directions.length; k++){
                     visibleTiles += getVisibleTilesAux(x + _directions[k].getX(), y + _directions[k].getY(), _directions[k]);
                 }
@@ -89,6 +108,12 @@ public class Board{
             }
         }
         return 0; //Si es unknown o muro devuelve 0
+    }
+
+    private HintType getHint(int x, int y){
+        if(_tiles[_posY][_posX].getType() == TileType.Value && getVisibleTiles(_posX, _posY) > _tiles[_posY][_posX].getValue()){
+            System.out.println("Esta casilla ve demasiadas fichas.");
+        }
     }
 
     private int getVisibleTilesAux(int x, int y, Direction dir){
