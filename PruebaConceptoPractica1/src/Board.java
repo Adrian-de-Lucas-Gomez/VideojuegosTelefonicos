@@ -5,7 +5,7 @@ enum TileType{
 }
 
 enum HintType{
-    TooManyVisible, TileSeesAllRequired, None
+    TooManyVisible, TileSeesAllRequired, Correct, None
 }
 
 public class Board{
@@ -91,6 +91,9 @@ public class Board{
             case TileSeesAllRequired:
                 System.out.println("This tile sees all necessary dots.");
                 break;
+            case Correct:
+                System.out.println("This tile is correct!.");
+                break;
             default:
                 break;
         }
@@ -103,7 +106,8 @@ public class Board{
         if(_tiles[_posY][_posX].getType() == TileType.Value && info.getDotsSeen() > _tiles[_posY][_posX].getValue()) return HintType.TooManyVisible;
 
         if(info.getDotsSeen() == _tiles[y][x].getValue() && info.seesEmtpies()) return HintType.TileSeesAllRequired;
-        
+
+        if(info.getDotsSeen() == _tiles[y][x].getValue() && !info.seesEmtpies()) return HintType.Correct; //DEBUG. Dice si un tile es correcto pero no fiarse.
 
         return HintType.None;
     }
