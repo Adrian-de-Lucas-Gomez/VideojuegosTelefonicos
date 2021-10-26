@@ -82,7 +82,7 @@ public class Board{
     }
 
     public boolean update(){
-        System.out.println("La casilla ve: " + Integer.toString(getVisibleTiles(_posX, _posY)) + " casillas.");
+        //System.out.println("La casilla ve: " + Integer.toString(getVisibleTiles(_posX, _posY)) + " casillas.");
         HintType hint = getHint(_posX, _posY);
         switch (hint) {
             case TooManyVisible:
@@ -97,12 +97,31 @@ public class Board{
         return false;
     }
 
-    private int getVisibleTiles(int x, int y){
+    private HintType getHint(int x, int y){
+        TileInfo info = aquireTileInfo(x, y);
+
+        if(_tiles[_posY][_posX].getType() == TileType.Value && info.getDotsSeen() > _tiles[_posY][_posX].getValue()) return HintType.TooManyVisible;
+
+        if(info.getDotsSeen() == _tiles[y][x].getValue() && info.seesEmtpies()) return HintType.TileSeesAllRequired;
+        
+
+        return HintType.None;
+    }
+
+    TileInfo aquireTileInfo(int x, int y){
+        TileInfo info = new TileInfo();
+
+        info.setDotsSeen(getVisibleTiles(_posX, _posY, info));
+
+        return info;
+    }
+
+    private int getVisibleTiles(int x, int y, TileInfo info){
         if(isTileValid(x, y)){
             if (_tiles[y][x].getType() == TileType.Dot || _tiles[y][x].getType() == TileType.Value){
                 int visibleTiles = 0; //Se cuenta a ella misma
                 for(int k = 0; k < _directions.length; k++){
-                    visibleTiles += getVisibleTilesAux(x + _directions[k].getX(), y + _directions[k].getY(), _directions[k]);
+                    visibleTiles += getVisibleTilesAux(x + _directions[k].getX(), y + _directions[k].getY(), _directions[k], info);
                 }
                 return visibleTiles;
             }
@@ -110,18 +129,12 @@ public class Board{
         return 0; //Si es unknown o muro devuelve 0
     }
 
-    private HintType getHint(int x, int y){
-        if(_tiles[_posY][_posX].getType() == TileType.Value && getVisibleTiles(_posX, _posY) > _tiles[_posY][_posX].getValue()) return HintType.TooManyVisible;
-        
-
-        return HintType.None;
-    }
-
-    private int getVisibleTilesAux(int x, int y, Direction dir){
+    private int getVisibleTilesAux(int x, int y, Direction dir, TileInfo info){
         if(isTileValid(x, y)){
             if (_tiles[y][x].getType() == TileType.Dot || _tiles[y][x].getType() == TileType.Value){
-                return 1 + getVisibleTilesAux(x + dir.getX(), y + dir.getY(), dir);
+                return 1 + getVisibleTilesAux(x + dir.getX(), y + dir.getY(), dir, info);
             }
+            else if(_tiles[y][x].getType() == TileType.Unknown) info.setSeesEmpties(true);
         }
         return 0;
     }
