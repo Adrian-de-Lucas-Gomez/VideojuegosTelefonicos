@@ -1,6 +1,15 @@
 public class DirInfo {
-    public int _numDotsFilled = 0;
-    public int _numFreeTiles = 0;
-    public int _minSizeIfExpanded = 0;
-    public boolean _expandible = false;
+    public DirInfo(){}
+
+    public int numDotsFilled = 0;
+    public int spaceAvailable = 0;
+    public int minGrowthSize = 0;
+    public boolean expandable = false;
+
+    public void reset(){
+        numDotsFilled = 0;
+        spaceAvailable = 0;
+        minGrowthSize = 0;
+        expandable = false;
+    }
 }

@@ -17,6 +17,7 @@ public class Board{
         _full = new int[][]{{-1, -1, -1, -1, -1, -1}, {-1, 1, 2, -1, 2, -1}, {-1, -1, 3, 4, 4, -1}, {-1, 1, -1, 3, 3, -1}, {-1, 1, -1, 2, -1, -1}, {-1, -1, -1, -1, -1, -1}};
         _empty = new int[][]{{-1, -1, -1, -1, -1, -1}, {-1, 0, 2, 0, 0, -1}, {-1, -1, 0, 4, 0, -1}, {-1, 0, 0, 3, 3, -1}, {-1, 1, 0, 2, 0, -1}, {-1, -1, -1, -1, -1, -1}};
         _tiles = new Tile[_size][_size];
+        _tileDirInfo = new DirInfo[4];
         _directions = new Direction[]{new Direction(-1, 0), new Direction(1, 0), new Direction(0, 1), new Direction(0, -1)};
         TileType type;
         for(int k = 0; k < _size; k++){
@@ -81,7 +82,7 @@ public class Board{
         } 
         else if (input == 'e'){
             if(_empty[_posY][_posX] == 0){
-                _tiles[_posY][_posX].changeType();
+                _tiles[_posY][_posX].toggleType();
             }
             else System.out.println("No puedes cambiar una casilla fija bobo\n");
         }
@@ -114,45 +115,97 @@ public class Board{
     }
 
     private HintType getHint(int x, int y){
-        TileInfo info = gatherTileInfo(x, y);
+        if(_tiles[y][x].getType() == TileType.Dot || _tiles[y][x].getType() == TileType.Value){
+            boolean isExpandable = false;
+            
+            Tile currentTile = _tiles[y][x];
+            for(int k = 0; k < 4; k++){ //One per Direction (Up, Down, ...)
+                DirInfo dirInfo = _tileDirInfo[k];
+                dirInfo.reset();
 
-        if(_tiles[y][x].getType() == TileType.Value && info.getDotsSeen() > _tiles[y][x].getValue()) return HintType.TooManyDotsVisible;
+                Direction currentDir = _directions[k];
+                //Primero miramos el número de Dots en esta dirección
+                currentTile = navigateTile(currentTile, currentDir);
+                while(currentTile.getType() == TileType.Dot || currentTile.getType() == TileType.Value){
+                    dirInfo.numDotsFilled++;
+                    currentTile = navigateTile(currentTile, currentDir);
+                }
+                //Al terminar de recorrer los dots, recorremos los espacios en blanco. Como podemos habernos topado con 
+                //un muro en la primera casilla en esa dirección, hay que comprobarlo.
+                if(currentTile.getType() == TileType.Unknown){
+                    isExpandable = true;
+                    dirInfo.minGrowthSize = dirInfo.numDotsFilled + 1;
+                    currentTile = navigateTile(currentTile, currentDir);
+                    if(currentTile.getType() == TileType.Unknown){
+                        dirInfo.spaceAvailable = dirInfo.numDotsFilled + 2; //Current and previous tile
+                        currentTile = navigateTile(currentTile, currentDir);
+                        while(currentTile.getType() != TileType.Wall){
+                            dirInfo.spaceAvailable++;
+                            currentTile = navigateTile(currentTile, currentDir);
+                        }
+                    } 
+                    else if(currentTile.getType() == TileType.Dot || currentTile.getType() == TileType.Value){
+                        dirInfo.spaceAvailable++;
+                        dirInfo.minGrowthSize++;
+                        currentTile = navigateTile(currentTile, currentDir);
+                        while(currentTile.getType() == TileType.Dot || currentTile.getType() == TileType.Value){
+                            dirInfo.minGrowthSize++;
+                            dirInfo.spaceAvailable++;
+                            currentTile = navigateTile(currentTile, currentDir);
+                            while(currentTile.getType() != TileType.Wall){
+                                dirInfo.spaceAvailable++;
+                                currentTile = navigateTile(currentTile, currentDir);
+                            }
+                        }
+                    }
+                }
+            }
 
-        if(info.getDotsSeen() == _tiles[y][x].getValue() && info.seesEmtpies()) return HintType.TileSeesAllRequired;
+            
+
+        }
+
+        // if (_tiles[y][x].getType() == TileType.Dot || _tiles[y][x].getType() == TileType.Value){
+        //     int visibleTiles = 0; //Se cuenta a ella misma
+        //     for(int k = 0; k < _directions.length; k++){
+        //         visibleTiles += getVisibleTilesAux(x + _directions[k].getX(), y + _directions[k].getY(), _directions[k], info);
+        //     }
+        //     return visibleTiles;
+        // }
+
+        // if(_tiles[y][x].getType() == TileType.Value && info.getDotsSeen() > _tiles[y][x].getValue()) return HintType.TooManyDotsVisible;
+
+        // if(info.getDotsSeen() == _tiles[y][x].getValue() && info.seesEmtpies()) return HintType.TileSeesAllRequired;
 
         //if(info.getDotsSeen() == _tiles[y][x].getValue() && !info.seesEmtpies()) return HintType.Correct; //DEBUG. Dice si un tile es correcto pero no fiarse.
 
         return HintType.None;
     }
 
-    TileInfo gatherTileInfo(int x, int y){
-        TileInfo info = new TileInfo(false);
-
-        info.setDotsSeen(getVisibleTiles(x, y, info));
-
-        return info;
+    private Tile navigateTile(Tile tile, Direction dir){
+        return (_tiles[tile.getY() + dir.getY()][tile.getX() + dir.getX()]);
     }
 
-    private int getVisibleTiles(int x, int y, TileInfo info){
-        if (_tiles[y][x].getType() == TileType.Dot || _tiles[y][x].getType() == TileType.Value){
-            int visibleTiles = 0; //Se cuenta a ella misma
-            for(int k = 0; k < _directions.length; k++){
-                visibleTiles += getVisibleTilesAux(x + _directions[k].getX(), y + _directions[k].getY(), _directions[k], info);
-            }
-            return visibleTiles;
-        }
+    // TileInfo gatherTileInfo(int x, int y){
+    //     TileInfo info = new TileInfo(false);
         
-        return 0; //Si es unknown o muro devuelve 0
-    }
+    //     info.setDotsSeen(getVisibleTiles(x, y, info));
 
-    private int getVisibleTilesAux(int x, int y, Direction dir, TileInfo info){
-        if (_tiles[y][x].getType() == TileType.Dot || _tiles[y][x].getType() == TileType.Value){
-            return 1 + getVisibleTilesAux(x + dir.getX(), y + dir.getY(), dir, info);
-        }
-        else if(_tiles[y][x].getType() == TileType.Unknown) info.setSeesEmpties(true);
+    //     return info;
+    // }
+
+    // private int getVisibleTiles(int x, int y, TileInfo info){
         
-        return 0;
-    }
+    // }
+
+    // private int getVisibleTilesAux(int x, int y, Direction dir, TileInfo info){
+    //     if (_tiles[y][x].getType() == TileType.Dot || _tiles[y][x].getType() == TileType.Value){
+    //         return 1 + getVisibleTilesAux(x + dir.getX(), y + dir.getY(), dir, info);
+    //     }
+    //     else if(_tiles[y][x].getType() == TileType.Unknown) info.setSeesEmpties(true);
+        
+    //     return 0;
+    // }
 
     // private boolean isTileValid(int x, int y){
     //     return(x >= 0 && x < _size && y >= 0 && y < _size);
@@ -171,4 +224,5 @@ public class Board{
     private Tile[][] _tiles;
     private Direction[] _directions;
     private int _size;
+    private DirInfo[] _tileDirInfo; 
 }

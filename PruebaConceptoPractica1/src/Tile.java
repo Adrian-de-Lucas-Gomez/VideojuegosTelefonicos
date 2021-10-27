@@ -8,11 +8,15 @@ public class Tile{
     }
 
     //Getters & Setters
-    public void changeType(){
+    public void toggleType(){ //Cambia entre wall y dot
         if(_type == TileType.Unknown) _type = TileType.Dot;
         else if(_type == TileType.Dot) _type = TileType.Wall;
         else if(_type == TileType.Wall) _type = TileType.Dot;
     }
+
+    public int getX(){ return _x; }
+
+    public int getY(){ return _y; }
 
     public TileType getType(){
         return _type;
