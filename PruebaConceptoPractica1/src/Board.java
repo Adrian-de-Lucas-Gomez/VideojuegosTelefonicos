@@ -5,38 +5,38 @@ enum TileType{
 }
 
 enum HintType{
-    TooManyVisible, TileSeesAllRequired, Correct, None
+    TooManyDotsVisible, TileSeesAllRequired, EmptyIsWall, DotIsWall, TileMarksAllEmpties, ClosedOffTileIsIncorrect, Correct, None
 }
 
 public class Board{
 
     public Board(int size){
-        _size = size;
-        _full = new int[][]{{1, 2, -1, 2}, {-1, 3, 4, 4}, {1, -1, 3, 3}, {1, -1, 2, -1}};
-        _empty = new int[][]{{0, 2, 0, 0}, {-1, 0, 4, 0}, {0, 0, 3, 3}, {1, 0, 2, 0}};
-        _tiles = new Tile[4][4];
+        _size = size+2;
+        _full = new int[][]{{-1, -1, -1, -1, -1, -1}, {-1, 1, 2, -1, 2, -1}, {-1, -1, 3, 4, 4, -1}, {-1, 1, -1, 3, 3, -1}, {-1, 1, -1, 2, -1, -1}, {-1, -1, -1, -1, -1, -1}};
+        _empty = new int[][]{{-1, -1, -1, -1, -1, -1}, {-1, 0, 2, 0, 0, -1}, {-1, -1, 0, 4, 0, -1}, {-1, 0, 0, 3, 3, -1}, {-1, 1, 0, 2, 0, -1}, {-1, -1, -1, -1, -1, -1}};
+        _tiles = new Tile[_size][_size];
         _directions = new Direction[]{new Direction(-1, 0), new Direction(1, 0), new Direction(0, 1), new Direction(0, -1)};
         TileType type;
-        for(int k = 0; k < size; k++){
-            for(int l = 0; l < size; l++){
+        for(int k = 0; k < _size; k++){
+            for(int l = 0; l < _size; l++){
                 if(_empty[k][l] == -1) type = TileType.Wall;
                 else if (_empty[k][l] == 0) type = TileType.Unknown;
                 else type = TileType.Value;
 
-                _tiles[k][l] = new Tile(k % size, k / size + k % size, _empty[k][l], type);
+                _tiles[k][l] = new Tile(k % _size, k / _size + k % _size, _empty[k][l], type);
             }
         }
     }
 
     public void paint(){
-        for(int k = 0; k < _size; k++){
+        for(int k = 1; k < _size-1; k++){
             //Borde
-            for(int l = 0; l < _size; l++){
+            for(int l = 1; l < _size-1; l++){
                 System.out.print("+---");
             }
             System.out.print("+\n");
             //Casillas
-            for(int l = 0; l < _size; l++){
+            for(int l = 1; l < _size-1; l++){
                 System.out.print("| ");
                 TileType type = _tiles[k][l].getType();
                 
@@ -54,7 +54,7 @@ public class Board{
             System.out.print("|\n");
         }
         //Borde
-        for(int l = 0; l < _size; l++){
+        for(int l = 1; l < _size-1; l++){
             System.out.print("+---");
         }
         System.out.print("+\n");
@@ -62,17 +62,21 @@ public class Board{
 
     public void handleInput(char input){
         if(input == 'd'){
-            _posX = (_posX + 1) % _size; 
+            _posX = (_posX + 1) % (_size -1);
+            if(_posX == 0) _posX = 1;
         }
         else if (input == 's'){
-            _posY =  (_posY + 1) % _size; 
+            _posY =  (_posY + 1) % (_size -1); 
+            if(_posY == 0) _posY = 1;
         }
         else if (input == 'a'){
-            _posX = java.lang.Math.abs(_posX - 1) % _size; 
+            _posX = java.lang.Math.abs(_posX - 1) % (_size -1);
+            if(_posX == 0) _posX = _size-2;
         }
         else if (input == 'w'){
-            _posY = java.lang.Math.abs(_posY - 1) % _size; 
-        }
+            _posY = java.lang.Math.abs(_posY - 1) % (_size -1);
+            if(_posY == 0) _posY = _size-2;
+        } 
         else if (input == 'e'){
             if(_empty[_posY][_posX] == 0){
                 _tiles[_posY][_posX].changeType();
@@ -85,7 +89,7 @@ public class Board{
         //System.out.println("La casilla ve: " + Integer.toString(getVisibleTiles(_posX, _posY)) + " casillas.");
         HintType hint = getHint(_posX, _posY);
         switch (hint) {
-            case TooManyVisible:
+            case TooManyDotsVisible:
                 System.out.println("This tile sees too many dots.");
                 break;
             case TileSeesAllRequired:
@@ -103,7 +107,7 @@ public class Board{
     private HintType getHint(int x, int y){
         TileInfo info = aquireTileInfo(x, y);
 
-        if(_tiles[_posY][_posX].getType() == TileType.Value && info.getDotsSeen() > _tiles[_posY][_posX].getValue()) return HintType.TooManyVisible;
+        if(_tiles[_posY][_posX].getType() == TileType.Value && info.getDotsSeen() > _tiles[_posY][_posX].getValue()) return HintType.TooManyDotsVisible;
 
         if(info.getDotsSeen() == _tiles[y][x].getValue() && info.seesEmtpies()) return HintType.TileSeesAllRequired;
 
@@ -121,31 +125,29 @@ public class Board{
     }
 
     private int getVisibleTiles(int x, int y, TileInfo info){
-        if(isTileValid(x, y)){
-            if (_tiles[y][x].getType() == TileType.Dot || _tiles[y][x].getType() == TileType.Value){
-                int visibleTiles = 0; //Se cuenta a ella misma
-                for(int k = 0; k < _directions.length; k++){
-                    visibleTiles += getVisibleTilesAux(x + _directions[k].getX(), y + _directions[k].getY(), _directions[k], info);
-                }
-                return visibleTiles;
+        if (_tiles[y][x].getType() == TileType.Dot || _tiles[y][x].getType() == TileType.Value){
+            int visibleTiles = 0; //Se cuenta a ella misma
+            for(int k = 0; k < _directions.length; k++){
+                visibleTiles += getVisibleTilesAux(x + _directions[k].getX(), y + _directions[k].getY(), _directions[k], info);
             }
+            return visibleTiles;
         }
+        
         return 0; //Si es unknown o muro devuelve 0
     }
 
     private int getVisibleTilesAux(int x, int y, Direction dir, TileInfo info){
-        if(isTileValid(x, y)){
-            if (_tiles[y][x].getType() == TileType.Dot || _tiles[y][x].getType() == TileType.Value){
-                return 1 + getVisibleTilesAux(x + dir.getX(), y + dir.getY(), dir, info);
-            }
-            else if(_tiles[y][x].getType() == TileType.Unknown) info.setSeesEmpties(true);
+        if (_tiles[y][x].getType() == TileType.Dot || _tiles[y][x].getType() == TileType.Value){
+            return 1 + getVisibleTilesAux(x + dir.getX(), y + dir.getY(), dir, info);
         }
+        else if(_tiles[y][x].getType() == TileType.Unknown) info.setSeesEmpties(true);
+        
         return 0;
     }
 
-    private boolean isTileValid(int x, int y){
-        return(x >= 0 && x < _size && y >= 0 && y < _size);
-    }
+    // private boolean isTileValid(int x, int y){
+    //     return(x >= 0 && x < _size && y >= 0 && y < _size);
+    // }
 
     // private Direction getDir(Directions dir){
     //     if(dir == Directions.Down) return new Direction(0, 1);
@@ -154,7 +156,7 @@ public class Board{
     //     else return new Direction(1, 0); //Right
     // }    
 
-    private int _posX = 0, _posY = 0;
+    private int _posX = 1, _posY = 1;
     private int[][] _full;
     private int[][] _empty;
     private Tile[][] _tiles;
