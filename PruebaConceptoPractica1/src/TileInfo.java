@@ -1,6 +1,8 @@
 public class TileInfo {
-    public TileInfo(){
-
+    public TileInfo(boolean isEmpty){
+        if(!isEmpty){
+            dirs = new DirInfo[4];
+        }
     }
 
     public int getDotsSeen() {
@@ -21,4 +23,5 @@ public class TileInfo {
 
     private int _dotsSeen = 0;
     private boolean _seesEmpties = false;
+    private DirInfo[] dirs;
 }

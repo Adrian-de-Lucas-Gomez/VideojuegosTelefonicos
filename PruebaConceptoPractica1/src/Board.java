@@ -5,7 +5,9 @@ enum TileType{
 }
 
 enum HintType{
-    TooManyDotsVisible, TileSeesAllRequired, EmptyIsWall, DotIsWall, TileMarksAllEmpties, ClosedOffTileIsIncorrect, Correct, None
+    TooManyDotsVisible, TileSeesAllRequired, //Terminadas
+    EmptyIsWall, DotIsWall, TileMarksAllEmpties, ClosedOffTileIsIncorrect, //Pendientes
+    None 
 }
 
 public class Board{
@@ -87,7 +89,16 @@ public class Board{
 
     public boolean update(){
         //System.out.println("La casilla ve: " + Integer.toString(getVisibleTiles(_posX, _posY)) + " casillas.");
-        HintType hint = getHint(_posX, _posY);
+        HintType hint = HintType.None;
+        int auxX=1, auxY=1;
+        for(auxY = 1; auxY < _size - 1; auxY++){
+            for(auxX = 1; auxX < _size-1; auxX++){
+                hint = getHint(auxX, auxY);
+                if(hint != HintType.None) break;
+            }
+            if(hint != HintType.None) break;
+        }
+        System.out.println("Tile:[" + Integer.toString(auxY-1) + "," + Integer.toString(auxX-1) + "]");
         switch (hint) {
             case TooManyDotsVisible:
                 System.out.println("This tile sees too many dots.");
@@ -95,31 +106,29 @@ public class Board{
             case TileSeesAllRequired:
                 System.out.println("This tile sees all necessary dots.");
                 break;
-            case Correct:
-                System.out.println("This tile is correct!.");
-                break;
             default:
+                System.out.println("No hint found");
                 break;
         }
         return false;
     }
 
     private HintType getHint(int x, int y){
-        TileInfo info = aquireTileInfo(x, y);
+        TileInfo info = gatherTileInfo(x, y);
 
-        if(_tiles[_posY][_posX].getType() == TileType.Value && info.getDotsSeen() > _tiles[_posY][_posX].getValue()) return HintType.TooManyDotsVisible;
+        if(_tiles[y][x].getType() == TileType.Value && info.getDotsSeen() > _tiles[y][x].getValue()) return HintType.TooManyDotsVisible;
 
         if(info.getDotsSeen() == _tiles[y][x].getValue() && info.seesEmtpies()) return HintType.TileSeesAllRequired;
 
-        if(info.getDotsSeen() == _tiles[y][x].getValue() && !info.seesEmtpies()) return HintType.Correct; //DEBUG. Dice si un tile es correcto pero no fiarse.
+        //if(info.getDotsSeen() == _tiles[y][x].getValue() && !info.seesEmtpies()) return HintType.Correct; //DEBUG. Dice si un tile es correcto pero no fiarse.
 
         return HintType.None;
     }
 
-    TileInfo aquireTileInfo(int x, int y){
-        TileInfo info = new TileInfo();
+    TileInfo gatherTileInfo(int x, int y){
+        TileInfo info = new TileInfo(false);
 
-        info.setDotsSeen(getVisibleTiles(_posX, _posY, info));
+        info.setDotsSeen(getVisibleTiles(x, y, info));
 
         return info;
     }
