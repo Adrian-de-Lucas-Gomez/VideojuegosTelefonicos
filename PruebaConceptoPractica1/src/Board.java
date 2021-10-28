@@ -5,8 +5,17 @@ enum TileType{
 }
 
 enum HintType{
-    TooManyDotsVisible, TileSeesAllRequired, //Terminadas
-    EmptyIsWall, DotIsWall, TileMarksAllEmpties, ClosedOffTileIsIncorrect, //Pendientes
+    //Terminadas
+    VeDemasiadas, //Ve más puntos azules de los necesarios
+    VeLasNecesarias, //Ve las casillas necesarias y hay que cerrarla
+    FichaCerradaEsIncorrecta, //Una ficha resuelta ve menos azules de los que debería
+    SiExpandeSuperaValue, //Si expande con una casilla azul, supera el valor
+    AzulObligatorioEnDireccion, //En todas las soluciones imaginables hay una dirección en la que hay que poner azules
+
+    //Pendientes 
+    FichaVaciaEsMuro, //Si a un espacio vacio no le ve nadie (no tiene a ningun value en x o en y) tiene que ser muro
+    AzulEsMuro, //Si a un azul no le ve nadie (igual que la pista anterior) tiene que ser un muro
+    //SoloUnaDireccion, //Una ficha solo se puede expandir en una dirección
     None 
 }
 
@@ -101,11 +110,17 @@ public class Board{
         }
         System.out.println("Tile:[" + Integer.toString(auxY-1) + "," + Integer.toString(auxX-1) + "]");
         switch (hint) {
-            case TooManyDotsVisible:
+            case VeDemasiadas:
                 System.out.println("This tile sees too many dots.");
                 break;
-            case TileSeesAllRequired:
+            case VeLasNecesarias:
                 System.out.println("This tile sees all necessary dots.");
+                break;
+            case PuedeMarcarTodas:
+                System.out.println("El numero de casillas que le faltan a rellenar es el de casillas libres.");
+                break;
+            case ClosedOffTileIsIncorrect:
+                System.out.println("Has cerrado esta casilla pero no ve los azules necesarios.");
                 break;
             default:
                 System.out.println("No hint found");
@@ -117,7 +132,8 @@ public class Board{
     private HintType getHint(int x, int y){
         if(_tiles[y][x].getType() == TileType.Dot || _tiles[y][x].getType() == TileType.Value){
             boolean isExpandable = false;
-            
+            int totalNumDotsSeen = 0;
+            int totalSpaceAvailable = 0;
             Tile currentTile = _tiles[y][x];
             for(int k = 0; k < 4; k++){ //One per Direction (Up, Down, ...)
                 DirInfo dirInfo = _tileDirInfo[k];
@@ -134,10 +150,10 @@ public class Board{
                 //un muro en la primera casilla en esa dirección, hay que comprobarlo.
                 if(currentTile.getType() == TileType.Unknown){
                     isExpandable = true;
-                    dirInfo.minGrowthSize = dirInfo.numDotsFilled + 1;
+                    dirInfo.minGrowthSize = 1;
                     currentTile = navigateTile(currentTile, currentDir);
                     if(currentTile.getType() == TileType.Unknown){
-                        dirInfo.spaceAvailable = dirInfo.numDotsFilled + 2; //Current and previous tile
+                        dirInfo.spaceAvailable = 2; //Current and previous tile
                         currentTile = navigateTile(currentTile, currentDir);
                         while(currentTile.getType() != TileType.Wall){
                             dirInfo.spaceAvailable++;
@@ -159,64 +175,26 @@ public class Board{
                         }
                     }
                 }
+                totalNumDotsSeen += dirInfo.numDotsFilled;
+                totalSpaceAvailable += dirInfo.spaceAvailable;
+                if(totalNumDotsSeen > _tiles[y][x].getValue()) return HintType.VeDemasiadas;
             }
+            if(totalNumDotsSeen == _tiles[y][x].getValue() && isExpandable) return HintType.VeLasNecesarias;
+            else if (totalNumDotsSeen < _tiles[y][x].getValue() && !isExpandable) return HintType.FichaCerradaEsIncorrecta;
 
-            
-
+            //SiExpandeSuperaValue
+            for(int k = 0; k < 4; k++){
+                int aux = totalNumDotsSeen - _tileDirInfo[k].numDotsFilled;
+                if(aux + _tileDirInfo[k].minGrowthSize > _tiles[y][x].getValue()) return HintType.SiExpandeSuperaValue;
+            }
         }
-
-        // if (_tiles[y][x].getType() == TileType.Dot || _tiles[y][x].getType() == TileType.Value){
-        //     int visibleTiles = 0; //Se cuenta a ella misma
-        //     for(int k = 0; k < _directions.length; k++){
-        //         visibleTiles += getVisibleTilesAux(x + _directions[k].getX(), y + _directions[k].getY(), _directions[k], info);
-        //     }
-        //     return visibleTiles;
-        // }
-
-        // if(_tiles[y][x].getType() == TileType.Value && info.getDotsSeen() > _tiles[y][x].getValue()) return HintType.TooManyDotsVisible;
-
-        // if(info.getDotsSeen() == _tiles[y][x].getValue() && info.seesEmtpies()) return HintType.TileSeesAllRequired;
-
-        //if(info.getDotsSeen() == _tiles[y][x].getValue() && !info.seesEmtpies()) return HintType.Correct; //DEBUG. Dice si un tile es correcto pero no fiarse.
 
         return HintType.None;
     }
 
     private Tile navigateTile(Tile tile, Direction dir){
         return (_tiles[tile.getY() + dir.getY()][tile.getX() + dir.getX()]);
-    }
-
-    // TileInfo gatherTileInfo(int x, int y){
-    //     TileInfo info = new TileInfo(false);
-        
-    //     info.setDotsSeen(getVisibleTiles(x, y, info));
-
-    //     return info;
-    // }
-
-    // private int getVisibleTiles(int x, int y, TileInfo info){
-        
-    // }
-
-    // private int getVisibleTilesAux(int x, int y, Direction dir, TileInfo info){
-    //     if (_tiles[y][x].getType() == TileType.Dot || _tiles[y][x].getType() == TileType.Value){
-    //         return 1 + getVisibleTilesAux(x + dir.getX(), y + dir.getY(), dir, info);
-    //     }
-    //     else if(_tiles[y][x].getType() == TileType.Unknown) info.setSeesEmpties(true);
-        
-    //     return 0;
-    // }
-
-    // private boolean isTileValid(int x, int y){
-    //     return(x >= 0 && x < _size && y >= 0 && y < _size);
-    // }
-
-    // private Direction getDir(Directions dir){
-    //     if(dir == Directions.Down) return new Direction(0, 1);
-    //     else if(dir == Directions.Up) return new Direction(0, -1);
-    //     else if(dir == Directions.Left) return new Direction(-1, 0);
-    //     else return new Direction(1, 0); //Right
-    // }    
+    }   
 
     private int _posX = 1, _posY = 1;
     private int[][] _full;

@@ -6,8 +6,6 @@ import com.example.engine.Image;
 
 import java.awt.Color;
 
-
-
 public class AndroidGraphics implements Graphics {
     public AndroidImage newImage(String name){
         return new AndroidImage(0, 0);
