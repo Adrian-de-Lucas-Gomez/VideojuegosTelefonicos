@@ -14,6 +14,8 @@ public class Tile{
         else if(_type == TileType.Wall) _type = TileType.Dot;
     }
 
+    public void setType(TileType type) {_type = type;}
+
     public int getX(){ return _x; }
 
     public int getY(){ return _y; }
