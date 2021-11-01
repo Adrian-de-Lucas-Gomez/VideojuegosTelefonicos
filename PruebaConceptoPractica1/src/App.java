@@ -13,7 +13,7 @@ import java.io.FileInputStream;
 public class App extends JFrame{
 
 	public static void main(String[] args) {
-        Board board = new Board(4);
+        Board board = new Board(6);
         Scanner sc = new Scanner(System.in);
         System.out.println("Inizialicacion terminada.");
 
