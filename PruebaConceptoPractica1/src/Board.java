@@ -115,17 +115,8 @@ public class Board{
             if(_empty[_posY][_posX] == 0){
                 _tiles[_posY][_posX].toggleType();
             }
-            else System.out.println("No puedes cambiar una casilla fija bobo\n");
         }
     }
-
-    // private void printTile(int x, int y){
-    //     System.out.println("[" + Integer.toString(y - 1) + "," + Integer.toString(x - 1) + "]  Type: " + _tiles[y][x].getType());
-    // }
-
-    // private void printTile(Tile tile){
-    //     printTile(tile.getX(), tile.getY());
-    // }
 
     public boolean solveBoard(){ //Returns false if it can't be solved.
         _tileHint = getFirstHint();
@@ -190,53 +181,59 @@ public class Board{
     }
 
     private TileHint getHint(int x, int y){
+        Tile tileToChange = _tiles[y][x];
         Tile originalTile = _tiles[y][x];
         _tileHint.setOriginalTile(_tiles[y][x]);
-        Tile tileToChange = _tiles[y][x];
         if(originalTile.getType() == TileType.Value){
+            //Datos de la casilla
             boolean isExpandable = false;
             int totalNumDotsSeen = 0;
             int totalSpaceAvailable = 0;
-            Tile currentTile = originalTile;
+            Tile auxTile = originalTile;
+
             for(int k = 0; k < 4; k++){ //One per Direction (Up, Down, ...)
                 TileDirectionInfo dirInfo = _tileDirInfo[k];
-                dirInfo.reset();
+                dirInfo.reset(); //Reseteamos los datos de la clase para evitarnos news
                 Direction currentDir = _directions[k];
                 //Primero miramos el número de Dots en esta dirección
-                currentTile = navigateTile(originalTile, currentDir);
-                //printTile(currentTile);
-                while(currentTile.getType() == TileType.Dot || currentTile.getType() == TileType.Value){
+                auxTile = navigateTile(originalTile, currentDir);
+                while(auxTile.getType() == TileType.Dot || auxTile.getType() == TileType.Value){
                     dirInfo.numDotsFilled++;
-                    currentTile = navigateTile(currentTile, currentDir);
+                    auxTile = navigateTile(auxTile, currentDir);
                 }
-                //Al terminar de recorrer los dots, recorremos los espacios en blanco. Como podemos habernos topado con 
-                //un muro en la primera casilla en esa dirección, hay que comprobarlo.
-                if(currentTile.getType() == TileType.Unknown){
+                //Al terminar de recorrer los dots, miramos los espacios en blanco.
+                if(auxTile.getType() == TileType.Unknown){
+                    //Si a continuación de los dots hay un espacio en blanco, la ficha puede crecer en esa dirección.
                     isExpandable = true;
                     dirInfo.minGrowthSize++;
                     dirInfo.spaceAvailable++;
-                    currentTile = navigateTile(currentTile, currentDir);
-                    if(currentTile.getType() == TileType.Unknown){
+                    auxTile = navigateTile(auxTile, currentDir);
+                    //Si la casilla siguiente a la vacía es otra vacía, el crecimiento mínimo de esa ficha en esa dirección
+                    //es de numDots+1
+                    if(auxTile.getType() == TileType.Unknown){
                         dirInfo.spaceAvailable++;
-                        currentTile = navigateTile(currentTile, currentDir);
-                        while(currentTile.getType() != TileType.Wall){
+                        auxTile = navigateTile(auxTile, currentDir);
+                        while(auxTile.getType() != TileType.Wall){
                             dirInfo.spaceAvailable++;
-                            currentTile = navigateTile(currentTile, currentDir);
+                            auxTile = navigateTile(auxTile, currentDir);
                         }
-                    } 
-                    else if(currentTile.getType() == TileType.Dot || currentTile.getType() == TileType.Value){
+                    }
+                    //Si en su lugar hay un dot, el crecimiento mínimo de la casilla será mayor. Hay que buscar todos los dots
+                    //consecutivos al espacio en blanco.
+                    else if(auxTile.getType() == TileType.Dot || auxTile.getType() == TileType.Value){
                         dirInfo.spaceAvailable++;
                         dirInfo.minGrowthSize++;
-                        currentTile = navigateTile(currentTile, currentDir);
-                        while(currentTile.getType() == TileType.Dot || currentTile.getType() == TileType.Value){
+                        auxTile = navigateTile(auxTile, currentDir);
+                        while(auxTile.getType() == TileType.Dot || auxTile.getType() == TileType.Value){
                             dirInfo.minGrowthSize++;
                             dirInfo.spaceAvailable++;
-                            currentTile = navigateTile(currentTile, currentDir);
+                            auxTile = navigateTile(auxTile, currentDir);
                         }
-
-                        while(currentTile.getType() != TileType.Wall){
+                        //Tras obtener el número de dots consecutivos, miramos el resto de casillas que no sean un wall para actualizar
+                        //spaceAvailable.
+                        while(auxTile.getType() != TileType.Wall){
                             dirInfo.spaceAvailable++;
-                            currentTile = navigateTile(currentTile, currentDir);
+                            auxTile = navigateTile(auxTile, currentDir);
                         }
                     }
                 }
