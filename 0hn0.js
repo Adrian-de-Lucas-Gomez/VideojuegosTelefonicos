@@ -386,9 +386,9 @@ function Grid(size, height, id) {
             var tile = new Tile(2 * (size - 1), self, i);
             tiles.push(tile)
         }
-    }, this.maxify = function(maxAllowed) {
+    }, this.maxify = function(maxAllowed) { //Recoge todas las casillas que superen el valor maxAllowed
         for (var tile, tryAgain = !0, attempts = 0, maxAllowed = maxAllowed || width, maxTiles = [], i = 0; i < tiles.length; i++)(tile = tiles[i]).value > maxAllowed && maxTiles.push(tile);
-        Utils.shuffle(maxTiles);
+        Utils.shuffle(maxTiles); //Las baraja?
         for (; tryAgain && attempts++ < 99;)
             for (tryAgain = !1, i = 0; i < maxTiles.length; i++) {
                 var x = maxTiles[i].x,

@@ -58,8 +58,13 @@ public class Board{
                 else type = TileType.Value;
 
                 _tiles[k][l] = new Tile(l, k, _empty[k][l], type);
+                _solution[k][l] = new Tile(l, k, _empty[k][l], type);
             }
         }
+    }
+
+    public void generate(){
+        
     }
 
     public void paint(){
@@ -348,6 +353,7 @@ public class Board{
     private int _posX = 1, _posY = 1;
     private int[][] _empty;
     private Tile[][] _tiles;
+    private Tile[][] _solution;
     private Tile _nullTile;
     private Direction[] _directions;
     private TileHint _tileHint;
