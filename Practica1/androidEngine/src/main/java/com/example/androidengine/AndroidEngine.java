@@ -1,9 +1,9 @@
 package com.example.androidengine;
 
 import com.example.engine.Engine;
-
+/*
 public class AndroidEngine implements Engine {
-    AndroidGraphics graphics;
+    private AndroidGraphics graphics;
     private AndroidInput input;
 
     public AndroidGraphics getGraphics(){
@@ -13,10 +13,10 @@ public class AndroidEngine implements Engine {
         return input;
     }
 
-    public void Run(){
+    public void run(){
         //Aqui iremos llamando a todos las partes del motor necesarias
         //y actualizaremos la lógica del juego
     }
 
 
-}
+}*/

@@ -5,5 +5,7 @@ public interface Engine {
 
     abstract Input getInput();
 
-    abstract void Run();
+    abstract void setApplication(Application a);
+
+    abstract void run();
 }

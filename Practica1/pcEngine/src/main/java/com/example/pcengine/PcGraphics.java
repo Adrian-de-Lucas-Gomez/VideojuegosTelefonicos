@@ -19,8 +19,9 @@ public class PcGraphics extends AbstractGraphics {
 
     public PcGraphics(Window window){
         _window = window;
-        _windowHeight = window.getWidth();
+        _windowWidth = window.getWidth();
         _windowHeight = window.getHeight();
+        _strategy = window.getBufferStrategy();
     }
 
     public PcImage newImage(String name){
@@ -61,10 +62,29 @@ public class PcGraphics extends AbstractGraphics {
     public void drawText(String text, int x, int y){}
 
     public int getWidth(){
-        return width;
+        return _windowWidth;
     }
 
     public int getHeight() {
-        return height;
+        return _windowHeight;
     }
+
+    /*
+    // Pintamos el frame con el BufferStrategy
+			do {
+				do {
+					Graphics graphics = strategy.getDrawGraphics();
+					try {
+						ventana.render(graphics);
+					}
+					finally {
+						graphics.dispose();
+					}
+				} while(strategy.contentsRestored());
+				strategy.show();
+			} while(strategy.contentsLost());
+
+    Copiar descaradamente
+        Consejo de adri
+     */
 }

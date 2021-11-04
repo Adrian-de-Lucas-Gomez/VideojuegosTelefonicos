@@ -22,6 +22,7 @@ public class Window extends JFrame {
                 break;
             }
             catch(Exception e) {
+                System.err.println("Peté");
             }
         } // while pidiendo la creación de la buffeStrategy
         if (intentos == 0) {
