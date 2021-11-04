@@ -1,21 +1,21 @@
 package com.example.androidengine;
 
+import android.graphics.Bitmap;
+
 import com.example.engine.Image;
 
 public class AndroidImage implements Image {
 
-    public AndroidImage(int w, int h){ //Supongo que habrá que poner el source
-        width = w;
-        height = h;
+    private Bitmap _img;
+
+    public AndroidImage(Bitmap img){
+        _img = img;
     }
 
     public int getWidth(){
-        return width;
+        return _img.getWidth();
     }
-    public int getHeight(){
-        return height;
+    public int getHeight() {
+        return _img.getHeight();
     }
-
-    private int width;
-    private int height;
 }

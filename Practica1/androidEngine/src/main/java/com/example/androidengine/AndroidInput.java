@@ -1,12 +1,13 @@
 package com.example.androidengine;
 
 import com.example.engine.Input;
+import com.example.engine.TouchEvent;
 
 import java.util.List;
 
 public class AndroidInput implements Input {
-    public class AndroidTouchEvent extends TouchEvent{
-
+    private List<TouchEvent> events;
+    public List<TouchEvent> getTouchEvents(){
+        return events;
     }
-    //public List<AndroidTouchEvent> getTouchEvents(); No se como va esto
 }

@@ -1,4 +1,4 @@
-package com.example.practica2_moviles_intento3;
+package com.example.practica1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,6 +17,12 @@ public class MainActivity extends AppCompatActivity {
         engine = new AndroidEngine();
         logic = new Logic();
         setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Volver a lanzar la hebra
     }
 
     @Override

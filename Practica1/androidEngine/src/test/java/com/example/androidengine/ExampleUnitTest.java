@@ -1,4 +1,4 @@
-package com.example.practica2_moviles_intento3;
+package com.example.androidengine;
 
 import org.junit.Test;
 
