@@ -2,13 +2,9 @@ package com.example.engine;
 import com.example.engine.Graphics;
 
 public abstract class AbstractGraphics implements Graphics {
-    void setCanvas(){
-            //Miramos tamaño de la pantalla para saber como adaptarla???
-        }
-
-    /*  Supongo que estps metodos si no los voy a implementar
-        no es necesario que los nombre en la clase abstracta
-
+    protected int _windowWidth = 0;
+    protected int _windowHeight = 0;
+    /*
     abstract Image newImage(String name);
     abstract Font newFont(String filename, int size, boolean isBold);
     abstract void clear(int color);
