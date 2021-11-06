@@ -46,7 +46,7 @@ public class Board{
 
     public void generate(){
         //Reparto de numero de fichas
-        float percentageBlues = 0.55f, minPercentageBlues = 0.3f;
+        float percentageBlues = 0.8f, minPercentageBlues = 0.3f;
         int numTiles = (_size - 2) * (_size - 2);
         int maxNumBlues = (int)(numTiles * percentageBlues);
         int maxNumReds = numTiles - maxNumBlues;
@@ -93,12 +93,11 @@ public class Board{
             Tile toRed = blueTiles.remove(0);
             Tile toBlue = redTiles.remove(0);
             _tiles[toRed.getY()][toRed.getX()].setType(TileType.Wall);
+            _tiles[toRed.getY()][toRed.getX()].setValue(0); //No debería ser necesario pero lo dejo por seguridad.
             _tiles[toBlue.getY()][toBlue.getX()].setType(TileType.Value);
-            _tiles[toBlue.getY()][toBlue.getX()].setValue(0); //No debería ser necesario pero lo dejo por seguridad.
-            blueTiles.add(toBlue);
-            redTiles.add(toRed);
             calculateValues(blueTiles, redTiles);
             Collections.sort(blueTiles);
+            Collections.shuffle(redTiles);
         }
 
         Tile[][] auxBoard = new Tile[_size][_size];
@@ -207,6 +206,8 @@ public class Board{
     }
 
     private void calculateValues(ArrayList<Tile> blueTiles, ArrayList<Tile> redTiles){
+        blueTiles.clear();
+        redTiles.clear();
         for(int k = 1; k < _size - 1; k++){ //Tiene que ir desde [1][1] hasta [size-2][size-2] por el muro externo
             for(int l = 1; l < _size - 1; l++){
                 if(_tiles[k][l].getType() == TileType.Value){

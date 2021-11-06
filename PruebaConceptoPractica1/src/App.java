@@ -13,19 +13,21 @@ import java.io.FileInputStream;
 public class App extends JFrame{
 
 	public static void main(String[] args) {
-        Board board = new Board(5);
+        Board board = new Board(6);
         Scanner sc = new Scanner(System.in);
         char c;
         board.generate();
         board.paint();
-        while(true){
-            c = sc.next().charAt(0);
-            System.out.print("\033[H\033[2J");
-            System.out.flush();
-            board.handleInput(c);
-            board.update();
-            board.paint();
-        }
+        board.solveBoard();
+        board.paint();
+        // while(true){
+        //     c = sc.next().charAt(0);
+        //     System.out.print("\033[H\033[2J");
+        //     System.out.flush();
+        //     board.handleInput(c);
+        //     board.update();
+        //     board.paint();
+        // }
         
     }
 }
