@@ -15,10 +15,12 @@ public class PcGraphics extends AbstractGraphics {
 
     private BufferStrategy _strategy;
     private Window _window;
+    private Graphics _g;
 
     public PcGraphics(Window window){
         _window = window;
         _strategy = _window.getBufferStrategy();
+        _g = _strategy.getDrawGraphics();
     }
 
     public Image newImage(String name){
@@ -37,9 +39,8 @@ public class PcGraphics extends AbstractGraphics {
     }
 
     public void clear(int color){
-        Graphics graphics = _strategy.getDrawGraphics();
-        graphics.setColor(new Color(color));
-        graphics.fillRect(0, 0, _window.getWidth(), _window.getHeight());
+        _g.setColor(new Color(color));
+        _g.fillRect(0, 0, _window.getWidth(), _window.getHeight());
     }
 
     public void translate(int x, int y){}
@@ -52,18 +53,20 @@ public class PcGraphics extends AbstractGraphics {
 
     public void drawImage(Image /*Lol*/ image /*mas parametros?*/){}    //Revisar
 
-    public void setColor(Color color){}
+    public void setColor(Color color){
+        _g.setColor(color);
+    }
 
     public void fillCircle(int cx, int cy, int r){}
 
     public void drawText(String text, int x, int y){}
 
     public int getWidth(){ //TODO
-        return 1;
+        return _window.getWidth();
     }
 
     public int getHeight() {//TODO
-        return 1;
+        return _window.getHeight();
     }
 
     /*
