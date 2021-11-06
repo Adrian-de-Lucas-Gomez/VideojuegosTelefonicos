@@ -1,4 +1,4 @@
-public class Tile{
+public class Tile implements Comparable<Tile>{
 
     public Tile(int x, int y, int value, TileType type){
         _x = x;
@@ -19,6 +19,11 @@ public class Tile{
         _y = tile.getY();
         _value = tile.getValue();
         _type = tile.getType();
+    }
+
+    @Override
+    public int compareTo(Tile o) {
+        return Integer.compare(o.getValue(), this._value);
     }
 
     //Getters & Setters
