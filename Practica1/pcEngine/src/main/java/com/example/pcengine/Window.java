@@ -14,7 +14,7 @@ public class Window extends JFrame {
         // Hacemos visible la ventana.
         setVisible(true);
 
-        // Intentamos crear el buffer strategy con 2 buffers.
+        // Intentamos crear el buffer strategy con N buffers.
         int intentos = 100;
         while(intentos-- > 0) {
             try {
@@ -27,7 +27,6 @@ public class Window extends JFrame {
         } // while pidiendo la creación de la buffeStrategy
         if (intentos == 0) {
             System.err.println("Couldn't create BufferStrategy");
-            return;
         }
     }
 }

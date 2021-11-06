@@ -8,9 +8,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.io.IOException;
 
-import sun.jvm.hotspot.code.PCDesc;
+//import sun.jvm.hotspot.code.PCDesc;
 //Ahora implementan la clase abstracta AbstractGraphics
-
 
 public class PcGraphics extends AbstractGraphics {
 
@@ -19,12 +18,10 @@ public class PcGraphics extends AbstractGraphics {
 
     public PcGraphics(Window window){
         _window = window;
-        _windowWidth = window.getWidth();
-        _windowHeight = window.getHeight();
-        _strategy = window.getBufferStrategy();
+        _strategy = _window.getBufferStrategy();
     }
 
-    public PcImage newImage(String name){
+    public Image newImage(String name){
         PcImage img = null;
         try {
             img = new PcImage(javax.imageio.ImageIO.read(new java.io.File("./assets" + name)));
@@ -42,7 +39,7 @@ public class PcGraphics extends AbstractGraphics {
     public void clear(int color){
         Graphics graphics = _strategy.getDrawGraphics();
         graphics.setColor(new Color(color));
-        graphics.fillRect(0, 0, _windowWidth, _windowHeight);
+        graphics.fillRect(0, 0, _window.getWidth(), _window.getHeight());
     }
 
     public void translate(int x, int y){}
@@ -61,12 +58,12 @@ public class PcGraphics extends AbstractGraphics {
 
     public void drawText(String text, int x, int y){}
 
-    public int getWidth(){
-        return _windowWidth;
+    public int getWidth(){ //TODO
+        return 1;
     }
 
-    public int getHeight() {
-        return _windowHeight;
+    public int getHeight() {//TODO
+        return 1;
     }
 
     /*

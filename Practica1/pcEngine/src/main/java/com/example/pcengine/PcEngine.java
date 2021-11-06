@@ -17,7 +17,7 @@ public class PcEngine implements Engine {
     private long _lastFrameTime = 0;
 
     public PcEngine(int width, int height){
-        _window = new Window(width, height, 3);
+        _window = new Window(width, height, 2);
         _graphics = new PcGraphics(_window);
         _input = new PcInput();
         _clearColor = 0xADD8E6;
@@ -49,6 +49,7 @@ public class PcEngine implements Engine {
             //Updates
             _graphics.clear(_clearColor);
             _logic.onUpdate(elapsedTime); //Revisar si tiene que ser double o es un poco extra
+            _window.getBufferStrategy().show();
         }
     }
 }

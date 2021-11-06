@@ -3,17 +3,62 @@ package com.example.engine;
 import java.awt.Color;
 
 public interface Graphics {
-    abstract Image newImage(String name);
-    abstract Font newFont(String filename, int size, boolean isBold);
-    abstract void clear(int color);
-    abstract void translate(int x, int y);
-    abstract void scale(int x, int y);
-    abstract void save();
-    abstract void restore();
-    abstract void drawImage(Image image /*mas parametros?*/);
-    abstract void setColor(Color color);
-    abstract void fillCircle(int cx, int cy, int r);
-    abstract void drawText(String text, int x, int y);
-    abstract int getWidth();
-    abstract int getHeight();
+    /**
+     * Carga una imagen almacenada en el contenedor de recursos
+     * de la aplicacion a partir de su nombre
+     */
+    Image newImage(String name);
+
+    /**
+     * Crea una nueva fuente del tamanho especificado a partir
+     * de un fichero .ttf. Se indica si se desea o no fuente
+     * en negrita.
+     */
+    Font newFont(String filename, int size, boolean isBold);
+
+    /**
+     * Borra el contenido completo de la ventana, rellenandola
+     * con un color recibido como parametro
+     */
+    void clear(int color);
+
+    /**
+     * Metodos de control de la transformacion sobre el canvas.
+     * Las operaciones de dibujado se veran afectadas por la
+     * transformacion establecida
+     */
+    void translate(int x, int y);
+    void scale(int x, int y);
+    void save();
+    void restore();
+
+    /**
+     * Recibe una imagen y la muestra en la pantalla. Se pueden
+     * necesitar diferentes versiones de este metodo dependiendo
+     * de si se permite o no escalar la imagen, si se permite
+     * elegir que porción de la imagen original se muestra, etc.
+     */
+    void drawImage(Image image /*mas parametros?*/);
+
+    /**
+     * Establece el color a utilizar en las operaciones de
+     * dibujado posteriores
+     */
+    void setColor(Color color);
+
+    /**
+     * Dibuja un circulo relleno del color activo
+     */
+    void fillCircle(int cx, int cy, int r);
+
+    /**
+     * Escribe el texto con la fuente y color activos
+     */
+    void drawText(String text, int x, int y);
+
+    /**
+     * Devuelven el tamaño de la ventana
+     */
+    int getWidth();
+    int getHeight();
 }
