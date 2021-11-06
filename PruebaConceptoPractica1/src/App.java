@@ -13,9 +13,8 @@ import java.io.FileInputStream;
 public class App extends JFrame{
 
 	public static void main(String[] args) {
-        Board board = new Board(9);
+        Board board = new Board(5);
         Scanner sc = new Scanner(System.in);
-        board.paint();
         System.out.println("S = Resolver tablero. D = Jugar");
         char c = sc.next().charAt(0);
         if(c == 's'){
@@ -35,6 +34,10 @@ public class App extends JFrame{
                 board.update();
                 board.paint();
             }
+        }
+        else if(c == 'a'){
+            board.generate();
+            board.paint();
         }
     }
 }

@@ -1,5 +1,7 @@
 import java.util.Vector;
-
+import java.lang.reflect.Array;
+import java.util.Collections;
+import java.util.Random;
 enum TileType{
     Unknown, Dot, Wall, Value, None
 }
@@ -9,6 +11,7 @@ enum HintType{
     SiExpandeSuperaValor, //Si expande con una casilla azul, supera el valor
     RellenaTodosLosHuecos,
     AzulObligatorioEnDireccion, //En todas las soluciones imaginables hay una dirección en la que hay que poner azules
+    TableroResuelto, //Utilizada para resolver el tablero. Se devuelve si no ha encontrado ninguna otra pista y no hay casillas vacias.
     //SoloUnaDireccion, //Una ficha solo se puede expandir en una dirección
 
     //Errores del jugador
@@ -28,10 +31,8 @@ enum HintType{
 {-1,-1,-1,-1,-1,-1}};
 */
 public class Board{
-
     public Board(int size){
-        _size = size+2;
-        _empty = new int[][]{{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+        _empty = new int[][]{{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}, //CAMBIA ESTO POFAVO
                              {-1, 0, 8, 0, 0, 0, 0, 0, 0, 2,-1},
                              {-1, 7, 0, 0, 8, 0, 0, 0, 4, 0,-1},
                              {-1, 0, 0,-1, 0,-1, 0, 0, 0, 4,-1},
@@ -42,6 +43,8 @@ public class Board{
                              {-1, 0, 0, 0, 0, 0, 0, 1, 0, 0,-1},
                              {-1, 2, 3, 0, 2, 0, 0,-1, 3, 0,-1},
                              {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}};
+        _rand = new Random();
+        _size = size+2;
         _tiles = new Tile[_size][_size];
         _tileHint = new TileHint();
         _tileDirInfo = new TileDirectionInfo[4];
@@ -50,21 +53,118 @@ public class Board{
             _tileDirInfo[k] = new TileDirectionInfo();
         }
         _directions = new Direction[]{new Direction(-1, 0), new Direction(1, 0), new Direction(0, 1), new Direction(0, -1)};
-        TileType type;
-        for(int k = 0; k < _size; k++){
-            for(int l = 0; l < _size; l++){
-                if(_empty[k][l] == -1) type = TileType.Wall;
-                else if (_empty[k][l] == 0) type = TileType.Unknown;
-                else type = TileType.Value;
+        // TileType type;
+        // for(int k = 0; k < _size; k++){
+        //     for(int l = 0; l < _size; l++){
+        //         if(_empty[k][l] == -1) type = TileType.Wall;
+        //         else if (_empty[k][l] == 0) type = TileType.Unknown;
+        //         else type = TileType.Value;
 
-                _tiles[k][l] = new Tile(l, k, _empty[k][l], type);
-                _solution[k][l] = new Tile(l, k, _empty[k][l], type);
-            }
-        }
+        //         _tiles[k][l] = new Tile(l, k, _empty[k][l], type);
+        //         _solution[k][l] = new Tile(l, k, _empty[k][l], type);
+        //     }
+        // }
     }
 
     public void generate(){
-        
+        //Reparto de numero de fichas
+        float percentageBlues = 0.6f, minPercentageBlues = 0.3f;
+        int numTiles = (_size - 2) * (_size - 2);
+        int maxNumBlues = (int)(numTiles * percentageBlues);
+        int maxNumReds = numTiles - maxNumBlues;
+        int maxEliminatedBlues = (int)((percentageBlues - minPercentageBlues) * numTiles);
+
+        //Generación de tablero "resuelto"
+        int auxBlues = maxNumBlues, auxReds = maxNumReds;
+        Vector<Tile> vecTiles = new Vector<Tile>();
+        for(int k = 0; k < _size; k++){
+            for(int l = 0; l < _size; l++){
+                _tiles[k][l] = new Tile(l, k, 0, TileType.None);
+                if(k == 0 || l == 0 || k == _size - 1 || l == _size - 1){
+                    _tiles[k][l].setType(TileType.Wall);
+                }
+                else{
+                    if(auxBlues == 0){
+                        _tiles[k][l].setType(TileType.Wall);
+                        auxReds--;
+                    }
+                    else if (auxReds == 0){
+                        _tiles[k][l].setType(TileType.Value);
+                        auxBlues--;
+                    }
+                    else{
+                        if(_rand.nextInt(2) == 0){
+                            _tiles[k][l].setType(TileType.Wall);
+                            auxReds--;
+                        }
+                        else{
+                            _tiles[k][l].setType(TileType.Value);
+                            auxBlues--;
+                        }
+                    }
+                }
+            }
+        }
+        //Asignación de valores a los values y limpieza de fichas azules solitarias
+        for(int k = 1; k < _size - 1; k++){ //Tiene que ir desde [1][1] hasta [size-2][size-2] por el muro externo
+            for(int l = 1; l < _size - 1; l++){
+                if(_tiles[k][l].getType() == TileType.Value){
+                    int numDotsSeen = getNumDotsSeen(_tiles[k][l]);
+                    if(numDotsSeen == 0) _tiles[k][l].setType(TileType.Wall);
+                    else _tiles[k][l].setValue(numDotsSeen);
+                }
+                vecTiles.add(_tiles[k][l]);
+            }
+        }
+
+        //Siempre debería ser resoluble. Para asegurarse, _tileHint siempre debería devolver None en este momento.
+        //_tileHint = getFirstHint();
+
+        Tile[][] auxBoard = new Tile[_size][_size];
+        for(int k = 0; k < _size; k++){
+            for(int l = 0; l < _size; l++){
+                auxBoard[k][l] = new Tile(_tiles[k][l]);
+            }
+        }
+
+        //Convertimos fichas a desconocidas hasta que conseguimos un tablero con el número suficiente de fichas desconocidas
+        //pero resoluble.
+        //Al convertir a desconocida una ficha aleatoria es probable que ya no se pueda encontrar una solución. Para ello damos
+        //un número limitado de intentos.
+        int numTries = 10; //TO-DO:Esto tiene que ser proporcional al tamaño
+        Collections.shuffle(vecTiles);
+        Tile randomTile;
+        while(numTries > 0 && vecTiles.size() > 0){ //La última comprobación no debería ser necesaria pero la dejo por seguridad.
+            copyBoard(_tiles, auxBoard);
+            randomTile = vecTiles.remove(0);
+            if(randomTile.getType() == TileType.Value){
+                if(auxBlues >= maxEliminatedBlues) { //Cagaste
+                    while(randomTile.getType() == TileType.Value && vecTiles.size() > 0){
+                        randomTile = vecTiles.remove(0);
+                    }
+                }
+                else auxBlues++;
+            }
+            _tiles[randomTile.getY()][randomTile.getX()].setType(TileType.Unknown);
+            _tiles[randomTile.getY()][randomTile.getX()].setValue(0);
+            _tileHint = getFirstHint();
+            boolean isSolveable = solveBoard();
+            copyBoard(auxBoard, _tiles);
+            if (!isSolveable) { //No se puede quitar esta ficha. Se vuelve a intentar
+                numTries--;
+                vecTiles.add(randomTile);
+            }
+            else{
+                _tiles[randomTile.getY()][randomTile.getX()].setType(TileType.Unknown);
+                _tiles[randomTile.getY()][randomTile.getX()].setValue(0);
+                paint();
+            }
+        }
+        //solveBoard();
+        paint();
+        System.out.println("AQUI EMPIEZA LA RESOLUCION BRRRRRRRRRRRRRRRR");  
+        solveBoard();
+        paint(); 
     }
 
     public void paint(){
@@ -79,8 +179,8 @@ public class Board{
                 System.out.print("| ");
                 TileType type = _tiles[k][l].getType();
                 
-                if(k == _posY && l == _posX) System.out.print("* ");
-                else if (type == TileType.Wall) System.out.print("X ");
+                // if(k == _posY && l == _posX) System.out.print("* ");
+                if (type == TileType.Wall) System.out.print("X ");
                 else if (type == TileType.Dot) System.out.print("O ");
                 else if (type == TileType.Value){
                     System.out.print(_tiles[k][l].getValue());
@@ -97,6 +197,14 @@ public class Board{
             System.out.print("+---");
         }
         System.out.print("+\n");
+    }
+
+    void copyBoard(Tile[][] src, Tile[][] dst){
+        for(int k = 1; k < _size - 1; k++){
+            for(int l = 1; l < _size - 1; l++){
+                dst[k][l].copyFromTile(src[k][l]);
+            }
+        }
     }
 
     public void handleInput(char input){
@@ -123,12 +231,13 @@ public class Board{
         }
     }
 
-    public boolean solveBoard(){ //Returns false if it can't be solved.
+    public boolean solveBoard( ){ //Returns false if it can't be solved.
         _tileHint = getFirstHint();
         while(!isHintPlayerMistake(_tileHint.getType())){
-            if(_tileHint.getType() == HintType.None) return true;
-            System.out.println(" ");
+            if(_tileHint.getType() == HintType.TableroResuelto) return true;
+            else if(_tileHint.getType() == HintType.None) return false; 
             processHint(_tileHint);
+            //paint();
             _tileHint = getFirstHint();
         }
         return false;
@@ -174,14 +283,17 @@ public class Board{
 
     private TileHint getFirstHint(){
         TileHint hint = _tileHint;
+        boolean seenEmpties = false;
         int auxX=1, auxY=1;
         for(auxY = 1; auxY < _size - 1; auxY++){
             for(auxX = 1; auxX < _size-1; auxX++){
+                if(_tiles[auxY][auxX].getType() == TileType.Unknown) seenEmpties = true;
                 hint = getHint(auxX, auxY);
-                if(hint.getType() != HintType.None) return hint;
+                if(hint.getType() != HintType.None && hint.getType() != HintType.TableroResuelto) return hint;
             }
         }
-        hint.setHint(HintType.None, _nullTile);
+        if(!seenEmpties) hint.setHint(HintType.TableroResuelto, _nullTile);
+        else hint.setHint(HintType.None, _nullTile);
         return hint;
     }
 
@@ -342,6 +454,21 @@ public class Board{
         else return _nullTile;
     }
 
+    private int getNumDotsSeen(Tile tile){
+        //if(tile.getType() == 0)
+        int numDotsSeen = 0;
+        for(int k = 0; k < 4; k++){
+            numDotsSeen += getNumDotsSeenAux(tile, _directions[k]);
+        }
+        return numDotsSeen;
+    }
+
+    private int getNumDotsSeenAux(Tile tile, Direction dir){
+        tile = navigateTile(tile, dir);
+        if(tile.getType() == TileType.Unknown || tile.getType() == TileType.Wall) return 0;
+        else return getNumDotsSeenAux(tile, dir) + 1;
+    }
+
     private Tile navigateTile(Tile tile, Direction dir){
         return (_tiles[tile.getY() + dir.getY()][tile.getX() + dir.getX()]);
     }
@@ -359,4 +486,5 @@ public class Board{
     private TileHint _tileHint;
     private int _size;
     private TileDirectionInfo[] _tileDirInfo;
+    private Random _rand;
 }

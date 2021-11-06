@@ -7,6 +7,20 @@ public class Tile{
         _type = type;
     }
 
+    public Tile(Tile tile){
+        _x = tile.getX();
+        _y = tile.getY();
+        _value = tile.getValue();
+        _type = tile.getType();
+    }
+
+    public void copyFromTile(Tile tile){
+        _x = tile.getX();
+        _y = tile.getY();
+        _value = tile.getValue();
+        _type = tile.getType();
+    }
+
     //Getters & Setters
     public void toggleType(){ //Cambia entre wall y dot
         if(_type == TileType.Unknown) _type = TileType.Dot;
@@ -15,6 +29,8 @@ public class Tile{
     }
 
     public void setType(TileType type) {_type = type;}
+
+    public void setValue(int value) {_value = value;}
 
     public int getX(){ return _x; }
 
