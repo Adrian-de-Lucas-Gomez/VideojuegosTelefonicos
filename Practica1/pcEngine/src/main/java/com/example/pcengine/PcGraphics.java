@@ -87,7 +87,9 @@ public class PcGraphics extends AbstractGraphics {
 
     public void drawText(Font font, String text, int x, int y){
         _graphics.setFont(((PcFont)font).getFont());
-        _graphics.drawString(text, x, y);
+        int realX = x + _logicOffsetX;
+        int realY = y + _logicOffsetY;
+        _graphics.drawString(text, realX, realY);
     }
 
     public int getWidth(){
