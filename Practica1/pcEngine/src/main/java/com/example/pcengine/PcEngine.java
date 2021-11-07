@@ -3,6 +3,7 @@ package com.example.pcengine;
 import com.example.engine.Application;
 import com.example.engine.Engine;
 
+import java.awt.Graphics2D;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -28,7 +29,6 @@ public class PcEngine implements Engine {
 
     public void run(){ //TODO mover lo que no haga falta aqui
         while(true){
-
             //Obtencion DeltaTime
             long currentTime = System.nanoTime();
             long nanoElapsedTime = currentTime - _lastFrameTime;
@@ -44,7 +44,8 @@ public class PcEngine implements Engine {
             //y si se hace grande se ve vacio mas allá del clear. La imagen desaparece porque yolo
             do {
                 do {
-                    java.awt.Graphics graphicsJava = _window.getBufferStrategy().getDrawGraphics();
+                    java.awt.Graphics2D graphicsJava = (Graphics2D)_window.getBufferStrategy().getDrawGraphics();
+                    _graphics.setGraphics(graphicsJava);
                     try {
                         //Se llama a pintar lo que toque
                         _logic.onRender(_graphics);
@@ -55,7 +56,6 @@ public class PcEngine implements Engine {
                 } while(_window.getBufferStrategy().contentsRestored());
                 _window.getBufferStrategy().show(); //Mandamos a pintar en pantalla
             } while(_window.getBufferStrategy().contentsLost());
-
         }
     }
 

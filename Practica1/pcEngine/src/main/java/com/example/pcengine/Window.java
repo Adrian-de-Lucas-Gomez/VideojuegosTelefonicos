@@ -7,21 +7,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public class Window extends JFrame implements ComponentListener {
-
-    int _width;
-    int _height;
-    JLabel label;
-
     public Window(String title, int width, int height, int numBuffers){
         super(title);
 
-        _width = width;
-        _height = height;
-
-        setSize(_width, _height);
+        setSize(width, height);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        label = new JLabel();
-        getContentPane().add(label);
         getContentPane().addComponentListener(this);
 
         // Vamos a usar renderizado activo. No queremos que Swing llame al
@@ -45,25 +35,19 @@ public class Window extends JFrame implements ComponentListener {
         if (intentos == 0) {
             System.err.println("Couldn't create BufferStrategy");
         }
-    }
-
-    @Override
-    public int getWidth(){
-        return _width;
-    }
-    @Override
-    public int getHeight(){
-        return _height;
+        //pack();
     }
 
     @Override
     public void componentResized(ComponentEvent componentEvent) {
-        _height = this.getHeight();
-        _width = this.getWidth();
-        //System.out.println("Tamaño cambiado a: " + _width + "x" + _height);
+        //setBounds(0, 0, getWidth(), getHeight());
+        //this.setSize(getWidth(), getHeight());
+
+        //System.out.println("Tamaño cambiado a: " + getWidth() + "x" + getHeight());
     }
     @Override
     public void componentMoved(ComponentEvent componentEvent) {
+
     }
     @Override
     public void componentShown(ComponentEvent componentEvent) {

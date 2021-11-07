@@ -8,6 +8,7 @@ import com.example.engine.Input;
 import com.example.engine.TouchEvent;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 
 public class Logic implements Application {
 
@@ -16,6 +17,7 @@ public class Logic implements Application {
     private Input _input;
 
     private int _clearColor = 0xADD8E6;
+    private Color _redColor;
 
     //TODO pruebas
     private Image _imgPrueba;
@@ -31,7 +33,7 @@ public class Logic implements Application {
         System.out.println("ESTOY VIVO");
         _graphics = _engine.getGraphics();
         _input = _engine.getInput();
-
+        _redColor = new Color(0x8C31A0);
         _imgPrueba = _graphics.newImage("q42.png");
     }
 
@@ -54,7 +56,7 @@ public class Logic implements Application {
     public void onRender(Graphics graphics) {
         //Pintar el estado del juego
         _graphics.clear(_clearColor);
-        _graphics.setColor(new Color(0, 0, 0));
+        _graphics.setColor(_redColor);
         _graphics.fillCircle(100, 100, 30);
         _graphics.drawImage(_imgPrueba, 100, 200, 50, 50);
     }

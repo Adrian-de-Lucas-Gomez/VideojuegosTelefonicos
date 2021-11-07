@@ -6,6 +6,7 @@ import com.example.engine.Image;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.io.File;
 import java.io.IOException;
@@ -15,15 +16,13 @@ import java.io.IOException;
 
 public class PcGraphics extends AbstractGraphics {
 
-    private BufferStrategy _strategy;
     private Window _window;
-    private Graphics _javaGraphics;
+    private java.awt.image.BufferStrategy _strategy;
+    private java.awt.Graphics2D _graphics;
 
     public PcGraphics(Window window){
         _window = window;
-        _strategy = _window.getBufferStrategy();
-        _javaGraphics = _strategy.getDrawGraphics();
-
+        _strategy =  _window.getBufferStrategy();
     }
 
 
@@ -42,14 +41,12 @@ public class PcGraphics extends AbstractGraphics {
     public PcFont newFont(String filename, int size, boolean isBold){
         //Font customFont = java.awt.Font.createFont(Font.TRUETYPE_FONT, new File("Fonts\\custom_font.ttf")).deriveFont(12f);
         return new PcFont("Helvetica", Font.BOLD, size);
-
     }
 
 
     public void clear(int color){
-        _javaGraphics.setColor(new Color(color));
-        _javaGraphics.fillRect(0, 0, _window.getWidth(), _window.getHeight());
-        //System.out.println("Tamaño cambiado a: " + _window.getWidth() + "x" + _window.getHeight());
+        _graphics.setColor(new Color(color));
+        _graphics.fillRect(0, 0, _window.getWidth(), _window.getHeight());
     }
 
 
@@ -75,19 +72,19 @@ public class PcGraphics extends AbstractGraphics {
 
     public void drawImage(Image image, int x, int y, int w, int h){
         if(image != null)
-            _javaGraphics.drawImage(((PcImage)image).getImage(), x, y, w, h, null);
+            _graphics.drawImage(((PcImage)image).getImage(), x, y, w, h, null);
         else
             System.out.println("no drawImage :("); //TODO
     }
 
 
     public void setColor(Color color){
-        _javaGraphics.setColor(color);
+        _graphics.setColor(color);
     }
 
 
     public void fillCircle(int cx, int cy, int r){
-        _javaGraphics.fillOval(cx - r, cy - r, 2*r, 2*r);
+        _graphics.fillOval(cx - r, cy - r, 2*r, 2*r);
     }
 
 
@@ -105,22 +102,7 @@ public class PcGraphics extends AbstractGraphics {
         return _window.getHeight();
     }
 
-    /*
-    // Pintamos el frame con el BufferStrategy
-			do {
-				do {
-					Graphics graphics = strategy.getDrawGraphics();
-					try {
-						ventana.render(graphics);
-					}
-					finally {
-						graphics.dispose();
-					}
-				} while(strategy.contentsRestored());
-				strategy.show();
-			} while(strategy.contentsLost());
-
-    Copiar descaradamente
-        Consejo de adri
-     */
+    public void setGraphics(Graphics2D g){
+        _graphics = g;
+    }
 }
