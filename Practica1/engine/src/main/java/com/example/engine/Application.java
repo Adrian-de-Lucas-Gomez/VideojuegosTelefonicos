@@ -1,9 +1,9 @@
 package com.example.engine;
 
 public interface Application {
-    abstract void init();
-    abstract void onDestroy();
-    abstract void onEvent(TouchEvent event);
-    abstract void onUpdate(double deltaTime);
-    abstract void onRender(Graphics graphics);
+    void init();
+    void onDestroy();
+    void onEvent(TouchEvent event);
+    void onUpdate(double deltaTime);
+    void onRender(Graphics graphics);
 }

@@ -38,7 +38,7 @@ public interface Graphics {
      * de si se permite o no escalar la imagen, si se permite
      * elegir que porción de la imagen original se muestra, etc.
      */
-    void drawImage(Image image /*mas parametros?*/);
+    void drawImage(Image image, int x, int y, int w, int h);
 
     /**
      * Establece el color a utilizar en las operaciones de

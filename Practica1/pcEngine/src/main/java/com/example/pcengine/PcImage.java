@@ -16,4 +16,7 @@ public class PcImage implements Image {
     public int getHeight(){
         return _img.getHeight(null);
     }
+    public java.awt.Image getImage(){
+        return _img;
+    }
 }

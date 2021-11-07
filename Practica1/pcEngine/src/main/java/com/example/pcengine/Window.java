@@ -3,7 +3,8 @@ package com.example.pcengine;
 import javax.swing.JFrame;
 
 public class Window extends JFrame {
-    public Window(int width, int height, int numBuffers){
+    public Window(String title, int width, int height, int numBuffers){
+        super(title);
         setSize(width, height);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
