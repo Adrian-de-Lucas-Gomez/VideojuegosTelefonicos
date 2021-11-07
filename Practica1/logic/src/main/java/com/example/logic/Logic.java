@@ -2,13 +2,13 @@ package com.example.logic;
 
 import com.example.engine.Application;
 import com.example.engine.Engine;
+import com.example.engine.Font;
 import com.example.engine.Graphics;
 import com.example.engine.Image;
 import com.example.engine.Input;
 import com.example.engine.TouchEvent;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 
 public class Logic implements Application {
 
@@ -17,10 +17,11 @@ public class Logic implements Application {
     private Input _input;
 
     private int _clearColor = 0xADD8E6;
-    private Color _redColor;
+    private Color _color;
 
     //TODO pruebas
     private Image _imgPrueba;
+    private Font _fontPrueba;
 
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -33,8 +34,9 @@ public class Logic implements Application {
         System.out.println("ESTOY VIVO");
         _graphics = _engine.getGraphics();
         _input = _engine.getInput();
-        _redColor = new Color(0x8C31A0);
+        _color = new Color(0x8C31A0);
         _imgPrueba = _graphics.newImage("q42.png");
+        _fontPrueba = _graphics.newFont("Molle-Regular", 52.0f, true);
     }
 
     @Override
@@ -56,8 +58,11 @@ public class Logic implements Application {
     public void onRender(Graphics graphics) {
         //Pintar el estado del juego
         _graphics.clear(_clearColor);
-        _graphics.setColor(_redColor);
+        _graphics.setColor(_color);
         _graphics.fillCircle(100, 100, 30);
-        _graphics.drawImage(_imgPrueba, 100, 200, 50, 50);
+        _graphics.setColor(_color);
+        _graphics.drawText(_fontPrueba,"Ole ole los caracoles", 50, 350);
+        _graphics.drawText(_fontPrueba,"Muerte a PePa", 69, 420);
+        _graphics.drawImage(_imgPrueba, 100, 200, 50, 65);
     }
 }
