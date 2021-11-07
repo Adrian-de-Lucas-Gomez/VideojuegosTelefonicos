@@ -35,7 +35,7 @@ public abstract class AbstractGraphics implements Graphics {
     public void fillCircle(int cx, int cy, int r) {
 
     }
-    public void drawText(String text, int x, int y) {
+    public void drawText(Font font ,String text, int x, int y) {
 
     }
 }

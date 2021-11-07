@@ -11,7 +11,7 @@ import com.example.engine.Image;
     public AndroidImage newImage(String name){
         return new AndroidImage();
     }
-    public AndroidFont newFont(String filename, int size, boolean isBold){
+    public AndroidFont newFont(String filename, float size, boolean isBold){
         return new AndroidFont();
     }
     public void clear(int color){}

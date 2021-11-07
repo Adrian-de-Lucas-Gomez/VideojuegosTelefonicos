@@ -14,7 +14,7 @@ public interface Graphics {
      * de un fichero .ttf. Se indica si se desea o no fuente
      * en negrita.
      */
-    Font newFont(String filename, int size, boolean isBold);
+    Font newFont(String filename, float size, boolean isBold);
 
     /**
      * Borra el contenido completo de la ventana, rellenandola
@@ -54,7 +54,7 @@ public interface Graphics {
     /**
      * Escribe el texto con la fuente y color activos
      */
-    void drawText(String text, int x, int y);
+    void drawText(Font font, String text, int x, int y);
 
     /**
      * Devuelven el tamaño de la ventana

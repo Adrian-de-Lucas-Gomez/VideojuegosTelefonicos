@@ -1,10 +1,10 @@
 package com.example.pcengine;
 
 import com.example.engine.AbstractGraphics;
+import com.example.engine.Font;
 import com.example.engine.Image;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
@@ -38,9 +38,15 @@ public class PcGraphics extends AbstractGraphics {
     }
 
 
-    public PcFont newFont(String filename, int size, boolean isBold){
-        //Font customFont = java.awt.Font.createFont(Font.TRUETYPE_FONT, new File("Fonts\\custom_font.ttf")).deriveFont(12f);
-        return new PcFont("Helvetica", Font.BOLD, size);
+    public PcFont newFont(String filename, float size, boolean isBold){
+        int style;
+        if(isBold){
+            style = java.awt.Font.BOLD;
+        }
+        else{
+            style = java.awt.Font.PLAIN;
+        }
+        return new PcFont(filename, style, size);
     }
 
 
@@ -87,9 +93,9 @@ public class PcGraphics extends AbstractGraphics {
         _graphics.fillOval(cx - r, cy - r, 2*r, 2*r);
     }
 
-
-    public void drawText(String text, int x, int y){
-
+    public void drawText(Font font, String text, int x, int y){
+        _graphics.setFont(((PcFont)font).getFont());
+        _graphics.drawString(text, x, y);
     }
 
 
