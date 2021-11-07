@@ -4,38 +4,26 @@ import java.awt.Color;
 
 public abstract class AbstractGraphics implements Graphics {
 
-    /*public Image newImage(String name) {
+    protected float _aspect = 2f/3f; //TODO asignar el valor desde logic o desde main para que sea cosa solo del juego
+    protected int _logicWidth ;
+    protected int _logicHeight;
+    protected int _logicOffsetX;
+    protected int _logicOffsetY;
 
-    }
-    public Font newFont(String filename, int size, boolean isBold) {
-
-    }
-    */
-    public void clear(int color) {
-
-    }
-    public void translate(int x, int y) {
-
-    }
-    public void scale(int x, int y) {
-
-    }
-    public void save() {
-
-    }
-    public void restore() {
-
-    }
-    public void drawImage(Image image) {
-
-    }
-    public void setColor(Color color) {
-
-    }
-    public void fillCircle(int cx, int cy, int r) {
-
-    }
-    public void drawText(String text, int x, int y) {
-
+    public void setLogicCoords(){
+        //Calculo de coordenadar logicas a reales
+        float windowAspect = (float)getWidth() / (float)getHeight();
+        if(_aspect > windowAspect) {
+            _logicWidth = getWidth();
+            _logicHeight = (int)(getWidth() / _aspect);
+            _logicOffsetX = 0;
+            _logicOffsetY = getHeight()/2 - _logicHeight/2;
+        }
+        else if(_aspect < windowAspect) {
+            _logicWidth = (int)(getHeight() * _aspect);
+            _logicHeight = getHeight();
+            _logicOffsetX = getWidth()/2 - _logicWidth/2;
+            _logicOffsetY = 0;
+        }
     }
 }

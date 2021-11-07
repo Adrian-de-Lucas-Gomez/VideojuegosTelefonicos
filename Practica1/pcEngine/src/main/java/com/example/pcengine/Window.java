@@ -4,7 +4,6 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 public class Window extends JFrame implements ComponentListener {
     public Window(String title, int width, int height, int numBuffers){
@@ -21,7 +20,7 @@ public class Window extends JFrame implements ComponentListener {
         // Hacemos visible la ventana.
         setVisible(true);
 
-        // Intentamos crear el buffer strategy con N buffers.
+        // Buffer strategy con N buffers.
         int intentos = 100;
         while(intentos-- > 0) {
             try {
@@ -31,7 +30,7 @@ public class Window extends JFrame implements ComponentListener {
             catch(Exception e) {
                 System.err.println("Peté");
             }
-        } // while pidiendo la creación de la buffeStrategy
+        }
         if (intentos == 0) {
             System.err.println("Couldn't create BufferStrategy");
         }
