@@ -3,6 +3,9 @@ package com.example.pcengine;
 import com.example.engine.Application;
 import com.example.engine.Engine;
 
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
 public class PcEngine implements Engine {
 
     private Window _window;
@@ -35,22 +38,28 @@ public class PcEngine implements Engine {
             //TODO arreglar esto
             //Updates
             _logic.onUpdate(elapsedTime); //Revisar si tiene que ser double o es un poco extra
-            _window.getBufferStrategy().show();
-            
-            /*
+            //_window.getBufferStrategy().show();
+            _window.addComponentListener(new ComponentAdapter( ) {
+                public void componentResized(ComponentEvent ev) {
+
+                }
+            });
+            //Ahora permite redimensionar pero el valor de tamaño de la ventana no cambia
+            //y si se hace grande se ve vacio mas allá del clear. La imagen desaparece porque yolo
             do {
                 do {
-                    Graphics graphics = strategy.getDrawGraphics();
+                    java.awt.Graphics graphicsJava = _window.getBufferStrategy().getDrawGraphics();
                     try {
-                        _window.render(graphics);
+                        //Se llama a pintar lo que toque
+                        _logic.onRender(_graphics);
                     }
                     finally {
-                        graphics.dispose();
+                        graphicsJava.dispose();
                     }
-                } while(strategy.contentsRestored());
-                strategy.show();
-            } while(strategy.contentsLost());
-            */
+                } while(_window.getBufferStrategy().contentsRestored());
+                _window.getBufferStrategy().show(); //Mandamos a pintar en pantalla
+            } while(_window.getBufferStrategy().contentsLost());
+
         }
     }
 

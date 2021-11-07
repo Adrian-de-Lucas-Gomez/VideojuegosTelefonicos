@@ -47,14 +47,15 @@ public class Logic implements Application {
 
     @Override
     public void onUpdate(double deltaTime) {
-        _graphics.clear(_clearColor);
-        _graphics.setColor(new Color(0, 0, 0));
-        _graphics.fillCircle(100, 100, 30);
-        _graphics.drawImage(_imgPrueba, 200, 200, 50, 50);
+        //Logica de numeritos
     }
 
     @Override
     public void onRender(Graphics graphics) {
-
+        //Pintar el estado del juego
+        _graphics.clear(_clearColor);
+        _graphics.setColor(new Color(0, 0, 0));
+        _graphics.fillCircle(100, 100, 30);
+        _graphics.drawImage(_imgPrueba, 100, 200, 50, 50);
     }
 }
