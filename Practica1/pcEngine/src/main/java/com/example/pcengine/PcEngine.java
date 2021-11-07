@@ -39,11 +39,7 @@ public class PcEngine implements Engine {
             //Updates
             _logic.onUpdate(elapsedTime); //Revisar si tiene que ser double o es un poco extra
             //_window.getBufferStrategy().show();
-            _window.addComponentListener(new ComponentAdapter( ) {
-                public void componentResized(ComponentEvent ev) {
 
-                }
-            });
             //Ahora permite redimensionar pero el valor de tamaño de la ventana no cambia
             //y si se hace grande se ve vacio mas allá del clear. La imagen desaparece porque yolo
             do {

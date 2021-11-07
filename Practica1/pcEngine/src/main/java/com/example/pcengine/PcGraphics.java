@@ -4,8 +4,10 @@ import com.example.engine.AbstractGraphics;
 import com.example.engine.Image;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.io.File;
 import java.io.IOException;
 
 //import sun.jvm.hotspot.code.PCDesc;
@@ -21,6 +23,7 @@ public class PcGraphics extends AbstractGraphics {
         _window = window;
         _strategy = _window.getBufferStrategy();
         _javaGraphics = _strategy.getDrawGraphics();
+
     }
 
 
@@ -37,13 +40,16 @@ public class PcGraphics extends AbstractGraphics {
 
 
     public PcFont newFont(String filename, int size, boolean isBold){
-        return new PcFont();
+        //Font customFont = java.awt.Font.createFont(Font.TRUETYPE_FONT, new File("Fonts\\custom_font.ttf")).deriveFont(12f);
+        return new PcFont("Helvetica", Font.BOLD, size);
+
     }
 
 
     public void clear(int color){
         _javaGraphics.setColor(new Color(color));
         _javaGraphics.fillRect(0, 0, _window.getWidth(), _window.getHeight());
+        //System.out.println("Tamaño cambiado a: " + _window.getWidth() + "x" + _window.getHeight());
     }
 
 
