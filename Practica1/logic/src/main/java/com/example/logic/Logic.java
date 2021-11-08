@@ -71,7 +71,7 @@ public class Logic implements Application {
     @Override
     public void onHandleInput() {
         for (TouchEvent e: _input.getTouchEvents()) {
-            int logicX = e.posX - _graphics.getLogicOffsetX(), logicY = e.posY - _graphics.getLogicOffsetY();
+            int logicX = e.posX, logicY = e.posY;
             if(e.eventType == TouchEvent.EventType.buttonPressed){
                 if(currentState == GameState.MainMenu){
                     if(_playButton.isPressed(logicX, logicY)) setState(GameState.BoardSizeMenu);
@@ -102,26 +102,38 @@ public class Logic implements Application {
     public void onRender(Graphics graphics) {
         //Pintar el estado del juego
         _graphics.clear(_clearColor.getRGB());
-        /*
-        _graphics.setColor(_black);
-        _graphics.fillCircle(100, 100, 30);
-        _graphics.setColor(new Color(0x000000));*/
+        _graphics.translate(_graphics.getOffsetX(), _graphics.getOffsetY());
+        _graphics.save();
 
         if(currentState == GameState.MainMenu){
             //Tamaño Lógico: 800x600
             //_graphics.drawImage(_playButton.getImage(), _playButton.getX(), _playButton.getY(), _playButton.getWidth(), _playButton.getHeight());
+
+            _graphics.scale(_graphics.getLogicScaleAspect(), _graphics.getLogicScaleAspect());
+            //Imagen Q42
+            _graphics.translate(_graphics.getGameWidth()/2 - 30, 400);
+            _graphics.drawImage(_q43Img, 60, 80);
+
+            //Textos
+            _graphics.restore();
             _graphics.setColor(_black);
-            _graphics.drawText(_molleRegularTitle,"Oh no", 300, 200);
-            _graphics.drawImage(_q43Img, 400, 500, 60, 60); //Debería estar en el centro y para abajo
-            _graphics.drawText(_josefinSansTitle, "Jugar", 380, 300); //Y ya todo esto que lo documente otro lmao no se por que se ha puesto en colores fancy ah creo que por el todo tiene sentido
+            _graphics.translate(100, 200);
+            _graphics.drawText(_molleRegularTitle,"Oh no", 0, 0);
+            _graphics.translate(80, 100);
+            _graphics.drawText(_josefinSansTitle, "Jugar", 0, 0);
+
+            _graphics.restore();
             _graphics.setColor(_grey);
-            _graphics.drawText(_josefinSansText, "Un juego copiado a Q42", 325, 340);
-            _graphics.drawText(_josefinSansText, "Creado por Martin Kool", 330, 360);
+            _graphics.translate(125, 340);
+            _graphics.drawText(_josefinSansText, "Un juego copiado a Q42", 0, 0);
+            _graphics.restore();
+            _graphics.translate(130, 360);
+            _graphics.drawText(_josefinSansText, "Creado por Martin Kool", 0, 0);
         }
         else if(currentState == GameState.BoardSizeMenu){
             _graphics.setColor(_black);
             _graphics.drawText(_molleRegularTitle,"Oh no", 300, 200);
-            _graphics.drawImage(_goToTitleButton.getImage(), _goToTitleButton.getX(), _goToTitleButton.getY(), _goToTitleButton.getWidth(), _goToTitleButton.getHeight());
+            //_graphics.drawImage(_goToTitleButton.getImage(), _goToTitleButton.getX(), _goToTitleButton.getY(), _goToTitleButton.getWidth(), _goToTitleButton.getHeight());
             for(int k = 0; k < _chooseSizeButtons.length; k++) {
                 if(k % 2 == 0) _graphics.setColor(_red);
                 else _graphics.setColor(_blue);
@@ -132,7 +144,7 @@ public class Logic implements Application {
             }
         }
         else if (currentState == GameState.Game){
-            _graphics.drawImage(_goToTitleButton.getImage(), _goToTitleButton.getX(), _goToTitleButton.getY(), _goToTitleButton.getWidth(), _goToTitleButton.getHeight());
+            //_graphics.drawImage(_goToTitleButton.getImage(), _goToTitleButton.getX(), _goToTitleButton.getY(), _goToTitleButton.getWidth(), _goToTitleButton.getHeight());
         }
     }
 

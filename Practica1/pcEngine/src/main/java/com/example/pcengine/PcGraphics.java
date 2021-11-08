@@ -6,6 +6,7 @@ import com.example.engine.Image;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.io.IOException;
 
 //Ahora implementan la clase abstracta AbstractGraphics
@@ -13,15 +14,14 @@ import java.io.IOException;
 public class PcGraphics extends AbstractGraphics {
 
     private Window _window;
-    //private java.awt.image.BufferStrategy _strategy;
     private java.awt.Graphics2D _graphics;
+    private AffineTransform _tr;
 
     public PcGraphics(Window window, int width, int height){
         _window = window;
         _gameWidth = width;
         _gameHeight = height;
         _aspect = (float)_gameWidth / (float)_gameHeight;
-        //_strategy =  _window.getBufferStrategy();
     }
 
     public Image newImage(String name){
@@ -52,29 +52,25 @@ public class PcGraphics extends AbstractGraphics {
     }
 
     public void translate(int x, int y){
-
+        _graphics.translate(x, y);
     }
 
-    public void scale(int x, int y){
-
+    public void scale(float x, float y){
+        _graphics.scale(x, y);
     }
 
-    public void save(){
-
+    public void save(){ //TODO
+        _tr = _graphics.getTransform();
     }
 
-    public void restore(){
-
+    public void restore(){ //TODO
+        _graphics.setTransform(_tr);
     }
 
     //TODO igual hace falta uno con alpha en algun momento
-    public void drawImage(Image image, int x, int y, int w, int h){
+    public void drawImage(Image image, int w, int h){
         if(image != null) {
-            int realX = (int)(x * _logicScaleAspect + _logicOffsetX);
-            int realY = (int)(y * _logicScaleAspect + _logicOffsetY);
-            int realW = (int)(w * _logicScaleAspect);
-            int realH = (int)(h * _logicScaleAspect);
-             _graphics.drawImage(((PcImage)image).getImage(), realX, realY, realW, realH, null);
+            _graphics.drawImage(((PcImage)image).getImage(), 0, 0, w, h, null);
         }
         else
             System.out.println("Null image :(");
@@ -84,18 +80,13 @@ public class PcGraphics extends AbstractGraphics {
         _graphics.setColor(color);
     }
 
-    public void fillCircle(int cx, int cy, int r){
-        int realX = (int)(cx * _logicScaleAspect + _logicOffsetX);
-        int realY = (int)(cy * _logicScaleAspect + _logicOffsetY);
-        int realR = (int)(r * _logicScaleAspect);
-        _graphics.fillOval(realX - realR, realY - realR, 2*realR, 2*realR);
+    public void fillCircle(int cx, int cy, int r){ //TODO quitar cx y cy
+        _graphics.fillOval(0 - r, 0 - r, 2*r, 2*r);
     }
 
-    public void drawText(Font font, String text, int x, int y){
+    public void drawText(Font font, String text, int x, int y){ //TODO quitar x e y
         _graphics.setFont(((PcFont)font).getFont());
-        int realX = (int)(x * _logicScaleAspect + _logicOffsetX);
-        int realY = (int)(y * _logicScaleAspect + _logicOffsetY);
-        _graphics.drawString(text, realX, realY);
+        _graphics.drawString(text, 0, 0);
     }
 
     /*public float getScreenWidthText(Font font, String text){

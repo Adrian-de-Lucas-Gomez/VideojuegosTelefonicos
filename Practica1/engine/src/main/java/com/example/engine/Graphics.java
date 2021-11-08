@@ -28,7 +28,7 @@ public interface Graphics {
      * transformacion establecida
      */
     void translate(int x, int y);
-    void scale(int x, int y);
+    void scale(float x, float y);
     void save();
     void restore();
 
@@ -38,7 +38,7 @@ public interface Graphics {
      * de si se permite o no escalar la imagen, si se permite
      * elegir que porción de la imagen original se muestra, etc.
      */
-    void drawImage(Image image, int x, int y, int w, int h);
+    void drawImage(Image image, int w, int h);
 
     /**
      * Establece el color a utilizar en las operaciones de
@@ -57,20 +57,14 @@ public interface Graphics {
     void drawText(Font font, String text, int x, int y);
 
     /**
-     * Devuelven el tamaño de la ventana
+     * Devuelven el tamaño de la ventana real y logico
      */
     int getWidth();
     int getHeight();
-
-    /**
-     * Devuelven el tamaño del juego
-     */
     int getGameWidth();
     int getGameHeight();
 
-    /**
-     * Devuelvel el offset de coordenadas reales-logicas
-     */
-    int getLogicOffsetX();
-    int getLogicOffsetY();
+    float getLogicScaleAspect();
+    int getOffsetX();
+    int getOffsetY();
 }
