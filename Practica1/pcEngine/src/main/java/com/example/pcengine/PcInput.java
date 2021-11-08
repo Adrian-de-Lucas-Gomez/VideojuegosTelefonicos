@@ -12,8 +12,12 @@ import java.util.List;
 public class PcInput implements Input, MouseListener, MouseMotionListener {
     private ArrayList<TouchEvent> eventList;
 
+    public PcInput(){
+        eventList = new ArrayList<TouchEvent>();
+    }
+
     @Override
-    public List<TouchEvent> getTouchEvents(){
+    public ArrayList<TouchEvent> getTouchEvents(){
         if(eventList.size() > 0){
             ArrayList<TouchEvent> auxList = new ArrayList<TouchEvent>(eventList);
             eventList.clear();

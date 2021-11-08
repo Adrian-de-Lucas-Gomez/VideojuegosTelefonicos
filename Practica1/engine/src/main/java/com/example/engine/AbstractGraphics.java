@@ -26,4 +26,7 @@ public abstract class AbstractGraphics implements Graphics {
             _logicOffsetY = 0;
         }
     }
+    public int getLogicOffsetX() {return _logicOffsetX;}
+
+    public int getLogicOffsetY() {return _logicOffsetY;}
 }

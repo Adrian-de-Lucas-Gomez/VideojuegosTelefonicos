@@ -61,4 +61,6 @@ public interface Graphics {
      */
     int getWidth();
     int getHeight();
+    int getLogicOffsetX();
+    int getLogicOffsetY();
 }
