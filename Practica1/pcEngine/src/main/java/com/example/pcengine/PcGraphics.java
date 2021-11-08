@@ -98,6 +98,16 @@ public class PcGraphics extends AbstractGraphics {
         _graphics.drawString(text, realX, realY);
     }
 
+    /*public float getScreenWidthText(Font font, String text){
+        FontMetrics fontMetrics = _graphics.getFontMetrics(font);
+        return fontMetrics.stringWidth(text);
+    }
+
+    public float getScreenHeightText(Font font, String text){
+        FontMetrics fontMetrics = _graphics.getFontMetrics(font);
+        return fontMetrics.stringWidth(text);
+    }*/
+
     public int getWidth(){
         return _window.getWidth();
     }

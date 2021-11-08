@@ -4,6 +4,7 @@ import com.example.engine.Application;
 import com.example.engine.Engine;
 
 import java.awt.Graphics2D;
+import java.awt.List;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -20,6 +21,8 @@ public class PcEngine implements Engine {
         _window = new Window(title, width, height, 2);
         _graphics = new PcGraphics(_window, width, height);
         _input = new PcInput();
+        _window.addMouseListener(_input);
+        _window.addMouseMotionListener(_input);
     }
 
     @Override
@@ -40,6 +43,7 @@ public class PcEngine implements Engine {
             //TODO arreglar esto
             //Updates
             _logic.onUpdate(elapsedTime); //Revisar si tiene que ser double o es un poco extra
+            _logic.onHandleInput();
             //_window.getBufferStrategy().show();
 
             //Ahora permite redimensionar pero el valor de tamaño de la ventana no cambia

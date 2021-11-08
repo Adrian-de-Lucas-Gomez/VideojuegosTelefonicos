@@ -35,4 +35,12 @@ public abstract class AbstractGraphics implements Graphics {
     public int getGameHeight() {
         return _gameHeight;
     }
+    
+    public int getLogicOffsetX() {
+        return _logicOffsetX;
+    }
+
+    public int getLogicOffsetY() {
+        return _logicOffsetY;
+    }
 }

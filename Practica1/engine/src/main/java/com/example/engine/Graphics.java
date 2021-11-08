@@ -67,4 +67,10 @@ public interface Graphics {
      */
     int getGameWidth();
     int getGameHeight();
+
+    /**
+     * Devuelvel el offset de coordenadas reales-logicas
+     */
+    int getLogicOffsetX();
+    int getLogicOffsetY();
 }
