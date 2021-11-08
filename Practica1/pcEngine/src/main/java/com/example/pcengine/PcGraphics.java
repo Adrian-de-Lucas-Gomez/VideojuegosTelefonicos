@@ -16,8 +16,11 @@ public class PcGraphics extends AbstractGraphics {
     //private java.awt.image.BufferStrategy _strategy;
     private java.awt.Graphics2D _graphics;
 
-    public PcGraphics(Window window){
+    public PcGraphics(Window window, int width, int height){
         _window = window;
+        _gameWidth = width;
+        _gameHeight = height;
+        _aspect = (float)_gameWidth / (float)_gameHeight;
         //_strategy =  _window.getBufferStrategy();
     }
 
@@ -67,9 +70,11 @@ public class PcGraphics extends AbstractGraphics {
     //TODO igual hace falta uno con alpha en algun momento
     public void drawImage(Image image, int x, int y, int w, int h){
         if(image != null) {
-            int realX = x + _logicOffsetX;
-            int realY = y + _logicOffsetY;
-             _graphics.drawImage(((PcImage)image).getImage(), realX, realY, w, h, null);
+            int realX = (int)(x * _logicScaleAspect + _logicOffsetX);
+            int realY = (int)(y * _logicScaleAspect + _logicOffsetY);
+            int realW = (int)(w * _logicScaleAspect);
+            int realH = (int)(h * _logicScaleAspect);
+             _graphics.drawImage(((PcImage)image).getImage(), realX, realY, realW, realH, null);
         }
         else
             System.out.println("Null image :(");
@@ -80,15 +85,16 @@ public class PcGraphics extends AbstractGraphics {
     }
 
     public void fillCircle(int cx, int cy, int r){
-        int realX = cx + _logicOffsetX;
-        int realY = cy + _logicOffsetY;
-        _graphics.fillOval(realX - r, realY - r, 2*r, 2*r);
+        int realX = (int)(cx * _logicScaleAspect + _logicOffsetX);
+        int realY = (int)(cy * _logicScaleAspect + _logicOffsetY);
+        int realR = (int)(r * _logicScaleAspect);
+        _graphics.fillOval(realX - realR, realY - realR, 2*realR, 2*realR);
     }
 
     public void drawText(Font font, String text, int x, int y){
         _graphics.setFont(((PcFont)font).getFont());
-        int realX = x + _logicOffsetX;
-        int realY = y + _logicOffsetY;
+        int realX = (int)(x * _logicScaleAspect + _logicOffsetX);
+        int realY = (int)(y * _logicScaleAspect + _logicOffsetY);
         _graphics.drawString(text, realX, realY);
     }
 

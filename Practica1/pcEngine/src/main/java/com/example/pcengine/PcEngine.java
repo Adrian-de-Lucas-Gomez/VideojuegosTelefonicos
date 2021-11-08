@@ -18,7 +18,7 @@ public class PcEngine implements Engine {
 
     public PcEngine(String title, int width, int height){
         _window = new Window(title, width, height, 2);
-        _graphics = new PcGraphics(_window);
+        _graphics = new PcGraphics(_window, width, height);
         _input = new PcInput();
     }
 

@@ -64,5 +64,12 @@ public class Logic implements Application {
         _graphics.drawText(_fontPrueba,"Ole ole los caracoles", 50, 350);
         _graphics.drawText(_fontPrueba,"Muerte a PePa", 69, 420);
         _graphics.drawImage(_imgPrueba, 100, 200, 50, 65);
+
+        //TODO Pruebas
+        _graphics.setColor(new Color(0,0,0));
+        _graphics.fillCircle(10, 10, 5);
+        _graphics.fillCircle(10, _graphics.getGameHeight() - 10, 5);
+        _graphics.fillCircle(_graphics.getGameWidth() - 10, 10, 5);
+        _graphics.fillCircle(_graphics.getGameWidth() - 10, _graphics.getGameHeight() - 10, 5);
     }
 }

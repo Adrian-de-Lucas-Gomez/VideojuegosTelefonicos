@@ -61,4 +61,10 @@ public interface Graphics {
      */
     int getWidth();
     int getHeight();
+
+    /**
+     * Devuelven el tamaño del juego
+     */
+    int getGameWidth();
+    int getGameHeight();
 }
