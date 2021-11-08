@@ -6,11 +6,8 @@ import java.awt.FontFormatException;
 import java.io.File;
 import java.io.IOException;
 
-import javax.swing.text.Style;
-
 public class PcFont implements Font {
     private java.awt.Font _font;    //Almacenamos el tipo de fuente que soporta la plataforma
-
     public PcFont(String name, int style, float size){
         //Todavia sin saber que hace
         //_font = new java.awt.Font(type, style, size);
@@ -26,10 +23,6 @@ public class PcFont implements Font {
     //Propio de cada font ya que se usa para escribir el formato de la plataforma
     public java.awt.Font getFont(){
         return _font;
-    }
-    @Override
-    public void test() {
-
     }
 }
 
