@@ -16,6 +16,11 @@ public class AndroidEngine implements Engine, Runnable {
     private AndroidInput input;
     private Application logic;
 
+    //Hilo de ejecución
+    private Thread hilo;
+
+    volatile private boolean _running;
+
     //Para el input
     private SurfaceView surfaceView;
 
@@ -25,6 +30,9 @@ public class AndroidEngine implements Engine, Runnable {
 
         graphics = new AndroidGraphics(context);
         input = new AndroidInput();
+
+        //Ponemos el juego a funcionar
+        _running = true;
     }
 
     public AndroidGraphics getGraphics(){
@@ -48,13 +56,9 @@ public class AndroidEngine implements Engine, Runnable {
 
         long lastFrameTime = System.nanoTime();
 
-        //getGraphics().setSurfaceView(surfaceView_);
+        getGraphics().setSurfaceView(surfaceView);
 
-        // esperamos a que surfaceView adquiera valor para poder hacer los calculos de reescalado
-        while(getGraphics().getWindowWidth() == 0){}
-        //getGraphics().scaleCanvas(); // ASPECT-RATIO
-
-        while(true){    //Revisar
+        while(_running){    //Revisar
 
             //----------------------------------INPUT-------------------------------------
             //logic.onHandleInput();
@@ -68,12 +72,30 @@ public class AndroidEngine implements Engine, Runnable {
 
             //----------------------------------RENDER------------------------------------
             getGraphics().startFrame(); // lock canvas
-
+            System.out.println("update Run");
             graphics.clear(0x00ff00);
             //logic.onRender(graphics);
             getGraphics().endFrame();   // unlock canvas
         }
     }
+    public void resume(){
+        if(!_running){
+            _running = true;
+            hilo = new Thread(this);
+            hilo.start();
+        }
+    }
 
+    public void pause(){
+        _running = false;
+        while(true){
+            try{
+                hilo.join();
+                hilo = null;
+                break;
+            }
+            catch (InterruptedException ie){}
+        }
+    }
 
 }

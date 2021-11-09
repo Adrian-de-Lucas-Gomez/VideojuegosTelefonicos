@@ -32,7 +32,7 @@ public class AndroidGraphics extends AbstractGraphics {
         _paint.setColor(Color.WHITE);
         _paint.setStyle(Paint.Style.FILL);
 
-        _graphics.drawPaint(_paint);
+        //_graphics.drawPaint(_paint);
     }
 
     public Image newImage(String name){
@@ -100,7 +100,7 @@ public class AndroidGraphics extends AbstractGraphics {
     }
 
     // unclock canvas -> se libera
-    public void endFrame(){ _surface.getHolder().unlockCanvasAndPost(_graphics); }  //Lo soltamos u cambiamos el buffer
+    public void endFrame(){ _surface.getHolder().unlockCanvasAndPost(_graphics); }  //Lo soltamos y cambiamos el buffer supongo
 
 
     @Override
