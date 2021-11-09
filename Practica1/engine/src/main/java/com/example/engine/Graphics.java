@@ -59,11 +59,11 @@ public interface Graphics {
     /**
      * Devuelven el tamaño de la ventana real y logico
      */
-    int getWidth();
-    int getHeight();
+    int getWindowWidth();
+    int getWindowHeight();
     int getGameWidth();
     int getGameHeight();
-
+    int getTextHeight(Font font, String string);
     float getLogicScaleAspect();
     int getOffsetX();
     int getOffsetY();

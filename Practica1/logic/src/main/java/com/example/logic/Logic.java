@@ -55,7 +55,7 @@ public class Logic implements Application {
         _grey = new Color(150, 150, 150, 255);
         _blue = new Color(0, 100, 255, 255);
 
-        _q43Img = _graphics.newImage("q42.png"); //Tenemos que pasar ancho/alto
+        _q43Img = _graphics.newImage("q42.png");
 
         _molleRegularTitle = _graphics.newFont("Molle-Regular", 100.0f, true);
         _josefinSansTitle = _graphics.newFont("JosefinSans-Bold", 50.0f, true);
@@ -101,8 +101,9 @@ public class Logic implements Application {
     @Override
     public void onRender(Graphics graphics) {
         //Pintar el estado del juego
-        _graphics.clear(_clearColor.getRGB());
+
         _graphics.translate(_graphics.getOffsetX(), _graphics.getOffsetY());
+        _graphics.clear(_clearColor.getRGB());
         _graphics.save();
 
         if(currentState == GameState.MainMenu){
@@ -111,14 +112,14 @@ public class Logic implements Application {
 
             _graphics.scale(_graphics.getLogicScaleAspect(), _graphics.getLogicScaleAspect());
             //Imagen Q42
-            _graphics.translate(_graphics.getGameWidth()/2 - 30, 400);
+            _graphics.translate(200-30, 400-40);
             _graphics.drawImage(_q43Img, 60, 80);
 
             //Textos
             _graphics.restore();
             _graphics.setColor(_black);
-            _graphics.translate(100, 200);
-            _graphics.drawText(_molleRegularTitle,"Oh no", 0, 0);
+            _graphics.translate(100, 100);
+            _graphics.drawText(_molleRegularTitle,"Oh no", 10, 10);
             _graphics.translate(80, 100);
             _graphics.drawText(_josefinSansTitle, "Jugar", 0, 0);
 

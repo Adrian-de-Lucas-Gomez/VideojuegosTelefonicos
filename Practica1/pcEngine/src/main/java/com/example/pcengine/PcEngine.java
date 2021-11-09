@@ -32,8 +32,6 @@ public class PcEngine implements Engine {
 
     public void run(){ //TODO mover lo que no haga falta aqui
         while(true){
-            _graphics.setLogicCoords(); //TODO no sé si va aquí
-
             //Obtencion DeltaTime
             long currentTime = System.nanoTime();
             long nanoElapsedTime = currentTime - _lastFrameTime;
@@ -52,6 +50,7 @@ public class PcEngine implements Engine {
                 do {
                     java.awt.Graphics2D graphicsJava = (Graphics2D)_window.getBufferStrategy().getDrawGraphics();
                     _graphics.setGraphics(graphicsJava);
+                    _graphics.setScaleAspect(); //TODO no sé si va aquí
                     try {
                         //Se llama a pintar lo que toque
                         _logic.onRender(_graphics);

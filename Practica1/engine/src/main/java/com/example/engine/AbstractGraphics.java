@@ -1,48 +1,28 @@
 package com.example.engine;
 
-import java.awt.Color;
-
 public abstract class AbstractGraphics implements Graphics {
 
     protected int _gameWidth;
     protected int _gameHeight;
-    protected float _aspect;
-    protected float _scaleAspect;
-    protected int _offsetX;
-    protected int _offsetY;
+    protected float _aspect = 1.0f;
+    protected float _scaleAspect = 1.0f;
+    protected int _offsetX = 0;
+    protected int _offsetY = 0;
 
     public void setScaleAspect(){
-        float aspectX = (float)getWidth() / (float)_gameWidth;
-        float aspectY = (float)getHeight() / (float)_gameHeight;
-
-        if(_gameHeight * aspectX > getHeight()) {
-            _scaleAspect = aspectY;
-            _offsetX = (int)((float)getWidth()/2 - (float)_gameWidth/2);
-            _offsetY = 0;
-        }
-        else {
-            _scaleAspect = aspectX;
-            _offsetX = 0;
-            _offsetY = (int)((float)getHeight()/2 - (float)_gameHeight/2);
-        }
-    }
-
-    public void setLogicCoords(){
-        //Calculo de coordenadas logicas a reales
-        float logicAspect = (float)getWidth() / (float)getHeight();
+        float logicAspect = (float)getWindowWidth() / (float)getWindowHeight();
 
         if(_aspect > logicAspect) {
             _offsetX = 0;
-            _offsetY = (int)((float)getHeight()/2 - ((float)getWidth()/_aspect)/2);
-            _scaleAspect = (float)(getWidth()/_aspect) / (float)_gameHeight;
+            _offsetY = (int)((float)getWindowHeight()/2 - ((float)getWindowWidth()/_aspect)/2);
+            _scaleAspect = (float)(getWindowWidth()/_aspect) / (float)_gameHeight;
         }
         else if(_aspect < logicAspect) {
-            _offsetX = (int)((float)getWidth()/2 - (float)(getHeight() * _aspect)/2);
+            _offsetX = (int)((float)getWindowWidth()/2 - (float)(getWindowHeight() * _aspect)/2);
             _offsetY = 0;
-            _scaleAspect = (float)(getHeight() * _aspect) / (float)_gameWidth;
+            _scaleAspect = (float)(getWindowHeight() * _aspect) / (float)_gameWidth;
         }
     }
-
 
     public int getGameWidth() {
         return _gameWidth;

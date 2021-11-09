@@ -19,6 +19,8 @@ public class PcGraphics extends AbstractGraphics {
 
     public PcGraphics(Window window, int width, int height){
         _window = window;
+        System.out.println(width);
+        System.out.println(height);
         _gameWidth = width;
         _gameHeight = height;
         _aspect = (float)_gameWidth / (float)_gameHeight;
@@ -85,8 +87,9 @@ public class PcGraphics extends AbstractGraphics {
     }
 
     public void drawText(Font font, String text, int x, int y){ //TODO quitar x e y
-        _graphics.setFont(((PcFont)font).getFont());
-        _graphics.drawString(text, 0, 0);
+        System.out.println(_graphics.getFontRenderContext().getTransform().getScaleX());
+        _graphics.setFont(((PcFont)font).getFont().deriveFont(AffineTransform.getScaleInstance(_scaleAspect, _scaleAspect)));
+        _graphics.drawString(text, x, y);
     }
 
     /*public float getScreenWidthText(Font font, String text){
@@ -99,12 +102,18 @@ public class PcGraphics extends AbstractGraphics {
         return fontMetrics.stringWidth(text);
     }*/
 
-    public int getWidth(){
+    public int getWindowWidth(){
         return _window.getWidth();
     }
 
-    public int getHeight() {
+    public int getWindowHeight() {
         return _window.getHeight();
+    }
+
+    @Override
+    public int getTextHeight(Font font, String string) {
+        java.awt.Font aux = ((PcFont)font).getFont().deriveFont(((PcFont) font).getFont().getSize() * _scaleAspect);
+        return _graphics.getFontMetrics(aux).stringWidth(string);
     }
 
     public void setGraphics(Graphics2D g){
