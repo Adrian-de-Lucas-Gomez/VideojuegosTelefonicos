@@ -1,11 +1,13 @@
 package com.example.practica1;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
@@ -20,12 +22,30 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //engine =  new AndroidEngine();
-        //logic = new Logic(engine);
+        engine =  new AndroidEngine(this);    //Hace que pete, ni idea tho
+        logic = new Logic(engine);
+        engine.setApplication(logic);
         pantalla alla = new pantalla(this);
-        setContentView(alla);
+        setContentView(engine.getSurfaceView());
+
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Volver a lanzar la hebra
+        //game.resume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //Parar la hebra
+        //game.pause();
+    }
+
+
+    //Para la prueba unicamente
     class pantalla extends View{
         public pantalla(Context context){
             super(context);
@@ -44,18 +64,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-/*
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //Volver a lanzar la hebra
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        //Parar la hebra
-    }
-    */
 
 }
