@@ -5,6 +5,7 @@ import com.example.engine.Font;
 import com.example.engine.Image;
 
 import java.awt.Color;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
@@ -83,25 +84,28 @@ public class PcGraphics extends AbstractGraphics {
     }
 
     public void fillCircle(int cx, int cy, int r){ //TODO quitar cx y cy
-        _graphics.fillOval(0 - r, 0 - r, 2*r, 2*r);
+        _graphics.fillOval(-r + cx, -r + cy, r*2, r*2);
     }
 
     public void drawText(Font font, String text, int x, int y){ //TODO quitar x e y
-        System.out.println(_graphics.getFontRenderContext().getTransform().getScaleX());
         //_graphics.setFont(((PcFont)font).getFont().deriveFont(AffineTransform.getScaleInstance(_scaleAspect, _scaleAspect)));
         _graphics.setFont(((PcFont)font).getFont());
         _graphics.drawString(text, x, y);
     }
 
-    /*public float getScreenWidthText(Font font, String text){
-        FontMetrics fontMetrics = _graphics.getFontMetrics(font);
-        return fontMetrics.stringWidth(text);
+    @Override
+    public int getTextWidth(Font font, String text){
+        FontMetrics fontMetrics = _graphics.getFontMetrics(((PcFont)font).getFont());
+        //_graphics.draw(fontMetrics.getStringBounds(text, _graphics));
+        return (int)fontMetrics.getStringBounds(text, _graphics).getWidth();
     }
 
-    public float getScreenHeightText(Font font, String text){
-        FontMetrics fontMetrics = _graphics.getFontMetrics(font);
-        return fontMetrics.stringWidth(text);
-    }*/
+    @Override
+    public int getTextHeight(Font font, String text){
+        FontMetrics fontMetrics = _graphics.getFontMetrics(((PcFont)font).getFont());
+        //_graphics.draw(fontMetrics.getStringBounds(text, _graphics));
+        return (int)fontMetrics.getStringBounds(text, _graphics).getHeight();
+    }
 
     public int getWindowWidth(){
         return _window.getWidth();
@@ -109,12 +113,6 @@ public class PcGraphics extends AbstractGraphics {
 
     public int getWindowHeight() {
         return _window.getHeight();
-    }
-
-    @Override
-    public int getTextHeight(Font font, String string) {
-        java.awt.Font aux = ((PcFont)font).getFont().deriveFont(((PcFont) font).getFont().getSize() * _scaleAspect);
-        return _graphics.getFontMetrics(aux).stringWidth(string);
     }
 
     public void setGraphics(Graphics2D g){

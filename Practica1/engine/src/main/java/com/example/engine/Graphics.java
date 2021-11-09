@@ -2,6 +2,8 @@ package com.example.engine;
 
 import java.awt.Color;
 
+import jdk.internal.net.http.common.Pair;
+
 public interface Graphics {
     /**
      * Carga una imagen almacenada en el contenedor de recursos
@@ -64,6 +66,7 @@ public interface Graphics {
     int getGameWidth();
     int getGameHeight();
     int getTextHeight(Font font, String string);
+    int getTextWidth(Font font, String string);
     float getLogicScaleAspect();
     int getOffsetX();
     int getOffsetY();
