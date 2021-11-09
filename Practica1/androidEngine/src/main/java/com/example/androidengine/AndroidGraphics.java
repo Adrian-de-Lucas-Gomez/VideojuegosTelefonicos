@@ -3,6 +3,7 @@ package com.example.androidengine;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -15,8 +16,16 @@ import com.example.engine.Image;
 
 public class AndroidGraphics extends AbstractGraphics {
 
-    android.graphics.Canvas _graphics;
+    private android.graphics.Canvas _graphics;
+    private Paint _paint;
 
+    public AndroidGraphics() {
+        _paint = new Paint();
+        _paint.setColor(Color.WHITE);
+        _paint.setStyle(Paint.Style.FILL);
+
+        _graphics.drawPaint(_paint);
+    }
 
     public Image newImage(String name){
 
@@ -27,9 +36,13 @@ public class AndroidGraphics extends AbstractGraphics {
         return new AndroidImage(bMap);
     }
     public AndroidFont newFont(String filename, float size, boolean isBold){
+        //paint.setTextSize(20); ???
         return new AndroidFont();
     }
-    public void clear(int color){}
+    public void clear(int color){
+        _graphics.drawRect(0,0,_graphics.getWidth(),_graphics.getHeight(), _paint);
+
+    }
     public void translate(int x, int y){}
 
     @Override
@@ -42,7 +55,7 @@ public class AndroidGraphics extends AbstractGraphics {
 
     @Override
     public void drawImage(Image image, int w, int h) {
-
+        _graphics.drawBitmap(((AndroidImage)image).getImage(),w,h,_paint);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -50,13 +63,18 @@ public class AndroidGraphics extends AbstractGraphics {
 
         //Color ole= new Color().valueOf(0xffff0000);
         _graphics.drawColor(color);
+        _paint.setColor(color);      //Revisar
     }
 
-    public void fillCircle(int cx, int cy, int r){}
+    public void fillCircle(int cx, int cy, int r){
+        Paint a= new Paint();
+        _graphics.drawCircle(cx,cy,r,a);
+    }
 
     @Override
     public void drawText(Font font, String text, int x, int y) {
-
+        //font.size ??? paint.setTextSize(20);
+        _graphics.drawText(text, x, y, _paint);
     }
 
 
