@@ -4,6 +4,7 @@ import com.example.engine.Font;
 
 import java.awt.FontFormatException;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 public class PcFont implements Font {
@@ -12,7 +13,7 @@ public class PcFont implements Font {
         //Todavia sin saber que hace
         //_font = new java.awt.Font(type, style, size);
         try {
-            _font = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, new File("assets\\fonts\\"+name+".ttf")).deriveFont(style,size);
+            _font = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, new FileInputStream("assets\\fonts\\"+name+".ttf")).deriveFont(style,size);
             System.out.println("Me cree correctamente");
         } catch (FontFormatException e) {
             System.out.println("Peto en el formato");

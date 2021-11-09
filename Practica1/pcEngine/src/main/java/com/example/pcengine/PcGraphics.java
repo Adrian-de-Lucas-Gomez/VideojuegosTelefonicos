@@ -88,7 +88,8 @@ public class PcGraphics extends AbstractGraphics {
 
     public void drawText(Font font, String text, int x, int y){ //TODO quitar x e y
         System.out.println(_graphics.getFontRenderContext().getTransform().getScaleX());
-        _graphics.setFont(((PcFont)font).getFont().deriveFont(AffineTransform.getScaleInstance(_scaleAspect, _scaleAspect)));
+        //_graphics.setFont(((PcFont)font).getFont().deriveFont(AffineTransform.getScaleInstance(_scaleAspect, _scaleAspect)));
+        _graphics.setFont(((PcFont)font).getFont());
         _graphics.drawString(text, x, y);
     }
 

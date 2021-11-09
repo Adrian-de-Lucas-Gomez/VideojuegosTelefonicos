@@ -101,7 +101,7 @@ public class Logic implements Application {
     @Override
     public void onRender(Graphics graphics) {
         //Pintar el estado del juego
-
+        _graphics.scale(_graphics.getLogicScaleAspect(), _graphics.getLogicScaleAspect());
         _graphics.translate(_graphics.getOffsetX(), _graphics.getOffsetY());
         _graphics.clear(_clearColor.getRGB());
         _graphics.save();
@@ -109,8 +109,6 @@ public class Logic implements Application {
         if(currentState == GameState.MainMenu){
             //Tamaño Lógico: 800x600
             //_graphics.drawImage(_playButton.getImage(), _playButton.getX(), _playButton.getY(), _playButton.getWidth(), _playButton.getHeight());
-
-            _graphics.scale(_graphics.getLogicScaleAspect(), _graphics.getLogicScaleAspect());
             //Imagen Q42
             _graphics.translate(200-30, 400-40);
             _graphics.drawImage(_q43Img, 60, 80);
