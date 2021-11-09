@@ -78,8 +78,8 @@ public class PcGraphics extends AbstractGraphics {
             System.out.println("Null image :(");
     }
 
-    public void setColor(Color color){
-        _graphics.setColor(color);
+    public void setColor(int color){
+        _graphics.setColor(new Color(color));
     }
 
     public void fillCircle(int cx, int cy, int r){ //TODO quitar cx y cy

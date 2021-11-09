@@ -18,4 +18,7 @@ public class AndroidImage implements Image {
     public int getHeight() {
         return _img.getHeight();
     }
+    public Bitmap getImage(){
+        return _img;
+    }
 }

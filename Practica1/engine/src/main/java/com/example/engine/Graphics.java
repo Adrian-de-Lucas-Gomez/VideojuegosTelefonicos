@@ -44,7 +44,7 @@ public interface Graphics {
      * Establece el color a utilizar en las operaciones de
      * dibujado posteriores
      */
-    void setColor(Color color);
+    void setColor(int color);
 
     /**
      * Dibuja un circulo relleno del color activo

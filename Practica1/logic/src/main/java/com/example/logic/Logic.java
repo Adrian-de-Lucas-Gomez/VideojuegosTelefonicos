@@ -115,14 +115,14 @@ public class Logic implements Application {
 
             //Textos
             _graphics.restore();
-            _graphics.setColor(_black);
+            _graphics.setColor(_black.getRGB());
             _graphics.translate(100, 100);
             _graphics.drawText(_molleRegularTitle,"Oh no", 10, 10);
             _graphics.translate(80, 100);
             _graphics.drawText(_josefinSansTitle, "Jugar", 0, 0);
 
             _graphics.restore();
-            _graphics.setColor(_grey);
+            _graphics.setColor(_grey.getRGB());
             _graphics.translate(125, 340);
             _graphics.drawText(_josefinSansText, "Un juego copiado a Q42", 0, 0);
             _graphics.restore();
@@ -130,15 +130,15 @@ public class Logic implements Application {
             _graphics.drawText(_josefinSansText, "Creado por Martin Kool", 0, 0);
         }
         else if(currentState == GameState.BoardSizeMenu){
-            _graphics.setColor(_black);
+            _graphics.setColor(_black.getRGB());
             _graphics.drawText(_molleRegularTitle,"Oh no", 300, 200);
             //_graphics.drawImage(_goToTitleButton.getImage(), _goToTitleButton.getX(), _goToTitleButton.getY(), _goToTitleButton.getWidth(), _goToTitleButton.getHeight());
             for(int k = 0; k < _chooseSizeButtons.length; k++) {
-                if(k % 2 == 0) _graphics.setColor(_red);
-                else _graphics.setColor(_blue);
+                if(k % 2 == 0) _graphics.setColor(_red.getRGB());
+                else _graphics.setColor(_blue.getRGB());
                 _graphics.fillCircle(_chooseSizeButtons[k].getX() + _chooseSizeButtons[k].getWidth() / 2, _chooseSizeButtons[k].getY() + _chooseSizeButtons[k].getHeight() / 2, _chooseSizeButtons[k].getWidth() / 2);
                 //_graphics.drawImage(_chooseSizeButtons[k].getImage(), _chooseSizeButtons[k].getX(), _chooseSizeButtons[k].getY(), _chooseSizeButtons[k].getWidth(), _chooseSizeButtons[k].getHeight());
-                _graphics.setColor(_clearColor);
+                _graphics.setColor(_clearColor.getRGB());
                 _graphics.drawText(_josefinSansTitle, Integer.toString(k + 4), _chooseSizeButtons[k].getX() + _chooseSizeButtons[k].getWidth() / 2 - 12 /*ESTO ES TOTALMENTE ARBITRARIO*/,  _chooseSizeButtons[k].getY() + _chooseSizeButtons[k].getHeight() / 2 + 20);
             }
         }

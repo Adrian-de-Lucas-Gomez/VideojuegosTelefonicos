@@ -12,14 +12,14 @@ public class MainActivity extends AppCompatActivity {
     AndroidEngine engine;
     Logic logic;
     @Override
-    /*
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         engine =  new AndroidEngine();
         logic = new Logic(engine);
         setContentView(R.layout.activity_main);
     }
-     */
+
 
     @Override
     protected void onResume() {
