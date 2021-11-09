@@ -1,10 +1,7 @@
 package com.example.androidengine;
 
 import android.content.Context;
-import android.os.Build;
 import android.view.SurfaceView;
-
-import androidx.annotation.RequiresApi;
 
 import com.example.engine.Application;
 import com.example.engine.Engine;
@@ -33,6 +30,7 @@ public class AndroidEngine implements Engine, Runnable {
 
         //Ponemos el juego a funcionar
         _running = true;
+        run();
     }
 
     public AndroidGraphics getGraphics(){
@@ -71,11 +69,11 @@ public class AndroidEngine implements Engine, Runnable {
             //logic.onUpdate(elapsedTime);
 
             //----------------------------------RENDER------------------------------------
-            getGraphics().startFrame(); // lock canvas
+            getGraphics().lockCanvas(); // lock canvas  //Bucle infinito
             System.out.println("update Run");
             graphics.clear(0x00ff00);
             //logic.onRender(graphics);
-            getGraphics().endFrame();   // unlock canvas
+            getGraphics().unLockCanvas();   // unlock canvas
         }
     }
     public void resume(){

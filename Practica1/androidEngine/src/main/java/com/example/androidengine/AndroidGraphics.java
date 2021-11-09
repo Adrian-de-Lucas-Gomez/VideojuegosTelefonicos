@@ -6,11 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.os.Build;
-import android.view.Surface;
 import android.view.SurfaceView;
-
-import androidx.annotation.RequiresApi;
 
 import com.example.engine.AbstractGraphics;
 import com.example.engine.Font;
@@ -94,13 +90,16 @@ public class AndroidGraphics extends AbstractGraphics {
     //Referente a pintado -----------------------------------------------------------------------------------------------
     // lock canvas -> adquiere valor a traves de surfaceView
 
-    public void startFrame(){
+    public void lockCanvas(){
+        //En este while se queda pensando mucho
         while(!_surface.getHolder().getSurface().isValid());    //Tratamos de acceder a una surface
-        _graphics = _surface.getHolder().lockCanvas();  //Ufffff API
+        _graphics = _surface.getHolder().lockCanvas();
+
+        if(_graphics == null) System.out.println("El canvas fue null");
     }
 
     // unclock canvas -> se libera
-    public void endFrame(){ _surface.getHolder().unlockCanvasAndPost(_graphics); }  //Lo soltamos y cambiamos el buffer supongo
+    public void unLockCanvas(){ _surface.getHolder().unlockCanvasAndPost(_graphics); }  //Lo soltamos y renderizamos
 
 
     @Override
