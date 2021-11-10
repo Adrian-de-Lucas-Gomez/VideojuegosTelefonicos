@@ -2,9 +2,9 @@ package com.example.engine;
 
 public class Button {
     private Image _img = null;
-    private int _x, _y, _height, _width;
+    private float _x, _y, _height, _width;
 
-    public Button(int posX, int posY, int width, int height, Image img){
+    public Button(float posX, float posY, float width, float height, Image img){
         _img = img;
         _x = posX;
         _y = posY;
@@ -25,13 +25,13 @@ public class Button {
         return(_x <= x && _y <= y && _x + _width >= x && _y + _height >= y);
     }
 
-    public int getX() { return _x; }
+    public float getX() { return _x; }
 
-    public int getY() { return _y; }
+    public float getY() { return _y; }
 
-    public int getWidth() { return _width; }
+    public float getWidth() { return _width; }
 
-    public int getHeight() { return _height; }
+    public float getHeight() { return _height; }
 
     public Image getImage() {return _img;}
 }

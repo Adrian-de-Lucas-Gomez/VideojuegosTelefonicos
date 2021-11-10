@@ -21,7 +21,7 @@ public class Logic implements Application {
     private Graphics _graphics;
     private Input _input;
 
-    private Color _clearColor, _black, _red, _grey, _blue;
+    private Color _clearColor, _black, _red, _grey, _blue, _white;
 
     private GameState currentState;
 
@@ -39,6 +39,13 @@ public class Logic implements Application {
     //ChooseBoardSize state
     private Button _goToTitleButton;
     private Button[] _chooseSizeButtons;
+
+    //Game state
+    private int boardSize = 0;
+    private Board _board;
+    private Image _lockImg;
+    private Button _hintButton, _reverseButton;
+    private String _hintText = "";
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
     public Logic(Engine engine) {
@@ -55,6 +62,7 @@ public class Logic implements Application {
         _red = new Color(255, 20, 20, 255);
         _grey = new Color(150, 150, 150, 255);
         _blue = new Color(0, 100, 255, 255);
+        _white = new Color(255, 255, 255, 255);
 
         _q43Img = _graphics.newImage("q42.png");
         _testImg = _graphics.newImage("test.jpg");
@@ -83,6 +91,7 @@ public class Logic implements Application {
                     else{
                         for(int k = 0; k < _chooseSizeButtons.length; k++){
                             if(_chooseSizeButtons[k].isPressed(pointerX, pointerY)){
+                                boardSize = k + 4;
                                 setState(GameState.Game);
                                 break;
                             }
@@ -90,7 +99,9 @@ public class Logic implements Application {
                     }
                 }
                 else if (currentState == GameState.Game){
+                    if(_board.handleInput(e.posX, e.posY)) _hintText = "";
                     if (_goToTitleButton.isPressed(pointerX, pointerY)) setState(GameState.MainMenu);
+                    else if(_hintButton.isPressed(pointerX, pointerY)) {_hintText = _board.getHint(); System.out.println(_hintText);}
                 }
             }
         }
@@ -146,7 +157,7 @@ public class Logic implements Application {
             textWidth = _graphics.getTextWidth(_josefinSansText, "Escoge las dimensiones del tablero.");
             _graphics.drawText(_josefinSansText,"Escoge las dimensiones del tablero.", -textWidth/2, 0);
             //Imágenes
-            _graphics.translate(-_goToTitleButton.getWidth()/2, 250);
+            _graphics.translate(-_goToTitleButton.getWidth()/2, 300);
             _graphics.drawImage(_goToTitleButton.getImage(), _goToTitleButton.getWidth(), _goToTitleButton.getHeight());
 
             //Botones de eleccion de tamaño de tablero
@@ -175,23 +186,49 @@ public class Logic implements Application {
             }
         }
         else if (currentState == GameState.Game){
-            //_graphics.drawImage(_goToTitleButton.getImage(), _goToTitleButton.getX(), _goToTitleButton.getY(), _goToTitleButton.getWidth(), _goToTitleButton.getHeight());
+            _graphics.translate(200, 70);
+            if(_hintText != "") {_graphics.setColor(_black); _graphics.drawText(_josefinSansText, _hintText, -_graphics.getTextWidth(_josefinSansText, _hintText)/2, 0);}
+            _graphics.restore();
+
+            _graphics.translate(20, 100);
+            _board.paint();
+            _graphics.translate(60, 400);
+
+            //Botones
+            _graphics.drawImage(_hintButton.getImage(), _hintButton.getWidth(), _hintButton.getHeight());
+            _graphics.translate(100, 0);
+            _graphics.drawImage(_goToTitleButton.getImage(), _goToTitleButton.getWidth(), _goToTitleButton.getHeight());
+            _graphics.translate(100, 0);
+            _graphics.drawImage(_reverseButton.getImage(), _reverseButton.getWidth(), _reverseButton.getHeight());
         }
     }
 
     private void setState(GameState newState){
+        //TODO: Reciclar los objetos (Que solo se generen la primera vez que se cambia al nuevo estado)
         currentState = newState;
         if(newState == GameState.MainMenu){
             _playButton = new Button(145, 200,111, 60, null);
         }
         else if(newState == GameState.BoardSizeMenu){
             //126, 300
-            _goToTitleButton = new Button(180, 450, 40, 40, _graphics.newImage("close.png"));
+            _goToTitleButton = new Button(180, 500, 40, 40, _graphics.newImage("close.png"));
             int buttonHorizontalOffset = 40, buttonVerticalOffset = 70, buttonSize = 60;
             _chooseSizeButtons = new Button[6];
             for(int k = 0; k < 6; k++){
                 _chooseSizeButtons[k] = new Button(100 + (k % 3) * (buttonHorizontalOffset + buttonSize) - buttonSize/2, 300 +(k/3) * buttonVerticalOffset - buttonSize/2, buttonSize, buttonSize, _graphics.newImage("close.png"));
             }
+        }
+        else{
+            _board = new Board(boardSize, _graphics, 360);
+            _board.setPaintColors(_blue, _red, _grey, _white, _black);
+            _board.setFonts(_graphics.newFont("JosefinSans-Bold", 50.0f - (5.0f * (boardSize - 4)), true), _molleRegularTitle);
+            _board.setButtons(20, 100);
+            _board.generate();
+            _hintText = "";
+            _lockImg = _graphics.newImage("lock.png");
+
+            _hintButton = new Button(80, 500, 40, 40, _graphics.newImage("eye.png"));
+            _reverseButton = new Button(280, 500, 40, 40, _graphics.newImage("history.png"));
         }
     }
 }

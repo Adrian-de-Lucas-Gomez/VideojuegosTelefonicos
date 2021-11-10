@@ -54,7 +54,7 @@ public class PcGraphics extends AbstractGraphics {
         _graphics.fillRect(0, 0, _window.getWidth(), _window.getHeight());
     }
 
-    public void translate(int x, int y){
+    public void translate(float x, float y){
         _graphics.translate(x, y);
     }
 
@@ -71,9 +71,9 @@ public class PcGraphics extends AbstractGraphics {
     }
 
     //TODO igual hace falta uno con alpha en algun momento
-    public void drawImage(Image image, int w, int h){
+    public void drawImage(Image image, float w, float h){
         if(image != null) {
-            _graphics.drawImage(((PcImage)image).getImage(), 0, 0, w, h, null);
+            _graphics.drawImage(((PcImage)image).getImage(), 0, 0, (int)w, (int)h, null);
         }
         else
             System.out.println("Null image :(");
@@ -83,12 +83,11 @@ public class PcGraphics extends AbstractGraphics {
         _graphics.setColor(color);
     }
 
-    public void fillCircle(int cx, int cy, int r){ //TODO quitar cx y cy
-        _graphics.fillOval(-r + cx, -r + cy, r*2, r*2);
+    public void fillCircle(float cx, float cy, float r){ //TODO quitar cx y cy
+        _graphics.fillOval((int)(-r + cx), (int)(-r + cy), (int)(r*2), (int)(r*2));
     }
 
-    public void drawText(Font font, String text, int x, int y){ //TODO quitar x e y
-        //_graphics.setFont(((PcFont)font).getFont().deriveFont(AffineTransform.getScaleInstance(_scaleAspect, _scaleAspect)));
+    public void drawText(Font font, String text, float x, float y){ //TODO quitar x e y
         _graphics.setFont(((PcFont)font).getFont());
         _graphics.drawString(text, x, y);
     }
