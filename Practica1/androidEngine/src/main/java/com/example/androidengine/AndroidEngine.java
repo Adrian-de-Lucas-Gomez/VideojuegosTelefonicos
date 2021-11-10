@@ -18,7 +18,7 @@ public class AndroidEngine implements Engine, Runnable {
 
     volatile private boolean _running;
 
-    //Para el input
+    //Para pillar el canvas a usar
     private SurfaceView surfaceView;
 
     public AndroidEngine(Context c){
@@ -30,6 +30,7 @@ public class AndroidEngine implements Engine, Runnable {
 
         //Ponemos el juego a funcionar
         _running = true;
+        //Revisar
         run();
     }
 
@@ -54,26 +55,26 @@ public class AndroidEngine implements Engine, Runnable {
 
         long lastFrameTime = System.nanoTime();
 
-        getGraphics().setSurfaceView(surfaceView);
+        graphics.setSurfaceView(surfaceView);
 
         while(_running){    //Revisar
 
-            //----------------------------------INPUT-------------------------------------
+            //Detectar cambios en el input
             //logic.onHandleInput();
 
-            //----------------------------------UPDATE------------------------------------
+            //Zona para actualizar logica y DeltaTime
             long currentTime = System.nanoTime();
             long nanoElapsedTime = currentTime - lastFrameTime;
             lastFrameTime = currentTime;
             double elapsedTime = (double) nanoElapsedTime / 1.0E9;
             //logic.onUpdate(elapsedTime);
 
-            //----------------------------------RENDER------------------------------------
-            getGraphics().lockCanvas(); // lock canvas  //Bucle infinito
+            //Zona de Render
+            graphics.lockCanvas(); // Bloquea el canvas  //Bucle infinito
             System.out.println("update Run");
-            graphics.clear(0x00ff00);
-            //logic.onRender(graphics);
-            getGraphics().unLockCanvas();   // unlock canvas
+            graphics.clear(0x00ff00);   //Debug
+            //logic.onRender(graphics);     //Graphics siendo el canvas donde pintamos
+            graphics.releaseCanvas();   // Libera y pinta lo que hubiera en el canvas
         }
     }
     public void resume(){
@@ -92,7 +93,9 @@ public class AndroidEngine implements Engine, Runnable {
                 hilo = null;
                 break;
             }
-            catch (InterruptedException ie){}
+            catch (InterruptedException e){
+                System.out.println("No se pudo unir la hebra");
+            }
         }
     }
 

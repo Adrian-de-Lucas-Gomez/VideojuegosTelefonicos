@@ -16,7 +16,7 @@ import com.example.engine.Image;
 
 public class AndroidGraphics extends AbstractGraphics {
 
-    private android.graphics.Canvas _graphics;
+    private android.graphics.Canvas _canvas;
     private Paint _paint;
     private Context _context;
     private SurfaceView _surface;
@@ -28,7 +28,6 @@ public class AndroidGraphics extends AbstractGraphics {
         _paint.setColor(Color.WHITE);
         _paint.setStyle(Paint.Style.FILL);
 
-        //_graphics.drawPaint(_paint);
     }
 
     public Image newImage(String name){
@@ -48,7 +47,7 @@ public class AndroidGraphics extends AbstractGraphics {
         return new AndroidFont();
     }
     public void clear(int color){
-        _graphics.drawRect(0,0,_graphics.getWidth(),_graphics.getHeight(), _paint);
+        _canvas.drawRect(0,0, _canvas.getWidth(), _canvas.getHeight(), _paint);
 
     }
     public void translate(int x, int y){}
@@ -65,41 +64,40 @@ public class AndroidGraphics extends AbstractGraphics {
 
     @Override
     public void drawImage(Image image, int w, int h) {
-        _graphics.drawBitmap(((AndroidImage)image).getImage(),w,h,_paint);
+        _canvas.drawBitmap(((AndroidImage)image).getImage(),w,h,_paint);
     }
 
     @Override
     public void setColor(int color) {
 
         //Color ole= new Color().valueOf(0xffff0000);   //Necesita API avanzada
-        _graphics.drawColor(color);
+        _canvas.drawColor(color);
         _paint.setColor(color);      //Revisar
     }
 
     public void fillCircle(int cx, int cy, int r){
         Paint a= new Paint();
-        _graphics.drawCircle(cx,cy,r,a);
+        _canvas.drawCircle(cx,cy,r,a);
     }
 
     @Override
     public void drawText(Font font, String text, int x, int y) {
         //font.size ??? paint.setTextSize(20);
-        _graphics.drawText(text, x, y, _paint);
+        _canvas.drawText(text, x, y, _paint);
     }
 
-    //Referente a pintado -----------------------------------------------------------------------------------------------
-    // lock canvas -> adquiere valor a traves de surfaceView
+    //Referente a pillar y soltar cavas -----------------------------------------------------------------------------------------------
 
     public void lockCanvas(){
         //En este while se queda pensando mucho
         while(!_surface.getHolder().getSurface().isValid());    //Tratamos de acceder a una surface
-        _graphics = _surface.getHolder().lockCanvas();
+        _canvas = _surface.getHolder().lockCanvas();
 
-        if(_graphics == null) System.out.println("El canvas fue null");
+        if(_canvas == null) System.out.println("El canvas fue null");
     }
 
     // unclock canvas -> se libera
-    public void unLockCanvas(){ _surface.getHolder().unlockCanvasAndPost(_graphics); }  //Lo soltamos y renderizamos
+    public void releaseCanvas(){ _surface.getHolder().unlockCanvasAndPost(_canvas); }  //Lo soltamos y renderizamos
 
 
     @Override
