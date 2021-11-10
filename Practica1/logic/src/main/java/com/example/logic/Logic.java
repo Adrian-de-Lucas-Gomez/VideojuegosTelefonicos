@@ -80,7 +80,8 @@ public class Logic implements Application {
     @Override
     public void onHandleInput() {
         for (TouchEvent e: _input.getTouchEvents()) {
-            int pointerX = e.posX, pointerY = e.posY;
+            int pointerX = (int)((e.posX - _graphics.getOffsetX()) / _graphics.getLogicScaleAspect());
+            int pointerY = (int)((e.posY - _graphics.getOffsetY()) / _graphics.getLogicScaleAspect());
             System.out.println("Pointer: " + Integer.toString(pointerX) + ", " + Integer.toString(pointerY));
             if(e.eventType == TouchEvent.EventType.buttonPressed){
                 if(currentState == GameState.MainMenu){
@@ -99,7 +100,7 @@ public class Logic implements Application {
                     }
                 }
                 else if (currentState == GameState.Game){
-                    if(_board.handleInput(e.posX, e.posY)) _hintText = "";
+                    if(_board.handleInput(pointerX, pointerY)) _hintText = "";
                     if (_goToTitleButton.isPressed(pointerX, pointerY)) setState(GameState.MainMenu);
                     else if(_hintButton.isPressed(pointerX, pointerY)) {_hintText = _board.getHint(); System.out.println(_hintText);}
                 }
@@ -114,9 +115,9 @@ public class Logic implements Application {
     @Override
     public void onRender(Graphics graphics) {
         //Pintar el estado del juego
+        _graphics.clear(_clearColor.getRGB());
         _graphics.translate(_graphics.getOffsetX(), _graphics.getOffsetY());
         _graphics.scale(_graphics.getLogicScaleAspect(), _graphics.getLogicScaleAspect());
-        _graphics.clear(_clearColor.getRGB());
         _graphics.save();
 
         int textWidth, textHeight;
