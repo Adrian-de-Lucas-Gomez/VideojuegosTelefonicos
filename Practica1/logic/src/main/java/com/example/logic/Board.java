@@ -123,17 +123,17 @@ public class Board{
                 auxTile = _tiles[k][l];
 
                 if(auxTile.getX() == _hintTile.getX() && auxTile.getY() == _hintTile.getY()){
-                    _graphics.setColor(_hintColor);
+                    _graphics.setColor(_hintColor.getRGB());
                     _graphics.fillCircle(sizePerTile/2, sizePerTile/2, sizePerTile * 0.5f);
                 }
 
-                if(auxTile.getType() == TileType.Dot || auxTile.getType() == TileType.Value) _graphics.setColor(_dotColor);
-                else if (auxTile.getType() == TileType.Wall) _graphics.setColor(_wallColor);
-                else _graphics.setColor(_emptyColor);
+                if(auxTile.getType() == TileType.Dot || auxTile.getType() == TileType.Value) _graphics.setColor(_dotColor.getRGB());
+                else if (auxTile.getType() == TileType.Wall) _graphics.setColor(_wallColor.getRGB());
+                else _graphics.setColor(_emptyColor.getRGB());
 
                 _graphics.fillCircle(sizePerTile/2, sizePerTile/2, sizePerTile * circleDiameter * 0.5f);
 
-                _graphics.setColor(_textColor);
+                _graphics.setColor(_textColor.getRGB());
 
                 if(auxTile.getType() == TileType.Value)
                     _graphics.drawText(_tileFont, Integer.toString(auxTile.getValue()), (sizePerTile - _numberFontWidths[auxTile.getValue()]) * 0.5f, sizePerTile * 0.5f + _numberFontHeight * 0.25f);
