@@ -21,7 +21,7 @@ public class Logic implements Application {
     private Graphics _graphics;
     private Input _input;
 
-    private Color _clearColor, _black, _red, _grey, _blue, _white;
+    private int _clearColor, _black, _red, _grey, _blue, _white;
 
     private GameState currentState;
 
@@ -57,12 +57,12 @@ public class Logic implements Application {
         _graphics = _engine.getGraphics();
         _input = _engine.getInput();
 
-        _clearColor = new Color(220, 220, 220, 255);
-        _black = new Color(0, 0, 0, 255);
-        _red = new Color(255, 20, 20, 255);
-        _grey = new Color(150, 150, 150, 255);
-        _blue = new Color(0, 100, 255, 255);
-        _white = new Color(255, 255, 255, 255);
+        _clearColor = 0xDCDCDC;//new Color(220, 220, 220, 255);
+        _black = 0x000000;//new Color(0, 0, 0, 255);
+        _red = 0xFF0000;//new Color(255, 20, 20, 255);
+        _grey = 0x969696;//new Color(150, 150, 150, 255);
+        _blue = 0x0000FF;//new Color(0, 100, 255, 255);
+        _white = 0xFFFFFF;//new Color(255, 255, 255, 255);
 
         _q43Img = _graphics.newImage("q42.png");
         _testImg = _graphics.newImage("test.jpg");
@@ -116,7 +116,7 @@ public class Logic implements Application {
     @Override
     public void onRender(Graphics graphics) {
         //Pintar el estado del juego
-        _graphics.clear(_clearColor.getRGB());
+        _graphics.clear(_clearColor);
         _graphics.translate(_graphics.getOffsetX(), _graphics.getOffsetY());
         _graphics.scale(_graphics.getLogicScaleAspect(), _graphics.getLogicScaleAspect());
         _graphics.save();
@@ -131,7 +131,7 @@ public class Logic implements Application {
 
             //Textos
             _graphics.restore();
-            _graphics.setColor(_black.getRGB());
+            _graphics.setColor(_black);
             _graphics.translate(200, 0);
             textHeight = _graphics.getTextHeight(_molleRegularTitle, "Oh no");
             textWidth = _graphics.getTextWidth(_molleRegularTitle, "Oh no");
@@ -140,7 +140,7 @@ public class Logic implements Application {
             textWidth = _graphics.getTextWidth(_josefinSansTitle, "Jugar");
             textHeight = _graphics.getTextHeight(_josefinSansTitle, "Jugar");
             _graphics.drawText(_josefinSansTitle, "Jugar", -textWidth/2, 0);
-            _graphics.setColor(_grey.getRGB());
+            _graphics.setColor(_grey);
             _graphics.translate(0, 80);
             textWidth = _graphics.getTextWidth(_josefinSansText, "Un juego copiado a Q42");
             _graphics.drawText(_josefinSansText, "Un juego copiado a Q42", -textWidth/2, 0);
@@ -150,7 +150,7 @@ public class Logic implements Application {
         }
         else if(currentState == GameState.BoardSizeMenu){
             //Texto
-            _graphics.setColor(_black.getRGB());
+            _graphics.setColor(_black);
             _graphics.translate(200, 0);
             textHeight = _graphics.getTextHeight(_molleRegularTitle, "Oh no");
             textWidth = _graphics.getTextWidth(_molleRegularTitle, "Oh no");
@@ -167,10 +167,10 @@ public class Logic implements Application {
             _graphics.translate(100, 300);
             _graphics.save();
             for(int k = 0; k < 3; k++) {
-                if(k % 2 == 0) _graphics.setColor(_red.getRGB());
-                else _graphics.setColor(_blue.getRGB());
+                if(k % 2 == 0) _graphics.setColor(_red);
+                else _graphics.setColor(_blue);
                 _graphics.fillCircle(0, 0,30);
-                _graphics.setColor(_clearColor.getRGB());
+                _graphics.setColor(_clearColor);
                 _graphics.drawText(_josefinSansTitle, Integer.toString(k + 4),
                     - _graphics.getTextWidth(_josefinSansTitle, Integer.toString(k + 4)) / 2, _graphics.getTextHeight(_josefinSansTitle, Integer.toString(k + 4)) / 3);
                 _graphics.translate(100, 0);
@@ -178,10 +178,10 @@ public class Logic implements Application {
             graphics.restore();
             graphics.translate(0, 70);
             for(int k = 0; k < 3; k++) {
-                if(k % 2 == 1) _graphics.setColor(_red.getRGB());
-                else _graphics.setColor(_blue.getRGB());
+                if(k % 2 == 1) _graphics.setColor(_red);
+                else _graphics.setColor(_blue);
                 _graphics.fillCircle(0, 0,30);
-                _graphics.setColor(_clearColor.getRGB());
+                _graphics.setColor(_clearColor);
                 _graphics.drawText(_josefinSansTitle, Integer.toString(k + 7),
                     - _graphics.getTextWidth(_josefinSansTitle, Integer.toString(k + 7)) / 2, _graphics.getTextHeight(_josefinSansTitle, Integer.toString(k + 7)) / 3);
                 _graphics.translate(100, 0);
@@ -189,7 +189,7 @@ public class Logic implements Application {
         }
         else if (currentState == GameState.Game){
             //Texto
-            _graphics.setColor(_black.getRGB());
+            _graphics.setColor(_black);
             if(_hintText != ""){
                 _graphics.translate(200, 70);
                 _graphics.drawText(_josefinSansText, _hintText, -_graphics.getTextWidth(_josefinSansText, _hintText)/2, 0);

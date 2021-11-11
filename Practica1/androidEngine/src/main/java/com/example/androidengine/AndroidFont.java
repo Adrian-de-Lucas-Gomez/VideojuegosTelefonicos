@@ -1,14 +1,19 @@
 package com.example.androidengine;
 
+import android.graphics.Typeface;
 import com.example.engine.Font;
 
 public class AndroidFont implements Font {
-    public void test(){
 
+    Typeface font;
+
+    public AndroidFont(android.content.res.AssetManager manager, String name){
+        font = Typeface.createFromAsset(manager, "./assets/fonts/"+name+".ttf");
+
+        //font.
     }
-
-    public AndroidFont(){
-
+    //Propio de cada font ya que se usa para escribir el formato de la plataforma
+    public Typeface getFont(){
+        return font;
     }
-    //weeee woooo weeee woooo
 }

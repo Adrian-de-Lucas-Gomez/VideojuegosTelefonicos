@@ -13,7 +13,7 @@ public class PcFont implements Font {
         //Todavia sin saber que hace
         //_font = new java.awt.Font(type, style, size);
         try {
-            _font = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, new FileInputStream("assets\\fonts\\"+name+".ttf")).deriveFont(style,size);
+            _font = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, new FileInputStream("assets//fonts//"+name+".ttf")).deriveFont(style,size);
             //System.out.println("Me cree correctamente");
         } catch (FontFormatException e) {
             System.out.println("Peto en el formato");

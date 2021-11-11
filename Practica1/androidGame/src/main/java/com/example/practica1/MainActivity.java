@@ -3,6 +3,7 @@ package com.example.practica1;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+//import android.app.Application;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.view.View;
 
 import com.example.androidengine.AndroidEngine;
 import com.example.engine.Engine;
+import com.example.engine.Application;
 import com.example.logic.Logic;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,7 +25,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         engine =  new AndroidEngine(this);    //Hace que pete, ni idea tho
-        logic = new Logic(engine);
+        com.example.engine.Application logic = new Logic(engine);
+        logic.init();
         engine.setApplication(logic);
         //pantalla alla = new pantalla(this);
         setContentView(engine.getSurfaceView());

@@ -1,6 +1,7 @@
 package com.example.androidengine;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -41,10 +42,8 @@ public class AndroidGraphics extends AbstractGraphics {
 
     //Revisar (no se si es mejor cargarlo aqui y asi nos ahorramos pasar el context o mejor hacerlo en AndroidFont como en PcFont)
     public AndroidFont newFont(String filename, float size, boolean isBold){
-        //paint.setTextSize(20); ???
-        Typeface font = Typeface.createFromAsset(_context.getAssets(), ("./assets/fonts/" + filename + ".ttf"));
-        _paint.setTypeface(font);
-        return new AndroidFont();
+        AssetManager manager = _context.getAssets();
+        return new AndroidFont(manager, filename);
     }
 
     @Override
@@ -86,7 +85,8 @@ public class AndroidGraphics extends AbstractGraphics {
 
     @Override
     public void drawText(Font font, String text, float x, float y) {
-        //font.size ??? paint.setTextSize(20);
+        //paint.setTextSize(20); ???
+        _paint.setTypeface(((AndroidFont)font).getFont());
         _canvas.drawText(text, x, y, _paint);
     }
 

@@ -48,7 +48,7 @@ public class Board{
 
     //Pintado
     private Graphics _graphics;
-    private Color _dotColor, _wallColor, _emptyColor, _textColor, _hintColor;
+    private int _dotColor, _wallColor, _emptyColor, _textColor, _hintColor;
     private Font _tileFont, _hintsFont;
     private int _numberFontHeight;
     private int[] _numberFontWidths;
@@ -76,7 +76,7 @@ public class Board{
         _directions = new Direction[]{new Direction(-1, 0), new Direction(1, 0), new Direction(0, 1), new Direction(0, -1)};
     }
 
-    public void setPaintColors(Color dotColor, Color wallColor, Color emptyColor, Color textColor, Color hintColor){
+    public void setPaintColors(int dotColor, int wallColor, int emptyColor, int textColor, int hintColor){
         _dotColor = dotColor;
         _wallColor = wallColor;
         _emptyColor = emptyColor;
@@ -123,17 +123,17 @@ public class Board{
                 auxTile = _tiles[k][l];
 
                 if(auxTile.getX() == _hintTile.getX() && auxTile.getY() == _hintTile.getY()){
-                    _graphics.setColor(_hintColor.getRGB());
+                    _graphics.setColor(_hintColor);
                     _graphics.fillCircle(sizePerTile/2, sizePerTile/2, sizePerTile * 0.5f);
                 }
 
-                if(auxTile.getType() == TileType.Dot || auxTile.getType() == TileType.Value) _graphics.setColor(_dotColor.getRGB());
-                else if (auxTile.getType() == TileType.Wall) _graphics.setColor(_wallColor.getRGB());
-                else _graphics.setColor(_emptyColor.getRGB());
+                if(auxTile.getType() == TileType.Dot || auxTile.getType() == TileType.Value) _graphics.setColor(_dotColor);
+                else if (auxTile.getType() == TileType.Wall) _graphics.setColor(_wallColor);
+                else _graphics.setColor(_emptyColor);
 
                 _graphics.fillCircle(sizePerTile/2, sizePerTile/2, sizePerTile * circleDiameter * 0.5f);
 
-                _graphics.setColor(_textColor.getRGB());
+                _graphics.setColor(_textColor);
 
                 if(auxTile.getType() == TileType.Value)
                     _graphics.drawText(_tileFont, Integer.toString(auxTile.getValue()), (sizePerTile - _numberFontWidths[auxTile.getValue()]) * 0.5f, sizePerTile * 0.5f + _numberFontHeight * 0.25f);
