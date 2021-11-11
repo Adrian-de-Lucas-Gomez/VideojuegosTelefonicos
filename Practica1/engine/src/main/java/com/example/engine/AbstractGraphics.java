@@ -15,7 +15,7 @@ public abstract class AbstractGraphics implements Graphics {
         if(_aspect > logicAspect) {
             _offsetX = 0;
             _offsetY = (int)((float)getWindowHeight()/2 - ((float)getWindowWidth()/_aspect)/2);
-            _scaleAspect = (float)(getWindowWidth()/_aspect) / (float)_gameHeight;
+            _scaleAspect = (float)(getWindowWidth() / _aspect) / (float)_gameHeight;
         }
         else if(_aspect < logicAspect) {
             _offsetX = (int)((float)getWindowWidth()/2 - (float)(getWindowHeight() * _aspect)/2);

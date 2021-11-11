@@ -2,6 +2,8 @@ package com.example.engine;
 
 import java.awt.Color;
 
+import jdk.internal.net.http.common.Pair;
+
 public interface Graphics {
     /**
      * Carga una imagen almacenada en el contenedor de recursos
@@ -27,7 +29,7 @@ public interface Graphics {
      * Las operaciones de dibujado se veran afectadas por la
      * transformacion establecida
      */
-    void translate(int x, int y);
+    void translate(float x, float y);
     void scale(float x, float y);
     void save();
     void restore();
@@ -38,7 +40,7 @@ public interface Graphics {
      * de si se permite o no escalar la imagen, si se permite
      * elegir que porción de la imagen original se muestra, etc.
      */
-    void drawImage(Image image, int w, int h);
+    void drawImage(Image image, float w, float h);
 
     /**
      * Establece el color a utilizar en las operaciones de
@@ -49,12 +51,12 @@ public interface Graphics {
     /**
      * Dibuja un circulo relleno del color activo
      */
-    void fillCircle(int cx, int cy, int r);
+    void fillCircle(float cx, float cy, float r);
 
     /**
      * Escribe el texto con la fuente y color activos
      */
-    void drawText(Font font, String text, int x, int y);
+    void drawText(Font font, String text, float x, float y);
 
     /**
      * Devuelven el tamaño de la ventana real y logico
@@ -64,6 +66,7 @@ public interface Graphics {
     int getGameWidth();
     int getGameHeight();
     int getTextHeight(Font font, String string);
+    int getTextWidth(Font font, String string);
     float getLogicScaleAspect();
     int getOffsetX();
     int getOffsetY();

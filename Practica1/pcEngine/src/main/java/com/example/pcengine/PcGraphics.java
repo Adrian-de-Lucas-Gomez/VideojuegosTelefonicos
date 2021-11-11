@@ -5,6 +5,7 @@ import com.example.engine.Font;
 import com.example.engine.Image;
 
 import java.awt.Color;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
@@ -53,7 +54,7 @@ public class PcGraphics extends AbstractGraphics {
         _graphics.fillRect(0, 0, _window.getWidth(), _window.getHeight());
     }
 
-    public void translate(int x, int y){
+    public void translate(float x, float y){
         _graphics.translate(x, y);
     }
 
@@ -70,9 +71,9 @@ public class PcGraphics extends AbstractGraphics {
     }
 
     //TODO igual hace falta uno con alpha en algun momento
-    public void drawImage(Image image, int w, int h){
+    public void drawImage(Image image, float w, float h){
         if(image != null) {
-            _graphics.drawImage(((PcImage)image).getImage(), 0, 0, w, h, null);
+            _graphics.drawImage(((PcImage)image).getImage(), 0, 0, (int)w, (int)h, null);
         }
         else
             System.out.println("Null image :(");
@@ -82,26 +83,28 @@ public class PcGraphics extends AbstractGraphics {
         _graphics.setColor(new Color(color));
     }
 
-    public void fillCircle(int cx, int cy, int r){ //TODO quitar cx y cy
-        _graphics.fillOval(0 - r, 0 - r, 2*r, 2*r);
+    public void fillCircle(float cx, float cy, float r){ //TODO quitar cx y cy
+        _graphics.fillOval((int)(-r + cx), (int)(-r + cy), (int)(r*2), (int)(r*2));
     }
 
-    public void drawText(Font font, String text, int x, int y){ //TODO quitar x e y
-        System.out.println(_graphics.getFontRenderContext().getTransform().getScaleX());
-        //_graphics.setFont(((PcFont)font).getFont().deriveFont(AffineTransform.getScaleInstance(_scaleAspect, _scaleAspect)));
+    public void drawText(Font font, String text, float x, float y){ //TODO quitar x e y
         _graphics.setFont(((PcFont)font).getFont());
         _graphics.drawString(text, x, y);
     }
 
-    /*public float getScreenWidthText(Font font, String text){
-        FontMetrics fontMetrics = _graphics.getFontMetrics(font);
-        return fontMetrics.stringWidth(text);
+    @Override
+    public int getTextWidth(Font font, String text){
+        FontMetrics fontMetrics = _graphics.getFontMetrics(((PcFont)font).getFont());
+        //_graphics.draw(fontMetrics.getStringBounds(text, _graphics));
+        return (int)fontMetrics.getStringBounds(text, _graphics).getWidth();
     }
 
-    public float getScreenHeightText(Font font, String text){
-        FontMetrics fontMetrics = _graphics.getFontMetrics(font);
-        return fontMetrics.stringWidth(text);
-    }*/
+    @Override
+    public int getTextHeight(Font font, String text){
+        FontMetrics fontMetrics = _graphics.getFontMetrics(((PcFont)font).getFont());
+        //_graphics.draw(fontMetrics.getStringBounds(text, _graphics));
+        return (int)fontMetrics.getStringBounds(text, _graphics).getHeight();
+    }
 
     public int getWindowWidth(){
         return _window.getWidth();
@@ -109,12 +112,6 @@ public class PcGraphics extends AbstractGraphics {
 
     public int getWindowHeight() {
         return _window.getHeight();
-    }
-
-    @Override
-    public int getTextHeight(Font font, String string) {
-        java.awt.Font aux = ((PcFont)font).getFont().deriveFont(((PcFont) font).getFont().getSize() * _scaleAspect);
-        return _graphics.getFontMetrics(aux).stringWidth(string);
     }
 
     public void setGraphics(Graphics2D g){
