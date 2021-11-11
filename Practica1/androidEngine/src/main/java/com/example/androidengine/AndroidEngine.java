@@ -69,6 +69,8 @@ public class AndroidEngine implements Engine, Runnable {
             double elapsedTime = (double) nanoElapsedTime / 1.0E9;
             //logic.onUpdate(elapsedTime);
 
+
+            //Deberiamos tener esto en un método Render por si le damos una thread?????
             System.out.println("Antes del Lock");
             //Zona de Render
             graphics.lockCanvas(); // Bloquea el canvas  //Bucle infinito
@@ -76,6 +78,8 @@ public class AndroidEngine implements Engine, Runnable {
             graphics.clear(0x00ff00);   //Debug
             //logic.onRender(graphics);     //Graphics siendo el canvas donde pintamos
             graphics.releaseCanvas();   // Libera y pinta lo que hubiera en el canvas
+
+            //---------------------------------------------------------------------------------------
         }
     }
     public void resume(){

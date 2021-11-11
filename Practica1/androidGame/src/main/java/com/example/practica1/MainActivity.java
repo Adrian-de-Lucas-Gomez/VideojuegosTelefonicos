@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         engine =  new AndroidEngine(this);    //Hace que pete, ni idea tho
         logic = new Logic(engine);
         engine.setApplication(logic);
-        pantalla alla = new pantalla(this);
+        //pantalla alla = new pantalla(this);
         setContentView(engine.getSurfaceView());
 
     }
@@ -34,14 +34,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //Volver a lanzar la hebra
-        //game.resume();
+        engine.resume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         //Parar la hebra
-        //game.pause();
+        engine.pause();
     }
 
 
