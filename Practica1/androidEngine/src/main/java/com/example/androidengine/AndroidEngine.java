@@ -31,7 +31,7 @@ public class AndroidEngine implements Engine, Runnable {
         //Ponemos el juego a funcionar
         _running = true;
         //Revisar
-        run();
+        //run();
     }
 
     public AndroidGraphics getGraphics(){
@@ -69,6 +69,7 @@ public class AndroidEngine implements Engine, Runnable {
             double elapsedTime = (double) nanoElapsedTime / 1.0E9;
             //logic.onUpdate(elapsedTime);
 
+            System.out.println("Antes del Lock");
             //Zona de Render
             graphics.lockCanvas(); // Bloquea el canvas  //Bucle infinito
             System.out.println("update Run");
