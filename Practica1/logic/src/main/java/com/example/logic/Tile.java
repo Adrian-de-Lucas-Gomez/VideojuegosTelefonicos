@@ -27,13 +27,21 @@ public class Tile implements Comparable<Tile>{
         return Integer.compare(o.getValue(), this._value);
     }
 
-    //Getters & Setters
-    public void toggleType(){ //Cambia entre wall y dot
-        if(_type == TileType.Unknown) _type = TileType.Dot;
+
+    public void toggleType(){ //Cambia entre wall y dot. Devuelve el cambio en el número de tiles ocupadas del tablero
+        //Dot -> Wall -> Unknown
+        if(_type == TileType.Wall) _type = TileType.Unknown;
+        else if(_type == TileType.Unknown) _type = TileType.Dot;
         else if(_type == TileType.Dot) _type = TileType.Wall;
-        else if(_type == TileType.Wall) _type = TileType.Unknown;
     }
 
+    public void toggleType_i(){ //Usado para revertir jugadas
+        if(_type == TileType.Dot) _type = TileType.Unknown;
+        else if(_type == TileType.Unknown) _type = TileType.Wall;
+        else if(_type == TileType.Wall) _type = TileType.Dot;
+    }
+
+    //Getters & Setters
     public void setType(TileType type) {_type = type;}
 
     public void setValue(int value) {_value = value;}

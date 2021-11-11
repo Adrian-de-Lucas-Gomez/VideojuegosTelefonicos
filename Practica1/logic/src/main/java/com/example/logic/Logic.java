@@ -100,9 +100,10 @@ public class Logic implements Application {
                     }
                 }
                 else if (currentState == GameState.Game){
-                    if(_board.handleInput(pointerX, pointerY)) _hintText = "";
+                    if(_board.handleInput(pointerX, pointerY)) _hintText = ""; //TODO revisar esto que devuelva un boolean. es horrible
                     if (_goToTitleButton.isPressed(pointerX, pointerY)) setState(GameState.MainMenu);
-                    else if(_hintButton.isPressed(pointerX, pointerY)) {_hintText = _board.getHint(); System.out.println(_hintText);}
+                    else if(_hintButton.isPressed(pointerX, pointerY)) _hintText = _board.getHintText();
+                    else if(_reverseButton.isPressed(pointerX, pointerY)) _board.revertPlay();
                 }
             }
         }
@@ -187,8 +188,17 @@ public class Logic implements Application {
             }
         }
         else if (currentState == GameState.Game){
-            _graphics.translate(200, 70);
-            if(_hintText != "") {_graphics.setColor(_black); _graphics.drawText(_josefinSansText, _hintText, -_graphics.getTextWidth(_josefinSansText, _hintText)/2, 0);}
+            //Texto
+            _graphics.setColor(_black);
+            if(_hintText != ""){
+                _graphics.translate(200, 70);
+                _graphics.drawText(_josefinSansText, _hintText, -_graphics.getTextWidth(_josefinSansText, _hintText)/2, 0);
+                _graphics.restore();
+            }
+
+            _graphics.translate(200, 485);
+            String aux = Integer.toString(_board.getPercentageFilled()) + "%";
+            _graphics.drawText(_josefinSansText, aux, -_graphics.getTextWidth(_josefinSansText, aux)/2, 0);
             _graphics.restore();
 
             _graphics.translate(20, 100);

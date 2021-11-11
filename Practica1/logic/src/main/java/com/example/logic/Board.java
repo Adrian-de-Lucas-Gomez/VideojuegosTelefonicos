@@ -8,6 +8,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import java.util.Stack;
+
 enum TileType{
     Unknown, Dot, Wall, Value, None
 }
@@ -32,15 +34,17 @@ enum HintType{
 public class Board{
 
     //Funcionamiento interno del tablero
-    private int[][] _empty;
     private Tile[][] _tiles;
-    private Tile[][] _solution;
+    private Tile[][] _empty;
     private Tile _nullTile;
     private Direction[] _directions;
     private TileHint _tileHint;
     private int _size;
+    private int numTilesFilled = 0;
+    private int _numPlayeableTiles = 0;
     private TileDirectionInfo[] _tileDirInfo;
     private Random _rand;
+    private Stack<Tile> _moves;
 
     //Pintado
     private Graphics _graphics;
@@ -57,12 +61,15 @@ public class Board{
         _graphics = graphics;
         _rand = new Random();
         _size = size+2;
+        _numPlayeableTiles = (_size * _size);
         _tiles = new Tile[_size][_size];
+        _empty = new Tile[_size][_size];
         _tileHint = new TileHint();
         _tileDirInfo = new TileDirectionInfo[4];
         _paintingSize = paintingSize;
         _nullTile = new Tile(0, 0, 0, TileType.None);
         _hintTile = new Tile(0, 0, 0, TileType.None);
+        _moves = new Stack<Tile>();
         for(int k = 0; k < 4; k++){
             _tileDirInfo[k] = new TileDirectionInfo();
         }
@@ -94,6 +101,15 @@ public class Board{
                 _tileButtons[k][l] = new Button((int)(offsetX + sizePerButton * l) + (sizePerButton -  sizePerButton * circleDiameter) / 2, offsetY + sizePerButton * k + (sizePerButton -  sizePerButton * circleDiameter) / 2, sizePerButton * circleDiameter, sizePerButton * circleDiameter, null);
                 //TODO revisar todo esto
             }
+        }
+    }
+
+    public void revertPlay(){
+        if(!_moves.empty()){
+            Tile t = _moves.pop();
+            if (t.getType() == TileType.Unknown) numTilesFilled++;
+            _tiles[t.getY()][t.getX()].toggleType_i();
+            if(_tiles[t.getY()][t.getX()].getType() == TileType.Unknown) numTilesFilled--;
         }
     }
 
@@ -163,10 +179,10 @@ public class Board{
     public void generate(){
         //Reparto de numero de fichas
         float percentageBlues = 0.7f, minPercentageBlues = 0.2f;
-        int numTiles = (_size - 2) * (_size - 2);
-        int maxNumBlues = (int)(numTiles * percentageBlues);
-        int maxNumReds = numTiles - maxNumBlues;
-        int maxEliminatedBlues = (int)((percentageBlues - minPercentageBlues) * numTiles);
+        numTilesFilled = _numPlayeableTiles;
+        int maxNumBlues = (int)(_numPlayeableTiles * percentageBlues);
+        int maxNumReds = _numPlayeableTiles - maxNumBlues;
+        int maxEliminatedBlues = (int)((percentageBlues - minPercentageBlues) * _numPlayeableTiles);
 
         //Generación de tablero "resuelto"
         int auxBlues = maxNumBlues, auxReds = maxNumReds;
@@ -176,6 +192,7 @@ public class Board{
         for(int k = 0; k < _size; k++){
             for(int l = 0; l < _size; l++){
                 _tiles[k][l] = new Tile(l, k, 0, TileType.None);
+                _empty[k][l] = new Tile(l, k, 0, TileType.None);
                 if(k == 0 || l == 0 || k == _size - 1 || l == _size - 1){
                     _tiles[k][l].setType(TileType.Wall);
                 }
@@ -252,14 +269,16 @@ public class Board{
                 numTries--;
                 allTiles.add(randomTile);
             }
-            else{
+            else{ //Se puede solucionar con la disposicion actual de fichas
+                numTilesFilled--;
                 _tiles[randomTile.getY()][randomTile.getX()].setType(TileType.Unknown);
                 _tiles[randomTile.getY()][randomTile.getX()].setValue(0);
             }
         }
+        copyBoard(_tiles, _empty);
     }
 
-    void copyBoard(Tile[][] src, Tile[][] dst){
+    private void copyBoard(Tile[][] src, Tile[][] dst){
         for(int k = 1; k < _size - 1; k++){
             for(int l = 1; l < _size - 1; l++){
                 dst[k][l].copyFromTile(src[k][l]);
@@ -272,14 +291,28 @@ public class Board{
             for(int l = 1; l < _size - 1; l++){
                 if(_tileButtons[k - 1][l - 1].isPressed(posX, posY)){
                     Tile pressedTile = _tiles[k][l];
-                    switch (pressedTile.getType()){
-                        case Dot:
-                        case Unknown:
-                        case Wall:
-                            _tiles[k][l].toggleType();
-                            _hintTile = _nullTile;
-                            return true;
+                    //Si la ficha es parte de la disposición inicial es que está "lockeada" y no se puede modificar
+                    if(_empty[pressedTile.getY()][pressedTile.getX()].getType() == TileType.Unknown){
+                        switch (pressedTile.getType()){
+                            //Dot -> Wall -> Unknown
+                            case Dot:
+                                _moves.add(pressedTile);
+                                _tiles[k][l].toggleType();
+                                break;
+                            case Wall:
+                                _moves.add(pressedTile);
+                                _tiles[k][l].toggleType();
+                                numTilesFilled--;
+                                break;
+                            case Unknown:
+                                numTilesFilled++;
+                                _moves.add(pressedTile);
+                                _tiles[k][l].toggleType();
+                                _hintTile = _nullTile; //Como se ha tocado otra ficha, la pista anterior se elimina
+                                break;
+                        }
                     }
+                    return true;
                 }
             }
         }
@@ -305,6 +338,12 @@ public class Board{
 //                _tiles[_posY][_posX].toggleType();
 //            }
 //        }
+    }
+
+    public int getPercentageFilled(){
+        float percentageFilled = (float)numTilesFilled / _numPlayeableTiles * 100;
+        double fractionalPart = percentageFilled % 1;
+        return (int)(percentageFilled - fractionalPart);
     }
 
     private void calculateValues(ArrayList<Tile> blueTiles, ArrayList<Tile> redTiles, ArrayList<Tile> tiles){
@@ -335,18 +374,19 @@ public class Board{
         return false;
     }
 
-    public String getHint(){
-        //System.out.println("La casilla ve: " + Integer.toString(getVisibleTiles(_posX, _posY)) + " casillas.");
-        TileHint hint = _tileHint;
+    public void undoPlay(){
 
-        hint = getFirstHint();
+    }
+
+    public String getHintText(){
+        TileHint hint = getFirstHint();
         _hintTile = hint.getOriginalTile();
         System.out.println("Tile:[" + Integer.toString(hint.getOriginalTile().getY() - 1) + "," + Integer.toString(hint.getOriginalTile().getX() - 1) + "]");
         switch (hint.getType()) {
             case VeDemasiadas:
-                return ("This tile sees too \rmany dots.");
+                return ("Esta casilla ve demasiadas.");
             case VeLasNecesarias:
-                return ("This tile sees all \rnecessary dots.");
+                return ("Esta casilla ve las necesarias.");
             case RellenaTodosLosHuecos:
                 return ("Esta casilla debe rellenar todos sus huecos.");
             case FichaCerradaEsIncorrecta:
@@ -354,7 +394,7 @@ public class Board{
             case AzulObligatorioEnDireccion:
                 return ("Un hueco está incluido en todas las soluciones.");
             case SiExpandeSuperaValor:
-                return ("Si se expande en un sentido supera el valor de casilla.");
+                return ("Si expande en un sentido supera el valor.");
             case AzulEsMuro:
                 return ("Ninguna casilla ve a esta ficha azul");
             case VaciaEsMuro:
@@ -371,7 +411,7 @@ public class Board{
         for(auxY = 1; auxY < _size - 1; auxY++){
             for(auxX = 1; auxX < _size-1; auxX++){
                 if(_tiles[auxY][auxX].getType() == TileType.Unknown) seenEmpties = true;
-                hint = getHint(auxX, auxY);
+                hint = getHintText(auxX, auxY);
                 if(hint.getType() != HintType.None && hint.getType() != HintType.TableroResuelto) return hint;
             }
         }
@@ -380,7 +420,7 @@ public class Board{
         return hint;
     }
 
-    private TileHint getHint(int x, int y){
+    private TileHint getHintText(int x, int y){
         Tile tileToChange = _tiles[y][x];
         Tile originalTile = _tiles[y][x];
         _tileHint.setOriginalTile(_tiles[y][x]);
