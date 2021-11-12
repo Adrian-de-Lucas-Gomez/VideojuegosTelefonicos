@@ -33,14 +33,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
+
     protected void onResume() {
         super.onResume();
         //Volver a lanzar la hebra
         engine.resume();
     }
 
-    @Override
+
     protected void onPause() {
         super.onPause();
         //Parar la hebra

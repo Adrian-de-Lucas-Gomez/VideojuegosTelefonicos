@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -42,8 +43,6 @@ public class AndroidGraphics extends AbstractGraphics {
     }
 
     public Image newImage(String name){
-        //String ruta= "/sprites/" + name;
-        //Bitmap bMap = BitmapFactory.decodeFile(ruta);
         Image imagen= null;
         InputStream inputStream = null;
 
@@ -54,7 +53,7 @@ public class AndroidGraphics extends AbstractGraphics {
             imagen = new AndroidImage(bMap);
         }
         catch(IOException io){
-            android.util.Log.e("AndroidGraphics", "Error leyendo imagen");
+            android.util.Log.e("AndroidGraphics", "Error leyendo abriendo imagen");
         }
         finally{
             if(inputStream != null) {
@@ -75,7 +74,9 @@ public class AndroidGraphics extends AbstractGraphics {
 
     @Override
     public void clear(int color){
-        _canvas.drawRect(0,0, _canvas.getWidth(), _canvas.getHeight(), _paint);
+        //_canvas.drawRect(0,0, _canvas.getWidth(), _canvas.getHeight(), _paint);
+        color = (0x000000ff << 24) | (color & 0x00ffffff);
+        _canvas.drawColor(color);
 
     }
 
@@ -91,7 +92,6 @@ public class AndroidGraphics extends AbstractGraphics {
     //Revisar-------------------------------------------------------------------------------------------------------
     public void setSurfaceView(SurfaceView surfaceView){
         _surface = surfaceView;
-        //_surface.getHolder().addCallback(this);
     }
     //--------------------------------------------------------------------------------------------------------------
     public void save(){ _canvas.save(); }
@@ -110,7 +110,7 @@ public class AndroidGraphics extends AbstractGraphics {
 
     @Override
     public void setColor(int color) {
-        _canvas.drawColor(color);
+        //_canvas.drawColor(color);
         _paint.setColor(color);
     }
 
@@ -139,9 +139,15 @@ public class AndroidGraphics extends AbstractGraphics {
     public void lockCanvas(){
         //En este while se queda pensando mucho
         while(!_surface.getHolder().getSurface().isValid()){ /*No hago nada*/};    //Tratamos de acceder a una surface
-        _canvas = _surface.getHolder().lockCanvas();
+        //_canvas = _surface.getHolder().lockCanvas();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            _canvas = _surface.getHolder().lockHardwareCanvas();
+        }
+        else{
+            _canvas = _surface.getHolder().lockCanvas();
+        }
 
-        if(_canvas == null) System.out.println("El canvas fue null");
+        if(_canvas == null) System.out.println("El canvas devolvio null");
     }
 
     // unclock canvas -> se libera

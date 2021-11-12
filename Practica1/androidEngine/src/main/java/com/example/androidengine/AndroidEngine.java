@@ -30,10 +30,7 @@ public class AndroidEngine implements Engine, Runnable {
         input = new AndroidInput();
 
         //Ponemos el juego a funcionar
-        _running = true;
-        //Revisar
-        hilo = new Thread(this);
-        hilo.start();
+        resume();
     }
 
     public AndroidGraphics getGraphics(){
