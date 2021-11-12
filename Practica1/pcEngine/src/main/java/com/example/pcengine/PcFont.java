@@ -10,8 +10,6 @@ import java.io.IOException;
 public class PcFont implements Font {
     private java.awt.Font _font;    //Almacenamos el tipo de fuente que soporta la plataforma
     public PcFont(String name, int style, float size){
-        //Todavia sin saber que hace
-        //_font = new java.awt.Font(type, style, size);
         try {
             _font = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, new FileInputStream("assets//fonts//"+name+".ttf")).deriveFont(style,size);
             //System.out.println("Me cree correctamente");

@@ -49,6 +49,12 @@ public interface Graphics {
     void setColor(int color);
 
     /**
+     * Establece la fuente a utilizar en las operaciones de
+     * dibujado posteriores
+     */
+    void setFont(Font font);
+
+    /**
      * Dibuja un circulo relleno del color activo
      */
     void fillCircle(float cx, float cy, float r);
@@ -56,7 +62,7 @@ public interface Graphics {
     /**
      * Escribe el texto con la fuente y color activos
      */
-    void drawText(Font font, String text, float x, float y);
+    void drawText(String text, float x, float y, Boolean isCenteredX, Boolean isCenteredY);
 
     /**
      * Devuelven el tamaño de la ventana real y logico
@@ -65,8 +71,8 @@ public interface Graphics {
     int getWindowHeight();
     int getGameWidth();
     int getGameHeight();
-    int getTextHeight(Font font, String string);
-    int getTextWidth(Font font, String string);
+    int getTextHeight(String string);
+    int getTextWidth(String string);
     float getLogicScaleAspect();
     int getOffsetX();
     int getOffsetY();
