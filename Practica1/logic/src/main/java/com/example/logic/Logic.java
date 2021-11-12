@@ -91,7 +91,10 @@ public class Logic implements Application {
                     if(_playButton.isPressed(pointerX, pointerY)) setState(GameState.BoardSizeMenu);
                 }
                 else if(currentState == GameState.BoardSizeMenu){
-                    if (_goToTitleButton.isPressed(pointerX, pointerY)) setState(GameState.MainMenu);
+                    if (_goToTitleButton.isPressed(pointerX, pointerY)) {
+                        setState(GameState.MainMenu);
+                        justSolvedBoard = false;
+                    }
                     else{
                         for(int k = 0; k < _chooseSizeButtons.length; k++){
                             if(_chooseSizeButtons[k].isPressed(pointerX, pointerY)){
@@ -126,58 +129,47 @@ public class Logic implements Application {
         _graphics.scale(_graphics.getLogicScaleAspect(), _graphics.getLogicScaleAspect());
         _graphics.save();
 
-        int textWidth, textHeight;
-
         if(currentState == GameState.MainMenu){
             //Tamaño Lógico: 400x600
             //Imagen Q42
-            _graphics.translate(170, 360);
+            _graphics.translate(170, 400);
             _graphics.drawImage(_q43Img, 60, 80);
 
             //Textos
             _graphics.restore();
             _graphics.setColor(_black);
-            _graphics.translate(200, 0);
+            _graphics.translate(200, 100);
             _graphics.setFont(_molleRegularTitle);
-            textHeight = _graphics.getTextHeight("Oh no");
-            textWidth = _graphics.getTextWidth("Oh no");
-            _graphics.drawText("Oh no", -textWidth/2, textHeight);
-            _graphics.translate(0, 100 + textHeight);
+            _graphics.drawText("Oh no!", 0, 0, true, true);
+            _graphics.translate(0, 100 + _graphics.getTextHeight("0h no!") * 0.5f);
             _graphics.setFont(_josefinSansTitle);
-            textWidth = _graphics.getTextWidth("Jugar");
-            textHeight = _graphics.getTextHeight("Jugar");
-            _graphics.drawText("Jugar", -textWidth/2, 0);
+            _graphics.drawText("Jugar", 0, 0, true, false);
             _graphics.setColor(_grey);
             _graphics.translate(0, 80);
 
             _graphics.setFont(_josefinSansText);
-            textWidth = _graphics.getTextWidth("Un juego copiado a Q42");
-            _graphics.drawText("Un juego copiado a Q42", -textWidth/2, 0);
+            _graphics.drawText("Un juego copiado a Q42", 0,0, true, false);
             _graphics.translate(0, 20);
-            textWidth = _graphics.getTextWidth("Creado por Martin Kool");
-            _graphics.drawText("Creado por Martin Kool", -textWidth/2, 0);
+            _graphics.drawText("Creado por Martin Kool", 0, 0, true, false);
         }
         else if(currentState == GameState.BoardSizeMenu){
             //Texto
             _graphics.setColor(_black);
             if(!justSolvedBoard){
-                _graphics.translate(200, 0);
+                _graphics.translate(200, 100);
                 _graphics.setFont(_molleRegularTitle);
-                textHeight = _graphics.getTextHeight("Oh no");
-                textWidth = _graphics.getTextWidth("Oh no");
-                _graphics.drawText("Oh no", -textWidth/2, textHeight);
-                _graphics.translate(0, 200);
+                _graphics.drawText("Oh no!", 0, 0, true, true);
+                _graphics.translate(0, 100);
             }
             else{
                 _graphics.translate(200, 70);
                 _graphics.setFont(_josefinSansTitle);
-                _graphics.drawText("Maravilloso!", - _graphics.getTextWidth("Maravilloso!") * 0.5f, 0);
+                _graphics.drawText("Maravilloso!", 0, 0, true, false);
                 _graphics.translate(0, 130);
             }
 
             _graphics.setFont(_josefinSansText);
-            textWidth = _graphics.getTextWidth("Escoge las dimensiones del tablero.");
-            _graphics.drawText("Escoge las dimensiones del tablero.", -textWidth/2, 0);
+            _graphics.drawText("Escoge las dimensiones del tablero.", 0, 0, true, false);
             //Imágenes
             _graphics.translate(-_goToTitleButton.getWidth()/2, 300);
             _graphics.drawImage(_goToTitleButton.getImage(), _goToTitleButton.getWidth(), _goToTitleButton.getHeight());
@@ -192,8 +184,9 @@ public class Logic implements Application {
                 else _graphics.setColor(_blue);
                 _graphics.fillCircle(0, 0,30);
                 _graphics.setColor(_clearColor);
-                _graphics.drawText(Integer.toString(k + 4),
-                    - _graphics.getTextWidth(Integer.toString(k + 4)) / 2, _graphics.getTextHeight(Integer.toString(k + 4)) / 3);
+//                _graphics.drawText(Integer.toString(k + 4),
+//                    - _graphics.getTextWidth(Integer.toString(k + 4)) / 2, _graphics.getTextHeight(Integer.toString(k + 4)) / 3);
+                _graphics.drawText(Integer.toString(k + 4), 0,12, true, false);
                 _graphics.translate(100, 0);
             }
             graphics.restore();
@@ -203,8 +196,9 @@ public class Logic implements Application {
                 else _graphics.setColor(_blue);
                 _graphics.fillCircle(0, 0,30);
                 _graphics.setColor(_clearColor);
-                _graphics.drawText(Integer.toString(k + 7),
-                    - _graphics.getTextWidth(Integer.toString(k + 7)) / 2, _graphics.getTextHeight(Integer.toString(k + 7)) / 3);
+//                _graphics.drawText(Integer.toString(k + 7),
+//                    - _graphics.getTextWidth(Integer.toString(k + 7)) / 2, _graphics.getTextHeight(Integer.toString(k + 7)) / 3);
+                _graphics.drawText((Integer.toString(k + 7)),0, 12, true, false);
                 _graphics.translate(100, 0);
             }
         }
@@ -214,18 +208,18 @@ public class Logic implements Application {
             _graphics.translate(200, 70);
             if(_board.isSolved()){
                 _graphics.setFont(_josefinSansTitle);
-                _graphics.drawText("Maravilloso!", - graphics.getTextWidth("Maravilloso") * 0.5f, 0);
+                _graphics.drawText("Maravilloso!", 0, 0, true, false);
             }
             else{
                 String feedbackText = _board.getBoardFeedbackText();
                 if(!feedbackText.isEmpty()){
                     _graphics.setFont(_josefinSansText);
-                    _graphics.drawText(feedbackText, -_graphics.getTextWidth(feedbackText) * 0.5f, 0);
+                    _graphics.drawText(feedbackText, 0, 0, true, false);
                 }
                 else {
                     feedbackText = Integer.toString(boardSize) + " x " + Integer.toString(boardSize);
                     _graphics.setFont(_josefinSansTitle);
-                    _graphics.drawText(feedbackText, - graphics.getTextWidth(feedbackText) * 0.5f, 0);
+                    _graphics.drawText(feedbackText, 0, 0, true, false);
                 }
             }
 
@@ -233,7 +227,7 @@ public class Logic implements Application {
             _graphics.restore();
             _graphics.translate(200, 485);
             String percentageFilled = Integer.toString(_board.getPercentageFilled()) + "%";
-            _graphics.drawText(percentageFilled, -_graphics.getTextWidth(percentageFilled)/2, 0);
+            _graphics.drawText(percentageFilled, 0, 0, true, false);
             _graphics.restore();
 
             _graphics.translate(20, 100);

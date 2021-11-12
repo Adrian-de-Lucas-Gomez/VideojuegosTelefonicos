@@ -91,7 +91,9 @@ public class PcGraphics extends AbstractGraphics {
         _graphics.fillOval((int)(-r + cx), (int)(-r + cy), (int)(r*2), (int)(r*2));
     }
 
-    public void drawText(String text, float x, float y){
+    public void drawText(String text, float x, float y, Boolean isCenteredX, Boolean isCenteredY){
+        if(isCenteredX) x -= getTextWidth(text) * 0.5;
+        if(isCenteredY) y += getTextHeight(text) * 0.5;
         _graphics.drawString(text, x, y);
     }
 

@@ -62,7 +62,7 @@ public interface Graphics {
     /**
      * Escribe el texto con la fuente y color activos
      */
-    void drawText(String text, float x, float y);
+    void drawText(String text, float x, float y, Boolean isCenteredX, Boolean isCenteredY);
 
     /**
      * Devuelven el tamaño de la ventana real y logico
