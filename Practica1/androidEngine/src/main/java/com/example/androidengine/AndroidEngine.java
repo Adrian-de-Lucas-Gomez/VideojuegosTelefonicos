@@ -5,6 +5,7 @@ import android.view.SurfaceView;
 
 import com.example.engine.Application;
 import com.example.engine.Engine;
+import com.example.engine.Font;
 
 public class AndroidEngine implements Engine, Runnable {
 
@@ -31,7 +32,8 @@ public class AndroidEngine implements Engine, Runnable {
         //Ponemos el juego a funcionar
         _running = true;
         //Revisar
-        //run();
+        hilo = new Thread(this);
+        hilo.start();
     }
 
     public AndroidGraphics getGraphics(){
@@ -56,6 +58,10 @@ public class AndroidEngine implements Engine, Runnable {
         long lastFrameTime = System.nanoTime();
 
         graphics.setSurfaceView(surfaceView);
+
+        //Test
+        //Font aux= graphics.newFont("JosefinSans-Bold", 20.0f, false);
+        //graphics.setFont(aux);
 
         while(_running){    //Revisar
 

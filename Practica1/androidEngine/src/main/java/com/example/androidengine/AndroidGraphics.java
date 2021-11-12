@@ -6,8 +6,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import androidx.annotation.NonNull;
 
 import com.example.engine.AbstractGraphics;
 import com.example.engine.Font;
@@ -26,7 +30,7 @@ public class AndroidGraphics extends AbstractGraphics {
         _context = c;   //Adjudicamos el contexto
 
         _paint = new Paint();
-        _paint.setColor(Color.WHITE);
+        _paint.setColor(Color.GREEN);
         _paint.setStyle(Paint.Style.FILL);
 
     }
@@ -53,17 +57,22 @@ public class AndroidGraphics extends AbstractGraphics {
     }
 
     @Override
-    public void translate(float x, float y){}
+    public void translate(float x, float y){
+        _canvas.translate(x,y);
+    }
 
     @Override
     public void scale(float x, float y) {
-
+        _canvas.scale(x,y);
     }
     //Revisar-------------------------------------------------------------------------------------------------------
-    public void setSurfaceView(SurfaceView surfaceView){_surface = surfaceView;}
+    public void setSurfaceView(SurfaceView surfaceView){
+        _surface = surfaceView;
+        //_surface.getHolder().addCallback(this);
+    }
     //--------------------------------------------------------------------------------------------------------------
-    public void save(){}
-    public void restore(){}
+    public void save(){ _canvas.save(); }
+    public void restore(){ _canvas.restore(); }
 
     @Override
     public void drawImage(Image image, float w, float h) {
@@ -72,15 +81,12 @@ public class AndroidGraphics extends AbstractGraphics {
 
     @Override
     public void setColor(int color) {
-
-        //Color ole= new Color().valueOf(0xffff0000);   //Necesita API avanzada
         _canvas.drawColor(color);
         _paint.setColor(color);      //Revisar
     }
 
     public void setFont(Font font){
         _paint.setTypeface(((AndroidFont)font).getFont());
-        //fontMetrics = _graphics.getFontMetrics(((PcFont)font).getFont());
         //Revisar
     }
 
@@ -91,8 +97,6 @@ public class AndroidGraphics extends AbstractGraphics {
 
     @Override
     public void drawText(String text, float x, float y, Boolean isCenteredX, Boolean isCenteredY) {
-        //paint.setTextSize(20); ???
-        //_paint.setTypeface(((AndroidFont)font).getFont());
         if(isCenteredX) x -= getTextWidth(text) * 0.5;
         if(isCenteredY) y += getTextHeight(text) * 0.5;
         _canvas.drawText(text, x, y, _paint);
@@ -102,7 +106,7 @@ public class AndroidGraphics extends AbstractGraphics {
 
     public void lockCanvas(){
         //En este while se queda pensando mucho
-        while(!_surface.getHolder().getSurface().isValid());    //Tratamos de acceder a una surface
+        while(!_surface.getHolder().getSurface().isValid()){ /*No hago nada*/};    //Tratamos de acceder a una surface
         _canvas = _surface.getHolder().lockCanvas();
 
         if(_canvas == null) System.out.println("El canvas fue null");
@@ -114,15 +118,17 @@ public class AndroidGraphics extends AbstractGraphics {
 
     @Override
     public int getTextHeight(String string) {
-        //return (int)fontMetrics.getStringBounds(text, _graphics).getWidth();
-        return 0;
+        Rect result = new Rect();
+        _paint.getTextBounds(string, 0, string.length(), result);
+        return result.height();
         //Revisar
     }
 
     @Override
     public int getTextWidth(String string) {
-        //return (int)fontMetrics.getStringBounds(text, _graphics).getHeight();
-        return 0;
+        Rect result = new Rect();
+        _paint.getTextBounds(string, 0, string.length(), result);
+        return result.width();
         //Revisar
     }
 
@@ -137,4 +143,5 @@ public class AndroidGraphics extends AbstractGraphics {
 
     private int width = 0;
     private int height = 0;
+
 }
