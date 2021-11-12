@@ -53,8 +53,6 @@ public class Board{
     private Graphics _graphics;
     private Color _dotColor, _wallColor, _emptyColor, _textColor, _hintColor;
     private Font _tileFont;
-    private int _numberFontHeight;
-    private int[] _numberFontWidths;
     private Button[][] _tileButtons;
     private int _paintingSize;
     private String boardFeedbackText = "";
@@ -100,9 +98,6 @@ public class Board{
     public void setFonts(Font tileFont){
         _tileFont = tileFont;
         _graphics.setFont(_tileFont);
-        _numberFontHeight = _graphics.getTextHeight("3"); //Todos los números tienen aproximadamente la misma altura
-        _numberFontWidths = new int[_size]; //Almacena el tamaño gráfico de cada número (0, 1, 2, ... size-2)
-        for(int k = 0; k < _numberFontWidths.length; k++) _numberFontWidths[k] = _graphics.getTextWidth(Integer.toString(k));
     }
 
     public void setButtons(int offsetX, int offsetY){
