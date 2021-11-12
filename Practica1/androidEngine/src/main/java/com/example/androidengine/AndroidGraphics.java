@@ -104,7 +104,9 @@ public class AndroidGraphics extends AbstractGraphics {
             Rect src = new Rect(0, 0, image.getWidth(), image.getHeight());
             Rect dst = new Rect(0, 0, (int)w, (int)h);
 
+            _paint.setAlpha((int)(alpha * 255));
             _canvas.drawBitmap(((AndroidImage)image).getImage(), src, dst, _paint);
+            _paint.setAlpha(1);
         }
     }
 

@@ -72,7 +72,7 @@ public class Logic implements Application {
         _molleRegularTitle = _graphics.newFont("Molle-Regular", 100.0f, true);
         _josefinSansTitle = _graphics.newFont("JosefinSans-Bold", 50.0f, true);
         _josefinSansText = _graphics.newFont("JosefinSans-Bold", 20.0f, false);
-        setState(GameState.BoardSizeMenu);
+        setState(GameState.MainMenu);
     }
 
     @Override
