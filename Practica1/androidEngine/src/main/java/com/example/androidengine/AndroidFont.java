@@ -8,7 +8,7 @@ public class AndroidFont implements Font {
     Typeface font;
 
     public AndroidFont(android.content.res.AssetManager manager, String name){
-        font = Typeface.createFromAsset(manager, "./assets/fonts/"+name+".ttf");
+        font = Typeface.createFromAsset(manager, "fonts/"+name+".ttf");
 
         //font.
     }

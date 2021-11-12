@@ -78,15 +78,23 @@ public class AndroidGraphics extends AbstractGraphics {
         _paint.setColor(color);      //Revisar
     }
 
+    public void setFont(Font font){
+        _paint.setTypeface(((AndroidFont)font).getFont());
+        //fontMetrics = _graphics.getFontMetrics(((PcFont)font).getFont());
+        //Revisar
+    }
+
     public void fillCircle(float cx, float cy, float r){
         Paint a= new Paint();
         _canvas.drawCircle(cx,cy,r,a);
     }
 
     @Override
-    public void drawText(Font font, String text, float x, float y) {
+    public void drawText(String text, float x, float y, Boolean isCenteredX, Boolean isCenteredY) {
         //paint.setTextSize(20); ???
-        _paint.setTypeface(((AndroidFont)font).getFont());
+        //_paint.setTypeface(((AndroidFont)font).getFont());
+        if(isCenteredX) x -= getTextWidth(text) * 0.5;
+        if(isCenteredY) y += getTextHeight(text) * 0.5;
         _canvas.drawText(text, x, y, _paint);
     }
 
@@ -105,12 +113,18 @@ public class AndroidGraphics extends AbstractGraphics {
 
 
     @Override
-    public int getTextHeight(Font font, String string) {
+    public int getTextHeight(String string) {
+        //return (int)fontMetrics.getStringBounds(text, _graphics).getWidth();
         return 0;
+        //Revisar
     }
 
     @Override
-    public int getTextWidth(Font font, String string) { return 0; }
+    public int getTextWidth(String string) {
+        //return (int)fontMetrics.getStringBounds(text, _graphics).getHeight();
+        return 0;
+        //Revisar
+    }
 
     @Override
     public int getWindowWidth(){

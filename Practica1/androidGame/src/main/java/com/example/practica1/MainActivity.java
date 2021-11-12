@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         //pantalla alla = new pantalla(this);
         setContentView(engine.getSurfaceView());
 
+        engine.run();
+
     }
 
     @Override
