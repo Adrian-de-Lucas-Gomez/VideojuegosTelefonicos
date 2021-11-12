@@ -119,10 +119,23 @@ public class Board{
     public void revertPlay(){
         if(!_moves.empty()){
             Tile t = _moves.pop();
-            if (t.getType() == TileType.Unknown) numTilesFilled++;
+            //Empty -> Wall -> Dot
+            boardFeedbackText = "Esta casilla se devolvió a ser ";
             _tiles[t.getY()][t.getX()].toggleType_i();
-            if(_tiles[t.getY()][t.getX()].getType() == TileType.Unknown) numTilesFilled--;
+            if (t.getType() == TileType.Dot) {
+                numTilesFilled++;
+                boardFeedbackText += " azul";
+            }
+            else if (t.getType() == TileType.Wall) {
+                boardFeedbackText += " roja";
+            }
+            else if(t.getType() == TileType.Unknown){
+                numTilesFilled--;
+                boardFeedbackText += " vacía";
+            }
+            _hintTile = t;
         }
+        else boardFeedbackText = "No quedan jugadas por revertir.";
     }
 
     public void paint(){
@@ -290,15 +303,10 @@ public class Board{
                                 _moves.add(pressedTile);
                                 _tiles[k][l].toggleType();
                                 _solved = (getFirstHint().getType() == HintType.TableroResuelto);
-                                _hintTile = _nullTile; //Como se ha tocado otra ficha, la pista anterior se elimina
                                 break;
                         }
-                        if(_solved) {
-                            boardFeedbackText = "Victoria!";
-                            setAllDotToValue();
-                            calculateValues();
-                        }
-                        else boardFeedbackText = "";
+                        _hintTile = _nullTile; //Como se ha tocado otra ficha, la pista anterior se elimina
+                        boardFeedbackText = "";
                     }
                     return true;
                 }

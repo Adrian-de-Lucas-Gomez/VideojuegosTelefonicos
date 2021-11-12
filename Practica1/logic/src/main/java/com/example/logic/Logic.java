@@ -105,10 +105,10 @@ public class Logic implements Application {
                 }
                 else if (currentState == GameState.Game){
                     _board.handleInput(pointerX, pointerY);
-                    if (_goToTitleButton.isPressed(pointerX, pointerY)) setState(GameState.MainMenu);
+                    if (_goToTitleButton.isPressed(pointerX, pointerY)) setState(GameState.BoardSizeMenu);
                     else if(_hintButton.isPressed(pointerX, pointerY)) _board.setHintText();
                     else if(_reverseButton.isPressed(pointerX, pointerY)) _board.revertPlay();
-                    if(_board.isSolved()) setState(GameState.BoardSizeMenu);
+                    //if(_board.isSolved()) setState(GameState.BoardSizeMenu);
                 }
             }
         }
@@ -170,7 +170,7 @@ public class Logic implements Application {
             }
             else{
                 _graphics.translate(200, 70);
-                _graphics.setFont(_josefinSansText);
+                _graphics.setFont(_josefinSansTitle);
                 _graphics.drawText("Maravilloso!", - _graphics.getTextWidth("Maravilloso!") * 0.5f, 0);
                 _graphics.translate(0, 130);
             }
@@ -212,15 +212,21 @@ public class Logic implements Application {
             //Texto
             _graphics.setColor(_black);
             _graphics.translate(200, 70);
-            String feedbackText = _board.getBoardFeedbackText();
-            if(!feedbackText.isEmpty()){
-                _graphics.setFont(_josefinSansText);
-                _graphics.drawText(feedbackText, -_graphics.getTextWidth(feedbackText) * 0.5f, 0);
-            }
-            else {
-                feedbackText = Integer.toString(boardSize) + " x " + Integer.toString(boardSize);
+            if(_board.isSolved()){
                 _graphics.setFont(_josefinSansTitle);
-                _graphics.drawText(feedbackText, - graphics.getTextWidth(feedbackText) * 0.5f, 0);
+                _graphics.drawText("Maravilloso!", - graphics.getTextWidth("Maravilloso") * 0.5f, 0);
+            }
+            else{
+                String feedbackText = _board.getBoardFeedbackText();
+                if(!feedbackText.isEmpty()){
+                    _graphics.setFont(_josefinSansText);
+                    _graphics.drawText(feedbackText, -_graphics.getTextWidth(feedbackText) * 0.5f, 0);
+                }
+                else {
+                    feedbackText = Integer.toString(boardSize) + " x " + Integer.toString(boardSize);
+                    _graphics.setFont(_josefinSansTitle);
+                    _graphics.drawText(feedbackText, - graphics.getTextWidth(feedbackText) * 0.5f, 0);
+                }
             }
 
             _graphics.setFont(_josefinSansText);
