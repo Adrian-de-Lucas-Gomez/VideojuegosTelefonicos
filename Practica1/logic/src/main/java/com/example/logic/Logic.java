@@ -124,6 +124,8 @@ public class Logic implements Application {
 
     @Override
     public void onRender(Graphics graphics) {
+        _graphics.setScaleAspect();
+
         //Pintar el estado del juego
         _graphics.clear(_clearColor);
         _graphics.translate(_graphics.getOffsetX(), _graphics.getOffsetY());

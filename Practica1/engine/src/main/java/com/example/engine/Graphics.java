@@ -33,6 +33,7 @@ public interface Graphics {
     void scale(float x, float y);
     void save();
     void restore();
+    void setScaleAspect();
 
     /**
      * Recibe una imagen y la muestra en la pantalla. Se pueden
@@ -69,8 +70,6 @@ public interface Graphics {
      */
     int getWindowWidth();
     int getWindowHeight();
-    int getGameWidth();
-    int getGameHeight();
     int getTextHeight(String string);
     int getTextWidth(String string);
     float getLogicScaleAspect();

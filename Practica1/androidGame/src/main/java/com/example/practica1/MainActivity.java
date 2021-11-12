@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        engine =  new AndroidEngine(this);    //Hace que pete, ni idea tho
+        engine =  new AndroidEngine(this, 400, 600);    //Hace que pete, ni idea tho
         com.example.engine.Application logic = new Logic(engine);
         logic.init();
         engine.setApplication(logic);

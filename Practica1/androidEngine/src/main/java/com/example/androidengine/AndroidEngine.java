@@ -22,11 +22,11 @@ public class AndroidEngine implements Engine, Runnable {
     //Para pillar el canvas a usar
     private SurfaceView surfaceView;
 
-    public AndroidEngine(Context c){
+    public AndroidEngine(Context c, int width, int height){
         context = c;
         surfaceView = new SurfaceView(context);
 
-        graphics = new AndroidGraphics(context);
+        graphics = new AndroidGraphics(context, width, height);
         input = new AndroidInput();
 
         //Ponemos el juego a funcionar

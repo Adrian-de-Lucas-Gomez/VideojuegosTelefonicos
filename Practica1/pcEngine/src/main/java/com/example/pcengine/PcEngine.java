@@ -50,7 +50,6 @@ public class PcEngine implements Engine {
                 do {
                     java.awt.Graphics2D graphicsJava = (Graphics2D)_window.getBufferStrategy().getDrawGraphics();
                     _graphics.setGraphics(graphicsJava);
-                    _graphics.setScaleAspect(); //TODO no sé si va aquí
                     try {
                         //Se llama a pintar lo que toque
                         _logic.onRender(_graphics);

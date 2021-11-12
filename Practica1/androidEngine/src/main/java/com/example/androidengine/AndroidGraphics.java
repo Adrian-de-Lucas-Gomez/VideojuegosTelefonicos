@@ -29,8 +29,11 @@ public class AndroidGraphics extends AbstractGraphics {
     private Context _context;
     private SurfaceView _surface;
 
-    public AndroidGraphics(Context c) {
+    public AndroidGraphics(Context c, int width, int height) {
         _context = c;   //Adjudicamos el contexto
+        _gameWidth = width;
+        _gameHeight = height;
+        _aspect = (float)_gameWidth / (float)_gameHeight;
 
         _paint = new Paint();
         _paint.setColor(Color.GREEN);
@@ -96,7 +99,13 @@ public class AndroidGraphics extends AbstractGraphics {
 
     @Override
     public void drawImage(Image image, float w, float h, float alpha) {
-        _canvas.drawBitmap(((AndroidImage)image).getImage(),w,h,_paint);
+
+        if(image != null) {
+            Rect src = new Rect(0, 0, image.getWidth(), image.getHeight());
+            Rect dst = new Rect(0, 0, (int)w, (int)h);
+
+            _canvas.drawBitmap(((AndroidImage)image).getImage(), src, dst, _paint);
+        }
     }
 
     @Override
@@ -157,14 +166,11 @@ public class AndroidGraphics extends AbstractGraphics {
 
     @Override
     public int getWindowWidth(){
-        return width;
+        return _surface.getWidth();
     }
     @Override
     public int getWindowHeight() {
-        return height;
+        return _surface.getHeight();
     }
-
-    private int width = 0;
-    private int height = 0;
 
 }
