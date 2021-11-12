@@ -4,11 +4,14 @@ import com.example.engine.AbstractGraphics;
 import com.example.engine.Font;
 import com.example.engine.Image;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Composite;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
+import javax.swing.Timer;
 
 //Ahora implementan la clase abstracta AbstractGraphics
 
@@ -18,6 +21,8 @@ public class PcGraphics extends AbstractGraphics {
     private java.awt.Graphics2D _graphics;
     private AffineTransform _tr;
     private FontMetrics fontMetrics;
+    private Composite oComposite;
+    private Composite aComposite;
 
     public PcGraphics(Window window, int width, int height){
         _window = window;
@@ -26,6 +31,7 @@ public class PcGraphics extends AbstractGraphics {
         _gameWidth = width;
         _gameHeight = height;
         _aspect = (float)_gameWidth / (float)_gameHeight;
+        oComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f);
     }
 
     public Image newImage(String name){
@@ -72,9 +78,14 @@ public class PcGraphics extends AbstractGraphics {
     }
 
     //TODO igual hace falta uno con alpha en algun momento
-    public void drawImage(Image image, float w, float h){
+    public void drawImage(Image image, float w, float h, float alpha){
         if(image != null) {
+            if(alpha < 1f){
+                aComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
+                _graphics.setComposite(aComposite);
+            }
             _graphics.drawImage(((PcImage)image).getImage(), 0, 0, (int)w, (int)h, null);
+            _graphics.setComposite(oComposite);
         }
         else
             System.out.println("Null image :(");
@@ -89,8 +100,11 @@ public class PcGraphics extends AbstractGraphics {
         fontMetrics = _graphics.getFontMetrics(((PcFont)font).getFont());
     }
 
-    public void fillCircle(float cx, float cy, float r){ //TODO quitar cx y cy
+    public void fillCircle(float cx, float cy, float r, float alpha){ //TODO quitar cx y cy
+        aComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
+        _graphics.setComposite(aComposite);
         _graphics.fillOval((int)(-r + cx), (int)(-r + cy), (int)(r*2), (int)(r*2));
+        _graphics.setComposite(oComposite);
     }
 
     public void drawText(String text, float x, float y, Boolean isCenteredX, Boolean isCenteredY){

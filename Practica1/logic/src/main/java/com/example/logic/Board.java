@@ -59,6 +59,10 @@ public class Board{
     private float circleDiameter = 0.8f; //El radio del círculo medirá n veces el tamaño de su casilla asignada
     private Tile _hintTile;
 
+    //Animacion de los botones
+    private float iButtonAlpha = 0f, eButtonAlpha = 1f, iButtonScale = 1f, eButtonScale = 1.3f;
+    private float buttonAnimTime = 0.3f;
+
     public Board(Graphics graphics, int paintingSize){
         _graphics = graphics;
         _rand = new Random();
@@ -101,12 +105,12 @@ public class Board{
     }
 
     public void setButtons(int offsetX, int offsetY){
-        _tileButtons= new Button[_size - 2][_size - 2];
-        int sizePerButton = (int)(_paintingSize / (_size - 2));
-        for(int k = 0; k < _size - 2; k++){
-            for(int l = 0; l < _size - 2; l++){
+        _tileButtons= new Button[_size - 1][_size - 1];
+        int sizePerButton = _paintingSize / (_size - 2);
+        for(int k = 0; k < _size - 1; k++){
+            for(int l = 0; l < _size - 1; l++){
                 _tileButtons[k][l] = new Button((int)(offsetX + sizePerButton * l) + (sizePerButton -  sizePerButton * circleDiameter) / 2, offsetY + sizePerButton * k + (sizePerButton -  sizePerButton * circleDiameter) / 2, sizePerButton * circleDiameter, sizePerButton * circleDiameter, null);
-                //TODO revisar todo esto
+                _tileButtons[k][l].setAnimParams(iButtonAlpha, eButtonAlpha, iButtonScale, eButtonScale, buttonAnimTime);
             }
         }
     }
@@ -117,6 +121,7 @@ public class Board{
             //Empty -> Wall -> Dot
             boardFeedbackText = "Esta casilla se devolvió a ser ";
             _tiles[t.getY()][t.getX()].toggleType_i();
+            _tileButtons[t.getY() - 1][t.getX() - 1].activateAnimation();
             if (t.getType() == TileType.Dot) {
                 numTilesFilled++;
                 boardFeedbackText += " azul";
@@ -130,7 +135,10 @@ public class Board{
             }
             _hintTile = t;
         }
-        else boardFeedbackText = "No quedan jugadas por revertir.";
+        else {
+            boardFeedbackText = "No quedan jugadas por revertir.";
+            _hintTile = _nullTile; //Como se ha tocado otra ficha, la pista anterior se elimina
+        }
     }
 
     public void paint(){
@@ -145,14 +153,14 @@ public class Board{
 
                 if(auxTile.getX() == _hintTile.getX() && auxTile.getY() == _hintTile.getY()){
                     _graphics.setColor(_hintColor);
-                    _graphics.fillCircle(sizePerTile/2.0f, sizePerTile/2.0f, sizePerTile * 0.5f);
+                    _graphics.fillCircle(sizePerTile/2.0f, sizePerTile/2.0f, sizePerTile * 0.5f, 0.5f);
                 }
 
                 if(auxTile.getType() == TileType.Dot || auxTile.getType() == TileType.Value) _graphics.setColor(_dotColor);
                 else if (auxTile.getType() == TileType.Wall) _graphics.setColor(_wallColor);
                 else _graphics.setColor(_emptyColor);
 
-                _graphics.fillCircle(sizePerTile/2.0f, sizePerTile/2.0f, sizePerTile * circleDiameter * 0.5f);
+                _graphics.fillCircle(sizePerTile/2.0f, sizePerTile/2.0f, sizePerTile * circleDiameter * 0.5f, _tileButtons[k - 1][l - 1].getAlpha());
 
                 _graphics.setColor(_textColor);
 
@@ -279,8 +287,10 @@ public class Board{
             for(int l = 1; l < _size - 1; l++){
                 if(_tileButtons[k - 1][l - 1].isPressed(posX, posY)){
                     Tile pressedTile = _tiles[k][l];
+                    System.out.println("TOPO");
                     //Si la ficha es parte de la disposición inicial es que está "lockeada" y no se puede modificar
                     if(_empty[pressedTile.getY()][pressedTile.getX()].getType() == TileType.Unknown){
+
                         switch (pressedTile.getType()){
                             //Dot -> Wall -> Unknown
                             case Dot:
@@ -300,6 +310,7 @@ public class Board{
                                 _solved = (getFirstHint().getType() == HintType.TableroResuelto);
                                 break;
                         }
+                        _tileButtons[k - 1][l - 1].activateAnimation();
                         _hintTile = _nullTile; //Como se ha tocado otra ficha, la pista anterior se elimina
                         boardFeedbackText = "";
                     }
@@ -384,6 +395,14 @@ public class Board{
             default:
                 boardFeedbackText = "Completado!!!";
                 break;
+        }
+    }
+
+    public void onUpdate(double deltaTime){
+        for(int k = 0; k < _size - 1; k++){
+            for(int l = 0; l < _size - 1; l++){
+                _tileButtons[k][l].step(deltaTime);
+            }
         }
     }
 

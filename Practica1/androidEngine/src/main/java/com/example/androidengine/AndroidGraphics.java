@@ -75,7 +75,7 @@ public class AndroidGraphics extends AbstractGraphics {
     public void restore(){ _canvas.restore(); }
 
     @Override
-    public void drawImage(Image image, float w, float h) {
+    public void drawImage(Image image, float w, float h, float alpha) {
         _canvas.drawBitmap(((AndroidImage)image).getImage(),w,h,_paint);
     }
 

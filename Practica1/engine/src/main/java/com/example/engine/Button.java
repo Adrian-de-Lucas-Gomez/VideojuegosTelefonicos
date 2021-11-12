@@ -3,6 +3,15 @@ package com.example.engine;
 public class Button {
     private Image _img = null;
     private float _x, _y, _height, _width;
+    private State currentState = State.NotPressed;
+    private float alpha = 1.0f, scale = 1.0f;
+
+    //Animaciones
+    private float _iAlpha, _eAlpha, _iScale, _eScale;
+    private float _timeForAnim;
+    private float _stepAlpha, _stepScale;
+
+    enum State {NotPressed, Pressed, Transitioning}
 
     public Button(float posX, float posY, float width, float height, Image img){
         _img = img;
@@ -12,17 +21,40 @@ public class Button {
         _height = height;
     }
 
-    /*public Button(int posX1, int posY1, int posX2, int posY2, Font font, String text) { //No se xd
-        _font = font;
-        _text = text;
-        _x1 = posX1;
-        _x2 = posX2;
-        _y1 = posY1;
-        _y2 = posY2;
-    }*/
+    public State getState() {return currentState;}
 
     public boolean isPressed(int x, int y){
         return(_x <= x && _y <= y && _x + _width >= x && _y + _height >= y);
+    }
+
+    public void step(double deltaTime){
+        if(currentState == State.Transitioning) {
+            alpha += _stepAlpha * deltaTime;
+            scale += _stepScale * deltaTime;
+
+            if(alpha > _eAlpha || _stepScale > _eScale) {
+                currentState = State.NotPressed;
+                scale = _eScale;
+                alpha = _eAlpha;
+            }
+        }
+    }
+
+    public void activateAnimation(){
+        currentState = State.Transitioning;
+        scale = _iScale;
+        alpha = _iAlpha;
+    }
+
+    public void setAnimParams(float iAlpha, float eAlpha, float iScale, float eScale, float animationTime){
+        _iAlpha = iAlpha;
+        _eAlpha = eAlpha;
+        _iScale = iScale;
+        _eScale = eScale;
+        _timeForAnim = animationTime;
+
+        _stepAlpha = (eAlpha - iAlpha) / animationTime;
+        _stepScale = (eScale - iScale) / animationTime;
     }
 
     public float getX() { return _x; }
@@ -32,6 +64,10 @@ public class Button {
     public float getWidth() { return _width; }
 
     public float getHeight() { return _height; }
+
+    public float getAlpha() {return alpha;}
+
+    public float getScale() {return scale;}
 
     public Image getImage() {return _img;}
 }

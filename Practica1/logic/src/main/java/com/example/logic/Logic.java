@@ -85,7 +85,7 @@ public class Logic implements Application {
         for (TouchEvent e: _input.getTouchEvents()) {
             int pointerX = (int)((e.posX - _graphics.getOffsetX()) / _graphics.getLogicScaleAspect());
             int pointerY = (int)((e.posY - _graphics.getOffsetY()) / _graphics.getLogicScaleAspect());
-            //System.out.println("Pointer: " + Integer.toString(pointerX) + ", " + Integer.toString(pointerY)); //DEBUG
+            System.out.println("Pointer: " + Integer.toString(pointerX) + ", " + Integer.toString(pointerY)); //DEBUG
             if(e.eventType == TouchEvent.EventType.buttonPressed){
                 if(currentState == GameState.MainMenu){
                     if(_playButton.isPressed(pointerX, pointerY)) setState(GameState.BoardSizeMenu);
@@ -119,6 +119,7 @@ public class Logic implements Application {
 
     @Override
     public void onUpdate(double deltaTime) {
+        if(currentState == GameState.Game) _board.onUpdate(deltaTime);
     }
 
     @Override
@@ -133,7 +134,7 @@ public class Logic implements Application {
             //Tamaño Lógico: 400x600
             //Imagen Q42
             _graphics.translate(170, 400);
-            _graphics.drawImage(_q43Img, 60, 80);
+            _graphics.drawImage(_q43Img, 60, 80, 1.0f);
 
             //Textos
             _graphics.restore();
@@ -172,7 +173,7 @@ public class Logic implements Application {
             _graphics.drawText("Escoge las dimensiones del tablero.", 0, 0, true, false);
             //Imágenes
             _graphics.translate(-_goToTitleButton.getWidth()/2, 300);
-            _graphics.drawImage(_goToTitleButton.getImage(), _goToTitleButton.getWidth(), _goToTitleButton.getHeight());
+            _graphics.drawImage(_goToTitleButton.getImage(), _goToTitleButton.getWidth(), _goToTitleButton.getHeight(), 0.5f);
 
             //Botones de eleccion de tamaño de tablero
             _graphics.restore();
@@ -182,10 +183,8 @@ public class Logic implements Application {
             for(int k = 0; k < 3; k++) {
                 if(k % 2 == 0) _graphics.setColor(_red);
                 else _graphics.setColor(_blue);
-                _graphics.fillCircle(0, 0,30);
+                _graphics.fillCircle(0, 0,30, 0.5f);
                 _graphics.setColor(_clearColor);
-//                _graphics.drawText(Integer.toString(k + 4),
-//                    - _graphics.getTextWidth(Integer.toString(k + 4)) / 2, _graphics.getTextHeight(Integer.toString(k + 4)) / 3);
                 _graphics.drawText(Integer.toString(k + 4), 0,12, true, false);
                 _graphics.translate(100, 0);
             }
@@ -194,10 +193,8 @@ public class Logic implements Application {
             for(int k = 0; k < 3; k++) {
                 if(k % 2 == 1) _graphics.setColor(_red);
                 else _graphics.setColor(_blue);
-                _graphics.fillCircle(0, 0,30);
+                _graphics.fillCircle(0, 0,30, 0.5f);
                 _graphics.setColor(_clearColor);
-//                _graphics.drawText(Integer.toString(k + 7),
-//                    - _graphics.getTextWidth(Integer.toString(k + 7)) / 2, _graphics.getTextHeight(Integer.toString(k + 7)) / 3);
                 _graphics.drawText((Integer.toString(k + 7)),0, 12, true, false);
                 _graphics.translate(100, 0);
             }
@@ -235,11 +232,11 @@ public class Logic implements Application {
             _graphics.translate(60, 400);
 
             //Botones
-            _graphics.drawImage(_hintButton.getImage(), _hintButton.getWidth(), _hintButton.getHeight());
+            _graphics.drawImage(_hintButton.getImage(), _hintButton.getWidth(), _hintButton.getHeight(), 0.5f);
             _graphics.translate(100, 0);
-            _graphics.drawImage(_goToTitleButton.getImage(), _goToTitleButton.getWidth(), _goToTitleButton.getHeight());
+            _graphics.drawImage(_goToTitleButton.getImage(), _goToTitleButton.getWidth(), _goToTitleButton.getHeight(), 0.5f);
             _graphics.translate(100, 0);
-            _graphics.drawImage(_reverseButton.getImage(), _reverseButton.getWidth(), _reverseButton.getHeight());
+            _graphics.drawImage(_reverseButton.getImage(), _reverseButton.getWidth(), _reverseButton.getHeight(), 0.5f);
         }
     }
 
