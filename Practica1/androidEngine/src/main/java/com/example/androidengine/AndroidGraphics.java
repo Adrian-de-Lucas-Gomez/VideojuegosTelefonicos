@@ -122,10 +122,9 @@ public class AndroidGraphics extends AbstractGraphics {
     }
 
     public void fillCircle(float cx, float cy, float r, float alpha){
-        int auxAlpha= (int)(alpha * 255.0f);
-        _paint.setAlpha(auxAlpha);
+        _paint.setAlpha((int)(alpha * 255));
         _canvas.drawCircle(cx,cy,r,_paint);
-        _paint.setAlpha(255);
+        _paint.setAlpha(1);
 
     }
 
@@ -133,6 +132,7 @@ public class AndroidGraphics extends AbstractGraphics {
     public void drawText(String text, float x, float y, Boolean isCenteredX, Boolean isCenteredY) {
         if(isCenteredX) x -= getTextWidth(text) * 0.5;
         if(isCenteredY) y += getTextHeight(text) * 0.5;
+
         _canvas.drawText(text, x, y, _paint);
     }
 
