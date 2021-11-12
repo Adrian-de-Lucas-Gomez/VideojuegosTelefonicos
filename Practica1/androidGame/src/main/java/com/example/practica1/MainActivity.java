@@ -28,10 +28,8 @@ public class MainActivity extends AppCompatActivity {
         com.example.engine.Application logic = new Logic(engine);
         logic.init();
         engine.setApplication(logic);
-        //pantalla alla = new pantalla(this);
-        setContentView(engine.getSurfaceView());
 
-        //engine.run();
+        setContentView(engine.getSurfaceView());
 
     }
 
@@ -48,26 +46,4 @@ public class MainActivity extends AppCompatActivity {
         //Parar la hebra
         engine.pause();
     }
-
-
-    //Para la prueba unicamente
-    class pantalla extends View{
-        public pantalla(Context context){
-            super(context);
-        }
-
-        public void onDraw(Canvas canvas){
-            Paint pintura= new Paint();
-
-            pintura.setStyle(Paint.Style.FILL_AND_STROKE);
-            pintura.setStrokeWidth(15.0f);
-            pintura.setColor(Color.BLUE);
-            System.out.println("render");
-
-            canvas.drawCircle(150,150, 50, pintura);
-            canvas.drawRect(10,5,500,60,pintura);
-        }
-    }
-
-
 }

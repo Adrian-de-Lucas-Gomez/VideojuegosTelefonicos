@@ -17,6 +17,9 @@ import com.example.engine.AbstractGraphics;
 import com.example.engine.Font;
 import com.example.engine.Image;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 //Ahora implementa AbstractGraphics para no repetir codigo
 
 public class AndroidGraphics extends AbstractGraphics {
@@ -36,12 +39,29 @@ public class AndroidGraphics extends AbstractGraphics {
     }
 
     public Image newImage(String name){
+        //String ruta= "/sprites/" + name;
+        //Bitmap bMap = BitmapFactory.decodeFile(ruta);
+        Image imagen= null;
+        InputStream inputStream = null;
 
-        AndroidImage img = null;
-
-        Bitmap bMap = BitmapFactory.decodeFile("./assets/sprites/" + name);
-
-        return new AndroidImage(bMap);
+        try{
+            AssetManager assetManager = _context.getAssets();
+            inputStream = assetManager.open("sprites/"+name);
+            Bitmap bMap = BitmapFactory.decodeStream(inputStream);
+            imagen = new AndroidImage(bMap);
+        }
+        catch(IOException io){
+            android.util.Log.e("AndroidGraphics", "Error leyendo imagen");
+        }
+        finally{
+            if(inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (Exception io) {
+                }
+            }
+        }
+        return imagen;
     }
 
     //Revisar (no se si es mejor cargarlo aqui y asi nos ahorramos pasar el context o mejor hacerlo en AndroidFont como en PcFont)
@@ -82,7 +102,7 @@ public class AndroidGraphics extends AbstractGraphics {
     @Override
     public void setColor(int color) {
         _canvas.drawColor(color);
-        _paint.setColor(color);      //Revisar
+        _paint.setColor(color);
     }
 
     public void setFont(Font font){
@@ -90,9 +110,12 @@ public class AndroidGraphics extends AbstractGraphics {
         //Revisar
     }
 
-    public void fillCircle(float cx, float cy, float r){
-        Paint a= new Paint();
-        _canvas.drawCircle(cx,cy,r,a);
+    public void fillCircle(float cx, float cy, float r, float alpha){
+        int auxAlpha= (int)(alpha * 255.0f);
+        _paint.setAlpha(auxAlpha);
+        _canvas.drawCircle(cx,cy,r,_paint);
+        _paint.setAlpha(255);
+
     }
 
     @Override
