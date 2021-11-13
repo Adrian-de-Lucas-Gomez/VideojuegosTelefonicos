@@ -192,6 +192,7 @@ public class Board{
 
     public void generate(){
         //Reparto de numero de fichas
+        _solved = false;
         float percentageBlues = 0.6f, minPercentageBlues = 0.2f;
         numTilesFilled = _numPlayeableTiles;
         int maxNumBlues = (int)(_numPlayeableTiles * percentageBlues);

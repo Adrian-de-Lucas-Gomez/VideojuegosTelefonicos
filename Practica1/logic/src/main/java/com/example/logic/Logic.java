@@ -303,6 +303,7 @@ public class Logic implements Application {
 
     private void transitionTowardsState(GameState newState){
         isTransitioning = true;
+        hasFinishedHalfTransition = false;
         stateToTransition = newState;
         currentTimeToTransition = 0f;
     }
@@ -311,7 +312,7 @@ public class Logic implements Application {
 
         //Limpieza de estado actual
         if(currentState == GameState.Game) {
-            justSolvedBoard = _board.isSolved();
+            justSolvedBoard = false;
             _board.clear();
         }
 
