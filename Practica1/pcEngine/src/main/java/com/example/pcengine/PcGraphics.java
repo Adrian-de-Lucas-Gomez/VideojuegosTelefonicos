@@ -79,7 +79,8 @@ public class PcGraphics extends AbstractGraphics {
     //TODO igual hace falta uno con alpha en algun momento
     public void drawImage(Image image, float w, float h, float alpha, boolean isCentered){
         if(image != null) {
-            if(alpha < 1f){
+            if(alpha < _maxAlpha){
+                System.out.println("soy menor");
                 aComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
                 _graphics.setComposite(aComposite);
             }
@@ -100,9 +101,11 @@ public class PcGraphics extends AbstractGraphics {
         fontMetrics = _graphics.getFontMetrics(((PcFont)font).getFont());
     }
 
-    public void fillCircle(float cx, float cy, float r, float alpha){ //TODO quitar cx y cy
-        aComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
-        _graphics.setComposite(aComposite);
+    public void fillCircle(float cx, float cy, float r, float alpha){ //TODO quitar cx y cy (?? Creo que no hace falta)
+        if(alpha < _maxAlpha) {
+            aComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
+            _graphics.setComposite(aComposite);
+        }
         _graphics.fillOval((int)(-r + cx), (int)(-r + cy), (int)(r*2), (int)(r*2));
         _graphics.setComposite(oComposite);
     }
@@ -111,6 +114,13 @@ public class PcGraphics extends AbstractGraphics {
         if(isCenteredX) x -= getTextWidth(text) * 0.5;
         if(isCenteredY) y += getTextHeight(text) * 0.5;
         _graphics.drawString(text, x, y);
+    }
+
+    @Override
+    public void setMaxAlpha(float alpha) {
+        _maxAlpha = alpha;
+        oComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, _maxAlpha);
+        _graphics.setComposite(oComposite);
     }
 
     @Override

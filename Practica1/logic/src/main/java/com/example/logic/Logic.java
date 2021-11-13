@@ -46,6 +46,9 @@ public class Logic implements Application {
     private Board _board;
     private Image _lockImg;
     private Button _hintButton, _reverseButton;
+
+    private float timeBetweenStates = 1.5f;
+    private float sceneAlpha = 0.1f;
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
     public Logic(Engine engine) {
@@ -134,18 +137,18 @@ public class Logic implements Application {
     @Override
     public void onRender(Graphics graphics) {
         _graphics.setScaleAspect();
-
         //Pintar el estado del juego
         _graphics.clear(_clearColor);
         _graphics.translate(_graphics.getOffsetX(), _graphics.getOffsetY());
         _graphics.scale(_graphics.getLogicScaleAspect(), _graphics.getLogicScaleAspect());
         _graphics.save();
 
+        _graphics.setMaxAlpha(sceneAlpha); //todo revisar si esto se debe dejar aquí
         if(currentState == GameState.MainMenu){
             //Tamaño Lógico: 400x600
             //Imagen Q42
             _graphics.translate(170, 400);
-            _graphics.drawImage(_q43Img, 60, 80, 1.0f, false);
+            _graphics.drawImage(_q43Img, 60, 80, 0.5f, false);
 
             //Textos
             _graphics.restore();
@@ -298,6 +301,5 @@ public class Logic implements Application {
             _board.setButtons(20, 100);
         }
         hasBeenGenerated[currentState.ordinal()] = true;
-
     }
 }

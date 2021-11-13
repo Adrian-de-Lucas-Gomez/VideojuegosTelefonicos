@@ -66,6 +66,11 @@ public interface Graphics {
     void drawText(String text, float x, float y, Boolean isCenteredX, Boolean isCenteredY);
 
     /**
+     * Escribe el valor alpha máximo que pueden alcanzar los elementos gráficos
+     */
+    void setMaxAlpha(float alpha);
+
+    /**
      * Devuelven el tamaño de la ventana real y logico
      */
     int getWindowWidth();

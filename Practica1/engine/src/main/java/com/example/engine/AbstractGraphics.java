@@ -9,6 +9,8 @@ public abstract class AbstractGraphics implements Graphics {
     protected int _offsetX = 0;
     protected int _offsetY = 0;
 
+    protected float _maxAlpha = 1f; //Utilizado para las transiciones entre estados.
+
     public void setScaleAspect(){
         float logicAspect = (float)getWindowWidth() / (float)getWindowHeight();
 

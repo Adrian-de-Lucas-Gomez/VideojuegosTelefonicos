@@ -59,7 +59,6 @@ public class Button {
                 _scale = (_eScale - _iScale) * (float)Math.sin(currentScalingAnimationTime * (2f* Math.PI) / timePerScalingAnimationRepetition) + _iScale;
                 if(currentScalingAnimationTime > _scalingAnimationTime) _scalingAnimFinished = true;
             }
-
             if((!_hasScalingAnimation || _scalingAnimFinished) && (!_hasAlphaAnimation|| _alphaAnimationFinished)){
                 currentState = State.NotPressed;
                 _scale = _defaultScale;
