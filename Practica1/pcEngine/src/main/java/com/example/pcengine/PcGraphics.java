@@ -11,7 +11,6 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
-import javax.swing.Timer;
 
 //Ahora implementan la clase abstracta AbstractGraphics
 
@@ -78,13 +77,14 @@ public class PcGraphics extends AbstractGraphics {
     }
 
     //TODO igual hace falta uno con alpha en algun momento
-    public void drawImage(Image image, float w, float h, float alpha){
+    public void drawImage(Image image, float w, float h, float alpha, boolean isCentered){
         if(image != null) {
             if(alpha < 1f){
                 aComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
                 _graphics.setComposite(aComposite);
             }
-            _graphics.drawImage(((PcImage)image).getImage(), 0, 0, (int)w, (int)h, null);
+            if(isCentered) _graphics.drawImage(((PcImage)image).getImage(), (int)-w/2, (int)-h/2, (int)w, (int)h, null);
+            else _graphics.drawImage(((PcImage)image).getImage(), 0, 0, (int)w, (int)h, null);
             _graphics.setComposite(oComposite);
         }
         else

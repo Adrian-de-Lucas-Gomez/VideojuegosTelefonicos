@@ -41,7 +41,7 @@ public interface Graphics {
      * de si se permite o no escalar la imagen, si se permite
      * elegir que porción de la imagen original se muestra, etc.
      */
-    void drawImage(Image image, float w, float h, float alpha);
+    void drawImage(Image image, float w, float h, float alpha, boolean isCentered);
 
     /**
      * Establece el color a utilizar en las operaciones de

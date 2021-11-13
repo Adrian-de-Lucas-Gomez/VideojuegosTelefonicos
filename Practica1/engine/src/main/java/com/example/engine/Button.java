@@ -1,24 +1,38 @@
 package com.example.engine;
 
+import sun.util.resources.ext.CalendarData_en_IE;
+
 public class Button {
     private Image _img = null;
     private float _x, _y, _height, _width;
     private State currentState = State.NotPressed;
-    private float alpha = 1.0f, scale = 1.0f;
+    private float _alpha = 1.0f, _scale = 1.0f;
+    private float _defaultAlpha, _defaultScale;
 
     //Animaciones
     private float _iAlpha, _eAlpha, _iScale, _eScale;
-    private float _timeForAnim;
     private float _stepAlpha, _stepScale;
+
+    private boolean _hasScalingAnimation = false;
+    private boolean _hasAlphaAnimation = false;
+
+    private boolean _scalingAnimFinished = false;
+    private boolean _alphaAnimationFinished = false;
 
     enum State {NotPressed, Pressed, Transitioning}
 
-    public Button(float posX, float posY, float width, float height, Image img){
+    public Button(float posX, float posY, float width, float height, Image img, float alpha, float scale){
         _img = img;
         _x = posX;
         _y = posY;
         _width = width;
         _height = height;
+
+        _alpha = alpha;
+        _scale = scale;
+
+        _defaultAlpha = alpha;
+        _defaultScale = scale;
     }
 
     public State getState() {return currentState;}
@@ -29,31 +43,48 @@ public class Button {
 
     public void step(double deltaTime){
         if(currentState == State.Transitioning) {
-            alpha += _stepAlpha * deltaTime;
-            scale += _stepScale * deltaTime;
+            if(_hasAlphaAnimation && !_alphaAnimationFinished) {
+                _alpha += _stepAlpha * deltaTime;
+                if(_alpha < Math.min(_iAlpha, _eAlpha) || _alpha > Math.max(_iAlpha, _eAlpha)) _alphaAnimationFinished = true;
+            }
+            if(_hasScalingAnimation && !_scalingAnimFinished) {
+                _scale += _stepScale * deltaTime;
+                if(_scale < Math.min(_iScale, _eScale) || _scale > Math.max(_iScale, _eScale)) _scalingAnimFinished = true;
+            }
 
-            if(alpha > _eAlpha || _stepScale > _eScale) {
+            if((!_hasScalingAnimation || _scalingAnimFinished) && (!_hasAlphaAnimation|| _alphaAnimationFinished)){
                 currentState = State.NotPressed;
-                scale = _eScale;
-                alpha = _eAlpha;
+                _scale = _defaultScale;
+                _alpha = _defaultAlpha;
             }
         }
     }
 
     public void activateAnimation(){
+        if(_hasAlphaAnimation){
+            _alphaAnimationFinished = false;
+            _alpha = _iAlpha;
+        }
+        if(_hasScalingAnimation){
+            _scalingAnimFinished = false;
+            _scale = _iScale;
+        }
         currentState = State.Transitioning;
-        scale = _iScale;
-        alpha = _iAlpha;
     }
 
-    public void setAnimParams(float iAlpha, float eAlpha, float iScale, float eScale, float animationTime){
+    public void setAnimationAlpha(float iAlpha, float eAlpha, float animationTime){
+        _hasAlphaAnimation = true;
         _iAlpha = iAlpha;
         _eAlpha = eAlpha;
-        _iScale = iScale;
-        _eScale = eScale;
-        _timeForAnim = animationTime;
 
         _stepAlpha = (eAlpha - iAlpha) / animationTime;
+    }
+
+    public void setScalingAnimation(float iScale, float eScale, float animationTime){
+        _hasScalingAnimation = true;
+        _iScale = iScale;
+        _eScale = eScale;
+
         _stepScale = (eScale - iScale) / animationTime;
     }
 
@@ -65,9 +96,9 @@ public class Button {
 
     public float getHeight() { return _height; }
 
-    public float getAlpha() {return alpha;}
+    public float getAlpha() {return _alpha;}
 
-    public float getScale() {return scale;}
+    public float getScale() {return _scale;}
 
     public Image getImage() {return _img;}
 }

@@ -3,8 +3,8 @@ package com.example.logic;
 import com.example.engine.Button;
 import com.example.engine.Font;
 import com.example.engine.Graphics;
+import com.example.engine.Image;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -58,10 +58,12 @@ public class Board{
     private String boardFeedbackText = "";
     private float circleDiameter = 0.8f; //El radio del círculo medirá n veces el tamaño de su casilla asignada
     private Tile _hintTile;
+    private Image _lockImage;
+    boolean _pressedLockedTile = false;
 
     //Animacion de los botones
-    private float iButtonAlpha = 0f, eButtonAlpha = 1f, iButtonScale = 1f, eButtonScale = 1.3f;
-    private float buttonAnimTime = 0.3f;
+    private float iButtonAlpha = 0f, eButtonAlpha = 1f, iButtonScale = 1f, eButtonScale = 1.15f;
+    private float buttonAnimTime = 0.25f;
 
     public Board(Graphics graphics, int paintingSize){
         _graphics = graphics;
@@ -72,6 +74,7 @@ public class Board{
         _nullTile = new Tile(0, 0, 0, TileType.None);
         _hintTile = new Tile(0, 0, 0, TileType.None);
         _moves = new Stack<Tile>();
+        _lockImage = _graphics.newImage("lock.png");
         for(int k = 0; k < 4; k++){
             _tileDirInfo[k] = new TileDirectionInfo();
         }
@@ -105,12 +108,19 @@ public class Board{
     }
 
     public void setButtons(int offsetX, int offsetY){
-        _tileButtons= new Button[_size - 1][_size - 1];
+        _tileButtons= new Button[_size - 2][_size - 2];
         int sizePerButton = _paintingSize / (_size - 2);
-        for(int k = 0; k < _size - 1; k++){
-            for(int l = 0; l < _size - 1; l++){
-                _tileButtons[k][l] = new Button((int)(offsetX + sizePerButton * l) + (sizePerButton -  sizePerButton * circleDiameter) / 2, offsetY + sizePerButton * k + (sizePerButton -  sizePerButton * circleDiameter) / 2, sizePerButton * circleDiameter, sizePerButton * circleDiameter, null);
-                _tileButtons[k][l].setAnimParams(iButtonAlpha, eButtonAlpha, iButtonScale, eButtonScale, buttonAnimTime);
+        for(int k = 1; k < _size - 1; k++){
+            for(int l = 1; l < _size - 1; l++){
+                _tileButtons[k - 1][l - 1] = new Button(offsetX + sizePerButton * (l - 1) + (sizePerButton -  sizePerButton * circleDiameter) / 2, offsetY + sizePerButton * (k - 1) + (sizePerButton -  sizePerButton * circleDiameter) / 2,
+                        sizePerButton * circleDiameter, sizePerButton * circleDiameter, _lockImage, 1f, 1f);
+                if(_empty[k][l].getType() == TileType.Unknown) {
+                    _tileButtons[k - 1][l - 1].setAnimationAlpha(0f, 1f, buttonAnimTime);
+                    _tileButtons[k - 1][l - 1].setScalingAnimation(iButtonScale, eButtonScale, buttonAnimTime);
+                }
+                else{
+                    _tileButtons[k - 1][l - 1].setScalingAnimation(iButtonScale, 0.8f, buttonAnimTime);
+                }
             }
         }
     }
@@ -153,14 +163,19 @@ public class Board{
 
                 if(auxTile.getX() == _hintTile.getX() && auxTile.getY() == _hintTile.getY()){
                     _graphics.setColor(_hintColor);
-                    _graphics.fillCircle(sizePerTile/2.0f, sizePerTile/2.0f, sizePerTile * 0.5f, 0.5f);
+                    _graphics.fillCircle(sizePerTile/2.0f, sizePerTile/2.0f, sizePerTile * 0.5f, 1f);
                 }
 
                 if(auxTile.getType() == TileType.Dot || auxTile.getType() == TileType.Value) _graphics.setColor(_dotColor);
                 else if (auxTile.getType() == TileType.Wall) _graphics.setColor(_wallColor);
                 else _graphics.setColor(_emptyColor);
 
-                _graphics.fillCircle(sizePerTile/2.0f, sizePerTile/2.0f, sizePerTile * circleDiameter * 0.5f, _tileButtons[k - 1][l - 1].getAlpha());
+                _graphics.fillCircle(sizePerTile/2.0f, sizePerTile/2.0f, sizePerTile * circleDiameter * 0.5f * _tileButtons[k - 1][l - 1].getScale(), _tileButtons[k - 1][l - 1].getAlpha());
+                if(_empty[k][l].getType() == TileType.Wall && _pressedLockedTile) {
+                    _graphics.translate(sizePerTile * 0.5f, sizePerTile * 0.5f);
+                    _graphics.drawImage(_lockImage, _tileButtons[auxTile.getY() - 1][auxTile.getX() - 1].getWidth() * 0.7f, _tileButtons[auxTile.getY() - 1][auxTile.getX() - 1].getHeight() * 0.7f, 0.8f, true);
+                    _graphics.translate(-sizePerTile * 0.5f, -sizePerTile * 0.5f);
+                }
 
                 _graphics.setColor(_textColor);
 
@@ -177,7 +192,7 @@ public class Board{
 
     public void generate(){
         //Reparto de numero de fichas
-        float percentageBlues = 0.7f, minPercentageBlues = 0.2f;
+        float percentageBlues = 0.6f, minPercentageBlues = 0.2f;
         numTilesFilled = _numPlayeableTiles;
         int maxNumBlues = (int)(_numPlayeableTiles * percentageBlues);
         int maxNumReds = _numPlayeableTiles - maxNumBlues;
@@ -241,7 +256,7 @@ public class Board{
         //pero resoluble.
         //Al convertir a desconocida una ficha aleatoria es probable que ya no se pueda encontrar una solución. Para ello damos
         //un número limitado de intentos.
-        int numTries = 3; //TO-DO:Esto tiene que ser proporcional al tamaño
+        int numTries = 3; //TODO:Esto tiene que ser proporcional al tamaño
         //Collections.shuffle(blueTiles);
         Collections.shuffle(auxTiles);
         Tile randomTile;
@@ -287,10 +302,8 @@ public class Board{
             for(int l = 1; l < _size - 1; l++){
                 if(_tileButtons[k - 1][l - 1].isPressed(posX, posY)){
                     Tile pressedTile = _tiles[k][l];
-                    System.out.println("TOPO");
                     //Si la ficha es parte de la disposición inicial es que está "lockeada" y no se puede modificar
                     if(_empty[pressedTile.getY()][pressedTile.getX()].getType() == TileType.Unknown){
-
                         switch (pressedTile.getType()){
                             //Dot -> Wall -> Unknown
                             case Dot:
@@ -310,10 +323,14 @@ public class Board{
                                 _solved = (getFirstHint().getType() == HintType.TableroResuelto);
                                 break;
                         }
-                        _tileButtons[k - 1][l - 1].activateAnimation();
+                        _pressedLockedTile = false;
                         _hintTile = _nullTile; //Como se ha tocado otra ficha, la pista anterior se elimina
                         boardFeedbackText = "";
+                        if(isSolved()) setAllDotToValue();
                     }
+                    else _pressedLockedTile = true;
+                    //Activamos la animacion de la ficha.
+                    _tileButtons[k - 1][l - 1].activateAnimation();
                     return true;
                 }
             }
@@ -330,10 +347,13 @@ public class Board{
     }
 
     public int getPercentageFilled(){
+        if(_solved) return 100;
         float percentageFilled = (float)numTilesFilled / _numPlayeableTiles * 100;
         double fractionalPart = percentageFilled % 1;
         return (int)(percentageFilled - fractionalPart);
     }
+
+    public boolean justPressedLockedTile() {return _pressedLockedTile;}
 
     private void calculateValues(){
         blueTiles.clear();
@@ -399,8 +419,8 @@ public class Board{
     }
 
     public void onUpdate(double deltaTime){
-        for(int k = 0; k < _size - 1; k++){
-            for(int l = 0; l < _size - 1; l++){
+        for(int k = 0; k < _size - 2; k++){
+            for(int l = 0; l < _size - 2; l++){
                 _tileButtons[k][l].step(deltaTime);
             }
         }
@@ -414,6 +434,8 @@ public class Board{
                 if(currentTile.getType() == TileType.Dot) _tiles[k][l].setType(TileType.Value);
             }
         }
+        calculateValues();
+
     }
 
     private TileHint getFirstHint(){
