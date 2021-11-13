@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         engine.setApplication(logic);
 
         setContentView(engine.getSurfaceView());
-
     }
 
 

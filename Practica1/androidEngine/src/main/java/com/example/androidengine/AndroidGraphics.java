@@ -150,7 +150,7 @@ public class AndroidGraphics extends AbstractGraphics {
         _paint.setTextSize(fontInUse.getSize());
 
         if(isCenteredX) x -= getTextWidth(text) * 0.5;
-        if(isCenteredY) y += getTextHeight(text);
+        if(isCenteredY) y += getTextHeight(text)* 0.5;
 
         _canvas.drawText(text, x, y, _paint);
     }

@@ -180,7 +180,7 @@ public class Board{
                 _graphics.setColor(_textColor);
 
                 if(auxTile.getType() == TileType.Value)
-                    _graphics.drawText(Integer.toString(auxTile.getValue()), sizePerTile * 0.5f, sizePerTile * 0.35f, true, true);
+                    _graphics.drawText(Integer.toString(auxTile.getValue()), sizePerTile * 0.5f, sizePerTile * 0.5f, true, true);
 
                 _graphics.translate(sizePerTile, 0);
             }

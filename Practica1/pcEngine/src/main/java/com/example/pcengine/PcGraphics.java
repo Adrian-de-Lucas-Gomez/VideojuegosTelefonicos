@@ -111,7 +111,7 @@ public class PcGraphics extends AbstractGraphics {
 
     public void drawText(String text, float x, float y, Boolean isCenteredX, Boolean isCenteredY){
         if(isCenteredX) x -= getTextWidth(text) * 0.5;
-        if(isCenteredY) y += getTextHeight(text) * 0.5;
+        if(isCenteredY) y += getTextHeight(text) * 0.25;
         _graphics.drawString(text, x, y);
     }
 
