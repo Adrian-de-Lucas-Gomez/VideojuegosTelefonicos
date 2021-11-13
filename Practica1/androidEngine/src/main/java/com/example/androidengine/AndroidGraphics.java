@@ -143,7 +143,9 @@ public class AndroidGraphics extends AbstractGraphics {
 
     @Override
     public void drawText(String text, float x, float y, Boolean isCenteredX, Boolean isCenteredY) {
-        _paint.setARGB(255,0, 0, 0);
+
+        int color = _paint.getColor();
+        _paint.setARGB((int)(_maxAlpha * 255),Color.red(color), Color.green(color), Color.blue(color));
         _paint.setFakeBoldText(fontInUse.isBold());
         _paint.setTextSize(fontInUse.getSize());
 
