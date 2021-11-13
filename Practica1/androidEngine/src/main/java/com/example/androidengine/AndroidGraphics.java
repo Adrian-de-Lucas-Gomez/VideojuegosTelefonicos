@@ -98,11 +98,21 @@ public class AndroidGraphics extends AbstractGraphics {
     public void restore(){ _canvas.restore(); }
 
     @Override
-    public void drawImage(Image image, float w, float h, float alpha) {
+    public void drawImage(Image image, float w, float h, float alpha, boolean isCentered) {
 
         if(image != null) {
-            Rect src = new Rect(0, 0, image.getWidth(), image.getHeight());
-            Rect dst = new Rect(0, 0, (int)w, (int)h);
+            Rect src;
+            Rect dst;
+
+            if (isCentered){
+                //Ayuda no se centrar esto soy bobo
+                src = new Rect(0, 0, image.getWidth(), image.getHeight());
+                dst = new Rect(0, 0, (int)w, (int)h);
+            }
+            else{
+                src = new Rect(0, 0, image.getWidth(), image.getHeight());
+                dst = new Rect(0, 0, (int)w, (int)h);
+            }
 
             _paint.setAlpha((int)(alpha * 255));
             _canvas.drawBitmap(((AndroidImage)image).getImage(), src, dst, _paint);
@@ -134,6 +144,11 @@ public class AndroidGraphics extends AbstractGraphics {
         if(isCenteredY) y += getTextHeight(text) * 0.5;
 
         _canvas.drawText(text, x, y, _paint);
+    }
+
+    @Override
+    public void setMaxAlpha(float alpha) {
+        //Cosa de Mmur
     }
 
     //Referente a pillar y soltar cavas -----------------------------------------------------------------------------------------------

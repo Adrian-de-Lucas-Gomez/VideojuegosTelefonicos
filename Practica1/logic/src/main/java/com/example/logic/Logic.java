@@ -95,9 +95,11 @@ public class Logic implements Application {
         ArrayList<TouchEvent> eventList = _input.getTouchEvents();
         if(!isTransitioning || (isTransitioning && hasFinishedHalfTransition)){
             for (TouchEvent e: eventList) {
-                int pointerX = (int)((e.posX - _graphics.getOffsetX()) / _graphics.getLogicScaleAspect());
-                int pointerY = (int)((e.posY - _graphics.getOffsetY()) / _graphics.getLogicScaleAspect());
-                System.out.println("Pointer: " + Integer.toString(pointerX) + ", " + Integer.toString(pointerY)); //DEBUG
+                //Ya vienen transformados desde Input
+                int pointerX = e.posX;
+                int pointerY = e.posY;
+
+                //System.out.println("Pointer: " + Integer.toString(pointerX) + ", " + Integer.toString(pointerY)); //DEBUG
                 if(e.eventType == TouchEvent.EventType.buttonPressed){
                     if(currentState == GameState.MainMenu){
                         if(_playButton.isPressed(pointerX, pointerY)) transitionTowardsState(GameState.BoardSizeMenu);
@@ -280,6 +282,7 @@ public class Logic implements Application {
 
             _graphics.setFont(_josefinSansText);
             _graphics.restore();
+            _graphics.save();
             _graphics.translate(200, 485);
             String percentageFilled = Integer.toString(_board.getPercentageFilled()) + "%";
             _graphics.drawText(percentageFilled, 0, 0, true, false);

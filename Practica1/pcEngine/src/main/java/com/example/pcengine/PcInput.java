@@ -1,5 +1,6 @@
 package com.example.pcengine;
 
+import com.example.engine.Graphics;
 import com.example.engine.Input;
 import com.example.engine.TouchEvent;
 
@@ -11,8 +12,10 @@ import java.util.List;
 
 public class PcInput implements Input, MouseListener, MouseMotionListener {
     private ArrayList<TouchEvent> eventList;
+    Graphics _graphics;
 
-    public PcInput(){
+    public PcInput(Graphics graphics){
+        _graphics = graphics;
         eventList = new ArrayList<TouchEvent>();
     }
 
@@ -28,28 +31,32 @@ public class PcInput implements Input, MouseListener, MouseMotionListener {
     }
 
     @Override
-    public void mouseClicked(MouseEvent mouseEvent){
-        eventList.add(new TouchEvent(mouseEvent.getX(), mouseEvent.getY(), TouchEvent.EventType.buttonPressed));
+    synchronized public void mouseClicked(MouseEvent mouseEvent){
+        int x= (int)((mouseEvent.getX() - _graphics.getOffsetX()) / _graphics.getLogicScaleAspect());
+        int y= (int)((mouseEvent.getY() - _graphics.getOffsetY()) / _graphics.getLogicScaleAspect());
+        eventList.add(new TouchEvent(x, y, TouchEvent.EventType.buttonPressed));
     }
 
     @Override
-    public void mouseReleased(MouseEvent mouseEvent) {
-        eventList.add(new TouchEvent(mouseEvent.getX(), mouseEvent.getY(), TouchEvent.EventType.buttonReleased));
+    synchronized public void mouseReleased(MouseEvent mouseEvent) {
+        int x= (int)((mouseEvent.getX() - _graphics.getOffsetX()) / _graphics.getLogicScaleAspect());
+        int y= (int)((mouseEvent.getY() - _graphics.getOffsetY()) / _graphics.getLogicScaleAspect());
+        eventList.add(new TouchEvent(x, y, TouchEvent.EventType.buttonReleased));
     }
 
     //Es necesario definirlos pero como no se utilizan se dejan vacíos
     @Override
-    public void mousePressed(MouseEvent mouseEvent) { }
+    synchronized public void mousePressed(MouseEvent mouseEvent) { }
 
     @Override
-    public void mouseEntered(MouseEvent mouseEvent) { }
+    synchronized public void mouseEntered(MouseEvent mouseEvent) { }
 
     @Override
-    public void mouseExited(MouseEvent mouseEvent) { }
+    synchronized public void mouseExited(MouseEvent mouseEvent) { }
 
     @Override
-    public void mouseDragged(MouseEvent mouseEvent) { }
+    synchronized public void mouseDragged(MouseEvent mouseEvent) { }
 
     @Override
-    public void mouseMoved(MouseEvent mouseEvent) { }
+    synchronized public void mouseMoved(MouseEvent mouseEvent) { }
 }
