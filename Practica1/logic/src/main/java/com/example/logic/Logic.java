@@ -201,7 +201,7 @@ public class Logic implements Application {
             _graphics.setColor(_black);
             _graphics.translate(200, 100);
             _graphics.setFont(_molleRegularTitle);
-            _graphics.drawText("Oh no!", 0, 0, true, true);
+            _graphics.drawText("Oh no!", 0, 0, true, false);
             _graphics.translate(0, 100 + _graphics.getTextHeight("0h no!") * 0.5f);
             _graphics.setFont(_josefinSansTitle);
             _graphics.drawText("Jugar", 0, 0, true, false);
@@ -219,7 +219,7 @@ public class Logic implements Application {
             if(!justSolvedBoard){
                 _graphics.translate(200, 100);
                 _graphics.setFont(_molleRegularTitle);
-                _graphics.drawText("Oh no!", 0, 0, true, true);
+                _graphics.drawText("Oh no!", 0, 0, true, false);
                 _graphics.translate(0, 100);
             }
             else{

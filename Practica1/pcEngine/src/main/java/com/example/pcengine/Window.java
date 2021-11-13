@@ -13,6 +13,11 @@ public class Window extends JFrame implements ComponentListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().addComponentListener(this);
 
+        //FullScreen--------------------------------------------
+        //setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //setUndecorated(true);
+        //------------------------------------------------------
+
         // Vamos a usar renderizado activo. No queremos que Swing llame al
         // método repaint() porque el repintado es continuo en cualquier caso.
         setIgnoreRepaint(true);

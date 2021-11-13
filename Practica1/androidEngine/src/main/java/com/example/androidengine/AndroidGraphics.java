@@ -30,6 +30,8 @@ public class AndroidGraphics extends AbstractGraphics {
     private Context _context;
     private SurfaceView _surface;
 
+    private AndroidFont fontInUse;
+
     public AndroidGraphics(Context c, int width, int height) {
         _context = c;   //Adjudicamos el contexto
         _gameWidth = width;
@@ -69,7 +71,7 @@ public class AndroidGraphics extends AbstractGraphics {
     //Revisar (no se si es mejor cargarlo aqui y asi nos ahorramos pasar el context o mejor hacerlo en AndroidFont como en PcFont)
     public AndroidFont newFont(String filename, float size, boolean isBold){
         AssetManager manager = _context.getAssets();
-        return new AndroidFont(manager, filename);
+        return new AndroidFont(manager, filename, size, isBold);
     }
 
     @Override
@@ -126,7 +128,8 @@ public class AndroidGraphics extends AbstractGraphics {
     }
 
     public void setFont(Font font){
-        _paint.setTypeface(((AndroidFont)font).getFont());
+        fontInUse = ((AndroidFont)font);
+        _paint.setTypeface(fontInUse.getFont());
         //Revisar
     }
 
@@ -140,8 +143,12 @@ public class AndroidGraphics extends AbstractGraphics {
 
     @Override
     public void drawText(String text, float x, float y, Boolean isCenteredX, Boolean isCenteredY) {
+        _paint.setARGB(255,0, 0, 0);
+        _paint.setFakeBoldText(fontInUse.isBold());
+        _paint.setTextSize(fontInUse.getSize());
+
         if(isCenteredX) x -= getTextWidth(text) * 0.5;
-        if(isCenteredY) y += getTextHeight(text) * 0.5;
+        if(isCenteredY) y += getTextHeight(text);
 
         _canvas.drawText(text, x, y, _paint);
     }
