@@ -105,18 +105,17 @@ public class AndroidGraphics extends AbstractGraphics {
             Rect dst;
 
             if (isCentered){
-                //Ayuda no se centrar esto soy bobo
                 src = new Rect(0, 0, image.getWidth(), image.getHeight());
-                dst = new Rect(0, 0, (int)w, (int)h);
+                dst = new Rect((int)(-w * 0.5f), (int)(-h * 0.5f), (int)(w * 0.5f), (int)(h * 0.5f));
             }
             else{
                 src = new Rect(0, 0, image.getWidth(), image.getHeight());
                 dst = new Rect(0, 0, (int)w, (int)h);
             }
-
-            _paint.setAlpha((int)(alpha * 255));
+            if(alpha*255f < (_maxAlpha * 255f)) _paint.setAlpha((int)(alpha * 255f));
+            else _paint.setAlpha((int)(_maxAlpha * 255));
             _canvas.drawBitmap(((AndroidImage)image).getImage(), src, dst, _paint);
-            _paint.setAlpha(1);
+            _paint.setAlpha((int)(_maxAlpha * 255f));
         }
     }
 
@@ -132,9 +131,10 @@ public class AndroidGraphics extends AbstractGraphics {
     }
 
     public void fillCircle(float cx, float cy, float r, float alpha){
-        _paint.setAlpha((int)(alpha * 255));
+        if(alpha*255 < _maxAlpha * 255) _paint.setAlpha((int)(alpha * 255));
+        else _paint.setAlpha((int)(_maxAlpha * 255));
         _canvas.drawCircle(cx,cy,r,_paint);
-        _paint.setAlpha(1);
+        _paint.setAlpha((int)(_maxAlpha * 255));
 
     }
 
@@ -148,7 +148,8 @@ public class AndroidGraphics extends AbstractGraphics {
 
     @Override
     public void setMaxAlpha(float alpha) {
-        //Cosa de Mmur
+        _maxAlpha = alpha;
+        _paint.setAlpha((int)(_maxAlpha * 255f));
     }
 
     //Referente a pillar y soltar cavas -----------------------------------------------------------------------------------------------
