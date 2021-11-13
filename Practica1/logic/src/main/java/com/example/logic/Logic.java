@@ -21,7 +21,7 @@ public class Logic implements Application {
     private Graphics _graphics;
     private Input _input;
 
-    private int _clearColor, _black, _red, _grey, _blue, _white;
+    private int _clearColor, _black, _red, _lightgrey, _grey, _blue, _white;
 
     private GameState currentState;
 
@@ -69,12 +69,13 @@ public class Logic implements Application {
         _graphics = _engine.getGraphics();
         _input = _engine.getInput();
 
-        _clearColor = 0xDCDCDC;//new Color(220, 220, 220, 255);
-        _black = 0x000000;//new Color(0, 0, 0, 255);
-        _red = 0xFF0000;//new Color(255, 20, 20, 255);
-        _grey = 0x969696;//new Color(150, 150, 150, 255);
-        _blue = 0x0000FF;//new Color(0, 100, 255, 255);
-        _white = 0xFFFFFF;//new Color(255, 255, 255, 255);
+        _clearColor = 0xFFFFFF;
+        _black = 0x333333;
+        _red = 0xE63247;
+        _lightgrey = 0xEEEEEE;
+        _grey = 0xAAAAB2;
+        _blue = 0x60C1E0;
+        _white = 0xFFFFFF;
 
         hasBeenGenerated = new boolean[GameState.values().length];
 
@@ -99,7 +100,6 @@ public class Logic implements Application {
                 int pointerX = e.posX;
                 int pointerY = e.posY;
 
-                //System.out.println("Pointer: " + Integer.toString(pointerX) + ", " + Integer.toString(pointerY)); //DEBUG
                 if(e.eventType == TouchEvent.EventType.buttonPressed){
                     if(currentState == GameState.MainMenu){
                         if(_playButton.isPressed(pointerX, pointerY)) transitionTowardsState(GameState.BoardSizeMenu);
@@ -194,22 +194,24 @@ public class Logic implements Application {
             //Tamaño Lógico: 400x600
             //Imagen Q42
             _graphics.translate(170, 400);
-            _graphics.drawImage(_q43Img, 60, 80, 0.5f, false);
+            _graphics.drawImage(_q43Img, 60, 90, 1.0f, false);
 
             //Textos
             _graphics.restore();
             _graphics.setColor(_black);
             _graphics.translate(200, 100);
             _graphics.setFont(_molleRegularTitle);
-            _graphics.drawText("Oh no!", 0, 0, true, true);
-            _graphics.translate(0, 100 + _graphics.getTextHeight("0h no!") * 0.5f);
+            _graphics.drawText("Oh no", 0, 0, true, true);
+
+            _graphics.translate(0, 100 + _graphics.getTextHeight("0h no") * 0.5f);
             _graphics.setFont(_josefinSansTitle);
             _graphics.drawText("Jugar", 0, 0, true, false);
+
             _graphics.setColor(_grey);
             _graphics.translate(0, 80);
-
             _graphics.setFont(_josefinSansText);
             _graphics.drawText("Un juego copiado a Q42", 0,0, true, false);
+
             _graphics.translate(0, 20);
             _graphics.drawText("Creado por Martin Kool", 0, 0, true, false);
         }
@@ -219,18 +221,19 @@ public class Logic implements Application {
             if(!justSolvedBoard){
                 _graphics.translate(200, 100);
                 _graphics.setFont(_molleRegularTitle);
-                _graphics.drawText("Oh no!", 0, 0, true, true);
+                _graphics.drawText("Oh no", 0, 0, true, true);
                 _graphics.translate(0, 100);
             }
             else{
                 _graphics.translate(200, 70);
                 _graphics.setFont(_josefinSansTitle);
-                _graphics.drawText("Maravilloso!", 0, 0, true, false);
+                _graphics.drawText("¡Maravilloso!", 0, 0, true, false);
                 _graphics.translate(0, 130);
             }
 
             _graphics.setFont(_josefinSansText);
-            _graphics.drawText("Escoge las dimensiones del tablero.", 0, 0, true, false);
+            _graphics.drawText("Escoge las dimensiones del tablero", 0, 0, true, false);
+
             //Imágenes
             _graphics.translate(0, 320);
             _graphics.drawImage(_goToTitleButton.getImage(), _goToTitleButton.getWidth() * _goToTitleButton.getScale(), _goToTitleButton.getHeight() * _goToTitleButton.getScale(),  _goToTitleButton.getAlpha(), true);
@@ -243,7 +246,7 @@ public class Logic implements Application {
             for(int k = 0; k < 3; k++) {
                 if(k % 2 == 0) _graphics.setColor(_red);
                 else _graphics.setColor(_blue);
-                _graphics.fillCircle(0, 0,30 * _chooseSizeButtons[k].getScale(), 0.5f);
+                _graphics.fillCircle(0, 0,30 * _chooseSizeButtons[k].getScale(), 1.0f);
                 _graphics.setColor(_clearColor);
                 _graphics.drawText(Integer.toString(k + 4), 0,12, true, false);
                 _graphics.translate(100, 0);
@@ -253,7 +256,7 @@ public class Logic implements Application {
             for(int k = 0; k < 3; k++) {
                 if(k % 2 == 1) _graphics.setColor(_red);
                 else _graphics.setColor(_blue);
-                _graphics.fillCircle(0, 0,30 * _chooseSizeButtons[k + 3].getScale(), 0.5f);
+                _graphics.fillCircle(0, 0,30 * _chooseSizeButtons[k + 3].getScale(), 1.0f);
                 _graphics.setColor(_clearColor);
                 _graphics.drawText((Integer.toString(k + 7)),0, 12, true, false);
                 _graphics.translate(100, 0);
@@ -265,7 +268,7 @@ public class Logic implements Application {
             _graphics.translate(200, 70);
             if(_board.isSolved()){
                 _graphics.setFont(_josefinSansTitle);
-                _graphics.drawText("Maravilloso!", 0, 0, true, false);
+                _graphics.drawText("¡Maravilloso!", 0, 0, true, false);
             }
             else{
                 String feedbackText = _board.getBoardFeedbackText();
@@ -336,7 +339,7 @@ public class Logic implements Application {
             }
             else{
                 _board = new Board(_graphics, 360);
-                _board.setPaintColors(_blue, _red, _grey, _white, _black);
+                _board.setPaintColors(_blue, _red, _lightgrey, _white, _black);
                 _lockImg = _graphics.newImage("lock.png");
                 _hintButton = new Button(80, 500, 40, 40, _graphics.newImage("eye.png"), 0.5f, 1);
                 _hintButton.setScalingAnimation(1f, 1.1f, 0.3f, 1);

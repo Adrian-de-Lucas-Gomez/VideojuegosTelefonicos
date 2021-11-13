@@ -29,9 +29,8 @@ public class AndroidInput implements Input , View.OnTouchListener {
         return eventList;
     }
 
-
     @Override
-    synchronized public boolean onTouch(View v, MotionEvent event) {
+    public boolean onTouch(View v, MotionEvent event) {
         if(event.getActionMasked() == MotionEvent.ACTION_DOWN || event.getActionMasked() == MotionEvent.ACTION_POINTER_DOWN){
             touchPressed(event);
         }
@@ -44,24 +43,24 @@ public class AndroidInput implements Input , View.OnTouchListener {
         return true;
     }
 
-    synchronized public void touchPressed(MotionEvent e){
+    public void touchPressed(MotionEvent e){
         int x= (int)((e.getX() - _graphics.getOffsetX()) / _graphics.getLogicScaleAspect());
         int y= (int)((e.getY() - _graphics.getOffsetY()) / _graphics.getLogicScaleAspect());
         TouchEvent event = new TouchEvent(x,y, TouchEvent.EventType.buttonPressed);
-        eventList.add(event);
+        synchronized (this){eventList.add(event);}
     }
 
     synchronized public void touchRelease(MotionEvent e){
         int x= (int)((e.getX() - _graphics.getOffsetX()) / _graphics.getLogicScaleAspect());
         int y= (int)((e.getY() - _graphics.getOffsetY()) / _graphics.getLogicScaleAspect());
         TouchEvent event = new TouchEvent(x,y, TouchEvent.EventType.buttonReleased);
-        eventList.add(event);
+        synchronized (this){eventList.add(event);}
     }
 
     synchronized public void touchDragged(MotionEvent e){
         int x= (int)((e.getX() - _graphics.getOffsetX()) / _graphics.getLogicScaleAspect());
         int y= (int)((e.getY() - _graphics.getOffsetY()) / _graphics.getLogicScaleAspect());
         TouchEvent event = new TouchEvent(x,y, TouchEvent.EventType.pointerMoved);
-        eventList.add(event);
+        synchronized (this){eventList.add(event);}
     }
 }

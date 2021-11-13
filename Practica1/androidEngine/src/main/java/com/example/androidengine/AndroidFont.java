@@ -14,6 +14,7 @@ public class AndroidFont implements Font {
         size = sz;
         isBold = bold;
     }
+
     //Propio de cada font ya que se usa para escribir el formato de la plataforma
     public Typeface getFont(){
         return font;

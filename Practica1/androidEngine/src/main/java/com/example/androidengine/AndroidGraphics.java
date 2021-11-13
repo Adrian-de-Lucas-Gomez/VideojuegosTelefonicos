@@ -7,12 +7,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.os.Build;
-import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-
-import androidx.annotation.NonNull;
 
 import com.example.engine.AbstractGraphics;
 import com.example.engine.Font;
@@ -21,7 +17,6 @@ import com.example.engine.Image;
 import java.io.IOException;
 import java.io.InputStream;
 
-//Ahora implementa AbstractGraphics para no repetir codigo
 
 public class AndroidGraphics extends AbstractGraphics {
 
@@ -39,9 +34,8 @@ public class AndroidGraphics extends AbstractGraphics {
         _aspect = (float)_gameWidth / (float)_gameHeight;
 
         _paint = new Paint();
-        _paint.setColor(Color.GREEN);
+        _paint.setColor(Color.GREEN); //TODO
         _paint.setStyle(Paint.Style.FILL);
-
     }
 
     public Image newImage(String name){
@@ -76,7 +70,6 @@ public class AndroidGraphics extends AbstractGraphics {
 
     @Override
     public void clear(int color){
-        //_canvas.drawRect(0,0, _canvas.getWidth(), _canvas.getHeight(), _paint);
         color = (0x000000ff << 24) | (color & 0x00ffffff);
         _canvas.drawColor(color);
 
@@ -123,7 +116,6 @@ public class AndroidGraphics extends AbstractGraphics {
 
     @Override
     public void setColor(int color) {
-        //_canvas.drawColor(color);
         _paint.setColor(color);
     }
 
@@ -161,11 +153,11 @@ public class AndroidGraphics extends AbstractGraphics {
         _paint.setAlpha((int)(_maxAlpha * 255f));
     }
 
-    //Referente a pillar y soltar cavas -----------------------------------------------------------------------------------------------
+    //Referente a pillar y soltar canvas -----------------------------------------------------------------------------------------------
 
     public void lockCanvas(){
         //En este while se queda pensando mucho
-        while(!_surface.getHolder().getSurface().isValid()){ /*No hago nada*/};    //Tratamos de acceder a una surface
+        while(!_surface.getHolder().getSurface().isValid()) { /*No hago nada*/};    //Tratamos de acceder a una surface
         //_canvas = _surface.getHolder().lockCanvas();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             _canvas = _surface.getHolder().lockHardwareCanvas();
@@ -205,5 +197,4 @@ public class AndroidGraphics extends AbstractGraphics {
     public int getWindowHeight() {
         return _surface.getHeight();
     }
-
 }

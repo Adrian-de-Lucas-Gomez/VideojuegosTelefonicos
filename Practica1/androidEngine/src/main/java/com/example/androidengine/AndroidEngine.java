@@ -81,6 +81,7 @@ public class AndroidEngine implements Engine, Runnable {
             //---------------------------------------------------------------------------------------
         }
     }
+
     public void resume(){
         if(!_running){
             _running = true;
