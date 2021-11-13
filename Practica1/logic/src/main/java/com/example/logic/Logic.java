@@ -107,8 +107,14 @@ public class Logic implements Application {
                 else if (currentState == GameState.Game){
                     _board.handleInput(pointerX, pointerY);
                     if (_goToTitleButton.isPressed(pointerX, pointerY)) setState(GameState.BoardSizeMenu);
-                    else if(_hintButton.isPressed(pointerX, pointerY)) { _board.setHintText(); _hintButton.activateAnimation();}
-                    else if(_reverseButton.isPressed(pointerX, pointerY)) { _board.revertPlay(); _reverseButton.activateAnimation();}
+                    else if(_hintButton.isPressed(pointerX, pointerY)) {
+                        _board.setHintText();
+                        _hintButton.activateAnimation();
+                    }
+                    else if(_reverseButton.isPressed(pointerX, pointerY)) {
+                        _board.revertPlay();
+                        _reverseButton.activateAnimation();
+                    }
                     //if(_board.isSolved()) setState(GameState.BoardSizeMenu);
                 }
             }
@@ -263,7 +269,7 @@ public class Logic implements Application {
             }
             else if(newState == GameState.BoardSizeMenu){
                 _goToTitleButton = new Button(180, 500, 40, 40, _graphics.newImage("close.png"), 0.5f, 1);
-                _goToTitleButton.setScalingAnimation(1f, 1.1f, 0.3f);
+                _goToTitleButton.setScalingAnimation(1f, 1.1f, 0.3f, 1);
                 _goToTitleButton.setAnimationAlpha(0f, 0.5f, 0.3f);
                 int buttonHorizontalOffset = 40, buttonVerticalOffset = 70, buttonSize = 60;
                 _chooseSizeButtons = new Button[6];
@@ -276,10 +282,10 @@ public class Logic implements Application {
                 _board.setPaintColors(_blue, _red, _grey, _white, _black);
                 _lockImg = _graphics.newImage("lock.png");
                 _hintButton = new Button(80, 500, 40, 40, _graphics.newImage("eye.png"), 0.5f, 1);
-                _hintButton.setScalingAnimation(1f, 1.1f, 0.3f);
+                _hintButton.setScalingAnimation(1f, 1.1f, 0.3f, 1);
                 _hintButton.setAnimationAlpha(0f, 0.5f, 0.3f);
                 _reverseButton = new Button(280, 500, 40, 40, _graphics.newImage("history.png"), 0.5f, 1);
-                _reverseButton.setScalingAnimation(1f, 1.1f, 0.3f);
+                _reverseButton.setScalingAnimation(1f, 1.1f, 0.3f, 1);
                 _reverseButton.setAnimationAlpha(0f, 0.5f, 0.3f);
             }
         }

@@ -1,12 +1,10 @@
 package com.example.engine;
 
-import sun.util.resources.ext.CalendarData_en_IE;
-
 public class Button {
     private Image _img = null;
     private float _x, _y, _height, _width;
     private State currentState = State.NotPressed;
-    private float _alpha = 1.0f, _scale = 1.0f;
+    private float _alpha, _scale;
     private float _defaultAlpha, _defaultScale;
 
     //Animaciones
@@ -19,7 +17,15 @@ public class Button {
     private boolean _scalingAnimFinished = false;
     private boolean _alphaAnimationFinished = false;
 
-    enum State {NotPressed, Pressed, Transitioning}
+    private float currentAlphaAnimationTime = 0f;
+    private float currentScalingAnimationTime = 0f;
+
+    private float timePerScalingAnimationRepetition = 0f;
+
+    private float _scalingAnimationTime = 0f;
+    private float _alphaAnimationTime = 0f;
+
+    enum State {NotPressed, Transitioning}
 
     public Button(float posX, float posY, float width, float height, Image img, float alpha, float scale){
         _img = img;
@@ -35,7 +41,7 @@ public class Button {
         _defaultScale = scale;
     }
 
-    public State getState() {return currentState;}
+    //public State getState() {return currentState;} //No se utiliza por el momento
 
     public boolean isPressed(int x, int y){
         return(_x <= x && _y <= y && _x + _width >= x && _y + _height >= y);
@@ -44,12 +50,14 @@ public class Button {
     public void step(double deltaTime){
         if(currentState == State.Transitioning) {
             if(_hasAlphaAnimation && !_alphaAnimationFinished) {
+                currentAlphaAnimationTime += deltaTime;
                 _alpha += _stepAlpha * deltaTime;
-                if(_alpha < Math.min(_iAlpha, _eAlpha) || _alpha > Math.max(_iAlpha, _eAlpha)) _alphaAnimationFinished = true;
+                if(currentAlphaAnimationTime > _alphaAnimationTime) _alphaAnimationFinished = true;
             }
             if(_hasScalingAnimation && !_scalingAnimFinished) {
-                _scale += _stepScale * deltaTime;
-                if(_scale < Math.min(_iScale, _eScale) || _scale > Math.max(_iScale, _eScale)) _scalingAnimFinished = true;
+                currentScalingAnimationTime += deltaTime;
+                _scale = (_eScale - _iScale) * (float)Math.sin(currentScalingAnimationTime * (2f* Math.PI) / timePerScalingAnimationRepetition) + _iScale;
+                if(currentScalingAnimationTime > _scalingAnimationTime) _scalingAnimFinished = true;
             }
 
             if((!_hasScalingAnimation || _scalingAnimFinished) && (!_hasAlphaAnimation|| _alphaAnimationFinished)){
@@ -62,10 +70,12 @@ public class Button {
 
     public void activateAnimation(){
         if(_hasAlphaAnimation){
+            currentAlphaAnimationTime = 0f;
             _alphaAnimationFinished = false;
             _alpha = _iAlpha;
         }
         if(_hasScalingAnimation){
+            currentScalingAnimationTime = 0f;
             _scalingAnimFinished = false;
             _scale = _iScale;
         }
@@ -76,16 +86,19 @@ public class Button {
         _hasAlphaAnimation = true;
         _iAlpha = iAlpha;
         _eAlpha = eAlpha;
+        _alphaAnimationTime = animationTime;
 
-        _stepAlpha = (eAlpha - iAlpha) / animationTime;
+        _stepAlpha = (eAlpha - iAlpha) / _alphaAnimationTime;
     }
 
-    public void setScalingAnimation(float iScale, float eScale, float animationTime){
+    public void setScalingAnimation(float iScale, float eScale, float animationTime, int nReps){
         _hasScalingAnimation = true;
         _iScale = iScale;
         _eScale = eScale;
+        _scalingAnimationTime = animationTime;
 
-        _stepScale = (eScale - iScale) / animationTime;
+        timePerScalingAnimationRepetition = animationTime / nReps;
+        _stepScale = (eScale - iScale) / _scalingAnimationTime;
     }
 
     public float getX() { return _x; }
