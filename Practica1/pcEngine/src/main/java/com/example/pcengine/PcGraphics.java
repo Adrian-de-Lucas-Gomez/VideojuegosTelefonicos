@@ -80,7 +80,6 @@ public class PcGraphics extends AbstractGraphics {
     public void drawImage(Image image, float w, float h, float alpha, boolean isCentered){
         if(image != null) {
             if(alpha < _maxAlpha){
-                System.out.println("soy menor");
                 aComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
                 _graphics.setComposite(aComposite);
             }

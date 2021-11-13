@@ -9,6 +9,8 @@ import com.example.engine.Image;
 import com.example.engine.Input;
 import com.example.engine.TouchEvent;
 
+import java.util.ArrayList;
+
 public class Logic implements Application {
 
     private enum GameState{
@@ -48,7 +50,14 @@ public class Logic implements Application {
     private Button _hintButton, _reverseButton;
 
     private float timeBetweenStates = 1.5f;
-    private float sceneAlpha = 0.1f;
+    private float sceneAlpha = 1f;
+
+    //Transición entre estados.
+    private boolean isTransitioning = false;
+    private boolean hasFinishedHalfTransition = false;
+    private GameState stateToTransition = GameState.MainMenu;
+    private float timeToTransition = 2f;
+    private float currentTimeToTransition = 0f;
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
     public Logic(Engine engine) {
@@ -83,42 +92,53 @@ public class Logic implements Application {
 
     @Override
     public void onHandleInput() {
-        for (TouchEvent e: _input.getTouchEvents()) {
-            int pointerX = (int)((e.posX - _graphics.getOffsetX()) / _graphics.getLogicScaleAspect());
-            int pointerY = (int)((e.posY - _graphics.getOffsetY()) / _graphics.getLogicScaleAspect());
-            System.out.println("Pointer: " + Integer.toString(pointerX) + ", " + Integer.toString(pointerY)); //DEBUG
-            if(e.eventType == TouchEvent.EventType.buttonPressed){
-                if(currentState == GameState.MainMenu){
-                    if(_playButton.isPressed(pointerX, pointerY)) setState(GameState.BoardSizeMenu);
-                }
-                else if(currentState == GameState.BoardSizeMenu){
-                    if (_goToTitleButton.isPressed(pointerX, pointerY)) {
-                        setState(GameState.MainMenu);
-                        justSolvedBoard = false;
+        ArrayList<TouchEvent> eventList = _input.getTouchEvents();
+        if(!isTransitioning || (isTransitioning && hasFinishedHalfTransition)){
+            for (TouchEvent e: eventList) {
+                int pointerX = (int)((e.posX - _graphics.getOffsetX()) / _graphics.getLogicScaleAspect());
+                int pointerY = (int)((e.posY - _graphics.getOffsetY()) / _graphics.getLogicScaleAspect());
+                System.out.println("Pointer: " + Integer.toString(pointerX) + ", " + Integer.toString(pointerY)); //DEBUG
+                if(e.eventType == TouchEvent.EventType.buttonPressed){
+                    if(currentState == GameState.MainMenu){
+                        if(_playButton.isPressed(pointerX, pointerY)) transitionTowardsState(GameState.BoardSizeMenu);
                     }
-                    else{
-                        for(int k = 0; k < _chooseSizeButtons.length; k++){
-                            if(_chooseSizeButtons[k].isPressed(pointerX, pointerY)){
-                                boardSize = k + 4;
-                                justSolvedBoard = false;
-                                setState(GameState.Game);
-                                break;
+                    else if(currentState == GameState.BoardSizeMenu){
+                        if (_goToTitleButton.isPressed(pointerX, pointerY)) {
+                            transitionTowardsState(GameState.MainMenu);
+                            _goToTitleButton.activateAnimation();
+                        }
+                        else{
+                            for(int k = 0; k < _chooseSizeButtons.length; k++){
+                                if(_chooseSizeButtons[k].isPressed(pointerX, pointerY)){
+                                    boardSize = k + 4;
+                                    justSolvedBoard = false;
+                                    _chooseSizeButtons[k].activateAnimation();
+                                    transitionTowardsState(GameState.Game);
+                                    break;
+                                }
                             }
                         }
                     }
-                }
-                else if (currentState == GameState.Game){
-                    _board.handleInput(pointerX, pointerY);
-                    if (_goToTitleButton.isPressed(pointerX, pointerY)) setState(GameState.BoardSizeMenu);
-                    else if(_hintButton.isPressed(pointerX, pointerY)) {
-                        _board.setHintText();
-                        _hintButton.activateAnimation();
+                    else if (currentState == GameState.Game && (!_board.isSolved())){
+                        _board.handleInput(pointerX, pointerY);
+                        if (_goToTitleButton.isPressed(pointerX, pointerY)) {
+                            transitionTowardsState(GameState.BoardSizeMenu);
+                            _goToTitleButton.activateAnimation();
+                            justSolvedBoard = false;
+                        }
+                        else if(_hintButton.isPressed(pointerX, pointerY)) {
+                            _board.setHintText();
+                            _hintButton.activateAnimation();
+                        }
+                        else if(_reverseButton.isPressed(pointerX, pointerY)) {
+                            _board.revertPlay();
+                            _reverseButton.activateAnimation();
+                        }
+                        if(_board.isSolved()) {
+                            transitionTowardsState(GameState.BoardSizeMenu);
+                            justSolvedBoard = true;
+                        }
                     }
-                    else if(_reverseButton.isPressed(pointerX, pointerY)) {
-                        _board.revertPlay();
-                        _reverseButton.activateAnimation();
-                    }
-                    //if(_board.isSolved()) setState(GameState.BoardSizeMenu);
                 }
             }
         }
@@ -126,7 +146,31 @@ public class Logic implements Application {
 
     @Override
     public void onUpdate(double deltaTime) {
-        if(currentState == GameState.Game) {
+        if(isTransitioning){
+            currentTimeToTransition += deltaTime;
+            //Son mates un poco feas pero en esencia es una función seno que en un tiempo determinado recorre los valores 1 a 0 y de vuelta a 1, sin pasar por números negativos.
+            sceneAlpha = (float)Math.cos((currentTimeToTransition - 2 * timeToTransition) * (2 * Math.PI) / 2) * 0.5f + 0.5f;
+            _graphics.setMaxAlpha(sceneAlpha);
+
+            if(!hasFinishedHalfTransition && currentTimeToTransition > timeToTransition * 0.5f) {
+                hasFinishedHalfTransition = true;
+                setState(stateToTransition);
+            }
+
+            if(currentTimeToTransition >= timeToTransition) {
+                isTransitioning = false;
+                hasFinishedHalfTransition = false;
+                sceneAlpha = 1f;
+                _graphics.setMaxAlpha(sceneAlpha);
+            }
+        }
+
+        if(currentState == GameState.BoardSizeMenu) {
+            _goToTitleButton.step(deltaTime);
+            for(Button b : _chooseSizeButtons) b.step(deltaTime);
+        }
+
+        else if(currentState == GameState.Game) {
             _board.onUpdate(deltaTime);
             _reverseButton.step(deltaTime);
             _hintButton.step(deltaTime);
@@ -186,8 +230,8 @@ public class Logic implements Application {
             _graphics.setFont(_josefinSansText);
             _graphics.drawText("Escoge las dimensiones del tablero.", 0, 0, true, false);
             //Imágenes
-            _graphics.translate(-_goToTitleButton.getWidth()/2, 300);
-            _graphics.drawImage(_goToTitleButton.getImage(), _goToTitleButton.getWidth(), _goToTitleButton.getHeight(), 0.5f, false);
+            _graphics.translate(0, 320);
+            _graphics.drawImage(_goToTitleButton.getImage(), _goToTitleButton.getWidth() * _goToTitleButton.getScale(), _goToTitleButton.getHeight() * _goToTitleButton.getScale(),  _goToTitleButton.getAlpha(), true);
 
             //Botones de eleccion de tamaño de tablero
             _graphics.restore();
@@ -197,7 +241,7 @@ public class Logic implements Application {
             for(int k = 0; k < 3; k++) {
                 if(k % 2 == 0) _graphics.setColor(_red);
                 else _graphics.setColor(_blue);
-                _graphics.fillCircle(0, 0,30, 0.5f);
+                _graphics.fillCircle(0, 0,30 * _chooseSizeButtons[k].getScale(), 0.5f);
                 _graphics.setColor(_clearColor);
                 _graphics.drawText(Integer.toString(k + 4), 0,12, true, false);
                 _graphics.translate(100, 0);
@@ -207,7 +251,7 @@ public class Logic implements Application {
             for(int k = 0; k < 3; k++) {
                 if(k % 2 == 1) _graphics.setColor(_red);
                 else _graphics.setColor(_blue);
-                _graphics.fillCircle(0, 0,30, 0.5f);
+                _graphics.fillCircle(0, 0,30 * _chooseSizeButtons[k + 3].getScale(), 0.5f);
                 _graphics.setColor(_clearColor);
                 _graphics.drawText((Integer.toString(k + 7)),0, 12, true, false);
                 _graphics.translate(100, 0);
@@ -254,6 +298,12 @@ public class Logic implements Application {
         }
     }
 
+    private void transitionTowardsState(GameState newState){
+        isTransitioning = true;
+        stateToTransition = newState;
+        currentTimeToTransition = 0f;
+    }
+
     private void setState(GameState newState){
 
         //Limpieza de estado actual
@@ -273,11 +323,11 @@ public class Logic implements Application {
             else if(newState == GameState.BoardSizeMenu){
                 _goToTitleButton = new Button(180, 500, 40, 40, _graphics.newImage("close.png"), 0.5f, 1);
                 _goToTitleButton.setScalingAnimation(1f, 1.1f, 0.3f, 1);
-                _goToTitleButton.setAnimationAlpha(0f, 0.5f, 0.3f);
                 int buttonHorizontalOffset = 40, buttonVerticalOffset = 70, buttonSize = 60;
                 _chooseSizeButtons = new Button[6];
                 for(int k = 0; k < 6; k++){
                     _chooseSizeButtons[k] = new Button(100 + (k % 3) * (buttonHorizontalOffset + buttonSize) - buttonSize/2, 300 +(k/3) * buttonVerticalOffset - buttonSize/2, buttonSize, buttonSize, _graphics.newImage("close.png"), 1, 1);
+                    _chooseSizeButtons[k].setScalingAnimation(1f, 1.1f, 0.3f, 1);
                 }
             }
             else{
