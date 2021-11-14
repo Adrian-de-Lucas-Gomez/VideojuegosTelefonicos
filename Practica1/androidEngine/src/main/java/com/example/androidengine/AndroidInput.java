@@ -3,30 +3,18 @@ package com.example.androidengine;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.example.engine.AbstractInput;
 import com.example.engine.Graphics;
-import com.example.engine.Input;
 import com.example.engine.TouchEvent;
 
 import java.util.ArrayList;
 
-public class AndroidInput implements Input , View.OnTouchListener {
-    private ArrayList<TouchEvent> eventList;
-    private Graphics _graphics;
+public class AndroidInput extends AbstractInput implements View.OnTouchListener {
 
     public AndroidInput (Graphics graphics){
         super();
         _graphics = graphics;
         eventList = new ArrayList<TouchEvent>();
-    }
-
-    synchronized public ArrayList<TouchEvent> getTouchEvents(){
-        if(eventList.size() > 0){
-            ArrayList<TouchEvent> auxList = new ArrayList<TouchEvent>(eventList);
-            eventList.clear();
-
-            return auxList;
-        }
-        return eventList;
     }
 
     @Override

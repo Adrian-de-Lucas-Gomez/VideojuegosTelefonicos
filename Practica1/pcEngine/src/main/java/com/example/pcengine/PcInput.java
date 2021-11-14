@@ -1,7 +1,7 @@
 package com.example.pcengine;
 
+import com.example.engine.AbstractInput;
 import com.example.engine.Graphics;
-import com.example.engine.Input;
 import com.example.engine.TouchEvent;
 
 import java.awt.event.MouseEvent;
@@ -9,25 +9,11 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
-public class PcInput implements Input, MouseListener, MouseMotionListener {
-    private ArrayList<TouchEvent> eventList;
-    private Graphics _graphics;
+public class PcInput extends AbstractInput implements MouseListener, MouseMotionListener {
 
     public PcInput(Graphics graphics){
         _graphics = graphics;
         eventList = new ArrayList<TouchEvent>();
-    }
-
-    //Devuelve la lista de eventos
-    @Override
-    synchronized public ArrayList<TouchEvent> getTouchEvents(){
-        if(eventList.size() > 0){
-            ArrayList<TouchEvent> auxList = new ArrayList<TouchEvent>(eventList);
-            eventList.clear();
-
-            return auxList;
-        }
-        return eventList;
     }
 
     @Override

@@ -1,4 +1,5 @@
 package com.example.logic;
+
 public class Tile implements Comparable<Tile>{
 
     public Tile(int x, int y, int value, TileType type){

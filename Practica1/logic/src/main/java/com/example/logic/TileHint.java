@@ -1,7 +1,5 @@
 package com.example.logic;
 
-import javax.lang.model.util.Elements.Origin;
-
 public class TileHint {
     TileHint(){
         _hintTile = new Tile(0, 0, 0, TileType.Unknown);
