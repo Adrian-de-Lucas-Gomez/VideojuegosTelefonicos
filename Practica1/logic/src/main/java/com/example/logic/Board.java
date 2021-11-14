@@ -422,7 +422,7 @@ public class Board{
     public void onUpdate(double deltaTime){
         for(int k = 0; k < _size - 2; k++){
             for(int l = 0; l < _size - 2; l++){
-                _tileButtons[k][l].step(deltaTime);
+                _tileButtons[k][l].update(deltaTime);
             }
         }
     }
