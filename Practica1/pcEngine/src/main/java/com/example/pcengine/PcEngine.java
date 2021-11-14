@@ -24,12 +24,6 @@ public class PcEngine implements Engine {
         _window.addMouseMotionListener(_input);
     }
 
-    //Asignar la lógica del juego al motor
-    @Override
-    public void setApplication(Application a) {
-        _logic = a;
-    }
-
     public void run() {
 
         while(true){
@@ -60,7 +54,13 @@ public class PcEngine implements Engine {
         }
     }
 
-    //+++++++++++++GETTERS+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //+++++++++++++GETTERS Y SETTERS+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    //Asignar la lógica del juego al motor
+    @Override
+    public void setApplication(Application a) {
+        _logic = a;
+    }
     @Override
     public PcGraphics getGraphics() {
         return _graphics;

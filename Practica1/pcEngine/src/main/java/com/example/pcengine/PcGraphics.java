@@ -53,7 +53,7 @@ public class PcGraphics extends AbstractGraphics {
         return new PcFont(filename, style, size);
     }
 
-    //Pinta todo el fondo del color indicado
+    //Pinta toda la ventana del color indicado
     public void clear(int color){
         _graphics.setColor(new Color(color));
         _graphics.fillRect(0, 0, _window.getWidth(), _window.getHeight());
@@ -72,6 +72,7 @@ public class PcGraphics extends AbstractGraphics {
     public void restore(){ //TODO
         _graphics.setTransform(_tr);
     }
+
 
     public void drawImage(Image image, float w, float h, float alpha, boolean isCentered){
         if(image != null) {

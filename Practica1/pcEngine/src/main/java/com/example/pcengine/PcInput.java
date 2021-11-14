@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class PcInput implements Input, MouseListener, MouseMotionListener {
     private ArrayList<TouchEvent> eventList;
-    Graphics _graphics;
+    private Graphics _graphics;
 
     public PcInput(Graphics graphics){
         _graphics = graphics;
