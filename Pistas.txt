@@ -1,6 +1,0 @@
--"This number can see all its dots": VeLasNecesarias (toca poner muros)
--"This one should be easy": FichaVaciaEsMuro (esta rodeada de rojas asiq es muro)
--"A blue dot should always see at least one other": AzulEsMuro (esta rodeada de rojas de rojas asiq es muro)
--
--"Only one direction remains for this number to look in": ?
--"One specific dot is included in all solutions imaginable": ?
