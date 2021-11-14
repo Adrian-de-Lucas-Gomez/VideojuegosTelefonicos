@@ -62,7 +62,7 @@ public class AndroidGraphics extends AbstractGraphics {
         return imagen;
     }
 
-    //Revisar (no se si es mejor cargarlo aqui y asi nos ahorramos pasar el context o mejor hacerlo en AndroidFont como en PcFont)
+
     public AndroidFont newFont(String filename, float size, boolean isBold){
         AssetManager manager = _context.getAssets();
         return new AndroidFont(manager, filename, size, isBold);
@@ -79,18 +79,16 @@ public class AndroidGraphics extends AbstractGraphics {
     public void translate(float x, float y){
         _canvas.translate(x,y);
     }
-
     @Override
     public void scale(float x, float y) {
         _canvas.scale(x,y);
     }
-    //Revisar-------------------------------------------------------------------------------------------------------
+    public void save(){ _canvas.save(); }
+    public void restore(){ _canvas.restore(); }
+
     public void setSurfaceView(SurfaceView surfaceView){
         _surface = surfaceView;
     }
-    //--------------------------------------------------------------------------------------------------------------
-    public void save(){ _canvas.save(); }
-    public void restore(){ _canvas.restore(); }
 
     @Override
     public void drawImage(Image image, float w, float h, float alpha, boolean isCentered) {
@@ -153,12 +151,12 @@ public class AndroidGraphics extends AbstractGraphics {
         _paint.setAlpha((int)(_maxAlpha * 255f));
     }
 
-    //Referente a pillar y soltar canvas -----------------------------------------------------------------------------------------------
+    //Referente a pillar y soltar canvas -------------------------------------------------
 
     public void lockCanvas(){
-        //En este while se queda pensando mucho
-        while(!_surface.getHolder().getSurface().isValid()) { /*No hago nada*/};    //Tratamos de acceder a una surface
-        //_canvas = _surface.getHolder().lockCanvas();
+        //Tratamos de acceder a una surface
+        while(!_surface.getHolder().getSurface().isValid()) { /*No hago nada*/}
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             _canvas = _surface.getHolder().lockHardwareCanvas();
         }
@@ -169,16 +167,16 @@ public class AndroidGraphics extends AbstractGraphics {
         if(_canvas == null) System.out.println("El canvas devolvio null");
     }
 
-    // unclock canvas -> se libera
-    public void releaseCanvas(){ _surface.getHolder().unlockCanvasAndPost(_canvas); }  //Lo soltamos y renderizamos
+    //Lo soltamos y renderizamos
+    public void releaseCanvas() { _surface.getHolder().unlockCanvasAndPost(_canvas); }
 
+    //----------------------------------------------------------------------------------
 
     @Override
     public int getTextHeight(String string) {
         Rect result = new Rect();
         _paint.getTextBounds(string, 0, string.length(), result);
         return result.height();
-        //Revisar
     }
 
     @Override
@@ -186,7 +184,6 @@ public class AndroidGraphics extends AbstractGraphics {
         Rect result = new Rect();
         _paint.getTextBounds(string, 0, string.length(), result);
         return result.width();
-        //Revisar
     }
 
     @Override

@@ -12,8 +12,6 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
 
-//Ahora implementan la clase abstracta AbstractGraphics
-
 public class PcGraphics extends AbstractGraphics {
 
     private Window _window;
@@ -63,20 +61,17 @@ public class PcGraphics extends AbstractGraphics {
     public void translate(float x, float y){
         _graphics.translate(x, y);
     }
-
     public void scale(float x, float y){
         _graphics.scale(x, y);
     }
-
     public void save(){ //TODO
         _tr = _graphics.getTransform();
     }
-
     public void restore(){ //TODO
         _graphics.setTransform(_tr);
     }
 
-    //TODO igual hace falta uno con alpha en algun momento
+
     public void drawImage(Image image, float w, float h, float alpha, boolean isCentered){
         if(image != null) {
             if(alpha < _maxAlpha){
@@ -100,7 +95,7 @@ public class PcGraphics extends AbstractGraphics {
         fontMetrics = _graphics.getFontMetrics(((PcFont)font).getFont());
     }
 
-    public void fillCircle(float cx, float cy, float r, float alpha){ //TODO quitar cx y cy (?? Creo que no hace falta)
+    public void fillCircle(float cx, float cy, float r, float alpha){
         if(alpha < _maxAlpha) {
             aComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
             _graphics.setComposite(aComposite);

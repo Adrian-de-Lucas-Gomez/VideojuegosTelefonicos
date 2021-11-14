@@ -5,31 +5,25 @@ import android.view.SurfaceView;
 
 import com.example.engine.Application;
 import com.example.engine.Engine;
-import com.example.engine.Font;
 
 public class AndroidEngine implements Engine, Runnable {
 
     private Context context;
+    private SurfaceView surfaceView; //Para coger el canvas a usar
     private AndroidGraphics graphics;
     private AndroidInput input;
     private Application logic;
 
-    //Hilo de ejecución
-    private Thread hilo;
-
+    private Thread hilo; //Hilo de ejecución
     volatile private boolean _running;
-
-    //Para pillar el canvas a usar
-    private SurfaceView surfaceView;
 
     public AndroidEngine(Context c, int width, int height){
         context = c;
         surfaceView = new SurfaceView(context);
-
         graphics = new AndroidGraphics(context, width, height);
         input = new AndroidInput(graphics);
-        //Para que escuche los eventos que da el surface
-        surfaceView.setOnTouchListener(input);
+        surfaceView.setOnTouchListener(input); //Para que escuche los eventos que da el surface
+
         //Ponemos el juego a funcionar
         resume();
     }
@@ -57,10 +51,9 @@ public class AndroidEngine implements Engine, Runnable {
 
         graphics.setSurfaceView(surfaceView);
 
-        while(logic == null){/*Esperamos al thread principal para que haga el setApplication*/}
+        while(logic == null) {/*Esperamos al thread principal para que haga el setApplication*/}
 
-        while(_running){    //Revisar
-
+        while(_running) {
             //Detectar cambios en el input
             logic.onHandleInput();
 
@@ -71,14 +64,10 @@ public class AndroidEngine implements Engine, Runnable {
             double elapsedTime = (double) nanoElapsedTime / 1.0E9;
             logic.onUpdate(elapsedTime);
 
-
-            //Deberiamos tener esto en un método Render por si le damos una thread?????
             //Zona de Render
-            graphics.lockCanvas(); // Bloquea el canvas
-            //graphics.clear(0x00ff00);   //Debug
-            logic.onRender(graphics);     //Graphics siendo el canvas donde pintamos
-            graphics.releaseCanvas();   // Libera y pinta lo que hubiera en el canvas
-            //---------------------------------------------------------------------------------------
+            graphics.lockCanvas();      //Bloquea el canvas
+            logic.onRender(graphics);   //Graphics siendo el canvas donde pintamos
+            graphics.releaseCanvas();   //Libera y pinta lo que hubiera en el canvas
         }
     }
 
@@ -103,5 +92,4 @@ public class AndroidEngine implements Engine, Runnable {
             }
         }
     }
-
 }

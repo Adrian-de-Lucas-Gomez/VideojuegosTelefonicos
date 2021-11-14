@@ -9,7 +9,7 @@ public class AndroidFont implements Font {
     private float size;
     private boolean isBold;
 
-    public AndroidFont(android.content.res.AssetManager manager, String name,float sz, boolean bold){
+    public AndroidFont(android.content.res.AssetManager manager, String name, float sz, boolean bold){
         font = Typeface.createFromAsset(manager, "fonts/"+name+".ttf");
         size = sz;
         isBold = bold;

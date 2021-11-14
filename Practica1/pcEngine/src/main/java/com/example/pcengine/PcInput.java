@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
-import java.util.List;
 
 public class PcInput implements Input, MouseListener, MouseMotionListener {
     private ArrayList<TouchEvent> eventList;
@@ -44,19 +43,15 @@ public class PcInput implements Input, MouseListener, MouseMotionListener {
         synchronized (this) {eventList.add(new TouchEvent(x, y, TouchEvent.EventType.buttonReleased));}
     }
 
-    //Es necesario definirlos pero como no se utilizan se dejan vacíos
+    //Es necesario definirlos pero como no se utilizan se dejan vacios
     @Override
     public void mousePressed(MouseEvent mouseEvent) { }
-
     @Override
     public void mouseEntered(MouseEvent mouseEvent) { }
-
     @Override
     public void mouseExited(MouseEvent mouseEvent) { }
-
     @Override
     public void mouseDragged(MouseEvent mouseEvent) { }
-
     @Override
     public void mouseMoved(MouseEvent mouseEvent) { }
 }

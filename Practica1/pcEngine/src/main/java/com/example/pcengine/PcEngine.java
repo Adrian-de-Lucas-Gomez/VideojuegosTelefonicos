@@ -4,9 +4,6 @@ import com.example.engine.Application;
 import com.example.engine.Engine;
 
 import java.awt.Graphics2D;
-import java.awt.List;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 public class PcEngine implements Engine {
 
@@ -30,7 +27,8 @@ public class PcEngine implements Engine {
         _logic = a;
     }
 
-    public void run(){ //TODO mover lo que no haga falta aqui
+    public void run() {
+
         while(true){
             //Obtencion DeltaTime
             long currentTime = System.nanoTime();
@@ -38,21 +36,16 @@ public class PcEngine implements Engine {
             _lastFrameTime = currentTime;
             double elapsedTime = (double) nanoElapsedTime / 1.0E9;
 
-            //TODO arreglar esto
             //Updates
-            _logic.onUpdate(elapsedTime); //Revisar si tiene que ser double o es un poco extra
+            _logic.onUpdate(elapsedTime);
             _logic.onHandleInput();
-            //_window.getBufferStrategy().show();
 
-            //Ahora permite redimensionar pero el valor de tamaño de la ventana no cambia
-            //y si se hace grande se ve vacio mas allá del clear. La imagen desaparece porque yolo
             do {
                 do {
                     java.awt.Graphics2D graphicsJava = (Graphics2D)_window.getBufferStrategy().getDrawGraphics();
                     _graphics.setGraphics(graphicsJava);
                     try {
-                        //Se llama a pintar lo que toque
-                        _logic.onRender(_graphics);
+                        _logic.onRender(_graphics); //Se llama a pintar lo que toque
                     }
                     finally {
                         graphicsJava.dispose();

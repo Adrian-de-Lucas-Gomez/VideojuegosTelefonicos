@@ -1,9 +1,5 @@
 package com.example.engine;
 
-import java.awt.Color;
-
-import jdk.internal.net.http.common.Pair;
-
 public interface Graphics {
     /**
      * Carga una imagen almacenada en el contenedor de recursos
@@ -36,10 +32,7 @@ public interface Graphics {
     void setScaleAspect();
 
     /**
-     * Recibe una imagen y la muestra en la pantalla. Se pueden
-     * necesitar diferentes versiones de este metodo dependiendo
-     * de si se permite o no escalar la imagen, si se permite
-     * elegir que porción de la imagen original se muestra, etc.
+     * Recibe una imagen y la muestra en la pantalla
      */
     void drawImage(Image image, float w, float h, float alpha, boolean isCentered);
 

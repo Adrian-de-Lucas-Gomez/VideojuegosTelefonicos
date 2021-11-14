@@ -27,6 +27,7 @@ public class Button {
 
     enum State {NotPressed, Transitioning}
 
+
     public Button(float posX, float posY, float width, float height, Image img, float alpha, float scale){
         _img = img;
         _x = posX;
@@ -40,8 +41,6 @@ public class Button {
         _defaultAlpha = alpha;
         _defaultScale = scale;
     }
-
-    //public State getState() {return currentState;} //No se utiliza por el momento
 
     public boolean isPressed(int x, int y){
         return(_x <= x && _y <= y && _x + _width >= x && _y + _height >= y);
@@ -99,6 +98,8 @@ public class Button {
         timePerScalingAnimationRepetition = animationTime / nReps;
         _stepScale = (eScale - iScale) / _scalingAnimationTime;
     }
+
+    public State getState() {return currentState;} //No se utiliza por el momento
 
     public float getX() { return _x; }
 
