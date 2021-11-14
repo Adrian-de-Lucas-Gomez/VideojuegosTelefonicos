@@ -7,15 +7,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class PcFont implements Font {
-    private java.awt.Font _font;    //Almacenamos el tipo de fuente que soporta la plataforma
+    private java.awt.Font _font; //Almacenamos el tipo de fuente que soporta la plataforma
 
     public PcFont(String name, int style, float size){
         try {
             _font = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, new FileInputStream("assets//fonts//"+name+".ttf")).deriveFont(style,size);
         } catch (FontFormatException e) {
-            System.out.println("PCFont. Format");
+            System.out.println("Error PCFont. Format");
         } catch (IOException e) {
-            System.out.println("PCFont. IO");
+            System.out.println("Error PCFont. IO");
         }
     }
 

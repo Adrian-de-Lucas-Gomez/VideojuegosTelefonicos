@@ -4,7 +4,7 @@ import com.example.engine.Image;
 
 public class PcImage implements Image {
 
-    private java.awt.Image _img;
+    private java.awt.Image _img; //Imagen de Java
 
     public PcImage(java.awt.Image img){
         _img = img;

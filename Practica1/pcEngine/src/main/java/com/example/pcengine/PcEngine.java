@@ -15,13 +15,16 @@ public class PcEngine implements Engine {
     private long _lastFrameTime = 0;
 
     public PcEngine(String title, int width, int height){
-        _window = new Window(title, width, height, 2);
+        _window = new Window(title, width, height, 2); //2 buffers para pintar
         _graphics = new PcGraphics(_window, width, height);
+
+        //Para input
         _input = new PcInput(_graphics);
         _window.addMouseListener(_input);
         _window.addMouseMotionListener(_input);
     }
 
+    //Asignar la lógica del juego al motor
     @Override
     public void setApplication(Application a) {
         _logic = a;
@@ -40,6 +43,7 @@ public class PcEngine implements Engine {
             _logic.onUpdate(elapsedTime);
             _logic.onHandleInput();
 
+            //Renderizado
             do {
                 do {
                     java.awt.Graphics2D graphicsJava = (Graphics2D)_window.getBufferStrategy().getDrawGraphics();
@@ -56,11 +60,11 @@ public class PcEngine implements Engine {
         }
     }
 
+    //+++++++++++++GETTERS+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     @Override
     public PcGraphics getGraphics() {
         return _graphics;
     }
-
     @Override
     public PcInput getInput() {
         return _input;

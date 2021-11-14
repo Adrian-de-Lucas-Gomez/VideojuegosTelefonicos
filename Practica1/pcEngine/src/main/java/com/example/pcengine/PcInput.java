@@ -18,6 +18,7 @@ public class PcInput implements Input, MouseListener, MouseMotionListener {
         eventList = new ArrayList<TouchEvent>();
     }
 
+    //Devuelve la lista de eventos
     @Override
     synchronized public ArrayList<TouchEvent> getTouchEvents(){
         if(eventList.size() > 0){
@@ -31,15 +32,19 @@ public class PcInput implements Input, MouseListener, MouseMotionListener {
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent){
-        int x= (int)((mouseEvent.getX() - _graphics.getOffsetX()) / _graphics.getLogicScaleAspect());
-        int y= (int)((mouseEvent.getY() - _graphics.getOffsetY()) / _graphics.getLogicScaleAspect());
+        //Calculo de coordenadas logicas
+        int x = (int)((mouseEvent.getX() - _graphics.getOffsetX()) / _graphics.getLogicScaleAspect());
+        int y = (int)((mouseEvent.getY() - _graphics.getOffsetY()) / _graphics.getLogicScaleAspect());
+
         synchronized (this) {eventList.add(new TouchEvent(x, y, TouchEvent.EventType.buttonPressed));}
     }
 
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
-        int x= (int)((mouseEvent.getX() - _graphics.getOffsetX()) / _graphics.getLogicScaleAspect());
-        int y= (int)((mouseEvent.getY() - _graphics.getOffsetY()) / _graphics.getLogicScaleAspect());
+        //Calculo de coordenadas logicas
+        int x = (int)((mouseEvent.getX() - _graphics.getOffsetX()) / _graphics.getLogicScaleAspect());
+        int y = (int)((mouseEvent.getY() - _graphics.getOffsetY()) / _graphics.getLogicScaleAspect());
+
         synchronized (this) {eventList.add(new TouchEvent(x, y, TouchEvent.EventType.buttonReleased));}
     }
 
