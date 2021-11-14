@@ -351,7 +351,7 @@ public class Logic implements Application {
                 _board = new Board(_graphics, 360);
                 _board.setPaintColors(_blue, _red, _lightgrey, _white, _black);
                 _lockImg = _graphics.newImage("lock.png");
-                
+
                 _hintButton = new Button(80, 500, 40, 40, _graphics.newImage("eye.png"), 0.5f, 1);
                 _hintButton.setScalingAnimation(1f, 1.1f, 0.3f, 1);
                 _hintButton.setAnimationAlpha(0f, 0.5f, 0.3f);

@@ -99,6 +99,7 @@ public class Board{
     public void clear(){
         _hintTile.setX(0);
         _hintTile.setY(0);
+        _pressedLockedTile = false;
         boardFeedbackText = "";
     }
 
