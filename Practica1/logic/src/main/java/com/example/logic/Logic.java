@@ -129,7 +129,7 @@ public class Logic implements Application {
                             justSolvedBoard = false;
                         }
                         else if(_hintButton.isPressed(pointerX, pointerY)) {
-                            _board.setHintText();
+                            _board.searchHintInTile();
                             _hintButton.activateAnimation();
                         }
                         else if(_reverseButton.isPressed(pointerX, pointerY)) {
@@ -276,7 +276,7 @@ public class Logic implements Application {
                 _graphics.drawText("¡Maravilloso!", 0, 0, true, false);
             }
             else{
-                String feedbackText = _board.getBoardFeedbackText();
+                String feedbackText = _board.get_boardFeedbackText();
                 if(!feedbackText.isEmpty()){
                     _graphics.setFont(_josefinSansText);
                     _graphics.drawText(feedbackText, 0, 0, true, false);
@@ -297,7 +297,7 @@ public class Logic implements Application {
             _graphics.restore();
 
             _graphics.translate(20, 100);
-            _board.paint();
+            _board.render();
             _graphics.translate(80, 420);
 
             //Botones
