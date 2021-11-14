@@ -8,8 +8,8 @@ public class Button {
     private float _defaultAlpha, _defaultScale;
 
     //Animaciones
-    private float _iAlpha, _eAlpha, _iScale, _eScale;
-    private float _stepAlpha, _stepScale;
+    private float _iAlpha, _iScale, _eScale;
+    private float _stepAlpha;
 
     private boolean _hasScalingAnimation = false;
     private boolean _hasAlphaAnimation = false;
@@ -20,6 +20,7 @@ public class Button {
     private float currentAlphaAnimationTime = 0f;
     private float currentScalingAnimationTime = 0f;
 
+    //Tiempo por cada repetición de la animación de escalado.
     private float timePerScalingAnimationRepetition = 0f;
 
     private float _scalingAnimationTime = 0f;
@@ -42,11 +43,20 @@ public class Button {
         _defaultScale = scale;
     }
 
+    /**
+     * Devuelve un bool que indica si el usuario ha pulsado el botón con las coordenadas lógicas indicadas.
+     * @param x posición X de la pulsación del jugador en cooredenadas lógicas
+     * @param y posición Y de la pulsación del jugador en cooredenadas lógicas
+     */
     public boolean isPressed(int x, int y){
         return(_x <= x && _y <= y && _x + _width >= x && _y + _height >= y);
     }
 
-    public void step(double deltaTime){
+    /**
+     * Actualiza los valores escala/alpha de sus respectivas animaciones
+     * @param deltaTime tiempo desde el último frame
+     */
+    public void update(double deltaTime){
         if(currentState == State.Transitioning) {
             if(_hasAlphaAnimation && !_alphaAnimationFinished) {
                 currentAlphaAnimationTime += deltaTime;
@@ -65,7 +75,9 @@ public class Button {
             }
         }
     }
-
+    /**
+     * Activa flags de las animaciones. Estas se actualizan en update()
+     */
     public void activateAnimation(){
         if(_hasAlphaAnimation){
             currentAlphaAnimationTime = 0f;
@@ -80,15 +92,28 @@ public class Button {
         currentState = State.Transitioning;
     }
 
+    /**
+     * Añade una animación en la que la transparencia del botón va variando.
+     * @param iAlpha valor alpha inicial
+     * @param eAlpha valor alpha final
+     * @param animationTime tiempo que dura la animación
+     */
     public void setAnimationAlpha(float iAlpha, float eAlpha, float animationTime){
         _hasAlphaAnimation = true;
         _iAlpha = iAlpha;
-        _eAlpha = eAlpha;
         _alphaAnimationTime = animationTime;
 
         _stepAlpha = (eAlpha - iAlpha) / _alphaAnimationTime;
     }
 
+    /**
+     * Añade una animación en la que la escala del botón va variando.
+     * @param iScale valor de escala inicial
+     * @param eScale valor de escala final
+     * @param animationTime tiempo que dura la animación
+     * @param nReps número de veces que se repite la animación en el tiempo determinado. Con esto
+     *              se consigue el efecto de "bote" de los muros que no se pueden modificar.
+     */
     public void setScalingAnimation(float iScale, float eScale, float animationTime, int nReps){
         _hasScalingAnimation = true;
         _iScale = iScale;
@@ -96,10 +121,7 @@ public class Button {
         _scalingAnimationTime = animationTime;
 
         timePerScalingAnimationRepetition = animationTime / nReps;
-        _stepScale = (eScale - iScale) / _scalingAnimationTime;
     }
-
-    public State getState() {return currentState;} //No se utiliza por el momento
 
     public float getX() { return _x; }
 

@@ -24,22 +24,23 @@ public class Logic implements Application {
     private int _clearColor, _black, _red, _lightgrey, _grey, _blue, _white;
 
     private GameState currentState;
-
-    //Hay elementos (botones, imágenes, ...) que no necesitamos generar cada vez que visitemos un nuevo estado
-    //si guardamos los estados que si hemos visitado, al cambiar de estado podemos comprobar si no hemos entrado aun
-    //en el nuevo estado y generar estos elementos.
+    /*
+    Hay elementos (botones, imágenes, ...) que no necesitamos generar cada vez que visitemos un nuevo estado.
+    Este vector guarda los estados que hemos visitado para que cuando accedamos a uno que ya hemos visitado, como el estado de juego,
+    podremos reutilizar sus elementos en vez de hacer varios new().
+     */
     private boolean[] hasBeenGenerated;
 
-    private Image _q43Img;
     private Font _molleRegularTitle;
     private Font _josefinSansTitle;
     private Font _josefinSansText;
 
     //Menu state
+    private Image _q43Img;
     private Button _playButton;
 
     //ChooseBoardSize state
-    private Button _goToTitleButton;
+    private Button _goBackButton;
     private Button[] _chooseSizeButtons;
     private boolean justSolvedBoard = false;
 
@@ -79,7 +80,6 @@ public class Logic implements Application {
 
         hasBeenGenerated = new boolean[GameState.values().length];
 
-        _q43Img = _graphics.newImage("q42.png");
         _molleRegularTitle = _graphics.newFont("Molle-Regular", 100.0f, true);
         _josefinSansTitle = _graphics.newFont("JosefinSans-Bold", 50.0f, true);
         _josefinSansText = _graphics.newFont("JosefinSans-Bold", 20.0f, false);
@@ -105,9 +105,9 @@ public class Logic implements Application {
                         if(_playButton.isPressed(pointerX, pointerY)) transitionTowardsState(GameState.BoardSizeMenu);
                     }
                     else if(currentState == GameState.BoardSizeMenu){
-                        if (_goToTitleButton.isPressed(pointerX, pointerY)) {
+                        if (_goBackButton.isPressed(pointerX, pointerY)) {
                             transitionTowardsState(GameState.MainMenu);
-                            _goToTitleButton.activateAnimation();
+                            _goBackButton.activateAnimation();
                         }
                         else{
                             for(int k = 0; k < _chooseSizeButtons.length; k++){
@@ -123,9 +123,9 @@ public class Logic implements Application {
                     }
                     else if (currentState == GameState.Game && (!_board.isSolved())){
                         _board.handleInput(pointerX, pointerY);
-                        if (_goToTitleButton.isPressed(pointerX, pointerY)) {
+                        if (_goBackButton.isPressed(pointerX, pointerY)) {
                             transitionTowardsState(GameState.BoardSizeMenu);
-                            _goToTitleButton.activateAnimation();
+                            _goBackButton.activateAnimation();
                             justSolvedBoard = false;
                         }
                         else if(_hintButton.isPressed(pointerX, pointerY)) {
@@ -148,12 +148,14 @@ public class Logic implements Application {
 
     @Override
     public void onUpdate(double deltaTime) {
+        //Si está cambiando de estado, se aplica una animación de transición en la que disminuye el alpha de toda la escena para subir de nuevo.
         if(isTransitioning){
             currentTimeToTransition += deltaTime;
             //Son mates un poco feas pero en esencia es una función seno que en un tiempo determinado recorre los valores 1 a 0 y de vuelta a 1, sin pasar por números negativos.
             sceneAlpha = (float)Math.cos((currentTimeToTransition - 2 * timeToTransition) * (2 * Math.PI) / 2) * 0.5f + 0.5f;
             _graphics.setMaxAlpha(sceneAlpha);
 
+            //Si la animación va por la mitad (alpha es 0), se genera el nuevo estado. De este modo la transición es lo más fluida posible
             if(!hasFinishedHalfTransition && currentTimeToTransition > timeToTransition * 0.5f) {
                 hasFinishedHalfTransition = true;
                 setState(stateToTransition);
@@ -167,16 +169,18 @@ public class Logic implements Application {
             }
         }
 
+        //Actualización de las animaciones de los botones del estado de elección de tamaño de tablero.
         if(currentState == GameState.BoardSizeMenu) {
-            _goToTitleButton.step(deltaTime);
-            for(Button b : _chooseSizeButtons) b.step(deltaTime);
+            _goBackButton.update(deltaTime);
+            for(Button b : _chooseSizeButtons) b.update(deltaTime);
         }
 
+        //Actualización de las animaciones de los elementos del estado de juego.
         else if(currentState == GameState.Game) {
             _board.onUpdate(deltaTime);
-            _reverseButton.step(deltaTime);
-            _hintButton.step(deltaTime);
-            _goToTitleButton.step(deltaTime);
+            _reverseButton.update(deltaTime);
+            _hintButton.update(deltaTime);
+            _goBackButton.update(deltaTime);
         }
     }
 
@@ -189,7 +193,8 @@ public class Logic implements Application {
         _graphics.scale(_graphics.getLogicScaleAspect(), _graphics.getLogicScaleAspect());
         _graphics.save();
 
-        _graphics.setMaxAlpha(sceneAlpha); //todo revisar si esto se debe dejar aquí
+        _graphics.setMaxAlpha(sceneAlpha);
+
         if(currentState == GameState.MainMenu){
             //Tamaño Lógico: 400x600
             //Imagen Q42
@@ -236,7 +241,7 @@ public class Logic implements Application {
 
             //Imágenes
             _graphics.translate(0, 320);
-            _graphics.drawImage(_goToTitleButton.getImage(), _goToTitleButton.getWidth() * _goToTitleButton.getScale(), _goToTitleButton.getHeight() * _goToTitleButton.getScale(),  _goToTitleButton.getAlpha(), true);
+            _graphics.drawImage(_goBackButton.getImage(), _goBackButton.getWidth() * _goBackButton.getScale(), _goBackButton.getHeight() * _goBackButton.getScale(),  _goBackButton.getAlpha(), true);
 
             //Botones de eleccion de tamaño de tablero
             _graphics.restore();
@@ -298,7 +303,7 @@ public class Logic implements Application {
             //Botones
             _graphics.drawImage(_hintButton.getImage(), _hintButton.getWidth() * _hintButton.getScale(), _hintButton.getHeight() * _hintButton.getScale(), _hintButton.getAlpha(), true);
             _graphics.translate(100, 0);
-            _graphics.drawImage(_goToTitleButton.getImage(), _goToTitleButton.getWidth() * _goToTitleButton.getScale(), _goToTitleButton.getHeight() * _goToTitleButton.getScale(),  _goToTitleButton.getAlpha(), true);
+            _graphics.drawImage(_goBackButton.getImage(), _goBackButton.getWidth() * _goBackButton.getScale(), _goBackButton.getHeight() * _goBackButton.getScale(),  _goBackButton.getAlpha(), true);
             _graphics.translate(100, 0);
             _graphics.drawImage(_reverseButton.getImage(), _reverseButton.getWidth() * _reverseButton.getScale(), _reverseButton.getHeight() * _reverseButton.getScale(),  _reverseButton.getAlpha(), true);
         }
@@ -325,11 +330,12 @@ public class Logic implements Application {
         //Si no hemos visitado este estado anteriormente, hacemos new de todos los elementos que necesite
         if(!hasBeenGenerated[currentState.ordinal()]){
             if(newState == GameState.MainMenu){
+                _q43Img = _graphics.newImage("q42.png");
                 _playButton = new Button(145, 200,111, 60, null, 1, 1);
             }
             else if(newState == GameState.BoardSizeMenu){
-                _goToTitleButton = new Button(180, 500, 40, 40, _graphics.newImage("close.png"), 0.5f, 1);
-                _goToTitleButton.setScalingAnimation(1f, 1.1f, 0.3f, 1);
+                _goBackButton = new Button(180, 500, 40, 40, _graphics.newImage("close.png"), 0.5f, 1);
+                _goBackButton.setScalingAnimation(1f, 1.1f, 0.3f, 1);
                 int buttonHorizontalOffset = 40, buttonVerticalOffset = 70, buttonSize = 60;
                 _chooseSizeButtons = new Button[6];
                 for(int k = 0; k < 6; k++){
@@ -338,12 +344,18 @@ public class Logic implements Application {
                 }
             }
             else{
+                if(_goBackButton == null){ //Se genera en el estado anterior pero lo dejo por si al modificar la práctica hay que saltar del primer estado al juego.
+                    _goBackButton = new Button(180, 500, 40, 40, _graphics.newImage("close.png"), 0.5f, 1);
+                    _goBackButton.setScalingAnimation(1f, 1.1f, 0.3f, 1);
+                }
                 _board = new Board(_graphics, 360);
                 _board.setPaintColors(_blue, _red, _lightgrey, _white, _black);
                 _lockImg = _graphics.newImage("lock.png");
+
                 _hintButton = new Button(80, 500, 40, 40, _graphics.newImage("eye.png"), 0.5f, 1);
                 _hintButton.setScalingAnimation(1f, 1.1f, 0.3f, 1);
                 _hintButton.setAnimationAlpha(0f, 0.5f, 0.3f);
+
                 _reverseButton = new Button(280, 500, 40, 40, _graphics.newImage("history.png"), 0.5f, 1);
                 _reverseButton.setScalingAnimation(1f, 1.1f, 0.3f, 1);
                 _reverseButton.setAnimationAlpha(0f, 0.5f, 0.3f);
