@@ -1,0 +1,1986 @@
+/* promo */
+"    regularly %@" = "    regularly %@";
+
+/* promo */
+"    regularly 5 for %@" = "    regularly 5 for %@";
+
+/* format of post to twitter text */
+"%@ #flowfree" = "%@ #flowfree";
+
+/* promo */
+"%@ additional premium packs" = "%@ additional premium packs";
+
+/* formatting for the level description for example: Mania, 9x9 level 20 */
+"%@ level %d" = "%1$@ level %2$d";
+
+/* promo */
+"%@ new levels" = "%@ new levels";
+
+/* promo */
+"%@ new premium packs" = "%@ new premium packs";
+
+/* promo */
+"%@ premium packs" = "%@ premium packs";
+
+/* promo */
+"%@, huge savings over full price." = "%@, huge savings over full price.";
+
+/* promo */
+"%@, Unlock today and beat the game!" = "%@, Unlock today and beat the game!";
+
+/* Label text describing daily puzzles, shown when there are new daily puzzles to play.  %d will be replaced with the current streak length, greater than 1, example: '3 day streak!' */
+"%d day streak!  New puzzles available!" = "%d day streak!  New puzzles available!";
+
+/* Label text describing daily puzzles, shown after the user has completed today's puzzles.  %d will be replaced with the current streak length, greater than 1, example: '3 day streak!' */
+"%d day streak!  Play more tomorrow!" = "%d day streak!  Play more tomorrow!";
+
+/* Label text indicating the length of a daily puzzle streak.  %d will be replaced with the number of days, either zero or greater than one, example: '0 days' or '2 days' */
+"%d days" = "%d days";
+
+/* buy %d hints button. The %d is a number greater than 1. */
+"%d hints" = "%d hints";
+
+/* Item for purchase.  A hint shows the user part of the solution to the puzzle. */
+"%d Hints" = "%d Hints";
+
+/* Number of hints remaining plus prompt to buy more. The %d is a number greater than 1, or zero. */
+"%d Hints Remain: Get More!" = "%d Hints Remain: Get More!";
+
+/* more than one hint remaining */
+"%d hints remaining" = "%d hints remaining";
+
+/* 20 or more hints left.  Keep %d because it will be replaced with a number 20 or greater. */
+"%d hints remaining.  Get more now!" = "%d hints remaining.  Get more now!";
+
+/* Number of levels in packs. The %d is a number, such as 150. */
+"%d Premium Levels" = "%d Premium Levels";
+
+/* Number of levels in packs. The %d is a number, such as 150. */
+"%d Premium Levels Each" = "%d Premium Levels Each";
+
+/* Show how many boards are solved, keep %d it will be replaced with a number */
+"%d solved" = "%d solved";
+
+/* Label text indicating the number of weeks that weekly puzzles have been completed.  %d will be replaced with the number of weeks, either zero or greater than one, example: '0 weeks' or '2 weeks' */
+"%d weeks" = "%d weeks";
+
+/* Label text describing weekly puzzles, shown when there are new weekly puzzles to play.  %d will be replaced with the number of weekly weeks completed, greater than 1, example: '3 weeks completed!  New puzzles available!' */
+"%d weeks completed!  New puzzles available!" = "%d weeks completed!  New puzzles available!";
+
+/* Label text describing weekly puzzles, shown after the user has completed this week's puzzles.  %d will be replaced with the number of weekly weeks completed, greater than 1, example: '3 weeks completed!  Play more on Monday!' */
+"%d weeks completed!  Play more on Monday!" = "%d weeks completed!  Play more on Monday!";
+
+/* Refers to the ability to buy all game packs as one purchase. */
+"(Best Deal)" = "(Best Deal)";
+
+/* legal */
+"* \"Flow\", \"Flow Free\", \"Flow Free: Bridges\", and the Bridges icon are trademarks registered internationally, including in the United States, to Big Duck Games®, LLC (reg. #s 4,395,937, 4,320,256, 4,396,260 and 4,414,889)." = "* \"Flow\", \"Flow Free\", \"Flow Free: Bridges\", and the Bridges icon are trademarks registered internationally, including in the United States, to Big Duck Games®, LLC (reg. #s 4,395,937, 4,320,256, 4,396,260 and 4,414,889).";
+
+/* legal */
+"* \"Flow\", \"Flow Free\", \"Flow Free: Hexes\", and the Hexes icon are trademarks registered internationally, including in the United States, to Big Duck Games®, LLC (reg. #s 4,395,937, 4,320,256, 5,213,571 and 5,213,574)." = "* \"Flow\", \"Flow Free\", \"Flow Free: Hexes\", and the Hexes icon are trademarks registered internationally, including in the United States, to Big Duck Games®, LLC (reg. #s 4,395,937, 4,320,256, 5,213,571 and 5,213,574).";
+
+/* legal */
+"* \"Flow\", \"Flow Free\", and the Flow Free icon are trademarks registered internationally, including in the United States, to Big Duck Games®, LLC (reg. #s 4,395,937, 4,320,256 and 4,356,856)." = "* \"Flow\", \"Flow Free\", and the Flow Free icon are trademarks registered internationally, including in the United States, to Big Duck Games®, LLC (reg. #s 4,395,937, 4,320,256 and 4,356,856).";
+
+/* Label text indicating a one day daily puzzle streak */
+"1 day" = "1 day";
+
+/* Label text describing daily puzzles, shown when there are new daily puzzles to play.  Translation should be similar to the corresponding plural string: '%d day streak!  New puzzles available!' */
+"1 day streak!  New puzzles available!" = "1 day streak!  New puzzles available!";
+
+/* Label text describing daily puzzles, shown after the user has completed today's puzzles.  Translation should be similar to the corresponding plural string: '%d day streak!  Play more tomorrow!' */
+"1 day streak!  Play more tomorrow!" = "1 day streak!  Play more tomorrow!";
+
+/* only one hint remaining */
+"1 hint remaining" = "1 hint remaining";
+
+/* One hint remaining plus prompt to buy more. Translation should be similar to the corresponding plural string: '%d Hints Remain: Get More!' */
+"1 Hint Remains: Get More!" = "1 Hint Remains: Get More!";
+
+/* duration of time trial */
+"1 minute" = "1 minute";
+
+/* Label text indicating one week of weekly puzzles have been completed. */
+"1 week" = "1 week";
+
+/* Label text describing weekly puzzles, shown when there are new weekly puzzles to play.  Translation should be similar to the corresponding plural string: '%d weeks completed!  New puzzles available!' */
+"1 week complete!  New puzzles available!" = "1 week complete!  New puzzles available!";
+
+/* Label text describing weekly puzzles, shown after the user has completed this week's puzzles.  Translation should be similar to the corresponding plural string: '%d weeks completed!  Play more on Monday!' */
+"1 week complete!  Play more on Monday!" = "1 week complete!  Play more on Monday!";
+
+/* short description of the Jumbo, Purple, and Pink Pack */
+"10x10 - 14x14 boards" = "10x10 - 14x14 boards";
+
+/* short description of the Jumbo Rainbow Pack */
+"10x10 - 14x14 rainbow" = "10x10 - 14x14 rainbow";
+
+/* short level pack name */
+"10x10 Mania" = "10x10 Mania";
+
+/* long level pack name */
+"10x10 Mania Pack" = "10x10 Mania Pack";
+
+/* description of the Jumbo Pack and Yellow Pack */
+"10x10 to 14x14 boards" = "10x10 to 14x14 boards";
+
+/* description of the Tangle Pack */
+"10x10 to 14x14 boards with tangles" = "10x10 to 14x14 boards with tangles";
+
+/* description of the Warpway Pack */
+"10x10 to 14x14 boards with warpways" = "10x10 to 14x14 boards with warpways";
+
+/* description of the Worm Pack */
+"10x10 to 14x14 boards with worms" = "10x10 to 14x14 boards with worms";
+
+/* short description of the Jumbo Courtyard Pack */
+"11x11 - 15x15 boards" = "11x11 - 15x15 boards";
+
+/* short level pack name */
+"11x11 Mania" = "11x11 Mania";
+
+/* long level pack name */
+"11x11 Mania Pack" = "11x11 Mania Pack";
+
+/* description of the Pathway Pack */
+"11x11 to 15x15 boards with pathways" = "11x11 to 15x15 boards with pathways";
+
+/* description of the Star Field Pack */
+"11x11 to 15x15 boards with stars" = "11x11 to 15x15 boards with stars";
+
+/* description of the Jumbo Courtyard Pack */
+"11x11 to 15x15 boards with walls" = "11x11 to 15x15 boards with walls";
+
+/* description of the Flower Field Pack */
+"11x11 to 15x15 fields of flowers" = "11x11 to 15x15 fields of flowers";
+
+/* short description of the Jumbo Rectangle and Hextangle Packs */
+"11x14 - 15x18 boards" = "11x14 - 15x18 boards";
+
+/* description of the Jumbo Rectangle Pack */
+"11x14 to 15x18 boards" = "11x14 to 15x18 boards";
+
+/* short level pack name */
+"12x12 Mania" = "12x12 Mania";
+
+/* long level pack name */
+"12x12 Mania Pack" = "12x12 Mania Pack";
+
+/* short level pack name */
+"13x13 Mania" = "13x13 Mania";
+
+/* long level pack name */
+"13x13 Mania Pack" = "13x13 Mania Pack";
+
+/* short level pack name */
+"14x14 Mania" = "14x14 Mania";
+
+/* long level pack name */
+"14x14 Mania Pack" = "14x14 Mania Pack";
+
+/* short level pack name */
+"15x15 Mania" = "15x15 Mania";
+
+/* long level pack name */
+"15x15 Mania Pack" = "15x15 Mania Pack";
+
+/* duration of time trial */
+"2 minutes" = "2 minutes";
+
+/* duration of time trial */
+"30 seconds" = "30 seconds";
+
+/* duration of time trial */
+"4 minutes" = "4 minutes";
+
+/* description of the 4x4 Boundless Pack */
+"4x4 boards with full warps" = "4x4 boards with full warps";
+
+/* short level pack name */
+"4x4 Boundless" = "4x4 Boundless";
+
+/* long level pack name */
+"4x4 Boundless Pack" = "4x4 Boundless Pack";
+
+/* description of the Small Galaxy Pack */
+"4x4 to 6x6 boards with wide warps" = "4x4 to 6x6 boards with wide warps";
+
+/* description of the Tower Pack */
+"4x5 to 8x14 boards" = "4x5 to 8x14 boards";
+
+/* promo */
+"5 new color sets" = "5 new color sets";
+
+/* short description of the Blue and Green Packs, and Hexes Classic Pack 2 */
+"5x5 - 9x9 boards" = "5x5 - 9x9 boards";
+
+/* description of the Starter Pack */
+"5x5 and 6x6 boards" = "5x5 and 6x6 boards";
+
+/* description of the Kids Pack in Warps */
+"5x5 boards with easy warps" = "5x5 boards with easy warps";
+
+/* description of the 5x5 Boundless Pack */
+"5x5 boards with full warps" = "5x5 boards with full warps";
+
+/* description of the Starter Pack */
+"5x5 boards with increasing warps" = "5x5 boards with increasing warps";
+
+/* short description of the Comet Pack */
+"5x5 boards with warps" = "5x5 boards with warps";
+
+/* short level pack name */
+"5x5 Boundless" = "5x5 Boundless";
+
+/* long level pack name */
+"5x5 Boundless Pack" = "5x5 Boundless Pack";
+
+/* short level pack name */
+"5x5 Mania" = "5x5 Mania";
+
+/* long level pack name */
+"5x5 Mania Pack" = "5x5 Mania Pack";
+
+/* description of the Classic, Regular, and Bonus Pack */
+"5x5 to 9x9 boards" = "5x5 to 9x9 boards";
+
+/* description of the Jet Pack */
+"5x5 to 9x9 boards with 2 warps" = "5x5 to 9x9 boards with 2 warps";
+
+/* description of the Scanline Pack */
+"5x5 to 9x9 boards with scanning walls" = "5x5 to 9x9 boards with scanning walls";
+
+/* description of the Warps Pack. 'warps' is the brand name of one of our apps and shouldn't be localized. */
+"5x5 to 9x9 boards with warps" = "5x5 to 9x9 boards with warps";
+
+/* description of the Flower Pack */
+"5x5 to 9x9 flowers" = "5x5 to 9x9 flowers";
+
+/* description of the Tower Pack */
+"5x6 to 9x15 boards" = "5x6 to 9x15 boards";
+
+/* promo */
+"60% off!" = "60% off!";
+
+/* promo */
+"60% savings over full price!" = "60% savings over full price!";
+
+/* promo */
+"60% savings over regular price!" = "60% savings over regular price!";
+
+/* short level pack name */
+"6x6 Boundless" = "6x6 Boundless";
+
+/* long level pack name */
+"6x6 Boundless Pack" = "6x6 Boundless Pack";
+
+/* short description of the 6x6 Boundless Pack */
+"6x6 full warps boards" = "6x6 full warps boards";
+
+/* short level pack name */
+"6x6 Mania" = "6x6 Mania";
+
+/* long level pack name */
+"6x6 Mania Pack" = "6x6 Mania Pack";
+
+/* description of the Pockets Pack */
+"6x6 to 10x10 boards with pockets" = "6x6 to 10x10 boards with pockets";
+
+/* description of the Worm Pack */
+"6x6 to 10x10 boards with worms" = "6x6 to 10x10 boards with worms";
+
+/* description of the Large Galaxy Pack */
+"6x6 to 8x8 boards with wide warps" = "6x6 to 8x8 boards with wide warps";
+
+/* description of the Tower Pack */
+"6x7 to 10x16 boards" = "6x7 to 10x16 boards";
+
+/* promo */
+"7 bonus hints" = "7 bonus hints";
+
+/* promo */
+"7 extra hints" = "7 extra hints";
+
+/* short description of the Extreme Rainbow Pack */
+"7x7 - 15x15 rainbow" = "7x7 - 15x15 rainbow";
+
+/* description of the Challenge Pack */
+"7x7 and 8x8 boards" = "7x7 and 8x8 boards";
+
+/* short level pack name */
+"7x7 Boundless" = "7x7 Boundless";
+
+/* long level pack name */
+"7x7 Boundless Pack" = "7x7 Boundless Pack";
+
+/* short description of the 7x7 Boundless Pack */
+"7x7 full warps boards" = "7x7 full warps boards";
+
+/* short level pack name */
+"7x7 Mania" = "7x7 Mania";
+
+/* long level pack name */
+"7x7 Mania Pack" = "7x7 Mania Pack";
+
+/* description of the Hashed Pack */
+"7x7 to 11x11 boards with hashes" = "7x7 to 11x11 boards with hashes";
+
+/* description of the Warps Scattered Pack */
+"7x7 to 11x11 boards with obstacles" = "7x7 to 11x11 boards with obstacles";
+
+/* description of the Rift Pack */
+"7x7 to 11x11 boards with rifts" = "7x7 to 11x11 boards with rifts";
+
+/* description of the Stitched Pack */
+"7x7 to 11x11 boards with stitches" = "7x7 to 11x11 boards with stitches";
+
+/* description of the Courtyard, Warpyard, and Capacitor Packs */
+"7x7 to 11x11 boards with walls" = "7x7 to 11x11 boards with walls";
+
+/* description of the Sunflower Pack */
+"7x7 to 15x15 flowers" = "7x7 to 15x15 flowers";
+
+/* description of the Rectangle and Hextangle Pack */
+"8x10 to 12x14 boards" = "8x10 to 12x14 boards";
+
+/* short description of the Extreme Rainbow Pack */
+"8x8 - 15x15 rainbow" = "8x8 - 15x15 rainbow";
+
+/* short description of the Deep Space Pack 2 */
+"8x8 - 9x9 star boards" = "8x8 - 9x9 star boards";
+
+/* description of the Deep Space Pack */
+"8x8 and 9x9 boards with star walls" = "8x8 and 9x9 boards with star walls";
+
+/* short level pack name */
+"8x8 Mania" = "8x8 Mania";
+
+/* long level pack name */
+"8x8 Mania Pack" = "8x8 Mania Pack";
+
+/* description of the Scattered Pack */
+"8x8 to 12x12 boards with obstacles" = "8x8 to 12x12 boards with obstacles";
+
+/* description of the Pockets Pack */
+"8x8 to 12x12 boards with pockets" = "8x8 to 12x12 boards with pockets";
+
+/* description of the Hourglass Pack */
+"9x11 to 13x15 hourglass boards" = "9x11 to 13x15 hourglass boards";
+
+/* description of the Time Warp Pack */
+"9x11 to 13x15 time warp boards" = "9x11 to 13x15 time warp boards";
+
+/* short description of the Jumbo Interval Pack */
+"9x9 - 15x15 intervals" = "9x9 - 15x15 intervals";
+
+/* description of the Bonus Pack */
+"9x9 boards" = "9x9 boards";
+
+/* short level pack name */
+"9x9 Mania" = "9x9 Mania";
+
+/* long level pack name */
+"9x9 Mania Pack" = "9x9 Mania Pack";
+
+/* description of the Jumbo Jet Pack */
+"9x9 to 13x13 boards with 2 warps" = "9x9 to 13x13 boards with 2 warps";
+
+/* description of the Courtyard Spin Pack */
+"9x9 to 13x13 boards with walls" = "9x9 to 13x13 boards with walls";
+
+/* description of the Party Pack */
+"A celebration of Flow Free!" = "A celebration of Flow Free!";
+
+/* promo */
+"A fun and challenging new twist on Flow Free!" = "A fun and challenging new twist on Flow Free!";
+
+/* Device notification message for weekly puzzles, telling players there are new weekly puzzles. */
+"A new weekly challenge is out!" = "A new weekly challenge is out!";
+
+/* Choice on the main menu to read about the game. */
+"about" = "about";
+
+/* promo */
+"Add some color to your game with themes!" = "Add some color to your game with themes!";
+
+/* Menu label for animations that are turned on fully. */
+"all" = "all";
+
+/* description of the 10x10 Mania Pack */
+"All 10x10, all the time!" = "All 10x10, all the time!";
+
+/* short description of the 11x11 Mania Pack */
+"All 11x11, all the time!" = "All 11x11, all the time!";
+
+/* short description of the 12x12 Mania Pack */
+"All 12x12, all the time!" = "All 12x12, all the time!";
+
+/* short description of the 13x13 Mania Pack */
+"All 13x13, all the time!" = "All 13x13, all the time!";
+
+/* short description of the 14x14 Mania Pack */
+"All 14x14, all the time!" = "All 14x14, all the time!";
+
+/* short description of the 15x15 Mania Pack */
+"All 15x15, all the time!" = "All 15x15, all the time!";
+
+/* description of the 5x5 Mania Pack */
+"All 5x5, all the time!" = "All 5x5, all the time!";
+
+/* description of the 6x6 Mania Pack */
+"All 6x6, all the time!" = "All 6x6, all the time!";
+
+/* description of the 7x7 Mania Pack */
+"All 7x7, all the time!" = "All 7x7, all the time!";
+
+/* description of the 8x8 Mania Pack */
+"All 8x8, all the time!" = "All 8x8, all the time!";
+
+/* description of the 9x9 Mania Pack */
+"All 9x9, all the time!" = "All 9x9, all the time!";
+
+/* promo */
+"All board sizes" = "All board sizes";
+
+/* Something the user will get, themes change all the colors in the game */
+"All color themes!" = "All color themes!";
+
+/* promo */
+"All for just %@" = "All for just %@";
+
+/* Something the user will get, level packs give the user more puzzles to solve */
+"All premium level packs!" = "All premium level packs!";
+
+/* Flows finished but pipe remaining dialog title */
+"Almost there..." = "Almost there...";
+
+/* description of the Amoeba Pack */
+"Amoeba boards increasing in size" = "Amoeba boards increasing in size";
+
+/* weekly puzzle theme name. 'Amoeba' translation should be similar to the related pack 'Amoeba Pack' */
+"Amoeba Challenge" = "Amoeba Challenge";
+
+/* short level pack name */
+"Amoeba Pack" = "Amoeba Pack";
+
+/* promo */
+"An exciting limited time offer:" = "An exciting limited time offer:";
+
+/* Price of what you get for free, for example: An over $8 value for free! */
+"An over $10 value for free!" = "An over $10 value for free!";
+
+/* Price of what you get for free, for example: An over $8 value for free! */
+"An over $8 value for free!" = "An over $8 value for free!";
+
+/* Menu item for toggling animations on or off. */
+"animations: %@" = "animations: %@";
+
+/* Ask if the user would like to exit the game.  Do not localize 'Flow Free'. */
+"Are you sure that you want to exit Flow Free?" = "Are you sure that you want to exit Flow Free?";
+
+/* Message popup asking user to confirm reset. */
+"Are you sure you want to reset all level progress?" = "Are you sure you want to reset all level progress?";
+
+/* Confirm back navigation dialog button */
+"back to menu" = "back to menu";
+
+/* Pack is locked. %@ will be replaced with a localized pack name. example: 'Beat any pack to play the Blue Pack' */
+"Beat any pack to play the %@." = "Beat any pack to play the %@.";
+
+/* Pack is locked.  %1$@ and %2$@ will be replaced with localized pack names, example: 'Beat the Blue Pack to play the Pink Pack' */
+"Beat the %@ to play the %@." = "Beat the %1$@ to play the %2$@.";
+
+/* Pack is locked. %@ will be replaced with a localized pack name. example: 'Beat the Blue Pack to play this pack' */
+"Beat the %@ to play this pack." = "Beat the %@ to play this pack.";
+
+/* buy more hints to get a better price per hint */
+"Best Deal" = "Best Deal";
+
+/* Selling point for the Unlock All bundle */
+"Best deal!" = "Best deal!";
+
+/* short level pack name */
+"Blue Pack" = "Blue Pack";
+
+/* text on the game screen telling the user the board number */
+"board %d" = "board %d";
+
+/* Header title on the board size menu. */
+"board size" = "board size";
+
+/* Show the size of the board, keep %d it will be replaced with a number, example 8x8 */
+"board size: %dx%d" = "board size: %1$dx%2$d";
+
+/* short level pack name */
+"Bonus Pack" = "Bonus Pack";
+
+/* section name */
+"Boundless" = "Boundless";
+
+/* short level pack name. 'Bridges' is the brand name of one of our apps and shouldn't be localized. */
+"Bridges Sampler" = "Bridges Sampler";
+
+/* text used on a button to cancel the action */
+"cancel" = "cancel";
+
+/* text used on a button to cancel the action */
+"Cancel" = "Cancel";
+
+/* weekly puzzle theme name. 'Capacitor' translation should be similar to the related pack 'Capacitor Pack' */
+"Capacitor Challenge" = "Capacitor Challenge";
+
+/* short level pack name */
+"Capacitor Pack" = "Capacitor Pack";
+
+/* section name */
+"Challenge" = "Challenge";
+
+/* short level pack name */
+"Challenge Pack" = "Challenge Pack";
+
+/* pause dialog button */
+"change settings" = "change settings";
+
+/* promo for game, for example Check out my progress in Flow Free! */
+"Check out my progress in %@!" = "Check out my progress in %@!";
+
+/* promo for game, for example Check out this Flow Free puzzle! */
+"Check out this %@ puzzle!" = "Check out this %@ puzzle!";
+
+/* Language name, for display as a game language option */
+"Chinese (Simp.)" = "Chinese (Simp.)";
+
+/* Language name, for display as a game language option */
+"Chinese (Trad.)" = "Chinese (Trad.)";
+
+/* Claim hint reward after watching a rewarded video. */
+"claim" = "claim";
+
+/* short theme name */
+"Classic" = "Classic";
+
+/* promo */
+"Classic and Jumbo boards" = "Classic and Jumbo boards";
+
+/* short level pack name */
+"Classic Pack" = "Classic Pack";
+
+/* short level pack name */
+"Classic Pack 2" = "Classic Pack 2";
+
+/* full theme name */
+"Classic Theme" = "Classic Theme";
+
+/* Button to close the dialog */
+"Close" = "Close";
+
+/* Menu item indicating whether syncing game progress to the cloud is currently on or off. %@ will be replaced with 'on' or 'off', example: 'cloud sync: off' */
+"cloud sync: %@" = "cloud sync: %@";
+
+/* weekly puzzle theme name */
+"Clovers Challenge" = "Clovers Challenge";
+
+/* Menu item for toggling flow color labels on or off.  Labeling each flow color with a letter is useful for players that are color blind.  %@ will be replaced with 'on' or 'off', example: 'color labels: off' */
+"color labels: %@" = "color labels: %@";
+
+/* Description on the store submenu that explains Themes. */
+"Color your game and boards!" = "Color your game and boards!";
+
+/* short level pack name */
+"Comet Pack" = "Comet Pack";
+
+/* Device notification message for weekly puzzles, asking user to play the game, before the puzzles are gone. */
+"Complete this week's puzzles before they're gone!" = "Complete this week's puzzles before they're gone!";
+
+/* Device notification message for daily puzzles, asking user to play the game, and extend their daily streak, before the day ends. */
+"Complete today's puzzles before midnight to extend your streak!" = "Complete today's puzzles before midnight to extend your streak!";
+
+/* short level pack name */
+"Concepts Pack" = "Concepts Pack";
+
+/* Title for back confirmation dialog */
+"Confirm" = "Confirm";
+
+/* Dialog title that is used when asking the user if they want to exit the game. */
+"Confirm Exit" = "Confirm Exit";
+
+/* User finished the level pack. %@ will be replaced with a localized pack name, example: 'Congratulations on beating the Green Pack' */
+"Congratulations on beating the %@!" = "Congratulations on beating the %@!";
+
+/* Dialog title text */
+"Congratulations!" = "Congratulations!";
+
+/* Button to continue after completing a Time Trial. */
+"continue" = "continue";
+
+/* weekly puzzle theme name */
+"Cornerless Challenge" = "Cornerless Challenge";
+
+/* Hints error message */
+"couldn't load" = "couldn't load";
+
+/* short level pack name */
+"Courtyard Pack" = "Courtyard Pack";
+
+/* short level pack name */
+"Courtyard Spin" = "Courtyard Spin";
+
+/* long level pack name */
+"Courtyard Spin Pack" = "Courtyard Spin Pack";
+
+/* Label text indicating the length of the user's current daily puzzle streak.  %@ will be replaced with the number of days, example: 'Current streak: 2 days' */
+"Current streak: %@" = "Current streak: %@";
+
+/* Two letter language code for this language (for example, 'en' for English).  See ISO 639-1: http://www.loc.gov/standards/iso639-2/php/English_list.php */
+"currentLanguage" = "en";
+
+/* promo */
+"Customize your boards with color themes!" = "Customize your boards with color themes!";
+
+/* Choice on the main menu to play the daily puzzles. */
+"daily puzzles" = "daily puzzles";
+
+/* New puzzles every day */
+"Daily Puzzles" = "Daily Puzzles";
+
+/* short theme name */
+"Dark" = "Dark";
+
+/* full theme name */
+"Dark Matter" = "Dark Matter";
+
+/* Label text indicating the total number of daily puzzle packs the user has completed.  %@ will be replaced with the number of days, example: 'Days played: 7 days' */
+"Days played: %@" = "Days played: %@";
+
+/* short level pack name */
+"Deep Space" = "Deep Space Pack";
+
+/* short level pack name */
+"Deep Space 2" = "Deep Space Pack 2";
+
+/* long level pack name */
+"Deep Space Pack" = "Deep Space Pack";
+
+/* long level pack name */
+"Deep Space Pack 2" = "Deep Space Pack 2";
+
+/* promo */
+"Discover a new dimension of Flow Free!" = "Discover a new dimension of Flow Free!";
+
+/* Button to decline reviewing the app */
+"Don't Ask Again" = "Don't Ask Again";
+
+/* weekly puzzle theme name */
+"Donuts Challenge" = "Donuts Challenge";
+
+/* weekly puzzle theme name */
+"Dotted Challenge" = "Dotted Challenge";
+
+/* promo */
+"download\nfree!" = "download\nfree!";
+
+/* Help text for Flow Free: Warps app */
+"Drag to connect matching colors with pipe, creating a flow.\n\nPair all colors, and cover the entire board with pipe to solve each puzzle.  But watch out, pipes will break if they cross or overlap!\n\nDrag outwards through a warp to make the pipe appear on the opposite side.\n\nAfter warping, you may need to lift your finger to complete the flow.  Don't worry, it won't affect your score!\n\nOn some boards, you may not need to use all of the warps." = "Drag to connect matching colors with pipe, creating a flow.\n\nPair all colors, and cover the entire board with pipe to solve each puzzle.  But watch out, pipes will break if they cross or overlap!\n\nDrag outwards through a warp to make the pipe appear on the opposite side.\n\nAfter warping, you may need to lift your finger to complete the flow.  Don't worry, it won't affect your score!\n\nOn some boards, you may not need to use all of the warps.";
+
+/* Help text for Flow Free: Bridges app */
+"Drag to connect matching colors with pipe, creating a flow.\n\nPair all colors, and cover the entire board with pipe to solve each puzzle.\n\nBut watch out, pipes will break if they cross or overlap!  Use the bridge to cross two pipes and solve the puzzle.\n\nToo easy? Try selecting a larger board or different level pack.  Or see how fast you can solve in Time Trial mode." = "Drag to connect matching colors with pipe, creating a flow.\n\nPair all colors, and cover the entire board with pipe to solve each puzzle.\n\nBut watch out, pipes will break if they cross or overlap!  Use the bridge to cross two pipes and solve the puzzle.\n\nToo easy? Try selecting a larger board or different level pack.  Or see how fast you can solve in Time Trial mode.";
+
+/* Help text for Flow Free and Flow Free: Hexes apps */
+"Drag to connect matching colors with pipe, creating a flow.\n\nPair all colors, and cover the entire board with pipe to solve each puzzle.\n\nBut watch out, pipes will break if they cross or overlap!\n\nToo easy? Try selecting a larger board or different level pack.  Or see how fast you can solve in Time Trial mode." = "Drag to connect matching colors with pipe, creating a flow.\n\nPair all colors, and cover the entire board with pipe to solve each puzzle.\n\nBut watch out, pipes will break if they cross or overlap!\n\nToo easy? Try selecting a larger board or different level pack.  Or see how fast you can solve in Time Trial mode.";
+
+/* weekly puzzle theme name */
+"Dumbbell Challenge" = "Dumbbell Challenge";
+
+/* level difficulty */
+"easy" = "easy";
+
+/* short description of the Kids Pack */
+"Easy 5x5 - 6x6 boards" = "Easy 5x5 - 6x6 boards";
+
+/* description of the Kids Pack */
+"Easy 5x5 and 6x6 boards" = "Easy 5x5 and 6x6 boards";
+
+/* short description of the Kids Pack */
+"Easy 5x5 boards" = "Easy 5x5 boards";
+
+/* Language name, for display as a game language option */
+"English" = "English";
+
+/* Remove Ads Dialog Message */
+"Enjoy thousands of puzzles, with zero ads!" = "Enjoy thousands of puzzles, with zero ads!";
+
+/* Ask the user to review the app in the app store. */
+"Enjoying the app?\nPlease give us a review." = "Enjoying the app?\nPlease give us a review.";
+
+/* promo */
+"Exciting Offer!" = "Exciting Offer!";
+
+/* description of the Bridges Sampler. 'Flow Free: Bridges' is the brand name of one of our apps and shouldn't be localized. */
+"Experience Flow Free: Bridges" = "Experience Flow Free: Bridges";
+
+/* description of the Hexes Sampler. 'Flow Free: Hexes' is the brand name of one of our apps and shouldn't be localized. */
+"Experience Flow Free: Hexes" = "Experience Flow Free: Hexes";
+
+/* description of the Warps Sampler. 'Flow Free: Warps' is the brand name of one of our apps and shouldn't be localized. */
+"Experience Flow Free: Warps" = "Experience Flow Free: Warps";
+
+/* Extra options and functionality. */
+"Extras" = "Extras";
+
+/* section name */
+"Extreme" = "Extreme";
+
+/* weekly puzzle theme name */
+"Extreme Cornerless" = "Extreme Cornerless";
+
+/* weekly puzzle theme name. 'Courtyard' translation should be similar to the related pack 'Courtyard Pack' */
+"Extreme Courtyard" = "Extreme Courtyard";
+
+/* weekly puzzle theme name. 'Courtyard Spin' translation should be similar to the related pack 'Courtyard Spin Pack' */
+"Extreme Courtyard Spin" = "Extreme Courtyard Spin";
+
+/* short level pack name and weekly puzzle theme name. 'Hextangle' translation should be similar to the related pack 'Hextangle Pack' */
+"Extreme Hextangle" = "Extreme Hextangle";
+
+/* long level pack name. 'Hextangle' translation should be similar to the related pack 'Hextangle Pack' */
+"Extreme Hextangle Pack" = "Extreme Hextangle Pack";
+
+/* weekly puzzle theme name */
+"Extreme Interval" = "Extreme Interval";
+
+/* short level pack name */
+"Extreme Pack" = "Extreme Pack";
+
+/* short level pack name */
+"Extreme Pack 2" = "Extreme Pack 2";
+
+/* short level pack name and weekly puzzle theme name */
+"Extreme Rainbow" = "Extreme Rainbow";
+
+/* long level pack name */
+"Extreme Rainbow Pack" = "Extreme Rainbow Pack";
+
+/* weekly puzzle theme name */
+"Extreme Rectangle" = "Extreme Rectangle";
+
+/* weekly puzzle theme name */
+"Extreme Sawtooth" = "Extreme Sawtooth";
+
+/* weekly puzzle theme name. 'Tower' translation should be similar to the related pack 'Tower Pack' */
+"Extreme Tower" = "Extreme Tower";
+
+/* short theme name */
+"Fall" = "Fall";
+
+/* full theme name */
+"Fall Harvest" = "Fall Harvest";
+
+/* title of color theme for in app purchase */
+"Fall Harvest Colors" = "Fall Harvest Colors";
+
+/* description of color theme in app purchase */
+"Fall Harvest Colors theme" = "Fall Harvest Colors theme";
+
+/* promo */
+"Feed your addiction and\nunlock all packs today!" = "Feed your addiction and\nunlock all packs today!";
+
+/* Flows finished but pipe remaining dialog message */
+"Fill the board with pipe to complete the level." = "Fill the board with pipe to complete the level.";
+
+/* Header on the store submenu.  Themes change the colors within the game. */
+"Flow Themes" = "Flow Themes";
+
+/* short level pack name */
+"Flower Field Pack" = "Flower Field Pack";
+
+/* short level pack name */
+"Flower Pack" = "Flower Pack";
+
+/* weekly puzzle theme name */
+"Flower Rainbow" = "Flower Rainbow";
+
+/* On the game screen, how many flows are complete / how many to go */
+"flows: %d/%d" = "flows: %1$d/%2$d";
+
+/* weekly puzzle theme name */
+"Frames Challenge" = "Frames Challenge";
+
+/* Item is free, no cost to purchase */
+"Free" = "Free";
+
+/* Dialog title text */
+"Free Hint" = "Free Hint";
+
+/* Rewarded Hint Dialog Header */
+"Free Hint!" = "Free Hint!";
+
+/* Something the user will get, hints help users solve puzzles */
+"Free hints!" = "Free hints!";
+
+/* promo */
+"Free Mania, Boundless,\nand Deep Space packs" = "Free Mania, Boundless,\nand Deep Space packs";
+
+/* promo */
+"Free Mania, Flower,\nand Extreme packs" = "Free Mania, Flower,\nand Extreme packs";
+
+/* promo */
+"Free Mania, Jumbo,\nand Extreme packs" = "Free Mania, Jumbo,\nand Extreme packs";
+
+/* Choice on the main menu to play without trying to beat the clock */
+"free play" = "free play";
+
+/* Language name, for display as a game language option */
+"French" = "French";
+
+/* Dialog title */
+"Game Paused" = "Game Paused";
+
+/* Language name, for display as a game language option */
+"German" = "German";
+
+/* description of hints in app purchase. The %d is a number greater than 1. */
+"get %d hints" = "get %d hints";
+
+/* get hint with rewarded video button */
+"get 1 free hint!" = "get 1 free hint!";
+
+/* Free hint button on the level complete dialog. */
+"get a free hint" = "get a free hint";
+
+/* Flows finished but pipe remaining dialog button */
+"get a hint" = "get a hint";
+
+/* Prompt the user to get achievements from online. */
+"Get Achievements?" = "Get Achievements?";
+
+/* Hint Dialog Header */
+"Get Hints" = "Get Hints";
+
+/* Button on the notification dialog asking the user to download the promoted app */
+"Get It" = "Get It";
+
+/* promo */
+"get it now" = "get it now";
+
+/* promo */
+"get it now!" = "get it now!";
+
+/* Button on the notification dialog asking the user to download the promoted app */
+"Get It!" = "Get It!";
+
+/* Upsell the user to download one of our other games to get more levels.  Will appear before the text logo of the game, example: 'get more <bridges logo>' */
+"get more" = "get more";
+
+/* More hints button on the level complete dialog. */
+"get more hints" = "get more hints";
+
+/* Button to promote purchasing more hints. */
+"Get More Hints" = "Get More Hints";
+
+/* upsell text */
+"Get more hints today!" = "Get more hints today!";
+
+/* Upsell the user to get more levels. */
+"get more levels" = "get more levels";
+
+/* Button to promote purchasing more levels. */
+"Get More Levels" = "Get More Levels";
+
+/* promo */
+"Get the Starter Bundle today!" = "Get the Starter Bundle today!";
+
+/* promo */
+"Get them all for just %@" = "Get them all for just %@";
+
+/* promo */
+"Get them all now!" = "Get them all now!";
+
+/* upsell text */
+"Go Pro! Get more levels today!" = "Go Pro! Get more levels today!";
+
+/* promo */
+"Great Deal!" = "Great Deal!";
+
+/* promo */
+"Great Flowing!" = "Great Flowing!";
+
+/* short level pack name */
+"Green Pack" = "Green Pack";
+
+/* level difficulty */
+"hard" = "hard";
+
+/* section name */
+"Hard Manias" = "Hard Manias";
+
+/* level difficulty */
+"harder" = "harder";
+
+/* level difficulty */
+"hardest" = "hardest";
+
+/* short level pack name */
+"Hashed Pack" = "Hashed Pack";
+
+/* weekly puzzle theme name. 'Hashtag' as in the symbol # */
+"Hashtag Bridges Challenge" = "Hashtag Bridges Challenge";
+
+/* Header title on the help menu. */
+"help" = "help";
+
+/* weekly puzzle theme name. Play on the phrase 'X marks the spot' */
+"Hex Marks The Spot" = "Hex Marks The Spot";
+
+/* short level pack name. 'Hexes' is the brand name of one of our apps and shouldn't be localized. */
+"Hexes Sampler" = "Hexes Sampler";
+
+/* weekly puzzle theme name. 'Hextangle' translation should be similar to the related pack 'Hextangle Pack' */
+"Hextangle Challenge" = "Hextangle Challenge";
+
+/* short level pack name (a play on Hexagon + Rectangle) */
+"Hextangle Pack" = "Hextangle Pack";
+
+/* section name (a play on Hexagon + Rectangle) */
+"Hextangles" = "Hextangles";
+
+/* short theme name */
+"Holiday" = "Holiday";
+
+/* full theme name */
+"Holiday Gift" = "Holiday Gift";
+
+/* short theme name */
+"Honey" = "Honey";
+
+/* full theme name */
+"Honeycomb" = "Honeycomb";
+
+/* short level pack name */
+"Hourglass Pack" = "Hourglass Pack";
+
+/* Option on the about menu that will explain the game rules. */
+"how to play" = "how to play";
+
+/* promo price, example: Just $1.99 */
+"Huge savings over full price." = "Huge savings over full price.";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I beat %@ levels in %@!  Can you?" = "I beat %1$@ levels in %2$@!  Can you?";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I beat %@ levels perfectly in %@!  Can you?" = "I beat %1$@ levels perfectly in %2$@!  Can you?";
+
+/* Social invite. %d is number of levels, %@ is Flow Free or Flow Free Bridges. */
+"I beat %d level packs in %@!  Can you?" = "I beat %1$d level packs in %2$@!  Can you?";
+
+/* Social invite. %d is number of levels, %@ is Flow Free or Flow Free Bridges. */
+"I beat %d level packs perfectly in %@!  Can you?" = "I beat %1$d level packs perfectly in %2$@!  Can you?";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I beat all the free level packs in %@!  Can you?" = "I beat all the free level packs in %@!  Can you?";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I beat all the included level packs in %@!  Can you?" = "I beat all the included level packs in %@!  Can you?";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I beat EVERY level pack in %@!  Can you?" = "I beat EVERY level pack in %@!  Can you?";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I beat one level in %@!  Can you?" = "I beat one level in %@!  Can you?";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I beat one level perfectly in %@!  Can you?" = "I beat one level perfectly in %@!  Can you?";
+
+/* Social invite. %1$@ is the Pack Name, %2$@ is Flow Free or Flow Free Bridges. example: 'I beat the Green Pack in Flow Free!  Can you?'' */
+"I beat the %@ in %@!  Can you?" = "I beat the %1$@ in %2$@!  Can you?";
+
+/* Social invite. %1$@ is the Pack Name, %2$@ is Flow Free or Flow Free Bridges. example: 'I beat the Green Pack perfectly in Flow Free!  Can you?' */
+"I beat the %@ perfectly in %@!  Can you?" = "I beat the %1$@ perfectly in %2$@!  Can you?";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I got perfect on all the free level packs in %@!  Can you beat that?" = "I got perfect on all the free level packs in %@!  Can you beat that?";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I got perfect on all the included level packs in %@!  Can you beat that?" = "I got perfect on all the included level packs in %@!  Can you beat that?";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I got perfect on EVERY level pack in %@!  Can you match that?" = "I got perfect on EVERY level pack in %@!  Can you match that?";
+
+/* Social invite. %@ is Flow Free or Flow Free Bridges. */
+"I haven't beaten any levels in %@ yet.  Can you?" = "I haven't beaten any levels in %@ yet.  Can you?";
+
+/* promo for game, for example I solved Mania, 9x9 level 20 in Flow Free perfectly!  Can you? */
+"I solved %@ in %@ perfectly!  Can you?" = "I solved %1$@ in %2$@ perfectly!  Can you?";
+
+/* promo for game, for example I solved Mania, 9x9 level 20 in Flow Free!  Can you? */
+"I solved %@ in %@!  Can you?" = "I solved %1$@ in %2$@!  Can you?";
+
+/* promo for game, for example I solved Mania, 9x9 level 20 in Flow Free.  Join me! */
+"I solved %@ in %@.  Join me!" = "I solved %1$@ in %2$@.  Join me!";
+
+/* promo for game, for example I'm working on Mania, 9x9 level 20 in Flow Free.  Can you solve it? */
+"I'm working on %@ in %@.  Can you solve it?" = "I'm working on %1$@ in %2$@.  Can you solve it?";
+
+/* Menu item indicating syncing game progress to iCloud is currently off. */
+"iCloud sync: off" = "iCloud sync: off";
+
+/* Menu item indicating syncing game progress to iCloud is currently on. */
+"iCloud sync: on" = "iCloud sync: on";
+
+/* Message popup on iOS asking user to confirm reset. */
+"If you've previously purchased any level packs, this will download them again for free." = "If you've previously purchased any level packs, this will download them again for free.";
+
+/* description of the Inkblot Pack */
+"Inkblot boards increasing in size" = "Inkblot boards increasing in size";
+
+/* weekly puzzle theme name. 'Inkblot' translation should be similar to the related pack 'Inkblot Pack' */
+"Inkblot Challenge" = "Inkblot Challenge";
+
+/* short level pack name */
+"Inkblot Pack" = "Inkblot Pack";
+
+/* weekly puzzle theme name. 'Interval' translation should be similar to the related pack 'Interval Pack' */
+"Interval Challenge" = "Interval Challenge";
+
+/* short level pack name */
+"Interval Pack" = "Interval Pack";
+
+/* description of the Interval Pack */
+"Intervals from 6x6 to 12x12" = "Intervals from 6x6 to 12x12";
+
+/* description of the Jumbo Interval Pack */
+"Intervals from 9x9 to 15x15" = "Intervals from 9x9 to 15x15";
+
+/* section name */
+"Intro" = "Intro";
+
+/* short level pack name */
+"Intro Pack" = "Intro Pack";
+
+/* Language name, for display as a game language option */
+"Italian" = "Italian";
+
+/* Language name, for display as a game language option */
+"Japanese" = "Japanese";
+
+/* short level pack name */
+"Jet Pack" = "Jet Pack";
+
+/* section name */
+"Jumbo" = "Jumbo";
+
+/* short level pack name */
+"Jumbo Courtyard" = "Jumbo Courtyard";
+
+/* long level pack name */
+"Jumbo Courtyard Pack" = "Jumbo Courtyard Pack";
+
+/* short level pack name */
+"Jumbo Hextangle" = "Jumbo Hextangle";
+
+/* long level pack name */
+"Jumbo Hextangle Pack" = "Jumbo Hextangle Pack";
+
+/* short level pack name */
+"Jumbo Interval" = "Jumbo Interval";
+
+/* long level pack name */
+"Jumbo Interval Pack" = "Jumbo Interval Pack";
+
+/* short level pack name */
+"Jumbo Jet Pack" = "Jumbo Jet Pack";
+
+/* short level pack name */
+"Jumbo Pack" = "Jumbo Pack";
+
+/* short level pack name */
+"Jumbo Pack 2" = "Jumbo Pack 2";
+
+/* short level pack name */
+"Jumbo Rainbow" = "Jumbo Rainbow";
+
+/* long level pack name */
+"Jumbo Rainbow Pack" = "Jumbo Rainbow Pack";
+
+/* short level pack name */
+"Jumbo Rectangle" = "Jumbo Rectangle";
+
+/* short level pack name */
+"Jumbo Rectangle 2" = "Jumbo Rectangle 2";
+
+/* long level pack name */
+"Jumbo Rectangle Pack" = "Jumbo Rectangle Pack";
+
+/* long level pack name */
+"Jumbo Rectangle Pack 2" = "Jumbo Rectangle Pack 2";
+
+/* promo price, example: Just $1.99 */
+"Just %@" = "Just %@";
+
+/* promo */
+"Just %@ for a limited time only." = "Just %@ for a limited time only.";
+
+/* Flows finished but pipe remaining dialog button */
+"keep playing" = "keep playing";
+
+/* section name */
+"Kids" = "Kids";
+
+/* short level pack name */
+"Kids Pack" = "Kids Pack";
+
+/* Language name, for display as a game language option */
+"Korean" = "Korean";
+
+/* Header title on the language selection menu. */
+"language" = "language";
+
+/* option on the settings menu.  %@ will be replaced with the localized name of the current game language, example: 'language: english' */
+"language: %@" = "language: %@";
+
+/* short level pack name */
+"Large Galaxy" = "Large Galaxy Pack";
+
+/* long level pack name */
+"Large Galaxy Pack" = "Large Galaxy Pack";
+
+/* text on the game screen showing the current level number.  %d will be replaced by the level number, example: 'level 3' */
+"level %d" = "level %d";
+
+/* text on the game screen showing the current level number, and total number of levels in the pack.  Translation should be similar to the string 'level %d'.  %1$d is the level number, and %2$d is the total number of levels, example: 'level 3/10' */
+"level %d/%d" = "level %1$d/%2$d";
+
+/* Title text indicating the user completed a level. */
+"Level complete!" = "Level complete!";
+
+/* Menu header for selecting a level. */
+"levels" = "levels";
+
+/* promo */
+"Limited time only." = "Limited time only.";
+
+/* Text shown while items for purchase are being loaded. */
+"Loading Store..." = "Loading Store...";
+
+/* Hints menu */
+"loading..." = "loading...";
+
+/* Label text indicating the length of the user's longest ever daily puzzle streak.  %@ will be replaced with the number of days, example: 'Longest streak: 7 days' */
+"Longest streak: %@" = "Longest streak: %@";
+
+/* promo text. 'Bridges' is the brand name of one of our apps and shouldn't be localized. */
+"Love Bridges?\nGet Flow Free: Bridges!" = "Love Bridges?\nGet Flow Free: Bridges!";
+
+/* upsell text */
+"Love Flow Free? Upgrade today!" = "Love Flow Free? Upgrade today!";
+
+/* Ask the user to review the app in the app store. */
+"Love Flow Free?\nPlease give us a review." = "Love Flow Free?\nPlease give us a review.";
+
+/* promo text. 'Hexes' is the brand name of one of our apps and shouldn't be localized. */
+"Love Hexes?\nGet Flow Free: Hexes!" = "Love Hexes?\nGet Flow Free: Hexes!";
+
+/* promo text. 'Warps' is the brand name of one of our apps and shouldn't be localized. */
+"Love Warps?\nGet Flow Free: Warps!" = "Love Warps?\nGet Flow Free: Warps!";
+
+/* Menu label for animations that are turned to the low or reduced setting. */
+"low" = "low";
+
+/* promo */
+"Make the rest even better." = "Make the rest even better.";
+
+/* section name */
+"Manias" = "Manias";
+
+/* No. Maybe watch a video later. */
+"maybe later" = "maybe later";
+
+/* level difficulty */
+"medium" = "medium";
+
+/* weekly puzzle theme name */
+"Mega Rainbow" = "Mega Rainbow";
+
+/* Choice on the menu to find other games written by Big Duck Games. */
+"more games" = "more games";
+
+/* The most popular hint package that we sell */
+"Most Popular" = "Most Popular";
+
+/* Show how many moves the user has made while trying to solve the puzzle and number of moves for their personal best */
+"moves: %d   best: %d" = "moves: %1$d   best: %2$d";
+
+/* Show how many moves the user has made while trying to solve the puzzle, they have not solved this puzzle yet so no personal best */
+"moves: %d   best: -" = "moves: %d   best: -";
+
+/* Navigating back out of a level */
+"Navigating back will lose your current level progress." = "Navigating back will lose your current level progress.";
+
+/* promo */
+"Need more color in your life?" = "Need more color in your life?";
+
+/* upsell text */
+"Need more hints? Get some now!" = "Need more hints? Get some now!";
+
+/* short theme name */
+"Neon" = "Neon";
+
+/* full theme name */
+"Neon Rainbow" = "Neon Rainbow";
+
+/* title of color theme for in app purchase */
+"Neon Rainbow Colors" = "Neon Rainbow Colors";
+
+/* description of color theme in app purchase */
+"Neon Rainbow Colors theme" = "Neon Rainbow Colors theme";
+
+/* promo */
+"Neon, pastel and more" = "Neon, pastel and more";
+
+/* Label text describing daily puzzles, shown when the user doesn't have a current streak. */
+"New puzzles every day!  Start a streak!" = "New puzzles every day!  Start a streak!";
+
+/* Label text describing weekly puzzles, shown when the user hasn't completed a week. */
+"New puzzles every week!" = "New puzzles every week!";
+
+/* Dialog title */
+"New record!" = "New record!";
+
+/* Dialog title shown after completing today's daily puzzles, and starting a new daily streak.  A streak can be extended by completing puzzles multiple days in a row. */
+"New Streak!" = "New Streak!";
+
+/* Device notification message for weekly puzzles, telling players there are new weekly puzzles. */
+"New Weekly Puzzles!" = "New Weekly Puzzles!";
+
+/* promo */
+"new\ngame!" = "new\ngame!";
+
+/* Button text on the dialog allowing the user to progress to the next level. */
+"next level" = "next level";
+
+/* text used on a button */
+"No" = "No";
+
+/* Warning shown when user runs out of hints. */
+"No hints remaining.  Get more now!" = "No hints remaining.  Get more now!";
+
+/* decline more hints */
+"no thanks" = "no thanks";
+
+/* Button on the notification dialog */
+"No thanks" = "No thanks";
+
+/* Device notification message for weekly puzzles, asking user to play the game, before the puzzles are gone. */
+"Not long left to beat the weekly puzzles for this week!" = "Not long left to beat the weekly puzzles for this week!";
+
+/* Button to decline reviewing the app */
+"Not Now" = "Not Now";
+
+/* Menu item indicating whether notifications are currently on or off. %@ will be replaced with 'on' or 'off', example: 'notifications: off' */
+"notifications: %@" = "notifications: %@";
+
+/* Description text for permissions prompt */
+"NSCalendarsUsageDescription" = "Some ads may offer adding events to your Calendar";
+
+/* Description text for permissions prompt */
+"NSPhotoLibraryAddUsageDescription" = "Save screenshots to Photos";
+
+/* Description text for permissions prompt */
+"NSUserTrackingUsageDescription" = "This allows us to provide you with a better ad experience.";
+
+/* Description text for permissions prompt */
+"NSUserTrackingUsageDescriptionAlt1" = "This allows us to personalize your ad experience so you see more relevant ads.";
+
+/* Description text for permissions prompt */
+"NSUserTrackingUsageDescriptionAlt2" = "Your data will be used to provide you a better and personalized ad experience.";
+
+/* section name */
+"Obstacles" = "Obstacles";
+
+/* Menu label for a setting option that is turned off.  Translation should be as short as possible, and correspond with the 'on' string.  Example usage, tapping will toggle on/off: 'color labels: off' */
+"off" = "off";
+
+/* text used on a button to acknowledge the message */
+"OK" = "OK";
+
+/* text used on a button to acknowledge the message */
+"okay" = "okay";
+
+/* text used on a button to acknowledge the message */
+"Okay" = "Okay";
+
+/* Menu label for a setting option that is turned on.  Translation should be as short as possible, and correspond with the 'off' string.  Example usage, tapping will toggle on/off: 'color labels: on' */
+"on" = "on";
+
+/* promo */
+"One premium level pack" = "One premium level pack";
+
+/* More than 2 hints left.  Keep %d because it will be replaced with a number between 2 and 20. */
+"Only %d hints remaining.  Get more now!" = "Only %d hints remaining.  Get more now!";
+
+/* Warning shown when user has one hint left. */
+"Only 1 hint remaining.  Get more now!" = "Only 1 hint remaining.  Get more now!";
+
+/* Device notification message for daily puzzles, asking user to play the game, and extend their daily streak, before the day ends. */
+"Only a few hours left to beat today's puzzles and extend your streak!" = "Only a few hours left to beat today's puzzles and extend your streak!";
+
+/* Dialog title */
+"Options" = "Options";
+
+/* promo */
+"Over 1,000 new levels!" = "Over 1,000 new levels!";
+
+/* promo */
+"Over 2,000 free levels!" = "Over 2,000 free levels!";
+
+/* Dialog title shown after completing all levels in a pack. */
+"Pack Complete!" = "Pack Complete!";
+
+/* The game requires an update to play the pack. */
+"Pack not found.  Would you like to check for an update?" = "Pack not found.  Would you like to check for an update?";
+
+/* Dialog title shown after completing all levels in a pack perfectly, with no mistakes. */
+"Pack Perfect!" = "Pack Perfect!";
+
+/* short level pack name */
+"Party Pack" = "Party Pack";
+
+/* short theme name */
+"Pastel" = "Pastel";
+
+/* full theme name */
+"Pastel Colors" = "Pastel Colors";
+
+/* description of color theme in app purchase */
+"Pastel Colors theme" = "Pastel Colors theme";
+
+/* short level pack name */
+"Pathway Pack" = "Pathway Pack";
+
+/* weekly puzzle theme name. 'Pathways' translation should be similar to the related pack 'Pathway Pack' */
+"Pathways Challenge" = "Pathways Challenge";
+
+/* Title text indicating the user completed a level without making a mistake. */
+"Perfect!" = "Perfect!";
+
+/* short theme name */
+"Pink" = "Pink";
+
+/* short level pack name */
+"Pink Pack" = "Pink Pack";
+
+/* On the game screen, what percent of pipe is complete */
+"pipe: %d%%" = "pipe: %d%%";
+
+/* Message on the level complete dialog, %@ will be replaced with the name of a level pack, or a board size/type, for example '8x8' */
+"play %@" = "play %@";
+
+/* promo */
+"Play ad free forever" = "Play ad free forever";
+
+/* upsell text */
+"Play ad-free! Upgrade today!" = "Play ad-free! Upgrade today!";
+
+/* time trial complete dialog button */
+"play again" = "play again";
+
+/* promo */
+"Play all the Mania packs" = "Play all the Mania packs";
+
+/* Upsell the user to play one of our other games to get more levels.  Will appear before the text logo of the game, example: 'play more <bridges logo>' */
+"play more" = "play more";
+
+/* short level pack name */
+"Playground Pack" = "Playground Pack";
+
+/* weekly puzzle theme name */
+"Plaza Challenge" = "Plaza Challenge";
+
+/* weekly puzzle theme name */
+"Pluses Challenge" = "Pluses Challenge";
+
+/* short level pack name */
+"Pockets Pack" = "Pockets Pack";
+
+/* Language name, for display as a game language option */
+"Portuguese" = "Portuguese";
+
+/* description of the Jumbo, Purple, and Pink Pack */
+"Premium 10x10 to 14x14 boards" = "Premium 10x10 to 14x14 boards";
+
+/* description of the Jumbo Courtyard Pack */
+"Premium 11x11 to 15x15 with walls" = "Premium 11x11 to 15x15 with walls";
+
+/* description of the Jumbo Rectangle and Hextangle Packs */
+"Premium 11x14 to 15x18 boards" = "Premium 11x14 to 15x18 boards";
+
+/* description of the Comet Pack */
+"Premium 5x5 boards with increasing warps" = "Premium 5x5 boards with increasing warps";
+
+/* description of the Blue and Green Packs, and Hexes Classic Pack 2 */
+"Premium 5x5 to 9x9 boards" = "Premium 5x5 to 9x9 boards";
+
+/* description of the 6x6 Boundless Pack */
+"Premium 6x6 boards with full warps" = "Premium 6x6 boards with full warps";
+
+/* description of the 7x7 Boundless Pack */
+"Premium 7x7 boards with full warps" = "Premium 7x7 boards with full warps";
+
+/* description of the Deep Space Pack 2 */
+"Premium 8x8 and 9x9 boards with star walls" = "Premium 8x8 and 9x9 boards with star walls";
+
+/* description of the 10x10 Mania Pack */
+"Premium all 10x10, all the time!" = "Premium all 10x10, all the time!";
+
+/* description of the 11x11 Mania Pack */
+"Premium all 11x11, all the time!" = "Premium all 11x11, all the time!";
+
+/* description of the 12x12 Mania Pack */
+"Premium all 12x12, all the time!" = "Premium all 12x12, all the time!";
+
+/* description of the 13x13 Mania Pack */
+"Premium all 13x13, all the time!" = "Premium all 13x13, all the time!";
+
+/* description of the 14x14 Mania Pack */
+"Premium all 14x14, all the time!" = "Premium all 14x14, all the time!";
+
+/* description of the 15x15 Mania Pack */
+"Premium all 15x15, all the time!" = "Premium all 15x15, all the time!";
+
+/* Heading for list of premium packs for purchase */
+"Premium Level Packs" = "Premium Level Packs";
+
+/* full theme name */
+"Pretty Pink" = "Pretty Pink";
+
+/* Link to Privacy Policy */
+"privacy policy" = "privacy policy";
+
+/* section name */
+"Progression" = "Progression";
+
+/* Message on the themes for purchase dialog. */
+"Purchase any theme to remove ads." = "Purchase any theme to remove ads.";
+
+/* short level pack name */
+"Purple Pack" = "Purple Pack";
+
+/* time trail complete dialog button */
+"quit" = "quit";
+
+/* weekly puzzle theme name. 'Rainbow' translation should be similar to the related pack 'Rainbow Pack' */
+"Rainbow Challenge" = "Rainbow Challenge";
+
+/* short level pack name */
+"Rainbow Pack" = "Rainbow Pack";
+
+/* description of the Jumbo Rainbow Pack */
+"Rainbows of 10x10 to 14x14 boards" = "Rainbows of 10x10 to 14x14 boards";
+
+/* description of the Rainbow Pack */
+"Rainbows of 5x5 to 9x9 boards" = "Rainbows of 5x5 to 9x9 boards";
+
+/* description of the Extreme Rainbow Pack */
+"Rainbows of tricky 7x7 to 15x15 boards" = "Rainbows of tricky 7x7 to 15x15 boards";
+
+/* description of the Extreme Rainbow Pack */
+"Rainbows of tricky 8x8 to 15x15 boards" = "Rainbows of tricky 8x8 to 15x15 boards";
+
+/* weekly puzzle theme name. 'Rectangle' translation should be similar to the related pack 'Rectangle Pack' */
+"Rectangle Challenge" = "Rectangle Challenge";
+
+/* short level pack name */
+"Rectangle Pack" = "Rectangle Pack";
+
+/* section name */
+"Rectangles" = "Rectangles";
+
+/* Button to remove advertisements by making a purchase. */
+"remove ads" = "remove ads";
+
+/* promo */
+"Remove ads" = "Remove ads";
+
+/* Button to promote purchase that removes ads. */
+"Remove Ads" = "Remove Ads";
+
+/* upsell text */
+"Remove ads!" = "Remove ads!";
+
+/* Remove Ads Dialog Header */
+"Remove Ads?" = "Remove Ads?";
+
+/* Text shown when viewing the store submenu. */
+"Remove ads\n by purchasing any level pack!" = "Remove ads\n by purchasing any level pack!";
+
+/* Remove all ads by purchasing the Unlock All bundle */
+"Remove all ads" = "Remove all ads";
+
+/* option on the settings menu */
+"reset progress" = "reset progress";
+
+/* option in the store page */
+"Restore Purchases" = "Restore Purchases";
+
+/* Option on the about menu that links to the app store to review this game. */
+"review app" = "review app";
+
+/* Button to review the app in the app store. */
+"Review App" = "Review App";
+
+/* weekly puzzle theme name. 'Rift' translation should be similar to the related pack 'Rift Pack' */
+"Rift Challenge" = "Rift Challenge";
+
+/* short level pack name */
+"Rift Pack" = "Rift Pack";
+
+/* weekly puzzle theme name */
+"Rotating Warp Challenge" = "Rotating Warp Challenge";
+
+/* Language name, for display as a game language option */
+"Russian" = "Russian";
+
+/* promo */
+"Sale!" = "Sale!";
+
+/* weekly puzzle theme name */
+"Sawtooth Challenge" = "Sawtooth Challenge";
+
+/* weekly puzzle theme name. 'Scanline' translation should be similar to the related pack 'Scanline Pack' */
+"Scanline Challenge" = "Scanline Challenge";
+
+/* short level pack name */
+"Scanline Pack" = "Scanline Pack";
+
+/* weekly puzzle theme name. 'Scattered' translation should be similar to the related pack 'Scattered Pack' */
+"Scattered Challenge" = "Scattered Challenge";
+
+/* short level pack name */
+"Scattered Pack" = "Scattered Pack";
+
+/* title text on select level menu */
+"Select Level" = "Select Level";
+
+/* Button to move to the next level pack */
+"select next pack" = "select next pack";
+
+/* Option on the about menu to send feedback on this game. */
+"send feedback" = "send feedback";
+
+/* Choice on main menu and header on the settings submenu. */
+"settings" = "settings";
+
+/* description of the Concepts Pack */
+"Shaped and walled boards" = "Shaped and walled boards";
+
+/* Button text on the level complete dialog allowing the user to share their progress with friends. */
+"share" = "share";
+
+/* dialog title */
+"Share" = "Share";
+
+/* pause dialog button */
+"share board" = "share board";
+
+/* Message on share progress dialog to share progress with friends. */
+"Share Progress" = "Share Progress";
+
+/* pause dialog button */
+"share solution" = "share solution";
+
+/* Prompt the user to sign in to get achievements from online. */
+"Sign in to Game Center to start unlocking your achievements." = "Sign in to Game Center to start unlocking your achievements.";
+
+/* Menu item that allows for logging in to Google Play */
+"sign in to Google Play" = "sign in to Google Play";
+
+/* Prompt the user to sign in to get achievements from online. */
+"Sign in to Google Play to start unlocking your achievements." = "Sign in to Google Play to start unlocking your achievements.";
+
+/* Menu item that allows for logging out of Google Play. */
+"sign out of Google Play" = "sign out of Google Play";
+
+/* weekly puzzle theme name */
+"Simply Extreme" = "Simply Extreme";
+
+/* short level pack name */
+"Small Galaxy" = "Small Galaxy Pack";
+
+/* long level pack name */
+"Small Galaxy Pack" = "Small Galaxy Pack";
+
+/* weekly puzzle theme name */
+"Snowflake Challenge" = "Snowflake Challenge";
+
+/* Show how many puzzles the user solved during a timed game and their personal best */
+"solved: %d   best: %d" = "solved: %1$d   best: %2$d";
+
+/* Show how many puzzles the user solved during a timed game, no personal best yet becuase this is their first attempt */
+"solved: %d   best: -" = "solved: %d   best: -";
+
+/* The current sound volume. Do not remove %d, it will be replaced with an number 0 to 9. */
+"sound: %d" = "sound: %d";
+
+/* Sound volume status on the menu indicating that sound currently off. */
+"sound: off" = "sound: off";
+
+/* Language name, for display as a game language option */
+"Spanish" = "Spanish";
+
+/* promo */
+"Special Offer!" = "Special Offer!";
+
+/* description of the Spectrum Pack */
+"Spectrum of 5x5 to 9x9 boards" = "Spectrum of 5x5 to 9x9 boards";
+
+/* short level pack name */
+"Spectrum Pack" = "Spectrum Pack";
+
+/* short theme name */
+"Spring" = "Spring";
+
+/* full theme name */
+"Spring Greens" = "Spring Greens";
+
+/* title of color theme for in app purchase */
+"Spring Greens Colors" = "Spring Greens Colors";
+
+/* description of color theme in app purchase */
+"Spring Greens Colors theme" = "Spring Greens Colors theme";
+
+/* weekly puzzle theme name. 'Star Field' translation should be similar to the related pack 'Star Field Pack' */
+"Star Field Challenge" = "Star Field Challenge";
+
+/* short level pack name */
+"Star Field Pack" = "Star Field Pack";
+
+/* promo */
+"Starter Bundle" = "Starter Bundle";
+
+/* In app purchase description of the Starter Bundle */
+"Starter Bundle with premium level pack and extra hints" = "Starter Bundle with premium level pack and extra hints";
+
+/* short level pack name */
+"Starter Pack" = "Starter Pack";
+
+/* weekly puzzle theme name. 'Stitched' translation should be similar to the related pack 'Stitched Pack' */
+"Stitched Challenge" = "Stitched Challenge";
+
+/* short level pack name */
+"Stitched Pack" = "Stitched Pack";
+
+/* upsell text */
+"Stock up on hints today!" = "Stock up on hints today!";
+
+/* The menu header when when viewing the store submenu. */
+"store" = "store";
+
+/* Dialog title shown after completing today's daily puzzles, and extending an existing daily streak.  A streak is extended by completing puzzles multiple days in a row. */
+"Streak Extended!" = "Streak Extended!";
+
+/* short level pack name */
+"Sunflower Pack" = "Sunflower Pack";
+
+/* weekly puzzle theme name */
+"Sunny Day Challenge" = "Sunny Day Challenge";
+
+/* weekly puzzle theme name */
+"Swiss Cheese Challenge" = "Swiss Cheese Challenge";
+
+/* weekly puzzle theme name. 'Tangle' translation should be similar to the related pack 'Tangle Pack' */
+"Tangle Challenge" = "Tangle Challenge";
+
+/* short level pack name */
+"Tangle Pack" = "Tangle Pack";
+
+/* Text shown after a purchase is made. */
+"Thanks for your support!" = "Thanks for your support!";
+
+/* Device notification message for weekly puzzles, asking user to play the game, before the puzzles are gone. */
+"The clock is ticking...  Come beat this week's puzzles before they're gone!" = "The clock is ticking...  Come beat this week's puzzles before they're gone!";
+
+/* Device notification message for daily puzzles, asking user to play the game, and extend their daily streak, before the day ends. */
+"The clock is ticking...  Come beat today's puzzles to extend your streak!" = "The clock is ticking...  Come beat today's puzzles to extend your streak!";
+
+/* Unlock All promo description. */
+"The Complete Package!" = "The Complete Package!";
+
+/* promo */
+"The next evolution of\nFlow Free!" = "The next evolution of\nFlow Free!";
+
+/* option on the settings menu */
+"theme:" = "theme:";
+
+/* The menu header when when viewing the themes submenu. */
+"themes" = "themes";
+
+/* Device notification message for weekly puzzles, telling players there are new weekly puzzles. */
+"There is a new set of weekly puzzles!" = "There is a new set of weekly puzzles!";
+
+/* Message on cloud sync dialog */
+"There's more level progress saved in iCloud.  Would you like to sync with iCloud?" = "There's more level progress saved in iCloud.  Would you like to sync with iCloud?";
+
+/* Message on the cloud sync dialog */
+"There's more level progress saved in the cloud.  Would you like to sync with the cloud?" = "There's more level progress saved in the cloud.  Would you like to sync with the cloud?";
+
+/* Special version of the application gives some some benifits to the user */
+"This Flow Free version exclusively from Amazon includes:" = "This Flow Free version exclusively from Amazon includes:";
+
+/* Choice on the main menu to play a game mode where you race against the clock to solve puzzles quickly. */
+"time trial" = "time trial";
+
+/* description of the Time Trial Pack */
+"Time trial pack" = "Time trial pack";
+
+/* short level pack name */
+"Time Trial Pack" = "Time Trial Pack";
+
+/* short level pack name */
+"Time Warp Pack" = "Time Warp Pack";
+
+/* Dialog title */
+"Time's up." = "Time's up.";
+
+/* short version of 'time trial' for menu header that does not fit */
+"timed" = "timed";
+
+/* Header text displayed above the list of daily puzzles that are available today.  The puzzles change every day. */
+"Today's Puzzles" = "Today's Puzzles";
+
+/* short level pack name */
+"Tower Pack" = "Tower Pack";
+
+/* description of the Extreme Hextangle Pack */
+"Tricky 8x10 to 12x14 boards" = "Tricky 8x10 to 12x14 boards";
+
+/* description of the Extreme Pack and Extreme Pack 2 */
+"Tricky 8x8 to 12x12 boards" = "Tricky 8x8 to 12x12 boards";
+
+/* section name */
+"Tutorial" = "Tutorial";
+
+/* Error text when store connection fails. */
+"Unable to connect to Store." = "Unable to connect to Store.";
+
+/* error */
+"Unable to purchase.  In-App Purchases are not enabled." = "Unable to purchase.  In-App Purchases are not enabled.";
+
+/* error */
+"Unable to purchase.  In-App Purchases have been restricted in Settings." = "Unable to purchase.  In-App Purchases have been restricted in Settings.";
+
+/* error */
+"Unable to purchase.  Please check your connection to the App Store and try again later." = "Unable to purchase.  Please check your connection to the App Store and try again later.";
+
+/* A description of how many premium levels you would unlock if you purchase the package. %@ is a number such as 1,500. */
+"Unlock all %@ Premium Levels" = "Unlock all %@ Premium Levels";
+
+/* promo */
+"Unlock all level packs today!" = "Unlock all level packs today!";
+
+/* promo */
+"Unlock all level packs today! (%@)" = "Unlock all level packs today! (%@)";
+
+/* Offer the user the ability to buy all game packs as one purchase. */
+"Unlock All Packs" = "Unlock All Packs";
+
+/* Offer the user the ability to buy all game packs as one purchase. */
+"Unlock All Packs and Remove Ads" = "Unlock All Packs and Remove Ads";
+
+/* Option to purchase all themes. */
+"Unlock All Themes" = "Unlock All Themes";
+
+/* description of color theme in app purchase */
+"Unlock every color theme" = "Unlock every color theme";
+
+/* Purchase that will give the user access to all level packs in the game */
+"Unlock every level pack and remove ads" = "Unlock every level pack and remove ads";
+
+/* promo */
+"Unlock today and beat the game!" = "Unlock today and beat the game!";
+
+/* upsell text */
+"Upgrade your game!" = "Upgrade your game!";
+
+/* upsell text */
+"Upgrade your levels!" = "Upgrade your levels!";
+
+/* button text if user has not yet logged in to game center */
+"use Game Center" = "use Game Center";
+
+/* button text if user has not yet logged in to Google Play */
+"use Google Play" = "use Google Play";
+
+/* section name */
+"Variety" = "Variety";
+
+/* description of the Variety Pack */
+"Variety of fun-shaped boards" = "Variety of fun-shaped boards";
+
+/* description of the Showcase Pack */
+"Variety of playful boards" = "Variety of playful boards";
+
+/* short level pack name */
+"Variety Pack" = "Variety Pack";
+
+/* Button to show important progress points the user has completed. */
+"View Achievements" = "View Achievements";
+
+/* pause dialog button */
+"view store" = "view store";
+
+/* section name */
+"Walls" = "Walls";
+
+/* upsell text */
+"Want more levels? Get some now!" = "Want more levels? Get some now!";
+
+/* promo */
+"Want to be a master plumber?" = "Want to be a master plumber?";
+
+/* short level pack name. 'Warps' is the brand name of one of our apps and shouldn't be localized. */
+"Warps Pack" = "Warps Pack";
+
+/* short level pack name. 'Warps' is the brand name of one of our apps and shouldn't be localized. */
+"Warps Sampler" = "Warps Sampler";
+
+/* short level pack name */
+"Warpway Pack" = "Warpway Pack";
+
+/* 'Warpyard' is a play on 'Courtyard', if there is no fitting way to attach 'Warp' to a translation of 'Courtyard', then use 'Courtyard'. */
+"Warpyard Pack" = "Warpyard Pack";
+
+/* short level pack name */
+"Warpyard Spin" = "Warpyard Spin";
+
+/* long level pack name */
+"Warpyard Spin Pack" = "Warpyard Spin Pack";
+
+/* Text warning the user to complete an easier level pack.  %1$@ and %2$@ will be replaced with localized pack names, example: 'We recommend completing the Starter Pack first.  Do you want to play the Daily Pack anyway?' */
+"We recommend completing the %@ first.  Do you want to play the %@ anyway?" = "We recommend completing the %1$@ first.  Do you want to play the %2$@ anyway?";
+
+/* Text warning the user to play an easier level pack first.  %1$@ and %2$@ will be replaced with localized pack names, example: 'We recommend playing the Warps Sampler first.  Do you want to play the Party Pack anyway?' */
+"We recommend playing the %@ first.  Do you want to play the %@ anyway?" = "We recommend playing the %1$@ first.  Do you want to play the %2$@ anyway?";
+
+/* Text warning the user to try an easier level.  %1$@ and %2$@ will be replaced with localized pack names, example: 'We recommend starting with the Starter Pack.  Do you want to play the Blue Pack anyway?' */
+"We recommend starting with the %@.  Do you want to play the %@ anyway?" = "We recommend starting with the %1$@.  Do you want to play the %2$@ anyway?";
+
+/* Dialog title shown after completing this week's weekly puzzles. */
+"Week Completed!" = "Week Completed!";
+
+/* Dialog title shown after completing this week's weekly puzzles perfectly. */
+"Week Perfected!" = "Week Perfected!";
+
+/* Choice on the main menu to play the weekly puzzles. */
+"weekly puzzles" = "weekly puzzles";
+
+/* New puzzles every week */
+"Weekly Puzzles" = "Weekly Puzzles";
+
+/* Label text indicating the total number of weekly puzzle weeks the user has completed.  %@ will be replaced with the number of weeks, example: 'Weeks completed: 7 weeks' */
+"Weeks completed: %@" = "Weeks completed: %@";
+
+/* description of the Intro Pack */
+"Welcome to Flow Free!" = "Welcome to Flow Free!";
+
+/* section name */
+"Wide Warps" = "Wide Warps";
+
+/* short theme name */
+"Winter" = "Winter";
+
+/* full theme name */
+"Winter Chill" = "Winter Chill";
+
+/* title of color theme for in app purchase */
+"Winter Chill Colors" = "Winter Chill Colors";
+
+/* description of color theme in app purchase */
+"Winter Chill Colors theme" = "Winter Chill Colors theme";
+
+/* weekly puzzle theme name. 'Worm' translation should be similar to the related pack 'Worm Pack' */
+"Worm Challenge" = "Worm Challenge";
+
+/* short level pack name */
+"Worm Pack" = "Worm Pack";
+
+/* Pause dialog message */
+"Would you like to customize your game settings?" = "Would you like to customize your game settings?";
+
+/* Pause dialog message */
+"Would you like to customize your game, or get more hints?" = "Would you like to customize your game, or get more hints?";
+
+/* Pause dialog message */
+"Would you like to customize your game, or get more levels?" = "Would you like to customize your game, or get more levels?";
+
+/* Dialog message offering to enable device notifications when new daily puzzle content is available. */
+"Would you like to get notifications when new daily puzzles are available, so you don't lose your streak?" = "Would you like to get notifications when new daily puzzles are available, so you don't lose your streak?";
+
+/* Prompt the user to sign in to use cloud sync from Google Play. */
+"Would you like to sign in to Google Play to enable cloud sync of your game progress?" = "Would you like to sign in to Google Play to enable cloud sync of your game progress?";
+
+/* promo */
+"Would you like to unlock all level packs? Includes:" = "Would you like to unlock all level packs? Includes:";
+
+/* Rewarded Hint Dialog Message */
+"Would you like to watch a short video to earn a free hint?" = "Would you like to watch a short video to earn a free hint?";
+
+/* section name */
+"Woven" = "Woven";
+
+/* short level pack name */
+"Yellow Pack" = "Yellow Pack";
+
+/* Button text */
+"yes" = "yes";
+
+/* text used on a button */
+"Yes" = "Yes";
+
+/* User finished the level pack. %@ will be replaced with a localized pack name, example: 'You beat the Green Pack' */
+"You beat the %@!" = "You beat the %@!";
+
+/* User completed a level. Keep the %d because it will be replaced with a number. */
+"You completed the level in\n%d moves." = "You completed the level in\n%d moves.";
+
+/* Time trial complete dialog message */
+"You solved %d puzzles in\n%@." = "You solved %1$d puzzles in\n%2$@.";
+
+/* Time trial complete dialog message */
+"You solved 1 puzzle in\n%@." = "You solved 1 puzzle in\n%@.";
+
+/* Dialog message shown after completing all levels in a pack perfectly.  %@ will be replaced with a localized pack name, example: 'You've completed the Green Pack perfectly!' */
+"You've completed the\n%@ perfectly!" = "You've completed the\n%@ perfectly!";
+
+/* Dialog message shown after completing all levels in a pack.  %@ will be replaced with a localized pack name, example: 'You've completed the Green Pack!' */
+"You've completed the\n%@!" = "You've completed the\n%@!";
+
+/* Dialog message shown after completing all weekly puzzles perfectly. */
+"You've completed the\nweekly puzzles perfectly!" = "You've completed the\nweekly puzzles perfectly!";
+
+/* Dialog message shown after completing all weekly puzzles. */
+"You've completed the\nweekly puzzles!" = "You've completed the\nweekly puzzles!";
+
+/* Dialog message shown after completing today's daily puzzles.  %d will be replaced by the length of the streak in days, greater than 1, example: '3 day streak!' */
+"You've completed today's puzzles!  %d day streak!" = "You've completed today's puzzles!  %d day streak!";
+
+/* Dialog message shown after completing today's daily puzzles.  Translation should be similar to the corresponding plural string: 'You've completed today's puzzles!  %d day streak!' */
+"You've completed today's puzzles!  1 day streak!" = "You've completed today's puzzles!  1 day streak!";
+
+/* Claim hint dialog message. */
+"You've earned a free hint!" = "You've earned a free hint!";
+
+/* Message on the level complete dialog, %@ will be replaced with the board size or type, for example '8x8' */
+"You've reached the end of the\n%@ boards." = "You've reached the end of the\n%@ boards.";
+
+/* User finished the level pack. %@ will be replaced with a localized pack name, example: 'You've reached the end of the Green Pack' */
+"You've reached the end of the\n%@." = "You've reached the end of the\n%@.";
+
+/* promo */
+"You've solved %@ puzzles." = "You've solved %@ puzzles.";
+
+/* promo */
+"You've solved 1 puzzle" = "You've solved 1 puzzle";
+
+/* A new level pack was unlocked.  %@ will be replaced with a localized pack name, example: 'You've unlocked the Green Pack' */
+"You've unlocked the\n%@." = "You've unlocked the\n%@.";
+
