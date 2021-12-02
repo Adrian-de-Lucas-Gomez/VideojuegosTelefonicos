@@ -12,6 +12,7 @@ public class Tile : MonoBehaviour
     [SerializeField] SpriteRenderer rightBar;
 
     private Color color;
+    private bool isOrigin = false;
 
     public void Start()
     {
@@ -28,5 +29,16 @@ public class Tile : MonoBehaviour
     {
         //spriteCircle.color = c;
         //color = c;
+    }
+
+    public void SetAsOrigin()
+    {
+        isOrigin = true;
+        spriteCircle.enabled = true;
+    }
+
+    public bool IsOrigin()
+    {
+        return isOrigin;
     }
 }

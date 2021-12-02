@@ -14,13 +14,19 @@ namespace flow
     {
         //TODO: en el start tiene que decirte si eres bobo y no le has puesto valor desde el editor con un debug log
         public GameObject tilePrefab;
-
         [SerializeField] Transform boardObject;
-        [SerializeField] int boardWidth;
-        [SerializeField] int boardHeight;
+
         [SerializeField] Vector2 posIni;
 
-        private logic.Board board;
+        //Para nivel
+        private string level = "5,0,1,5;18,17,12;21,16,11,6;3,4,9;0,1,2,7,8,13,14,19,24,23,22;20,15,10,5";
+        private int levelNumber;
+        private int nFlows;
+        private int boardWidth;
+        private int boardHeight;
+        List<List<int>> flows;
+        
+        //private logic.Board board;
         private List<Tile> tiles;
 
         //++++Pruebas
@@ -30,6 +36,7 @@ namespace flow
         public void Start()
         {
             tiles = new List<Tile>();
+            flows = new List<List<int>>();
 
             GenerateBoard();
             //tiles[tiley * boardWidth + tilex].SetColor(Color.blue);
@@ -42,16 +49,49 @@ namespace flow
 
         public void GenerateBoard()
         {
-            //board = new logic.Board(boardWidth, boardHeight);
+            //TODO: pasar a leerNivel
+            string[] levelInfo = level.Split(';');
+            string[] auxInfo;
 
-            for(int j = 0; j < boardHeight; ++j)
+            //Procesamos la cabecera del nivel
+            auxInfo = levelInfo[0].Split(',');
+            levelNumber = int.Parse(auxInfo[2]);
+            nFlows = int.Parse(auxInfo[3]);
+
+            if (auxInfo[0].Contains(":")) { //Ancho y alto
+                string[] levelSize = auxInfo[0].Split(':');
+                boardWidth = int.Parse(levelSize[0]);
+                boardHeight = int.Parse(levelSize[1]);
+            }
+            else {
+                boardWidth = boardHeight = int.Parse(auxInfo[0]);
+            }
+
+            //Nivel
+            for(int i = 0; i < nFlows; ++i) {
+                auxInfo = levelInfo[i+1].Split(',');
+                flows.Add(new List<int>());
+
+                for (int j = 0; j < auxInfo.Length; ++j)
+                    flows[i].Add(int.Parse(auxInfo[j]));
+            }
+
+
+            //Generar nivel
+            for (int j = 0; j < boardHeight; ++j)
             {
-                for(int i = 0; i < boardWidth; ++i)
+                for (int i = 0; i < boardWidth; ++i)
                 {
-                    GameObject t = Instantiate(tilePrefab, new Vector2(posIni.x + offset.x/2 + i*offset.x, posIni.y - offset.y/ 2 - j* offset.y),
+                    GameObject t = Instantiate(tilePrefab, new Vector2(posIni.x + offset.x / 2 + i * offset.x, posIni.y - offset.y / 2 - j * offset.y),
                         Quaternion.identity, boardObject);
                     tiles.Add(t.GetComponent<Tile>());
                 }
+            }
+
+            //Asignar los extremos de los flujos
+            foreach (var flow in flows) {
+                tiles[flow[0]].SetAsOrigin();
+                tiles[flow[flow.Count - 1]].SetAsOrigin();
             }
         }
 
