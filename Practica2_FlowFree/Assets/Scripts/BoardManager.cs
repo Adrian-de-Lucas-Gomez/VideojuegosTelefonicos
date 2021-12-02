@@ -25,8 +25,8 @@ namespace flow
         private List<Tile> tiles;
 
         //++++Pruebas
-        public int offsetX;
-        public int offsetY;
+        public float offsetX;
+        public float offsetY;
         public int tilex, tiley;
         //+++++++++++
 
@@ -35,7 +35,12 @@ namespace flow
             tiles = new List<Tile>();
 
             GenerateBoard();
-            tiles[tiley * boardWidth + tilex].SetColor(Color.blue);
+            //tiles[tiley * boardWidth + tilex].SetColor(Color.blue);
+        }
+
+        public void Update()
+        {
+            HandleInput(); //TODO:
         }
 
         public void GenerateBoard()
@@ -50,6 +55,30 @@ namespace flow
                     tiles.Add(t.GetComponent<Tile>());
                 }
             }
+        }
+
+        private void HandleInput()
+        {
+            if (Input.GetMouseButton(0)) //0: boton izq
+            {
+                Vector3 mousePos = Input.mousePosition;
+                mousePos.z = Camera.main.nearClipPlane;
+                Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos); //Escala??
+
+                if(IsPosInBoard(worldPos))
+                {
+                    Debug.Log("warro");
+                }
+            }
+        }
+
+        private bool IsPosInBoard(Vector3 pos)
+        {
+            if (pos.x >= posIniX - offsetX/2 && pos.x < posIniX - offsetX/2 + boardWidth * offsetX &&
+                pos.y <= posIniY + offsetY/2 && pos.y > posIniY + offsetY/2 - boardHeight * offsetY)
+                return true;
+
+            return false;
         }
     }
 }
