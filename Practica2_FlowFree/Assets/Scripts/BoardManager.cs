@@ -18,16 +18,13 @@ namespace flow
         [SerializeField] Transform boardObject;
         [SerializeField] int boardWidth;
         [SerializeField] int boardHeight;
-        [SerializeField] int posIniX;
-        [SerializeField] int posIniY;
+        [SerializeField] Vector2 posIni;
 
         private logic.Board board;
         private List<Tile> tiles;
 
         //++++Pruebas
-        public float offsetX;
-        public float offsetY;
-        public int tilex, tiley;
+        public Vector2 offset;
         //+++++++++++
 
         public void Start()
@@ -51,7 +48,8 @@ namespace flow
             {
                 for(int i = 0; i < boardWidth; ++i)
                 {
-                    GameObject t = Instantiate(tilePrefab, new Vector2(posIniX + i*offsetX, posIniY - j*offsetY), Quaternion.identity, boardObject);
+                    GameObject t = Instantiate(tilePrefab, new Vector2(posIni.x + offset.x/2 + i*offset.x, posIni.y - offset.y/ 2 - j* offset.y),
+                        Quaternion.identity, boardObject);
                     tiles.Add(t.GetComponent<Tile>());
                 }
             }
@@ -67,18 +65,28 @@ namespace flow
 
                 if(IsPosInBoard(worldPos))
                 {
-                    Debug.Log("warro");
+                    Vector2 tileInBoard = WorldPosToTile(worldPos);
+                    Debug.Log(tileInBoard);
                 }
             }
         }
 
         private bool IsPosInBoard(Vector3 pos)
         {
-            if (pos.x >= posIniX - offsetX/2 && pos.x < posIniX - offsetX/2 + boardWidth * offsetX &&
-                pos.y <= posIniY + offsetY/2 && pos.y > posIniY + offsetY/2 - boardHeight * offsetY)
+            if (pos.x >= posIni.x && pos.x < posIni.x + boardWidth * offset.x &&
+                pos.y <= posIni.y && pos.y > posIni.y - boardHeight * offset.y)
                 return true;
 
             return false;
+        }
+
+        private Vector2 WorldPosToTile(Vector3 pos)
+        {
+            Vector2 posBoard = new Vector2(Mathf.Abs(pos.x - posIni.x), Mathf.Abs(pos.y - posIni.y));
+            int col = (int)(posBoard.x / offset.x);
+            int row = (int)(posBoard.y / offset.y);
+
+            return new Vector2(col, row);
         }
     }
 }

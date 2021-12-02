@@ -906,12 +906,8 @@ MonoBehaviour:
   boardObject: {fileID: 325568755}
   boardWidth: 4
   boardHeight: 4
-  posIniX: -2
-  posIniY: 3
-  offsetX: 1
-  offsetY: 1
-  tilex: 3
-  tiley: 3
+  posIni: {x: -2, y: 3}
+  offset: {x: 1, y: 1}
 --- !u!4 &1649278889
 Transform:
   m_ObjectHideFlags: 0
