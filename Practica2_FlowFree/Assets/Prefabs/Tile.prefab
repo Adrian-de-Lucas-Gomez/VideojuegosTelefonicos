@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 268266785}
   - component: {fileID: 268266786}
   m_Layer: 0
-  m_Name: UpBar
+  m_Name: DownBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -257,7 +257,7 @@ GameObject:
   - component: {fileID: 1598605562}
   - component: {fileID: 1598605563}
   m_Layer: 0
-  m_Name: DownBar
+  m_Name: UpBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -626,7 +626,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteBackground: {fileID: 442308242608216721}
   spriteCircle: {fileID: 1780450226181956051}
-  upBar: {fileID: 268266786}
-  downBar: {fileID: 1598605563}
+  upBar: {fileID: 1598605563}
+  downBar: {fileID: 268266786}
   leftBar: {fileID: 1089219523}
   rightBar: {fileID: 1451128933}
