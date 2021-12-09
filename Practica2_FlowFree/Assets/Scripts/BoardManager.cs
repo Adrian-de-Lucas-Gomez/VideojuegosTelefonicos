@@ -19,7 +19,9 @@ namespace flow
         [SerializeField] Vector2 posIni;
 
         //Para nivel
-        private string level = "5,0,1,5;18,17,12;21,16,11,6;3,4,9;0,1,2,7,8,13,14,19,24,23,22;20,15,10,5";
+        public LevelPack aux;
+
+        //private string level = "5,0,1,5;18,17,12;21,16,11,6;3,4,9;0,1,2,7,8,13,14,19,24,23,22;20,15,10,5";
         private int levelNumber;
         private int nFlows;
         private int boardWidth;
@@ -48,6 +50,11 @@ namespace flow
 
         public void GenerateBoard()
         {
+            string[] maps = aux.levelsString.ToString().Split('\n');
+
+            string level = maps[0]; 
+
+
             //TODO: pasar a leerNivel
             string[] levelInfo = level.Split(';');
             string[] auxInfo;
