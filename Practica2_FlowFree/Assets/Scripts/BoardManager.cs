@@ -31,7 +31,12 @@ namespace flow
 
         //++++Pruebas
         public Vector2 offset;
+
         //+++++++++++
+
+        //Input
+        private int currentTile = 0;
+        private int currentFlow = 0;
 
         public void Start()
         {
@@ -88,24 +93,57 @@ namespace flow
             }
 
             //Asignar los extremos de los flujos
-            foreach (var flow in flows) {
-                tiles[flow[0]].SetAsOrigin();
-                tiles[flow[flow.Count - 1]].SetAsOrigin();
+            for(int i = 0; i < flows.Count; i++)
+            {
+                tiles[flows[i][0]].SetAsOrigin(i);
+                tiles[flows[i][flows[i].Count - 1]].SetAsOrigin(i);
             }
         }
 
         private void HandleInput()
         {
-            if (Input.GetMouseButton(0)) //0: boton izq
-            {
-                Vector3 mousePos = Input.mousePosition;
-                mousePos.z = Camera.main.nearClipPlane;
-                Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos); //Escala??
+            Vector3 mousePos = Input.mousePosition;
+            mousePos.z = Camera.main.nearClipPlane;
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos); //Escala??
+            int newTile = WorldPosToTile(worldPos);
+            int newFlow = tiles[newTile].GetColor();
+            Debug.Log(newTile);
 
-                if(IsPosInBoard(worldPos))
+            if (IsPosInBoard(worldPos))
+            {
+                //0: boton izq, 1: boton der
+                if (Input.GetMouseButtonDown(0)) //Si el usuario acaba de pulsar el botón izquierdo 
                 {
-                    Vector2 tileInBoard = WorldPosToTile(worldPos);
-                    Debug.Log(tileInBoard);
+                    if (tiles[newTile].IsOrigin())
+                    {
+                        currentTile = newTile;
+                        currentFlow = tiles[currentTile].GetColor();
+                    }
+                }
+
+                else if (Input.GetMouseButtonUp(0)) //Si el usuario acaba de liberar el botón izquierdo 
+                {
+                    currentTile = int.MaxValue;
+                    currentFlow = int.MaxValue;
+                    //lol
+                }
+
+                else if (Input.GetMouseButton(0)) //Si el usuario está pulsando el botón izquierdo
+                {
+                    if(newTile != currentTile && !tiles[newTile].IsOrigin() && newFlow != currentFlow)
+                    {
+                        Direction dir = DirectionFromTile(currentTile, newTile);
+
+                        if(dir != Direction.None)
+                        {
+                            tiles[currentTile].SetDirection(dir);
+
+                            tiles[newTile].SetColor(tiles[currentTile].GetTempColor());
+                            tiles[newTile].SetTempColor(tiles[currentTile].GetTempColor());
+                            tiles[newTile].SetDirection(DirectionUtils.GetOppositeDirection(dir));
+                        }
+                        currentTile = newTile;
+                    }
                 }
             }
         }
@@ -119,13 +157,26 @@ namespace flow
             return false;
         }
 
-        private Vector2 WorldPosToTile(Vector3 pos)
+        private int WorldPosToTile(Vector3 pos)
         {
             Vector2 posBoard = new Vector2(Mathf.Abs(pos.x - posIni.x), Mathf.Abs(pos.y - posIni.y));
             int col = (int)(posBoard.x / offset.x);
             int row = (int)(posBoard.y / offset.y);
 
-            return new Vector2(col, row);
+            return (row * boardWidth + col);
+        }
+
+        private Direction DirectionFromTile(int origin, int dest)
+        {
+            if (origin + 1 == dest && origin / boardWidth == dest / boardWidth) return Direction.Right;
+
+            else if (origin - 1 == dest && origin / boardWidth == dest / boardWidth) return Direction.Left;
+
+            else if (origin - boardWidth == dest) return Direction.Up;
+
+            else if (origin + boardWidth == dest) return Direction.Down;
+
+            return Direction.None;
         }
     }
 }
