@@ -11,6 +11,19 @@ namespace flow
     /// </summary>
     public class LevelManager : MonoBehaviour
     {
+        public BoardManager boardManager;
+        private void Start()
+        {
+            
+        }
 
+        public void initializeLevel(int levelNumber, LevelPack pack)
+        {
+            string[] maps = pack.levelsString.ToString().Split('\n');
+
+            string level = maps[levelNumber];
+
+            boardManager.GenerateBoard(level, pack.colors);
+        }
     }
 }

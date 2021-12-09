@@ -19,8 +19,6 @@ namespace flow
         [SerializeField] Vector2 posIni;
 
         //Para nivel
-        public LevelPack aux;
-
         //private string level = "5,0,1,5;18,17,12;21,16,11,6;3,4,9;0,1,2,7,8,13,14,19,24,23,22;20,15,10,5";
         private int levelNumber;
         private int nFlows;
@@ -37,10 +35,7 @@ namespace flow
 
         public void Start()
         {
-            tiles = new List<Tile>();
-            flows = new List<List<int>>();
 
-            GenerateBoard();
         }
 
         public void Update()
@@ -48,12 +43,10 @@ namespace flow
             HandleInput(); //TODO:
         }
 
-        public void GenerateBoard()
+        public void GenerateBoard(string level, Color[] skin)
         {
-            string[] maps = aux.levelsString.ToString().Split('\n');
-
-            string level = maps[0]; 
-
+            tiles = new List<Tile>();
+            flows = new List<List<int>>();
 
             //TODO: pasar a leerNivel
             string[] levelInfo = level.Split(';');
@@ -90,6 +83,7 @@ namespace flow
                 {
                     GameObject t = Instantiate(tilePrefab, new Vector2(posIni.x + offset.x / 2 + i * offset.x, posIni.y - offset.y / 2 - j * offset.y),
                         Quaternion.identity, boardObject);
+
                     tiles.Add(t.GetComponent<Tile>());
                 }
             }
