@@ -39,7 +39,6 @@ namespace flow
             flows = new List<List<int>>();
 
             GenerateBoard();
-            //tiles[tiley * boardWidth + tilex].SetColor(Color.blue);
         }
 
         public void Update()

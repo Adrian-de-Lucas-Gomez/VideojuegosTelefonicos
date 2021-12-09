@@ -27,8 +27,8 @@ public class Tile : MonoBehaviour
 
     public void SetColor(Color c)
     {
-        //spriteCircle.color = c;
-        //color = c;
+        spriteCircle.material.color = c;
+        color = c;
     }
 
     public void SetAsOrigin()
