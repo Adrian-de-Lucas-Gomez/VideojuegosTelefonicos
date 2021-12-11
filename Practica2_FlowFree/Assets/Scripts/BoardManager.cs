@@ -74,6 +74,16 @@ namespace flow
                 boardWidth = boardHeight = int.Parse(auxInfo[0]);
             }
 
+            //auxInfo[4] son los puentes: No se procesan
+
+            if(auxInfo.Length >= 6) //Celdas huecas
+            {
+
+            }
+
+
+
+
             //Nivel
             for(int i = 0; i < nFlows; ++i) {
                 auxInfo = levelInfo[i+1].Split(',');

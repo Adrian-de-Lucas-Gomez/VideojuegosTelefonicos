@@ -16,6 +16,7 @@ namespace flow
         private int color = int.MaxValue;
         private Color tempColor; //TODO: no se si esto es temporal
         private bool isOrigin = false;
+        private bool isEmpty = false;
 
         public void Start()
         {
@@ -111,6 +112,11 @@ namespace flow
         public bool IsActive()
         {
             return color != int.MaxValue;
+        }
+        
+        public bool IsEmpty()
+        {
+            return isEmpty;
         }
     }
 }
