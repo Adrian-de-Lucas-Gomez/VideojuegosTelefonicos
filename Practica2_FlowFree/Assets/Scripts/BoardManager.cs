@@ -63,8 +63,8 @@ namespace flow
             levelNumber = int.Parse(auxInfo[2]);
             nFlows = int.Parse(auxInfo[3]);
 
-            if (auxInfo[0].Contains(":"))
-            { //Ancho y alto
+            if (auxInfo[0].Contains(":")) //Ancho y alto
+            { 
                 string[] levelSize = auxInfo[0].Split(':');
                 boardWidth = int.Parse(levelSize[0]);
                 boardHeight = int.Parse(levelSize[1]);
@@ -90,7 +90,7 @@ namespace flow
                 }
             }
 
-            //Nivel
+            //Flujos nivel
             for(int i = 0; i < nFlows; ++i)
             {
                 auxInfo = levelInfo[i+1].Split(',');

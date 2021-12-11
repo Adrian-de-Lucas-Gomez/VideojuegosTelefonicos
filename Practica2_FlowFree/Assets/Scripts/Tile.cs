@@ -17,6 +17,8 @@ namespace flow
         private Color tempColor; //TODO: no se si esto es temporal
         private bool isOrigin = false;
         private bool isEmpty = false;
+        private List<bool> walls;
+
 
         public void Start()
         {
@@ -35,6 +37,12 @@ namespace flow
             downBar.color = tempColor;
             leftBar.color = tempColor;
             rightBar.color = tempColor;
+
+            //Lista de muros
+            walls = new List<bool>();
+            for(int i = 0; i < (int)Direction.None; ++i) {
+                walls.Add(false);
+            }
         }
 
         private void ResetBars()
@@ -91,6 +99,11 @@ namespace flow
             color = c;
         }
 
+        public void SetWall(Direction dir, bool isWall)
+        {
+            walls[(int)dir] = isWall;
+        }
+
     //Getters
     //---------------------------------------------
 
@@ -122,6 +135,11 @@ namespace flow
         public bool IsEmpty()
         {
             return isEmpty;
+        }
+
+        public bool IsWall(Direction dir)
+        {
+            return walls[(int)dir];
         }
     }
 }
