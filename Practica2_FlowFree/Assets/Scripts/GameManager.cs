@@ -11,14 +11,16 @@ namespace flow
     /// </summary>
     public class GameManager : MonoBehaviour
     {
-
-        public int index;
-        public LevelPack pack;
+        public int categoryIndex;
+        public int packIndex;
+        public int levelIndex;
+         
+        public Categories[] categories;
         public LevelManager levelManager;
 
         public void Start()
         {
-            levelManager.initializeLevel(index, pack);
+            levelManager.initializeLevel(levelIndex, categories[categoryIndex].packs[packIndex]);
         }
     }
 }

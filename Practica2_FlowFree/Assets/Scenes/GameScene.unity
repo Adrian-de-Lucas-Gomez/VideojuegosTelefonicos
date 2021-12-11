@@ -1265,8 +1265,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82acef80d545e4345a511052a30108dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  index: 0
-  pack: {fileID: 11400000, guid: 3f14716611e5fa5489aafefd64da8a18, type: 2}
+  categoryIndex: 0
+  packIndex: 0
+  levelIndex: 5
+  categories:
+  - {fileID: 11400000, guid: 7f4a159cdad94794aa28c5ec8af02039, type: 2}
+  - {fileID: 11400000, guid: 2b144e0e5a743d645a04295ef9e5539d, type: 2}
   levelManager: {fileID: 1462976382}
 --- !u!4 &2089665304
 Transform:
