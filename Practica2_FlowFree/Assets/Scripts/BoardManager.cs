@@ -53,7 +53,7 @@ namespace flow
             HandleInput(); //TODO:
         }
 
-        public void ReadLevel(string level, ref List<int> emptyTiles) //TODO: dberia estar aqui? o en un script bobo "board"??
+        public void ReadLevel(string level, ref List<int> emptyTiles, ref List<(int, int)> walls) //TODO: dberia estar aqui? o en un script bobo "board"??
         {
             string[] levelInfo = level.Split(';');
             string[] auxInfo;
@@ -85,8 +85,14 @@ namespace flow
 
                 if (auxInfo.Length >= 7) //Celdas separadas por muros (0|6:12|4:17|3)
                 {
-                    string[] listWalls = auxInfo[6].Split(':');
-                    //TODO: procesar muros
+                    string[] listWalls = auxInfo[6].Split(':'); 
+
+                    for (int i = 0; i < listWalls.Length; ++i) //(0|6)
+                    {
+                        string[] aux = listWalls[i].Split('|');
+
+                        walls.Add((int.Parse(aux[0]), int.Parse(aux[1])));
+                    }
                 }
             }
 
@@ -106,11 +112,13 @@ namespace flow
         {
             tiles = new List<Tile>();
             flows = new List<Flow>();
+            solution = new List<List<int>>();
+
+            List<int> emptyTiles = new List<int>();
+            List<(int, int)> walls = new List<(int, int)>();
 
             //Lectura del nivel
-            solution = new List<List<int>>();
-            List<int> emptyTiles = new List<int>();
-            ReadLevel(level, ref emptyTiles);
+            ReadLevel(level, ref emptyTiles, ref walls);
 
             //Generar nivel
             for (int j = 0; j < boardHeight; ++j)
@@ -145,7 +153,16 @@ namespace flow
                 tiles[emptyTiles[i]].SetEmpty();
             }
 
-            //Asignar muros TODO:
+            //Asignar muros
+            for (int i = 0; i < walls.Count; i++)
+            {
+                int tile1 = walls[i].Item1;
+                int tile2 = walls[i].Item2;
+                Direction aux = DirectionFromTile(tile1, tile2);
+
+                tiles[tile1].SetWall(aux, true);
+                tiles[tile2].SetWall(DirectionUtils.GetOppositeDirection(aux), true);
+            }
         }
 
 
