@@ -11,15 +11,23 @@ namespace flow
     /// </summary>
     public class GameManager : MonoBehaviour
     {
-        public int categoryIndex;
-        public int packIndex;
-        public int levelIndex;
-         
-        public Categories[] categories;
-        public LevelManager levelManager;
+        [SerializeField] int categoryIndex = -1;
+        [SerializeField] int packIndex = -1;
+        [SerializeField] int levelIndex = -1;
+
+        [SerializeField] Categories[] categories;
+        [SerializeField] LevelManager levelManager;
 
         public void Start()
         {
+#if UNITY_EDITOR
+            if (categoryIndex == -1 || packIndex == -1 || levelIndex == -1 ||
+                categories == null || levelManager == null)
+            {
+                Debug.LogError("GameManager: Alguna variable no tiene valor asociado desde el editor.");
+                return;
+            }
+#endif
             levelManager.initializeLevel(levelIndex, categories[categoryIndex].packs[packIndex]);
         }
     }
