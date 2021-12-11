@@ -19,13 +19,14 @@ namespace flow
 
         public void Start()
         {
-            tempColor = Color.white;
-
-            spriteCircle.color = tempColor;
-            upBar.color = tempColor;
-            downBar.color = tempColor;
-            leftBar.color = tempColor;
-            rightBar.color = tempColor;
+#if UNITY_EDITOR
+           if(spriteBackground == null || spriteCircle == null || upBar == null || downBar == null ||
+                leftBar == null || rightBar == null)
+           {
+                Debug.LogError("Tile: Alguna variable no tiene valor asociado desde el editor.");
+                return;
+           }
+#endif
         }
 
         private void ResetBars()
@@ -70,7 +71,7 @@ namespace flow
             tempColor = c;
         }
 
-        public void SetTempColor(Color c) //ESTE TIENE QUE REEMPLAZAR AL DE ARRIBA
+        public void SetTempColor(Color c) //TODO: ESTE TIENE QUE REEMPLAZAR AL DE ARRIBA
         {
             tempColor = c;
         }
@@ -82,8 +83,8 @@ namespace flow
             color = c;
         }
 
-        //Getters
-        //---------------------------------------------
+    //Getters
+    //---------------------------------------------
 
         public bool IsOrigin()
         {

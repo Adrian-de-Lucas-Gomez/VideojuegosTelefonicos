@@ -12,24 +12,20 @@ namespace flow
     /// </summary>
     public class BoardManager : MonoBehaviour
     {
-        //TODO: en el start tiene que decirte si eres bobo y no le has puesto valor desde el editor con un debug log
-        public GameObject tilePrefab;
+        [SerializeField] GameObject tilePrefab;
         [SerializeField] Transform boardObject;
-
         [SerializeField] Vector2 posIni;
 
         //Para nivel
-        private string level = "5,0,1,5;18,17,12;21,16,11,6;3,4,9;0,1,2,7,8,13,14,19,24,23,22;20,15,10,5";
+        private string level = "5,0,1,5;18,17,12;21,16,11,6;3,4,9;0,1,2,7,8,13,14,19,24,23,22;20,15,10,5"; //TODO:
         private int levelNumber;
         private int nFlows;
         private int boardWidth;
         private int boardHeight;
-        List<List<int>> flows;
-        
-        //private logic.Board board;
+        private List<List<int>> flows;
         private List<Tile> tiles;
 
-        //++++Pruebas
+        //++++Pruebas TODO:
         public Vector2 offset;
 
         //+++++++++++
@@ -38,8 +34,17 @@ namespace flow
         private int currentTile = 0;
         private int currentFlow = 0;
 
+
         public void Start()
         {
+#if UNITY_EDITOR
+            if (tilePrefab == null || boardObject == null || posIni == null || offset == null)
+            {
+                Debug.LogError("BoardManager: Alguna variable no tiene valor asociado desde el editor.");
+                return;
+            }
+#endif
+
             tiles = new List<Tile>();
             flows = new List<List<int>>();
 
