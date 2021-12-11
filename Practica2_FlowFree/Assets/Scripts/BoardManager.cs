@@ -51,12 +51,8 @@ namespace flow
             HandleInput(); //TODO:
         }
 
-        public void GenerateBoard(string level, Color[] skin)
+        public void ReadLevel(string level, ref List<int> emptyTiles) //TODO: dberia estar aqui? o en un script bobo "board"??
         {
-            tiles = new List<Tile>();
-            flows = new List<List<int>>();
-
-            //TODO: pasar a leerNivel
             string[] levelInfo = level.Split(';');
             string[] auxInfo;
 
@@ -65,34 +61,54 @@ namespace flow
             levelNumber = int.Parse(auxInfo[2]);
             nFlows = int.Parse(auxInfo[3]);
 
-            if (auxInfo[0].Contains(":")) { //Ancho y alto
+            if (auxInfo[0].Contains(":"))
+            { //Ancho y alto
                 string[] levelSize = auxInfo[0].Split(':');
                 boardWidth = int.Parse(levelSize[0]);
                 boardHeight = int.Parse(levelSize[1]);
             }
-            else {
+            else
+            {
                 boardWidth = boardHeight = int.Parse(auxInfo[0]);
             }
 
             //auxInfo[4] son los puentes: No se procesan
 
-            if(auxInfo.Length >= 6) //Celdas huecas
+            if (auxInfo.Length >= 6) //Celdas huecas (0:6:12:4:17)
             {
+                string[] listEmpty = auxInfo[5].Split(':');
 
+                for (int i = 0; i < listEmpty.Length; ++i)
+                    emptyTiles.Add(int.Parse(listEmpty[i]));
+
+                if (auxInfo.Length >= 7) //Celdas separadas por muros (0|6:12|4:17|3)
+                {
+                    string[] listWalls = auxInfo[6].Split(':');
+                    //TODO: procesar muros
+                }
             }
 
-
-
-
-            //Nivel
-            for(int i = 0; i < nFlows; ++i) {
-                auxInfo = levelInfo[i+1].Split(',');
+            //Lectura nivel
+            for (int i = 0; i < nFlows; ++i)
+            {
+                auxInfo = levelInfo[i + 1].Split(',');
                 flows.Add(new List<int>());
 
                 for (int j = 0; j < auxInfo.Length; ++j)
                     flows[i].Add(int.Parse(auxInfo[j]));
             }
+        }
 
+
+        public void GenerateBoard(string level, Color[] skin)
+        {
+            tiles = new List<Tile>();
+
+            //Lectura del nivel
+            flows = new List<List<int>>();
+            List<int> emptyTiles = new List<int>();
+
+            ReadLevel(level, ref emptyTiles);
 
             //Generar nivel
             for (int j = 0; j < boardHeight; ++j)
@@ -112,7 +128,16 @@ namespace flow
                 tiles[flows[i][0]].SetAsOrigin(i);
                 tiles[flows[i][flows[i].Count - 1]].SetAsOrigin(i);
             }
+
+            //Asignar casillas vacias
+            for (int i = 0; i < emptyTiles.Count; i++)
+            {
+                tiles[emptyTiles[i]].SetEmpty();
+            }
+
+            //Asignar muros TODO:
         }
+
 
         private void HandleInput()
         {
@@ -162,6 +187,7 @@ namespace flow
             }
         }
 
+
         private bool IsPosInBoard(Vector3 pos)
         {
             if (pos.x >= posIni.x && pos.x < posIni.x + boardWidth * offset.x &&
@@ -171,6 +197,7 @@ namespace flow
             return false;
         }
 
+
         private int WorldPosToTile(Vector3 pos)
         {
             Vector2 posBoard = new Vector2(Mathf.Abs(pos.x - posIni.x), Mathf.Abs(pos.y - posIni.y));
@@ -179,6 +206,7 @@ namespace flow
 
             return (row * boardWidth + col);
         }
+
 
         private Direction DirectionFromTile(int origin, int dest)
         {

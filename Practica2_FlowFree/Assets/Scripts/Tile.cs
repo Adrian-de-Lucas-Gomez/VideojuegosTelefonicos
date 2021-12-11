@@ -114,6 +114,11 @@ namespace flow
             return color != int.MaxValue;
         }
         
+        public void SetEmpty()
+        {
+            isEmpty = true;
+        }
+
         public bool IsEmpty()
         {
             return isEmpty;
