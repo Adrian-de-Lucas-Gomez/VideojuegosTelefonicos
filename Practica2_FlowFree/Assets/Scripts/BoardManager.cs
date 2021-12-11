@@ -17,7 +17,7 @@ namespace flow
         [SerializeField] Vector2 posIni;
 
         //Para nivel
-        private string level = "5,0,1,5;18,17,12;21,16,11,6;3,4,9;0,1,2,7,8,13,14,19,24,23,22;20,15,10,5"; //TODO:
+        //private string level = "5,0,1,5;18,17,12;21,16,11,6;3,4,9;0,1,2,7,8,13,14,19,24,23,22;20,15,10,5";
         private int levelNumber;
         private int nFlows;
         private int boardWidth;
@@ -44,11 +44,6 @@ namespace flow
                 return;
             }
 #endif
-
-            tiles = new List<Tile>();
-            flows = new List<List<int>>();
-
-            GenerateBoard();
         }
 
         public void Update()
@@ -56,8 +51,11 @@ namespace flow
             HandleInput(); //TODO:
         }
 
-        public void GenerateBoard()
+        public void GenerateBoard(string level, Color[] skin)
         {
+            tiles = new List<Tile>();
+            flows = new List<List<int>>();
+
             //TODO: pasar a leerNivel
             string[] levelInfo = level.Split(';');
             string[] auxInfo;
@@ -76,6 +74,16 @@ namespace flow
                 boardWidth = boardHeight = int.Parse(auxInfo[0]);
             }
 
+            //auxInfo[4] son los puentes: No se procesan
+
+            if(auxInfo.Length >= 6) //Celdas huecas
+            {
+
+            }
+
+
+
+
             //Nivel
             for(int i = 0; i < nFlows; ++i) {
                 auxInfo = levelInfo[i+1].Split(',');
@@ -93,6 +101,7 @@ namespace flow
                 {
                     GameObject t = Instantiate(tilePrefab, new Vector2(posIni.x + offset.x / 2 + i * offset.x, posIni.y - offset.y / 2 - j * offset.y),
                         Quaternion.identity, boardObject);
+
                     tiles.Add(t.GetComponent<Tile>());
                 }
             }
@@ -117,7 +126,7 @@ namespace flow
                 int newFlow = tiles[newTile].GetColor();
                 Debug.Log(newTile);
                 //0: boton izq, 1: boton der
-                if (Input.GetMouseButtonDown(0)) //Si el usuario acaba de pulsar el botón izquierdo 
+                if (Input.GetMouseButtonDown(0)) //Si el usuario acaba de pulsar el boton izquierdo 
                 {
                     if (tiles[newTile].IsOrigin())
                     {
@@ -126,20 +135,20 @@ namespace flow
                     }
                 }
 
-                else if (Input.GetMouseButtonUp(0)) //Si el usuario acaba de liberar el botón izquierdo 
+                else if (Input.GetMouseButtonUp(0)) //Si el usuario acaba de liberar el boton izquierdo 
                 {
                     currentTile = int.MaxValue;
                     currentFlow = int.MaxValue;
                     //lol
                 }
 
-                else if (Input.GetMouseButton(0)) //Si el usuario está pulsando el botón izquierdo
+                else if (Input.GetMouseButton(0)) //Si el usuario esta pulsando el boton izquierdo
                 {
-                    if(newTile != currentTile && !tiles[newTile].IsOrigin() && newFlow != currentFlow)
+                    if (newTile != currentTile && !tiles[newTile].IsOrigin() && newFlow != currentFlow)
                     {
                         Direction dir = DirectionFromTile(currentTile, newTile);
 
-                        if(dir != Direction.None)
+                        if (dir != Direction.None)
                         {
                             tiles[currentTile].SetDirection(dir);
 
