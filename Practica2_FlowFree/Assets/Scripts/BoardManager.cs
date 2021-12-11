@@ -17,7 +17,7 @@ namespace flow
         [SerializeField] Vector2 posIni;
 
         //Para nivel
-        private string level = "5,0,1,5;18,17,12;21,16,11,6;3,4,9;0,1,2,7,8,13,14,19,24,23,22;20,15,10,5"; //TODO:
+        //private string level = "5,0,1,5;18,17,12;21,16,11,6;3,4,9;0,1,2,7,8,13,14,19,24,23,22;20,15,10,5";
         private int levelNumber;
         private int nFlows;
         private int boardWidth;
@@ -46,12 +46,6 @@ namespace flow
                 return;
             }
 #endif
-
-            tiles = new List<Tile>();
-            solution = new List<List<int>>();
-            flows = new List<Flow>();
-
-            GenerateBoard();
         }
 
         public void Update()
@@ -59,8 +53,12 @@ namespace flow
             HandleInput(); //TODO:
         }
 
-        public void GenerateBoard()
+        public void GenerateBoard(string level, Color[] skin)
         {
+            tiles = new List<Tile>();
+            solution = new List<List<int>>();
+            flows = new List<Flow>();
+
             //TODO: pasar a leerNivel
             string[] levelInfo = level.Split(';');
             string[] auxInfo;
@@ -79,6 +77,16 @@ namespace flow
                 boardWidth = boardHeight = int.Parse(auxInfo[0]);
             }
 
+            //auxInfo[4] son los puentes: No se procesan
+
+            if(auxInfo.Length >= 6) //Celdas huecas
+            {
+
+            }
+
+
+
+
             //Nivel
             for(int i = 0; i < nFlows; ++i) {
                 auxInfo = levelInfo[i+1].Split(',');
@@ -96,6 +104,7 @@ namespace flow
                 {
                     GameObject t = Instantiate(tilePrefab, new Vector2(posIni.x + offset.x / 2 + i * offset.x, posIni.y - offset.y / 2 - j * offset.y),
                         Quaternion.identity, boardObject);
+
                     tiles.Add(t.GetComponent<Tile>());
                 }
             }
@@ -108,7 +117,7 @@ namespace flow
                 //Asignamos el origen y el final de los caminos
                 flows[i].setOrigins(tiles[solution[i][0]], tiles[solution[i][solution[i].Count - 1]]);
                 
-                //Le indicamos la solución
+                //Le indicamos la soluciï¿½n
                 for(int j = 1; j < solution[i].Count - 1; j++)
                 {
                     flows[i].constructSolution(tiles[solution[i][j]]);
@@ -128,7 +137,7 @@ namespace flow
                 int newFlow = tiles[newTile].GetColor();
 
                 //0: boton izq, 1: boton der
-                if (Input.GetMouseButtonDown(0)) //Si el usuario acaba de pulsar el botón izquierdo 
+                if (Input.GetMouseButtonDown(0)) //Si el usuario acaba de pulsar el boton izquierdo 
                 {
                     if (tiles[newTile].IsActive())
                     {
@@ -141,7 +150,7 @@ namespace flow
                     }
                 }
 
-                else if (Input.GetMouseButtonUp(0)) //Si el usuario acaba de liberar el botón izquierdo 
+                else if (Input.GetMouseButtonUp(0)) //Si el usuario acaba de liberar el boton izquierdo 
                 {
                     currentTile = int.MaxValue;
                     currentFlow = int.MaxValue;
@@ -149,13 +158,13 @@ namespace flow
                     //lol
                 }
 
-                else if (Input.GetMouseButton(0) && isBuildingFlow) //Si el usuario está pulsando el botón izquierdo
+                else if (Input.GetMouseButton(0) && isBuildingFlow) //Si el usuario estï¿½ pulsando el botï¿½n izquierdo
                 {
                     if(newTile != currentTile && !flows[currentFlow].isClosed()) //Nos hemos movido de casilla
                     {
                         Direction dir = DirectionFromTile(currentTile, newTile);
 
-                        if(dir != Direction.None) //Si el movimiento ha sido válido (El movimiento en diagonal es demasiado poderoso)
+                        if(dir != Direction.None) //Si el movimiento ha sido vï¿½lido (El movimiento en diagonal es demasiado poderoso)
                         {
                             if (tiles[newTile].IsActive()) //La casilla forma parte de un flujo
                             {
@@ -163,7 +172,7 @@ namespace flow
                                 {
                                     if (!tiles[newTile].IsOrigin())
                                     {
-                                        //Cortar el otro flujo y avanzar en esa dirección
+                                        //Cortar el otro flujo y avanzar en esa direcciï¿½n
                                         currentTile = newTile;
                                     }
                                     else
@@ -192,7 +201,7 @@ namespace flow
                                 }
                             }
 
-                            else //La casilla está vacía
+                            else //La casilla estï¿½ vacï¿½a
                             {
                                 flows[currentFlow].addToFlow(tiles[newTile], DirectionFromTile(currentTile, newTile));
                                 currentTile = newTile;

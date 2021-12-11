@@ -11,6 +11,26 @@ namespace flow
     /// </summary>
     public class LevelManager : MonoBehaviour
     {
+        [SerializeField] BoardManager boardManager;
 
+        private void Start()
+        {
+#if UNITY_EDITOR
+            if (boardManager == null)
+            {
+                Debug.LogError("LevelManager: Alguna variable no tiene valor asociado desde el editor.");
+                return;
+            }
+#endif
+        }
+
+        public void initializeLevel(int levelNumber, LevelPack pack)
+        {
+            string[] maps = pack.levelsString.ToString().Split('\n');
+
+            string level = maps[levelNumber];
+
+            boardManager.GenerateBoard(level, pack.colors);
+        }
     }
 }
