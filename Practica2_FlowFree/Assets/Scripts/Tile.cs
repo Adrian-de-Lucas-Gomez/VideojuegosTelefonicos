@@ -14,11 +14,19 @@ namespace flow
         [SerializeField] SpriteRenderer rightBar;
 
         private int color = int.MaxValue;
-        private Color tempColor;
+        private Color tempColor; //TODO: no se si esto es temporal
         private bool isOrigin = false;
 
         public void Start()
         {
+#if UNITY_EDITOR
+           if(spriteBackground == null || spriteCircle == null || upBar == null || downBar == null ||
+                leftBar == null || rightBar == null)
+           {
+                Debug.LogError("Tile: Alguna variable no tiene valor asociado desde el editor.");
+                return;
+           }
+#endif
             tempColor = Color.white;
 
             spriteCircle.color = tempColor;
@@ -70,7 +78,7 @@ namespace flow
             tempColor = c;
         }
 
-        public void SetTempColor(Color c) //ESTE TIENE QUE REEMPLAZAR AL DE ARRIBA
+        public void SetTempColor(Color c) //TODO: ESTE TIENE QUE REEMPLAZAR AL DE ARRIBA
         {
             tempColor = c;
         }
@@ -82,8 +90,8 @@ namespace flow
             color = c;
         }
 
-        //Getters
-        //---------------------------------------------
+    //Getters
+    //---------------------------------------------
 
         public bool IsOrigin()
         {

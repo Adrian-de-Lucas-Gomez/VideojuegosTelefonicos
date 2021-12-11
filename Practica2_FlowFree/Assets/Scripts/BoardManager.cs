@@ -12,10 +12,8 @@ namespace flow
     /// </summary>
     public class BoardManager : MonoBehaviour
     {
-        //TODO: en el start tiene que decirte si eres bobo y no le has puesto valor desde el editor con un debug log
-        public GameObject tilePrefab;
+        [SerializeField] GameObject tilePrefab;
         [SerializeField] Transform boardObject;
-
         [SerializeField] Vector2 posIni;
 
         //Para nivel
@@ -24,12 +22,10 @@ namespace flow
         private int nFlows;
         private int boardWidth;
         private int boardHeight;
-        List<List<int>> flows;
-        
-        //private logic.Board board;
+        private List<List<int>> flows;
         private List<Tile> tiles;
 
-        //++++Pruebas
+        //++++Pruebas TODO:
         public Vector2 offset;
 
         //+++++++++++
@@ -38,9 +34,16 @@ namespace flow
         private int currentTile = 0;
         private int currentFlow = 0;
 
+
         public void Start()
         {
-
+#if UNITY_EDITOR
+            if (tilePrefab == null || boardObject == null || posIni == null || offset == null)
+            {
+                Debug.LogError("BoardManager: Alguna variable no tiene valor asociado desde el editor.");
+                return;
+            }
+#endif
         }
 
         public void Update()
@@ -107,18 +110,13 @@ namespace flow
             mousePos.z = Camera.main.nearClipPlane;
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos); //Escala??
 
-            int newTile = WorldPosToTile(worldPos);
-
-            if (newTile < 0 || newTile >= tiles.Count) return;
-
-            
-            int newFlow = tiles[newTile].GetColor();
-            Debug.Log(newTile);
-
             if (IsPosInBoard(worldPos))
             {
+                int newTile = WorldPosToTile(worldPos);
+                int newFlow = tiles[newTile].GetColor();
+                Debug.Log(newTile);
                 //0: boton izq, 1: boton der
-                if (Input.GetMouseButtonDown(0)) //Si el usuario acaba de pulsar el botón izquierdo 
+                if (Input.GetMouseButtonDown(0)) //Si el usuario acaba de pulsar el botï¿½n izquierdo 
                 {
                     if (tiles[newTile].IsOrigin())
                     {
@@ -127,14 +125,14 @@ namespace flow
                     }
                 }
 
-                else if (Input.GetMouseButtonUp(0)) //Si el usuario acaba de liberar el botón izquierdo 
+                else if (Input.GetMouseButtonUp(0)) //Si el usuario acaba de liberar el botï¿½n izquierdo 
                 {
                     currentTile = int.MaxValue;
                     currentFlow = int.MaxValue;
                     //lol
                 }
 
-                else if (Input.GetMouseButton(0)) //Si el usuario está pulsando el botón izquierdo
+                else if (Input.GetMouseButton(0)) //Si el usuario estï¿½ pulsando el botï¿½n izquierdo
                 {
                     if (newTile != currentTile && !tiles[newTile].IsOrigin() && newFlow != currentFlow)
                     {
