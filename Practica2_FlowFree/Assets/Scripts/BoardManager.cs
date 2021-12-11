@@ -105,12 +105,12 @@ namespace flow
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = Camera.main.nearClipPlane;
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos); //Escala??
-            int newTile = WorldPosToTile(worldPos);
-            int newFlow = tiles[newTile].GetColor();
-            Debug.Log(newTile);
 
             if (IsPosInBoard(worldPos))
             {
+                int newTile = WorldPosToTile(worldPos);
+                int newFlow = tiles[newTile].GetColor();
+                Debug.Log(newTile);
                 //0: boton izq, 1: boton der
                 if (Input.GetMouseButtonDown(0)) //Si el usuario acaba de pulsar el botón izquierdo 
                 {
