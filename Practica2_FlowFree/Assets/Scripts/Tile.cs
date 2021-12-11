@@ -14,7 +14,7 @@ namespace flow
         [SerializeField] SpriteRenderer rightBar;
 
         private int color = int.MaxValue;
-        private Color tempColor;
+        private Color tempColor; //TODO: no se si esto es temporal
         private bool isOrigin = false;
 
         public void Start()
@@ -27,6 +27,13 @@ namespace flow
                 return;
            }
 #endif
+            tempColor = Color.white;
+
+            spriteCircle.color = tempColor;
+            upBar.color = tempColor;
+            downBar.color = tempColor;
+            leftBar.color = tempColor;
+            rightBar.color = tempColor;
         }
 
         private void ResetBars()
