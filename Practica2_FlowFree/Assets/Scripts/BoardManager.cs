@@ -106,7 +106,12 @@ namespace flow
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = Camera.main.nearClipPlane;
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos); //Escala??
+
             int newTile = WorldPosToTile(worldPos);
+
+            if (newTile < 0 || newTile >= tiles.Count) return;
+
+            
             int newFlow = tiles[newTile].GetColor();
             Debug.Log(newTile);
 
@@ -131,11 +136,11 @@ namespace flow
 
                 else if (Input.GetMouseButton(0)) //Si el usuario está pulsando el botón izquierdo
                 {
-                    if(newTile != currentTile && !tiles[newTile].IsOrigin() && newFlow != currentFlow)
+                    if (newTile != currentTile && !tiles[newTile].IsOrigin() && newFlow != currentFlow)
                     {
                         Direction dir = DirectionFromTile(currentTile, newTile);
 
-                        if(dir != Direction.None)
+                        if (dir != Direction.None)
                         {
                             tiles[currentTile].SetDirection(dir);
 
