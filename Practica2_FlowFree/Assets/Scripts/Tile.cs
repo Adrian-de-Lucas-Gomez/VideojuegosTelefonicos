@@ -73,10 +73,10 @@ namespace flow
     //Setters
     //----------------------------------------------
 
-        public void SetColor(Color c)
+        public void SetColor(int c)
         {
-            spriteCircle.material.color = c;
-            tempColor = c;
+            //spriteCircle.material.color = c;
+            color = c;
         }
 
         public void SetTempColor(Color c) //TODO: ESTE TIENE QUE REEMPLAZAR AL DE ARRIBA
