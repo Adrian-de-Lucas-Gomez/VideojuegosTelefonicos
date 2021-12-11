@@ -81,7 +81,7 @@ namespace flow
                 string[] listEmpty = auxInfo[5].Split(':');
 
                 for (int i = 0; i < listEmpty.Length; ++i)
-                    emptyTiles.Add(int.Parse(listEmpty[i]));
+                    emptyTiles.Add(int.Parse(listEmpty[i].Split('_')[0]));
 
                 if (auxInfo.Length >= 7) //Celdas separadas por muros (0|6:12|4:17|3)
                 {
