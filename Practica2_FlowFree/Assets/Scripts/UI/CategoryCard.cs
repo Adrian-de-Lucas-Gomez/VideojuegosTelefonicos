@@ -13,7 +13,6 @@ namespace flow
         [SerializeField] Image bottomLine;
         
         private Categories category; //El scriptable
-        //Necesitamos un LevelPackCard
 
         void Start()
         {

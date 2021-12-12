@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c5e198646f5f1a47819ad6cd59a40c0, type: 3}
   m_Name: BonusPack
   m_EditorClassIdentifier: 
-  packName: 
+  packName: Bonus Pack
   levelsString: {fileID: 0}
   skin: {fileID: 0}
   texts: []
