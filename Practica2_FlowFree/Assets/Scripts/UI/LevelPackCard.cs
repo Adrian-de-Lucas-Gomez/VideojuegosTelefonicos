@@ -40,7 +40,6 @@ namespace flow
 
         public void OnClick()
         {
-            Debug.Log("CLICK");
             levelPackTitle.color = Color.white;
         }
     }
