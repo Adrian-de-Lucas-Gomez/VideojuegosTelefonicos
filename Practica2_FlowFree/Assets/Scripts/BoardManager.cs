@@ -138,12 +138,12 @@ namespace flow
                 flows.Add(new Flow(i));
 
                 //Asignamos el origen y el final de los caminos
-                flows[i].setOrigins(tiles[solution[i][0]], tiles[solution[i][solution[i].Count - 1]]);
+                flows[i].setOrigins(tiles[solution[i][0]], solution[i][0], tiles[solution[i][solution[i].Count - 1]], solution[i][solution[i].Count - 1]);
                 
                 //Le indicamos la solucion
                 for(int j = 1; j < solution[i].Count - 1; j++)
                 {
-                    flows[i].constructSolution(tiles[solution[i][j]]);
+                    flows[i].constructSolution(tiles[solution[i][j]], solution[i][j]);
                 }
             }
 
@@ -186,7 +186,7 @@ namespace flow
                         currentFlow = tiles[currentTile].GetColor();
 
                         //3 tipos de casos
-                        flows[currentFlow].startBuildingFlow(tiles[currentTile]);
+                        flows[currentFlow].startBuildingFlow(tiles[currentTile], currentTile);
                         isBuildingFlow = true;
                     }
                 }
@@ -226,16 +226,17 @@ namespace flow
                                 {
                                     if (tiles[newTile].IsOrigin()) //Nos tenemos que asegurar que NO es el origen del que estamos construyendo
                                     {
-                                        if(flows[currentFlow].getStartingTile() != tiles[currentTile])
+                                        if(flows[currentFlow].getStartingTile() != tiles[newTile])
                                         {
-                                            flows[currentFlow].addToFlow(tiles[newTile], DirectionFromTile(currentTile, newTile));
+                                            flows[currentFlow].addToFlow(tiles[newTile], newTile, DirectionFromTile(currentTile, newTile));
                                             flows[currentFlow].closeFlow();
                                         }
                                     }
 
                                     else
                                     {
-                                        flows[currentFlow].cutFlow(tiles[newTile]);
+                                        int lastTileInFlow = flows[currentFlow].cutFlow(newTile);
+                                        flows[currentFlow].addToFlow(tiles[newTile], newTile, DirectionFromTile(lastTileInFlow, newTile));
                                     }
 
                                     currentTile = newTile;
@@ -244,7 +245,7 @@ namespace flow
 
                             else //La casilla esta vacia
                             {
-                                flows[currentFlow].addToFlow(tiles[newTile], DirectionFromTile(currentTile, newTile));
+                                flows[currentFlow].addToFlow(tiles[newTile], newTile, DirectionFromTile(currentTile, newTile));
                                 currentTile = newTile;
                             }
                         }

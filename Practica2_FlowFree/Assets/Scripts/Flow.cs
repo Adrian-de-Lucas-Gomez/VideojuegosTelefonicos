@@ -1,30 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine; //SOLO PARA DEBUGEAR PORFA QUITAME CUANDO ACABEMOS ESTO
 
 namespace flow
 {
     public class Flow
     {
-        private List<Tile> tiles;
-        private List<Tile> solution;
-        private Tile originA, originB;
-        private Tile startingTile;
-        private int color = 0;
+        private struct TileInfo
+        {
+            public Tile tile;
+            public int position;
+            public TileInfo(Tile t, int pos) { tile = t; position = pos; }
+        }
+
+        private List<TileInfo> tiles;
+        private List<TileInfo> solution;
+        private TileInfo originAInfo, originBInfo;
+        private TileInfo startingTile;
+        private int _color = 0;
 
         bool closed = false;
 
         public Flow(int c)
         {
-            color = c;
-            tiles = new List<Tile>();
-            solution = new List<Tile>();
+            _color = c;
+            tiles = new List<TileInfo>();
+            solution = new List<TileInfo>();
         }
 
         //Construcción del camino
 
-        public void startBuildingFlow(Tile tile)
+        public void startBuildingFlow(Tile tile, int pos)
         {
-            startingTile = tile;
+            startingTile.tile = tile;
+            startingTile.position = pos;
             tiles.Add(startingTile);
         }
 
@@ -33,17 +42,22 @@ namespace flow
 
         }
 
-        public void addToFlow(Tile newTile, Direction dir)
+        public void addToFlow(Tile newTile, int pos, Direction dir)
         {
-            tiles[tiles.Count - 1].SetDirection(dir);
-            tiles.Add(newTile);
+            tiles[tiles.Count - 1].tile.SetDirection(dir);
+            tiles.Add(new TileInfo(newTile, pos));
             newTile.SetDirection(DirectionUtils.GetOppositeDirection(dir));
-            if (!newTile.IsActive()) newTile.SetColor(color);
+            if (!newTile.IsActive()) newTile.SetColor(_color);
         }
 
-        public void constructSolution(Tile tile)
+        public void constructSolution(Tile tile, int pos)
         {
-            solution.Add(tile);
+            solution.Add(new TileInfo(tile, pos));
+        }
+
+        private void constructSolution(TileInfo tileInfo)
+        {
+            solution.Add(tileInfo);
         }
 
         public void closeFlow()
@@ -51,15 +65,20 @@ namespace flow
             closed = true;
         }
 
-        public void cutFlow(Tile tile)
+        public int cutFlow(int tilePos)
         {
-            Tile searchTile = tiles[tiles.Count - 1];
-            searchTile.ResetData();
-            while(searchTile != tile)
+            TileInfo searchTile = tiles[tiles.Count - 1];
+            searchTile.tile.ResetData();
+            while(searchTile.position != tilePos)
             {
+                searchTile.tile.ResetData();
                 tiles.RemoveAt(tiles.Count - 1);
                 searchTile = tiles[tiles.Count - 1];
             }
+            searchTile.tile.ResetData();
+            tiles.RemoveAt(tiles.Count - 1);
+
+            return tiles[tiles.Count - 1].position;
         }
 
         public void clearFlow()
@@ -71,7 +90,7 @@ namespace flow
 
         public Tile getStartingTile()
         {
-            return startingTile;
+            return startingTile.tile;
         }
 
         public bool isClosed()
@@ -81,14 +100,16 @@ namespace flow
 
         //Setters
 
-        public void setOrigins(Tile origA, Tile origB)
+        public void setOrigins(Tile origA, int posOrigA, Tile origB, int posOrigB)
         {
-            originA = origA;
-            originA.SetAsOrigin(color);
-            constructSolution(origA);
-            originB = origB;
-            originB.SetAsOrigin(color);
-            constructSolution(origB);
+            originAInfo.tile = origA;
+            originAInfo.position = posOrigA;
+            originAInfo.tile.SetAsOrigin(_color);
+            constructSolution(originAInfo);
+            originBInfo.tile = origB;
+            originBInfo.position = posOrigB;
+            originBInfo.tile.SetAsOrigin(_color);
+            constructSolution(originBInfo);
         }
     }
 }
