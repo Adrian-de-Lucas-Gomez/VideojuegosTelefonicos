@@ -51,6 +51,17 @@ namespace flow
             closed = true;
         }
 
+        public void cutFlow(Tile tile)
+        {
+            Tile searchTile = tiles[tiles.Count - 1];
+            searchTile.ResetData();
+            while(searchTile != tile)
+            {
+                tiles.RemoveAt(tiles.Count - 1);
+                searchTile = tiles[tiles.Count - 1];
+            }
+        }
+
         public void clearFlow()
         {
             tiles.Clear();

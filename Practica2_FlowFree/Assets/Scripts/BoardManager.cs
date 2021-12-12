@@ -235,7 +235,7 @@ namespace flow
 
                                     else
                                     {
-                                        //Corta el flujo a ver quien tiene huevos de hacer eso :_)
+                                        flows[currentFlow].cutFlow(tiles[newTile]);
                                     }
 
                                     currentTile = newTile;
