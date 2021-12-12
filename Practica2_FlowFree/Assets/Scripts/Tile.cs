@@ -48,8 +48,11 @@ namespace flow
         public void ResetData()
         {
             ResetBars();
-            spriteCircle.enabled = false;
-            color = int.MaxValue;
+            if (!isOrigin)
+            {
+                spriteCircle.enabled = false;
+                color = int.MaxValue;
+            }
         }
 
         private void ResetBars()
@@ -60,29 +63,35 @@ namespace flow
             rightBar.enabled = false;
         }
 
-        public void SetDirection(Direction dir)
+        private SpriteRenderer GetDirectionSprite(Direction dir)
         {
-            SpriteRenderer sprite;
             switch (dir)
             {
                 case Direction.Up:
-                    sprite = upBar;
-                    break;
+                    return upBar;
                 case Direction.Down:
-                    sprite = downBar;
-                    break;
+                    return downBar;
                 case Direction.Right:
-                    sprite = rightBar;
-                    break;
+                    return rightBar;
                 case Direction.Left:
-                    sprite = leftBar;
-                    break;
+                    return leftBar;
                 default:
                     //Nunca se debería llegar aquí
-                    return;
+                    return upBar;
             }
+        }
+
+        public void SetDirection(Direction dir)
+        {
+            SpriteRenderer sprite = GetDirectionSprite(dir);
             sprite.enabled = true;
             sprite.material.color = tempColor;
+        }
+
+        public void ClearDirection(Direction dir)
+        {
+            SpriteRenderer sprite = GetDirectionSprite(dir);
+            sprite.enabled = false;
         }
 
     //Setters

@@ -32,6 +32,15 @@ namespace flow
 
         public void startBuildingFlow(Tile tile, int pos)
         {
+            closed = false;
+            if(tiles.Count > 0) //El camino ya está empezado, hay que limpiarlo todo
+            {
+                for (int k = 0; k < tiles.Count; k++)
+                {
+                    tiles[k].tile.ResetData();
+                }
+                tiles.Clear();
+            }
             startingTile.tile = tile;
             startingTile.position = pos;
             tiles.Add(startingTile);
@@ -67,18 +76,51 @@ namespace flow
 
         public int cutFlow(int tilePos)
         {
-            TileInfo searchTile = tiles[tiles.Count - 1];
-            searchTile.tile.ResetData();
-            while(searchTile.position != tilePos)
+            if(tilePos == startingTile.position)
             {
-                searchTile.tile.ResetData();
-                tiles.RemoveAt(tiles.Count - 1);
-                searchTile = tiles[tiles.Count - 1];
+                for (int k = 0; k < tiles.Count; k++)
+                {
+                    tiles[k].tile.ResetData();
+                }
+                tiles.Clear();
+                tiles.Add(startingTile);
+
+                return startingTile.position;
             }
-            searchTile.tile.ResetData();
+
+            TileInfo auxTile = tiles[tiles.Count - 1];
+            if (closed)
+            {
+                closed = false;
+                int aux = 0;
+                while(auxTile.position != tilePos)
+                {
+                    auxTile = tiles[aux];
+                    aux++;
+                }
+
+                //El camino más largo es de Origen -> Punto a cortar
+                if (aux < (tiles.Count - 1 )/ 2)
+                {
+                    startingTile = tiles[tiles.Count - 1];
+                    tiles.Reverse();
+                }
+                //Si no, el camino más largo es de Fin -> Punto a cortar
+
+                auxTile = tiles[tiles.Count - 1];
+            }
+            
+            while (auxTile.position != tilePos)
+            {
+                auxTile.tile.ResetData();
+                tiles.RemoveAt(tiles.Count - 1);
+                auxTile = tiles[tiles.Count - 1];
+            }
+            auxTile.tile.ResetData();
             tiles.RemoveAt(tiles.Count - 1);
 
             return tiles[tiles.Count - 1].position;
+            
         }
 
         public void clearFlow()
@@ -88,9 +130,9 @@ namespace flow
 
         //Getters
 
-        public Tile getStartingTile()
+        public int getStartingTile()
         {
-            return startingTile.tile;
+            return startingTile.position;
         }
 
         public bool isClosed()
