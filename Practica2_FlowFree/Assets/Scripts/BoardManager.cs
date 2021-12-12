@@ -233,6 +233,12 @@ namespace flow
                                             flows[currentFlow].addToFlow(tiles[newTile], newTile, DirectionFromTile(currentTile, newTile));
                                             flows[currentFlow].closeFlow();
                                         }
+                                        else
+                                        {
+                                            int lastTileInFlow = flows[currentFlow].cutFlow(newTile);
+                                            //flows[currentFlow].addToFlow(tiles[newTile], newTile, DirectionFromTile(lastTileInFlow, newTile));
+                                            currentTile = newTile;
+                                        }
                                     }
 
                                     else

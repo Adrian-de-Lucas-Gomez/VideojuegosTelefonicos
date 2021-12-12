@@ -76,6 +76,18 @@ namespace flow
 
         public int cutFlow(int tilePos)
         {
+            if(tilePos == startingTile.position)
+            {
+                for (int k = 0; k < tiles.Count; k++)
+                {
+                    tiles[k].tile.ResetData();
+                }
+                tiles.Clear();
+                tiles.Add(startingTile);
+
+                return startingTile.position;
+            }
+
             TileInfo auxTile = tiles[tiles.Count - 1];
             if (closed)
             {
@@ -93,9 +105,9 @@ namespace flow
                     startingTile = tiles[tiles.Count - 1];
                     tiles.Reverse();
                 }
+                //Si no, el camino más largo es de Fin -> Punto a cortar
 
                 auxTile = tiles[tiles.Count - 1];
-                //Si no, el camino más largo es de Fin -> Punto a cortar
             }
             
             while (auxTile.position != tilePos)
