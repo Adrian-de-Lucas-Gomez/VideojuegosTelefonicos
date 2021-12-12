@@ -48,8 +48,11 @@ namespace flow
         public void ResetData()
         {
             ResetBars();
-            spriteCircle.enabled = false;
-            color = int.MaxValue;
+            if (!isOrigin)
+            {
+                spriteCircle.enabled = false;
+                color = int.MaxValue;
+            }
         }
 
         private void ResetBars()

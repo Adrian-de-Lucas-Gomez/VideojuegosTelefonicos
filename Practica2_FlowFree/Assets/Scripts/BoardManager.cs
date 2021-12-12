@@ -185,8 +185,14 @@ namespace flow
                         currentTile = newTile;
                         currentFlow = tiles[currentTile].GetColor();
 
-                        //3 tipos de casos
-                        flows[currentFlow].startBuildingFlow(tiles[currentTile], currentTile);
+                        //Partimos de un origen. Empezamos a construir a partir del mismo
+                        if(tiles[newTile].IsOrigin()) flows[currentFlow].startBuildingFlow(tiles[currentTile], currentTile);
+                        //Partimos de un camino a medio construir. Lo cortamos hasta ese punto.
+                        else
+                        {
+                            int previousPos = flows[currentFlow].cutFlow(newTile);
+                            flows[currentFlow].addToFlow(tiles[newTile], newTile, DirectionFromTile(previousPos, newTile));
+                        }
                         isBuildingFlow = true;
                     }
                 }
@@ -216,17 +222,13 @@ namespace flow
                                         //Cortar el otro flujo y avanzar en esa direccion
                                         currentTile = newTile;
                                     }
-                                    else
-                                    {
-                                        //No hacer nada
-                                    }
                                 }
 
                                 else //Nos hemos cruzado con el flujo que estamos construyendo
                                 {
                                     if (tiles[newTile].IsOrigin()) //Nos tenemos que asegurar que NO es el origen del que estamos construyendo
                                     {
-                                        if(flows[currentFlow].getStartingTile() != tiles[newTile])
+                                        if(flows[currentFlow].getStartingTile() != newTile)
                                         {
                                             flows[currentFlow].addToFlow(tiles[newTile], newTile, DirectionFromTile(currentTile, newTile));
                                             flows[currentFlow].closeFlow();
@@ -237,9 +239,8 @@ namespace flow
                                     {
                                         int lastTileInFlow = flows[currentFlow].cutFlow(newTile);
                                         flows[currentFlow].addToFlow(tiles[newTile], newTile, DirectionFromTile(lastTileInFlow, newTile));
+                                        currentTile = newTile;
                                     }
-
-                                    currentTile = newTile;
                                 }
                             }
 
