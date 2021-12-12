@@ -32,6 +32,15 @@ namespace flow
 
         public void startBuildingFlow(Tile tile, int pos)
         {
+            closed = false;
+            if(tiles.Count > 0) //El camino ya está empezado, hay que limpiarlo todo
+            {
+                for (int k = 0; k < tiles.Count; k++)
+                {
+                    tiles[k].tile.ResetData();
+                }
+                tiles.Clear();
+            }
             startingTile.tile = tile;
             startingTile.position = pos;
             tiles.Add(startingTile);
