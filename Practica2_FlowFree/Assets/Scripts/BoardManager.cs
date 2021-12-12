@@ -220,6 +220,9 @@ namespace flow
                                     if (!tiles[newTile].IsOrigin())
                                     {
                                         //Cortar el otro flujo y avanzar en esa direccion
+                                        int previousTile = flows[newFlow].cutFlow(newTile);
+                                        tiles[previousTile].ClearDirection(DirectionFromTile(previousTile, newTile));
+                                        flows[currentFlow].addToFlow(tiles[newTile], newTile, DirectionFromTile(currentTile, newTile));
                                         currentTile = newTile;
                                     }
                                 }
