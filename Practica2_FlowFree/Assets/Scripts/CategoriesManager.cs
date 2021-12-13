@@ -35,7 +35,7 @@ namespace flow
                 for (int j = 0; j < packs.Length; ++j)
                 {
                     LevelPackCard pack = Instantiate(levelPackCardPrefab, categoriesParent);
-                    pack.ConfigureLevelPack(packs[j]);
+                    pack.ConfigureLevelPack(packs[j], categories[i]);
                 }
 
                 //card.button.onClick.AddListener(() =>

@@ -30,9 +30,10 @@ namespace flow
             if (category == null) return;
 
             categoryTitle.text = category.category;
-            //TODO:
-            //background.color = category.color; //si no funciona poner con material??
-            //bottomLine.color = category.color;
+            Color aux = category.color;
+            bottomLine.color = aux;
+            aux.a = 110f/255f;
+            background.color = aux;
         }
 
         public void ConfigureCategory(Categories category)

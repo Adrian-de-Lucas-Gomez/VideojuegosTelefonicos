@@ -9,16 +9,18 @@ namespace flow
     {
         //Para UI
         [SerializeField] Text levelPackTitle;
-        [SerializeField] Text nLevels;
+        [SerializeField] Text nLevelsText;
 
         private LevelPack pack; //El scriptable
+        private int nLevels;
+        private Categories category;
 
         void Start()
         {
 #if UNITY_EDITOR
-            if (levelPackTitle == null || nLevels == null)
+            if (levelPackTitle == null || nLevelsText == null)
             {
-                Debug.LogError("CategoryCard: Alguna variable no tiene valor asociado desde el editor.");
+                Debug.LogError("LevelPackCard: Alguna variable no tiene valor asociado desde el editor.");
                 return;
             }
 #endif
@@ -29,12 +31,16 @@ namespace flow
             if (pack == null) return;
 
             levelPackTitle.text = pack.packName;
-            nLevels.text = "jeje/juju"; //TODO:
+            levelPackTitle.color = category.color;
+
+            nLevels = pack.levelsString.ToString().Split('\n').Length - 1;
+            nLevelsText.text = "0" + "/" + nLevels.ToString(); //TODO:
         }
 
-        public void ConfigureLevelPack(LevelPack pack)
+        public void ConfigureLevelPack(LevelPack pack, Categories category)
         {
             this.pack = pack;
+            this.category = category;
             Configure();
         }
 
