@@ -135,13 +135,16 @@ namespace flow
             //Set-up de los caminos
             for(int i = 0; i < solution.Count; i++)
             {
-                flows.Add(new Flow(i));
+                flows.Add(new Flow(i, skin[i]));
 
                 //Asignamos el origen y el final de los caminos
                 flows[i].setOrigins(tiles[solution[i][0]], solution[i][0], tiles[solution[i][solution[i].Count - 1]], solution[i][solution[i].Count - 1]);
-                
+
+                tiles[solution[i][0]].SetTempColor(skin[i]);
+                tiles[solution[i][solution[i].Count - 1]].SetTempColor(skin[i]);
+
                 //Le indicamos la solucion
-                for(int j = 1; j < solution[i].Count - 1; j++)
+                for (int j = 1; j < solution[i].Count - 1; j++)
                 {
                     flows[i].constructSolution(tiles[solution[i][j]], solution[i][j]);
                 }
