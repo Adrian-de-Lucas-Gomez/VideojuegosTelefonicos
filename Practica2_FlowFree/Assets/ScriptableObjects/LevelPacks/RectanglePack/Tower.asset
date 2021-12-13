@@ -14,11 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   packName: Tower
   levelsString: {fileID: 0}
-  skin: {fileID: 0}
+  skin: {fileID: 11400000, guid: 431ed2c9b3db47b458349c96b12168da, type: 2}
   texts:
   - 5x6 - 5x11
   - 6x7 - 6x12
   - 7x8 - 7x13
   - 8x9 - 8x14
   - 9x10 - 9x15
-  colors: []
+  colors:
+  - {r: 0.990566, g: 0.49787214, b: 0, a: 0}
+  - {r: 0.9339623, g: 0.083704144, b: 0.083704144, a: 0}
+  - {r: 0.13136518, g: 0.745283, b: 0, a: 0}
+  - {r: 0.020247417, g: 0.034456547, b: 0.8584906, a: 0}
+  - {r: 0.9433962, g: 0.86984557, b: 0, a: 0}

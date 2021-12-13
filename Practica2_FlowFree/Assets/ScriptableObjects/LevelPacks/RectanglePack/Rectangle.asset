@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Rectangle
   m_EditorClassIdentifier: 
   packName: 'Rectangle '
-  levelsString: {fileID: 0}
-  skin: {fileID: 0}
+  levelsString: {fileID: 4900000, guid: 9e642677694055a4e8567d8976d1504f, type: 3}
+  skin: {fileID: 11400000, guid: 431ed2c9b3db47b458349c96b12168da, type: 2}
   texts:
   - 8x10
   - 9x11

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 6x6
   m_EditorClassIdentifier: 
   packName: 6x6 Mania
-  levelsString: {fileID: 4900000, guid: 9560e812a302b994a934c348cb0faa28, type: 3}
+  levelsString: {fileID: 4900000, guid: d881bde5a4a1e0844adeb2c69dae8f13, type: 3}
   skin: {fileID: 11400000, guid: 431ed2c9b3db47b458349c96b12168da, type: 2}
   texts:
   - 1-30

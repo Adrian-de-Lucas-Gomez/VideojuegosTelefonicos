@@ -48,7 +48,7 @@ namespace flow
 
         public void stopBuldingFlow()
         {
-
+            if(!tiles[tiles.Count - 1].tile.IsOrigin()) tiles[tiles.Count - 1].tile.EnableSmallCircle(true);
         }
 
         public void addToFlow(Tile newTile, int pos, Direction dir)

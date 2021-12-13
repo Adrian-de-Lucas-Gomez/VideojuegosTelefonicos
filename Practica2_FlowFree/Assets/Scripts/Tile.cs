@@ -7,7 +7,8 @@ namespace flow
     public class Tile : MonoBehaviour
     {
         [SerializeField] SpriteRenderer spriteBackground;
-        [SerializeField] SpriteRenderer spriteCircle;
+        [SerializeField] SpriteRenderer bigCircle;
+        [SerializeField] SpriteRenderer smallCircle;
         [SerializeField] SpriteRenderer upBar;
         [SerializeField] SpriteRenderer downBar;
         [SerializeField] SpriteRenderer leftBar;
@@ -23,8 +24,8 @@ namespace flow
         public void Start()
         {
 #if UNITY_EDITOR
-           if(spriteBackground == null || spriteCircle == null || upBar == null || downBar == null ||
-                leftBar == null || rightBar == null)
+           if(spriteBackground == null || bigCircle == null || upBar == null || downBar == null ||
+                leftBar == null || rightBar == null || smallCircle == null)
            {
                 Debug.LogError("Tile: Alguna variable no tiene valor asociado desde el editor.");
                 return;
@@ -32,11 +33,12 @@ namespace flow
 #endif
             tempColor = Color.white;
 
-            spriteCircle.color = tempColor;
-            upBar.color = tempColor;
-            downBar.color = tempColor;
-            leftBar.color = tempColor;
-            rightBar.color = tempColor;
+            bigCircle.material.color = tempColor;
+            upBar.material.color = tempColor;
+            downBar.material.color = tempColor;
+            leftBar.material.color = tempColor;
+            rightBar.material.color = tempColor;
+            smallCircle.material.color = tempColor;
 
             //Lista de muros
             walls = new List<bool>();
@@ -48,9 +50,10 @@ namespace flow
         public void ResetData()
         {
             ResetBars();
+            EnableSmallCircle(false);
             if (!isOrigin)
             {
-                spriteCircle.enabled = false;
+                bigCircle.enabled = false;
                 color = int.MaxValue;
             }
         }
@@ -61,6 +64,23 @@ namespace flow
             downBar.enabled = false;
             leftBar.enabled = false;
             rightBar.enabled = false;
+        }
+
+        public void SetAsOrigin(int c)
+        {
+            isOrigin = true;
+            bigCircle.enabled = true;
+            color = c;
+        }
+
+        public void EnableSmallCircle(bool visible)
+        {
+            smallCircle.enabled = visible;
+        }
+
+        public bool CanBeAccesed(Direction dir)
+        {
+            return !walls[(int)dir] && !isEmpty;
         }
 
         private SpriteRenderer GetDirectionSprite(Direction dir)
@@ -106,13 +126,6 @@ namespace flow
         public void SetTempColor(Color c) //TODO: ESTE TIENE QUE REEMPLAZAR AL DE ARRIBA
         {
             tempColor = c;
-        }
-
-        public void SetAsOrigin(int c)
-        {
-            isOrigin = true;
-            spriteCircle.enabled = true;
-            color = c;
         }
 
         public void SetWall(Direction dir, bool isWall)

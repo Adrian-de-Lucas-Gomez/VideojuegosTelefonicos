@@ -172,6 +172,18 @@ namespace flow
             mousePos.z = Camera.main.nearClipPlane;
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos); //Escala??
 
+            if (Input.GetMouseButtonUp(0)) //Si el usuario acaba de liberar el boton izquierdo 
+            {
+                if (currentFlow != int.MaxValue)
+                {
+                    flows[currentFlow].stopBuldingFlow();
+                    currentTile = int.MaxValue;
+                    currentFlow = int.MaxValue;
+                    isBuildingFlow = false;
+                }
+                //lol
+            }
+
             if (IsPosInBoard(worldPos))
             {
                 int newTile = WorldPosToTile(worldPos);
@@ -197,21 +209,13 @@ namespace flow
                     }
                 }
 
-                else if (Input.GetMouseButtonUp(0)) //Si el usuario acaba de liberar el boton izquierdo 
-                {
-                    currentTile = int.MaxValue;
-                    currentFlow = int.MaxValue;
-                    isBuildingFlow = false;
-                    //lol
-                }
-
                 else if (Input.GetMouseButton(0) && isBuildingFlow) //Si el usuario esta pulsando el boton izquierdo
                 {
                     if(newTile != currentTile && !flows[currentFlow].isClosed()) //Nos hemos movido de casilla
                     {
                         Direction dir = DirectionFromTile(currentTile, newTile);
 
-                        if(dir != Direction.None) //Si el movimiento ha sido valido (El movimiento en diagonal es demasiado poderoso)
+                        if(dir != Direction.None && tiles[newTile].CanBeAccesed(dir)) //Si el movimiento ha sido valido (El movimiento en diagonal es demasiado poderoso)
                         {
                             if (tiles[newTile].IsActive()) //La casilla forma parte de un flujo
                             {
