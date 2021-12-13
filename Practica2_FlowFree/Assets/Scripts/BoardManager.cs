@@ -199,6 +199,7 @@ namespace flow
 
                 else if (Input.GetMouseButtonUp(0)) //Si el usuario acaba de liberar el boton izquierdo 
                 {
+                    flows[currentFlow].stopBuldingFlow();
                     currentTile = int.MaxValue;
                     currentFlow = int.MaxValue;
                     isBuildingFlow = false;
