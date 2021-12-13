@@ -686,7 +686,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7f4a159cdad94794aa28c5ec8af02039, type: 2}
   - {fileID: 11400000, guid: 2b144e0e5a743d645a04295ef9e5539d, type: 2}
   - {fileID: 11400000, guid: 9fb0086823088564ab02409289d63c9e, type: 2}
-  - {fileID: 11400000, guid: b9fda1b359390b54f96275328a281466, type: 2}
   categoriesParent: {fileID: 1449186056}
   categoryCardPrefab: {fileID: 581190380269990570, guid: 0cb22e77c3254734d97ce14a0d015260, type: 3}
   levelPackCardPrefab: {fileID: -7039237724525266786, guid: eb828b5f16d76254492e86457d070f6c, type: 3}

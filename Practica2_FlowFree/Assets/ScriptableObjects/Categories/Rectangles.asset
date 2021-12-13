@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: Rectangles
   packs:
-  - {fileID: 11400000, guid: 3f14716611e5fa5489aafefd64da8a18, type: 2}
-  - {fileID: 11400000, guid: e05f11a27353f5c46b24f86eee2fd7cf, type: 2}
-  - {fileID: 11400000, guid: 616cba3d70f4aa84196a0ddb0691cef1, type: 2}
-  color: {r: 0.9245283, g: 0.3692334, b: 0, a: 0}
+  - {fileID: 11400000, guid: b168f293f1000b4438b4ca28f1467785, type: 2}
+  - {fileID: 11400000, guid: ae7f7186e9b664645aa2eda175bb28d5, type: 2}
+  - {fileID: 11400000, guid: 9b52c1821e1366b42b68ccf94fe094b1, type: 2}
+  color: {r: 0.9843137, g: 0.5372549, b: 0, a: 1}

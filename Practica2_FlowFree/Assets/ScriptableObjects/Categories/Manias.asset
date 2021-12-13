@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: Manias
   packs:
-  - {fileID: 11400000, guid: 3f14716611e5fa5489aafefd64da8a18, type: 2}
-  - {fileID: 11400000, guid: e05f11a27353f5c46b24f86eee2fd7cf, type: 2}
-  - {fileID: 11400000, guid: 616cba3d70f4aa84196a0ddb0691cef1, type: 2}
-  - {fileID: 11400000, guid: e99a4923bb825f44bb530f53b9ba0653, type: 2}
-  - {fileID: 11400000, guid: e99a4923bb825f44bb530f53b9ba0653, type: 2}
-  color: {r: 0.8773585, g: 0, b: 0.023376124, a: 0}
+  - {fileID: 11400000, guid: 1c2b271915ea13b41960785cddb06a86, type: 2}
+  - {fileID: 11400000, guid: 342d81e8daebcb8438fff392445745df, type: 2}
+  - {fileID: 11400000, guid: ee1850cdec8c3724aa549cd50b493f47, type: 2}
+  - {fileID: 11400000, guid: ef8f16637daa5a04b8232fe58591de84, type: 2}
+  - {fileID: 11400000, guid: b3c018768049dc046a07eaca30a78f59, type: 2}
+  color: {r: 1, g: 0, b: 0, a: 1}

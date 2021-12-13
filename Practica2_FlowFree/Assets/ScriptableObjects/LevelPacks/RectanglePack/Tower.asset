@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c5e198646f5f1a47819ad6cd59a40c0, type: 3}
   m_Name: Tower
   m_EditorClassIdentifier: 
-  packName: Tower
-  levelsString: {fileID: 0}
+  packName: Tower Pack
+  levelsString: {fileID: 4900000, guid: ef0f8b4dfc379f0429a222f6d9630d3d, type: 3}
   skin: {fileID: 11400000, guid: 431ed2c9b3db47b458349c96b12168da, type: 2}
   texts:
   - 5x6 - 5x11
@@ -22,8 +22,8 @@ MonoBehaviour:
   - 8x9 - 8x14
   - 9x10 - 9x15
   colors:
-  - {r: 0.990566, g: 0.49787214, b: 0, a: 0}
-  - {r: 0.9339623, g: 0.083704144, b: 0.083704144, a: 0}
-  - {r: 0.13136518, g: 0.745283, b: 0, a: 0}
-  - {r: 0.020247417, g: 0.034456547, b: 0.8584906, a: 0}
-  - {r: 0.9433962, g: 0.86984557, b: 0, a: 0}
+  - {r: 0.990566, g: 0.49787214, b: 0, a: 1}
+  - {r: 0.9339623, g: 0.083704144, b: 0.083704144, a: 1}
+  - {r: 0.13136518, g: 0.745283, b: 0, a: 1}
+  - {r: 0.020247417, g: 0.034456547, b: 0.8584906, a: 1}
+  - {r: 0.9433962, g: 0.86984557, b: 0, a: 1}

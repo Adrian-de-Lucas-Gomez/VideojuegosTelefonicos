@@ -16,14 +16,14 @@ MonoBehaviour:
   levelsString: {fileID: 4900000, guid: d3bac779666fdcc4895ba5b7a8ffd885, type: 3}
   skin: {fileID: 11400000, guid: 431ed2c9b3db47b458349c96b12168da, type: 2}
   texts:
-  - 5x5 Easy
+  - 5x5 - easy
   - 6x6
-  - 7x7 Medium
+  - 7x7 - medium
   - '8x8 '
-  - 9x9 Hard
+  - 9x9 - hard
   colors:
-  - {r: 0, g: 0.048205376, b: 1, a: 0}
-  - {r: 0, g: 0.050980393, b: 1, a: 0}
-  - {r: 0, g: 0.050980393, b: 1, a: 0}
-  - {r: 0, g: 0.050980393, b: 1, a: 0}
-  - {r: 0, g: 0.050980393, b: 1, a: 0}
+  - {r: 0, g: 0.048205376, b: 1, a: 1}
+  - {r: 0, g: 0.050980393, b: 1, a: 1}
+  - {r: 0, g: 0.050980393, b: 1, a: 1}
+  - {r: 0, g: 0.050980393, b: 1, a: 1}
+  - {r: 0, g: 0.050980393, b: 1, a: 1}
