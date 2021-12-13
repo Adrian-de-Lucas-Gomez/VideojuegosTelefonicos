@@ -80,7 +80,7 @@ namespace flow
 
         public bool CanBeAccesed(Direction dir)
         {
-            return !walls[(int)dir];
+            return !walls[(int)dir] && !isEmpty;
         }
 
         private SpriteRenderer GetDirectionSprite(Direction dir)
