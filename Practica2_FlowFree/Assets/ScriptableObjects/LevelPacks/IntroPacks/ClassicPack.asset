@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ClassicPack
   m_EditorClassIdentifier: 
   packName: Classic Pack
-  levelsString: {fileID: 4900000, guid: c8a0910b29d4efb47aecdae504a0cadb, type: 3}
+  levelsString: {fileID: 4900000, guid: 2be4a5e3b7d651c4fadad485bdce10cf, type: 3}
   skin: {fileID: 11400000, guid: 431ed2c9b3db47b458349c96b12168da, type: 2}
   texts:
   - 5x5 Easy

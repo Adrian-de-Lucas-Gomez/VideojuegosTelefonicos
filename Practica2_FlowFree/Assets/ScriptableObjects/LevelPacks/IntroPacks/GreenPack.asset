@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c5e198646f5f1a47819ad6cd59a40c0, type: 3}
-  m_Name: 10x10
+  m_Name: GreenPack
   m_EditorClassIdentifier: 
-  packName: 10x10 Mania
-  levelsString: {fileID: 4900000, guid: 60a3db93df9a11b4fb3d164b59f334b0, type: 3}
+  packName: Green Pack
+  levelsString: {fileID: 4900000, guid: 2f3b95cd571254c40ae043867ae424a4, type: 3}
   skin: {fileID: 11400000, guid: 431ed2c9b3db47b458349c96b12168da, type: 2}
   texts:
-  - 1-30
-  - 31-60
-  - 61-90
-  - 91-120
-  - 121-150
+  - 5x5 Easy
+  - 6x6
+  - 7x7 Medium
+  - '8x8 '
+  - 9x9 Hard
   colors:
-  - {r: 0.990566, g: 0.49787214, b: 0, a: 0}
-  - {r: 0.9339623, g: 0.083704144, b: 0.083704144, a: 0}
-  - {r: 0.13136518, g: 0.745283, b: 0, a: 0}
-  - {r: 0.020247417, g: 0.034456547, b: 0.8584906, a: 0}
-  - {r: 0.9433962, g: 0.86984557, b: 0, a: 0}
+  - {r: 0.07525253, g: 0.6981132, b: 0, a: 0}
+  - {r: 0, g: 0.7529412, b: 0.018977446, a: 0}
+  - {r: 0.043747023, g: 0.764151, b: 0, a: 0}
+  - {r: 0.07897456, g: 0.8490566, b: 0, a: 0}
+  - {r: 0.04135754, g: 0.7830189, b: 0, a: 0}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 8x8
   m_EditorClassIdentifier: 
   packName: 8x8 Mania
-  levelsString: {fileID: 4900000, guid: d3bac779666fdcc4895ba5b7a8ffd885, type: 3}
+  levelsString: {fileID: 4900000, guid: 58b79f69bfdfcd14d91fc8c7c092eac1, type: 3}
   skin: {fileID: 11400000, guid: 431ed2c9b3db47b458349c96b12168da, type: 2}
   texts:
   - 1-30
