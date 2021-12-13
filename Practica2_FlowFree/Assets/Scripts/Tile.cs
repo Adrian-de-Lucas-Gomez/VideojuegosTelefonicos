@@ -78,6 +78,11 @@ namespace flow
             smallCircle.enabled = visible;
         }
 
+        public bool CanBeAccesed(Direction dir)
+        {
+            return !walls[(int)dir];
+        }
+
         private SpriteRenderer GetDirectionSprite(Direction dir)
         {
             switch (dir)
