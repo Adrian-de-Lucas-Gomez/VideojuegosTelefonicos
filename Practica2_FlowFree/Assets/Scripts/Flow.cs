@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine; //SOLO PARA DEBUGEAR PORFA QUITAME CUANDO ACABEMOS ESTO TODO:
+using UnityEngine; //SOLO PARA DEBUGEAR PORFA QUITAME CUANDO ACABEMOS TODO ESTO :)
 
 namespace flow
 {
@@ -20,21 +20,23 @@ namespace flow
         private TileInfo originAInfo, originBInfo;
         private TileInfo startingTile;
         private int _color = 0;
+        private int _boardWidth;
         private Color _renderColor;
 
         bool closed = false;
 
-        public Flow(int c, Color rc)
+        public Flow(int c, Color rc, int boardWidth)
         {
             _color = c;
             _renderColor = rc;
+            _boardWidth = boardWidth;
             tiles = new List<TileInfo>();
             solution = new List<TileInfo>();
         }
 
         //Construcción del camino
 
-        public void startBuildingFlow(Tile tile, int pos)
+        public void StartBuildingFlow(Tile tile, int pos)
         {
             closed = false;
             if(tiles.Count > 0) //El camino ya está empezado, hay que limpiarlo todo
@@ -50,17 +52,17 @@ namespace flow
             tiles.Add(startingTile);
         }
 
-        public void closeSmallCircle()
+        public void CloseSmallCircle()
         {
             tiles[tiles.Count - 1].tile.EnableSmallCircle(false);
         }
 
-        public void stopBuldingFlow()
+        public void StopBuldingFlow()
         {
             if(!tiles[tiles.Count - 1].tile.IsOrigin()) tiles[tiles.Count - 1].tile.EnableSmallCircle(true);
         }
 
-        public void addToFlow(Tile newTile, int pos, Direction dir)
+        public void AddToFlow(Tile newTile, int pos, Direction dir)
         {
             tiles[tiles.Count - 1].tile.SetDirection(dir);
             tiles.Add(new TileInfo(newTile, pos));
@@ -70,22 +72,22 @@ namespace flow
             newTile.SetTempColor(_renderColor);
         }
 
-        public void constructSolution(Tile tile, int pos)
+        public void ConstructSolution(Tile tile, int pos)
         {
             solution.Add(new TileInfo(tile, pos));
         }
 
-        private void constructSolution(TileInfo tileInfo)
+        private void ConstructSolution(TileInfo tileInfo)
         {
             solution.Add(tileInfo);
         }
 
-        public void closeFlow()
+        public void CloseFlow()
         {
             closed = true;
         }
 
-        public int cutFlow(int tilePos)
+        public int CutFlow(int tilePos)
         {
             if(tilePos == startingTile.position)
             {
@@ -134,7 +136,7 @@ namespace flow
             
         }
 
-        public int provisionalCut(int position)
+        public int ProvisionalCut(int position)
         {
             TileInfo searchTile = tiles[0];
             int k = 0;
@@ -156,43 +158,55 @@ namespace flow
             return tiles[k - 1].position;
         }
 
-        public void recalculateCut(Flow other, int position, int boardWidth)
+        public void RecalculateCut(Flow other, int position)
         {
             if (provisionalCutPosition > -1 && provisionalCutPosition < tiles.Count)
             {
-                bool finished = other.contains(tiles[provisionalCutPosition].position);
+                bool finished = other.Contains(tiles[provisionalCutPosition].position);
                 while (!finished)
                 {
-                    Direction dir = DirectionUtils.DirectionBetweenTiles(tiles[provisionalCutPosition - 1].position, tiles[provisionalCutPosition].position, boardWidth);
+                    Direction dir = DirectionUtils.DirectionBetweenTiles(tiles[provisionalCutPosition - 1].position, tiles[provisionalCutPosition].position, _boardWidth);
                     tiles[provisionalCutPosition - 1].tile.SetDirection(dir);
                     tiles[provisionalCutPosition].tile.SetDirection(DirectionUtils.GetOppositeDirection(dir));
                     tiles[provisionalCutPosition].tile.SetColor(_color);
                     tiles[provisionalCutPosition].tile.SetTempColor(_renderColor);
-                    Debug.Log(tiles[provisionalCutPosition].position);
                     provisionalCutPosition++;
-                    finished = (provisionalCutPosition >= tiles.Count || other.contains(tiles[provisionalCutPosition].position));
+                    finished = (provisionalCutPosition >= tiles.Count || other.Contains(tiles[provisionalCutPosition].position));
                 }
             }
         }
 
-        public void applyProvisionalCut()
+        public void ApplyProvisionalCut()
         {
-            tiles.RemoveRange(provisionalCutPosition, tiles.Count - 1); //Idea feliz.
-            provisionalCutPosition = -1;
+            if(provisionalCutPosition > 0)
+            {
+                if(provisionalCutPosition < tiles.Count) tiles.RemoveRange(provisionalCutPosition, tiles.Count - provisionalCutPosition);
+                provisionalCutPosition = -1;
+            }
         }
 
-        public void clearFlow()
+        public void ClearFlow()
         {
             tiles.Clear();
         }
 
-        public bool contains(int position)
+        public bool Contains(int position)
         {
             for(int k = 0; k < tiles.Count; k++)
             {
                 if (tiles[k].position == position) return true;
             }
             return false;
+        }
+
+        private void PrintTiles() //DEBUG ONLY
+        {
+            string msg = _color + ": ";
+            for (int k = 0; k < tiles.Count; k++)
+            {
+                msg += tiles[k].position + ", ";
+            }
+            Debug.Log(msg);
         }
 
         //Getters
@@ -214,11 +228,11 @@ namespace flow
             originAInfo.tile = origA;
             originAInfo.position = posOrigA;
             originAInfo.tile.SetAsOrigin(_color);
-            constructSolution(originAInfo);
+            ConstructSolution(originAInfo);
             originBInfo.tile = origB;
             originBInfo.position = posOrigB;
             originBInfo.tile.SetAsOrigin(_color);
-            constructSolution(originBInfo);
+            ConstructSolution(originBInfo);
         }
     }
 }
