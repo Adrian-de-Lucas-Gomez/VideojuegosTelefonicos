@@ -18,7 +18,6 @@ namespace flow
         private List<TileInfo> tiles;
         private List<TileInfo> solution;
         private TileInfo originAInfo, originBInfo;
-        private TileInfo startingTile;
         private int _color = 0;
         private int _boardWidth;
         private Color _renderColor;
@@ -39,17 +38,16 @@ namespace flow
         public void StartBuildingFlow(Tile tile, int pos)
         {
             closed = false;
-            if(tiles.Count > 0) //El camino ya está empezado, hay que limpiarlo todo
+            if (tiles.Count > 0) //El camino ya está empezado, hay que limpiarlo todo
             {
-                for (int k = 0; k < tiles.Count; k++)
+                for (int k = 1; k < tiles.Count; k++)
                 {
                     tiles[k].tile.ResetData();
+                    tiles.RemoveAt(k);
                 }
                 tiles.Clear();
             }
-            startingTile.tile = tile;
-            startingTile.position = pos;
-            tiles.Add(startingTile);
+            else tiles.Add(new TileInfo(tile, pos));
         }
 
         public void CloseSmallCircle()
@@ -67,7 +65,6 @@ namespace flow
             tiles[tiles.Count - 1].tile.SetDirection(dir);
             tiles.Add(new TileInfo(newTile, pos));
             newTile.SetDirection(DirectionUtils.GetOppositeDirection(dir));
-            //Aquí comprobaba antes si no estaba vacío. Si peta por cualquier cosa probad lo que quité.
             newTile.SetColor(_color);
             newTile.SetTempColor(_renderColor);
         }
@@ -89,16 +86,15 @@ namespace flow
 
         public int CutFlow(int tilePos)
         {
-            if(tilePos == startingTile.position)
+            if(tilePos == tiles[0].position)
             {
                 for (int k = 0; k < tiles.Count; k++)
                 {
                     tiles[k].tile.ResetData();
                 }
-                tiles.Clear();
-                tiles.Add(startingTile);
+                tiles.RemoveRange(1, tiles.Count - 1);
 
-                return startingTile.position;
+                return tiles[0].position;
             }
 
             TileInfo auxTile = tiles[tiles.Count - 1];
@@ -113,11 +109,8 @@ namespace flow
                 }
 
                 //El camino más largo es de Origen -> Punto a cortar
-                if (aux < (tiles.Count - 1 )/ 2)
-                {
-                    startingTile = tiles[tiles.Count - 1];
-                    tiles.Reverse();
-                }
+                if (aux < (tiles.Count - 1 )/ 2) tiles.Reverse();
+
                 //Si no, el camino más largo es de Fin -> Punto a cortar
 
                 auxTile = tiles[tiles.Count - 1];
@@ -146,6 +139,16 @@ namespace flow
                 k++;
                 searchTile = tiles[k];
             }
+
+            if (closed)
+            {
+                if(k > (tiles.Count - 1) / 2)
+                {
+                    tiles.Reverse();
+                    k = tiles.Count - k - 1;
+                }
+            }
+
             //Nos guardamos el resto de tiles en el flujo.
             //Al resto les quitamos los dibujitos.
             for(int l = k; l < tiles.Count; l++)
@@ -180,7 +183,11 @@ namespace flow
         {
             if(provisionalCutPosition > 0)
             {
-                if(provisionalCutPosition < tiles.Count) tiles.RemoveRange(provisionalCutPosition, tiles.Count - provisionalCutPosition);
+                if (provisionalCutPosition < tiles.Count)
+                {
+                    if (closed) closed = false;
+                    tiles.RemoveRange(provisionalCutPosition, tiles.Count - provisionalCutPosition);
+                }
                 provisionalCutPosition = -1;
             }
         }
@@ -210,11 +217,6 @@ namespace flow
         }
 
         //Getters
-
-        public int getStartingTile()
-        {
-            return startingTile.position;
-        }
 
         public bool isClosed()
         {

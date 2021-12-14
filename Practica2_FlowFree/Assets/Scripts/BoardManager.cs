@@ -245,7 +245,7 @@ namespace flow
                                 {
                                     if (tiles[newTile].IsOrigin()) //Nos tenemos que asegurar que NO es el origen del que estamos construyendo
                                     {
-                                        if(flows[currentFlow].getStartingTile() != newTile)
+                                        if(!flows[currentFlow].Contains(newTile))
                                         {
                                             flows[currentFlow].AddToFlow(tiles[newTile], newTile, DirectionUtils.DirectionBetweenTiles(currentTile, newTile, boardWidth));
                                             flows[currentFlow].CloseFlow();
