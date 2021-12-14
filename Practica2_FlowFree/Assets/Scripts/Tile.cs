@@ -32,13 +32,14 @@ namespace flow
            }
 #endif
             tempColor = Color.white;
+            tempColor.a = 1;
 
-            bigCircle.material.color = tempColor;
-            upBar.material.color = tempColor;
-            downBar.material.color = tempColor;
-            leftBar.material.color = tempColor;
-            rightBar.material.color = tempColor;
-            smallCircle.material.color = tempColor;
+            //bigCircle.color = tempColor;
+            //upBar.color = tempColor;
+            //downBar.color = tempColor;
+            //leftBar.color = tempColor;
+            //rightBar.color = tempColor;
+            //smallCircle.color = tempColor;
 
             //Lista de muros
             walls = new List<bool>();
@@ -105,7 +106,7 @@ namespace flow
         {
             SpriteRenderer sprite = GetDirectionSprite(dir);
             sprite.enabled = true;
-            sprite.material.color = tempColor;
+            //sprite.color = tempColor;
         }
 
         public void ClearDirection(Direction dir)
@@ -119,12 +120,20 @@ namespace flow
 
         public void SetColor(int c)
         {
-            //spriteCircle.material.color = c;
+            //bigCircle.material.color = c;
             color = c;
         }
 
         public void SetTempColor(Color c) //TODO: ESTE TIENE QUE REEMPLAZAR AL DE ARRIBA
         {
+            c.a = 1;
+            bigCircle.color = c;
+            upBar.material.color = c;
+            downBar.material.color = c;
+            leftBar.material.color = c;
+            rightBar.material.color = c;
+            smallCircle.material.color = c;
+
             tempColor = c;
         }
 

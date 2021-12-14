@@ -18,12 +18,14 @@ namespace flow
         private TileInfo originAInfo, originBInfo;
         private TileInfo startingTile;
         private int _color = 0;
+        private Color _renderColor;
 
         bool closed = false;
 
-        public Flow(int c)
+        public Flow(int c, Color rc)
         {
             _color = c;
+            _renderColor = rc;
             tiles = new List<TileInfo>();
             solution = new List<TileInfo>();
         }
@@ -56,7 +58,10 @@ namespace flow
             tiles[tiles.Count - 1].tile.SetDirection(dir);
             tiles.Add(new TileInfo(newTile, pos));
             newTile.SetDirection(DirectionUtils.GetOppositeDirection(dir));
-            if (!newTile.IsActive()) newTile.SetColor(_color);
+            if (!newTile.IsActive()) { 
+                newTile.SetColor(_color);
+                newTile.SetTempColor(_renderColor);
+            }
         }
 
         public void constructSolution(Tile tile, int pos)
