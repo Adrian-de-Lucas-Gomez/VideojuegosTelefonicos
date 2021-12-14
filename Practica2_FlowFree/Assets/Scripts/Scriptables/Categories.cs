@@ -14,5 +14,7 @@ namespace flow
         public LevelPack[] packs;
         //Color en el menú
         public Color color;
+        //Levels locked
+        public bool levelsLocked;
     }
 }
