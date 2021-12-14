@@ -13,6 +13,8 @@ namespace flow
             public TileInfo(Tile t, int pos) { tile = t; position = pos; }
         }
 
+        private int provisionalCutPosition = -1;
+
         private List<TileInfo> tiles;
         private List<TileInfo> solution;
         private TileInfo originAInfo, originBInfo;
@@ -63,10 +65,9 @@ namespace flow
             tiles[tiles.Count - 1].tile.SetDirection(dir);
             tiles.Add(new TileInfo(newTile, pos));
             newTile.SetDirection(DirectionUtils.GetOppositeDirection(dir));
-            if (!newTile.IsActive()) { 
-                newTile.SetColor(_color);
-                newTile.SetTempColor(_renderColor);
-            }
+            //Aquí comprobaba antes si no estaba vacío. Si peta por cualquier cosa probad lo que quité.
+            newTile.SetColor(_color);
+            newTile.SetTempColor(_renderColor);
         }
 
         public void constructSolution(Tile tile, int pos)
@@ -133,9 +134,65 @@ namespace flow
             
         }
 
+        public int provisionalCut(int position)
+        {
+            TileInfo searchTile = tiles[0];
+            int k = 0;
+            //Buscamos el tile que corta el flujo
+            while (searchTile.position != position)
+            {
+                k++;
+                searchTile = tiles[k];
+            }
+            //Nos guardamos el resto de tiles en el flujo.
+            //Al resto les quitamos los dibujitos.
+            for(int l = k; l < tiles.Count; l++)
+            {
+                if (tiles[l].tile.GetColor() == _color) tiles[l].tile.ResetData();
+            }
+
+            provisionalCutPosition = k;
+
+            return tiles[k - 1].position;
+        }
+
+        public void recalculateCut(Flow other, int position, int boardWidth)
+        {
+            if (provisionalCutPosition > -1 && provisionalCutPosition < tiles.Count)
+            {
+                bool finished = other.contains(tiles[provisionalCutPosition].position);
+                while (!finished)
+                {
+                    Direction dir = DirectionUtils.DirectionBetweenTiles(tiles[provisionalCutPosition - 1].position, tiles[provisionalCutPosition].position, boardWidth);
+                    tiles[provisionalCutPosition - 1].tile.SetDirection(dir);
+                    tiles[provisionalCutPosition].tile.SetDirection(DirectionUtils.GetOppositeDirection(dir));
+                    tiles[provisionalCutPosition].tile.SetColor(_color);
+                    tiles[provisionalCutPosition].tile.SetTempColor(_renderColor);
+                    Debug.Log(tiles[provisionalCutPosition].position);
+                    provisionalCutPosition++;
+                    finished = (provisionalCutPosition >= tiles.Count || other.contains(tiles[provisionalCutPosition].position));
+                }
+            }
+        }
+
+        public void applyProvisionalCut()
+        {
+            tiles.RemoveRange(provisionalCutPosition, tiles.Count - 1); //Idea feliz.
+            provisionalCutPosition = -1;
+        }
+
         public void clearFlow()
         {
             tiles.Clear();
+        }
+
+        public bool contains(int position)
+        {
+            for(int k = 0; k < tiles.Count; k++)
+            {
+                if (tiles[k].position == position) return true;
+            }
+            return false;
         }
 
         //Getters

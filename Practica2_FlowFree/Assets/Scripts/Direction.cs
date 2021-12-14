@@ -31,5 +31,18 @@ namespace flow
                     return Direction.None;
             }
         }
+
+        static public Direction DirectionBetweenTiles(int pos1, int pos2, int boardWidth)
+        {
+            if (pos1 + 1 == pos2 && pos1 / boardWidth == pos2 / boardWidth) return Direction.Right;
+
+            else if (pos1 - 1 == pos2 && pos1 / boardWidth == pos2 / boardWidth) return Direction.Left;
+
+            else if (pos1 - boardWidth == pos2) return Direction.Up;
+
+            else if (pos1 + boardWidth == pos2) return Direction.Down;
+
+            return Direction.None;
+        }
     }
 }

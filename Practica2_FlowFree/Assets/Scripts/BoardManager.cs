@@ -162,7 +162,7 @@ namespace flow
             {
                 int tile1 = walls[i].Item1;
                 int tile2 = walls[i].Item2;
-                Direction aux = DirectionFromTile(tile1, tile2);
+                Direction aux = DirectionUtils.DirectionBetweenTiles(tile1, tile2, boardWidth);
 
                 tiles[tile1].SetWall(aux, true);
                 tiles[tile2].SetWall(DirectionUtils.GetOppositeDirection(aux), true);
@@ -213,7 +213,7 @@ namespace flow
                         else
                         {
                             int previousPos = flows[currentFlow].cutFlow(newTile);
-                            flows[currentFlow].addToFlow(tiles[newTile], newTile, DirectionFromTile(previousPos, newTile));
+                            flows[currentFlow].addToFlow(tiles[newTile], newTile, DirectionUtils.DirectionBetweenTiles(previousPos, newTile, boardWidth));
                         }
                         isBuildingFlow = true;
                     }
@@ -223,7 +223,7 @@ namespace flow
                 {
                     if(newTile != currentTile && !flows[currentFlow].isClosed()) //Nos hemos movido de casilla
                     {
-                        Direction dir = DirectionFromTile(currentTile, newTile);
+                        Direction dir = DirectionUtils.DirectionBetweenTiles(currentTile, newTile, boardWidth);
 
                         if(dir != Direction.None && tiles[newTile].CanBeAccesed(dir)) //Si el movimiento ha sido valido (El movimiento en diagonal es demasiado poderoso)
                         {
@@ -234,9 +234,9 @@ namespace flow
                                     if (!tiles[newTile].IsOrigin())
                                     {
                                         //Cortar el otro flujo y avanzar en esa direccion
-                                        int previousTile = flows[newFlow].cutFlow(newTile);
-                                        tiles[previousTile].ClearDirection(DirectionFromTile(previousTile, newTile));
-                                        flows[currentFlow].addToFlow(tiles[newTile], newTile, DirectionFromTile(currentTile, newTile));
+                                        int previousTile = flows[newFlow].provisionalCut(newTile);
+                                        tiles[previousTile].ClearDirection(DirectionUtils.DirectionBetweenTiles(previousTile, newTile, boardWidth));
+                                        flows[currentFlow].addToFlow(tiles[newTile], newTile, DirectionUtils.DirectionBetweenTiles(currentTile, newTile, boardWidth));
                                         currentTile = newTile;
                                     }
                                 }
@@ -247,12 +247,13 @@ namespace flow
                                     {
                                         if(flows[currentFlow].getStartingTile() != newTile)
                                         {
-                                            flows[currentFlow].addToFlow(tiles[newTile], newTile, DirectionFromTile(currentTile, newTile));
+                                            flows[currentFlow].addToFlow(tiles[newTile], newTile, DirectionUtils.DirectionBetweenTiles(currentTile, newTile, boardWidth));
                                             flows[currentFlow].closeFlow();
                                         }
                                         else
                                         {
-                                            int lastTileInFlow = flows[currentFlow].cutFlow(newTile);
+                                            flows[currentFlow].cutFlow(newTile);
+                                            for (int k = 0; k < flows.Count; k++) if (k != currentFlow) flows[k].recalculateCut(flows[currentFlow], newTile, boardWidth);
                                             //flows[currentFlow].addToFlow(tiles[newTile], newTile, DirectionFromTile(lastTileInFlow, newTile));
                                             currentTile = newTile;
                                         }
@@ -261,7 +262,8 @@ namespace flow
                                     else
                                     {
                                         int lastTileInFlow = flows[currentFlow].cutFlow(newTile);
-                                        flows[currentFlow].addToFlow(tiles[newTile], newTile, DirectionFromTile(lastTileInFlow, newTile));
+                                        flows[currentFlow].addToFlow(tiles[newTile], newTile, DirectionUtils.DirectionBetweenTiles(lastTileInFlow, newTile, boardWidth));
+                                        for (int k = 0; k < flows.Count; k++) if (k != currentFlow) flows[k].recalculateCut(flows[currentFlow], newTile, boardWidth);
                                         currentTile = newTile;
                                     }
                                 }
@@ -269,7 +271,7 @@ namespace flow
 
                             else //La casilla esta vacia
                             {
-                                flows[currentFlow].addToFlow(tiles[newTile], newTile, DirectionFromTile(currentTile, newTile));
+                                flows[currentFlow].addToFlow(tiles[newTile], newTile, DirectionUtils.DirectionBetweenTiles(currentTile, newTile, boardWidth));
                                 currentTile = newTile;
                             }
                         }
@@ -295,20 +297,6 @@ namespace flow
             int row = (int)(posBoard.y / offset.y);
 
             return (row * boardWidth + col);
-        }
-
-
-        private Direction DirectionFromTile(int origin, int dest)
-        {
-            if (origin + 1 == dest && origin / boardWidth == dest / boardWidth) return Direction.Right;
-
-            else if (origin - 1 == dest && origin / boardWidth == dest / boardWidth) return Direction.Left;
-
-            else if (origin - boardWidth == dest) return Direction.Up;
-
-            else if (origin + boardWidth == dest) return Direction.Down;
-
-            return Direction.None;
         }
     }
 }
