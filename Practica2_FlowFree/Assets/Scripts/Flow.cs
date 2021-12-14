@@ -48,6 +48,11 @@ namespace flow
             tiles.Add(startingTile);
         }
 
+        public void closeSmallCircle()
+        {
+            tiles[tiles.Count - 1].tile.EnableSmallCircle(false);
+        }
+
         public void stopBuldingFlow()
         {
             if(!tiles[tiles.Count - 1].tile.IsOrigin()) tiles[tiles.Count - 1].tile.EnableSmallCircle(true);

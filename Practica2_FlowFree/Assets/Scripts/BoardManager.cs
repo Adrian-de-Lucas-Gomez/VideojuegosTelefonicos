@@ -34,6 +34,7 @@ namespace flow
         //Input
         private int currentTile = 0;
         private int currentFlow = 0;
+        private int previousFlow = int.MaxValue;
         private bool isBuildingFlow = false;
 
 
@@ -177,6 +178,13 @@ namespace flow
 
             if (Input.GetMouseButtonUp(0)) //Si el usuario acaba de liberar el boton izquierdo 
             {
+                if (previousFlow != int.MaxValue)
+                {
+                    flows[previousFlow].closeSmallCircle();
+                }
+
+                previousFlow = currentFlow;
+
                 if (currentFlow != int.MaxValue)
                 {
                     flows[currentFlow].stopBuldingFlow();
@@ -184,7 +192,6 @@ namespace flow
                     currentFlow = int.MaxValue;
                     isBuildingFlow = false;
                 }
-                //lol
             }
 
             if (IsPosInBoard(worldPos))
@@ -270,7 +277,6 @@ namespace flow
                 }
             }
         }
-
 
         private bool IsPosInBoard(Vector3 pos)
         {
