@@ -38,14 +38,18 @@ namespace flow
         public void StartBuildingFlow(Tile tile, int pos)
         {
             closed = false;
-            if (tiles.Count > 0) //El camino ya está empezado, hay que limpiarlo todo
+            if (tiles.Count > 1) //El camino ya está empezado, hay que limpiarlo todo
             {
-                for (int k = 1; k < tiles.Count; k++)
+                for (int k = 0; k < tiles.Count; k++)
                 {
                     tiles[k].tile.ResetData();
-                    tiles.RemoveAt(k);
                 }
-                tiles.Clear();
+                if (pos == tiles[0].position) tiles.RemoveRange(1, tiles.Count - 1);
+                else
+                {
+                    tiles.Clear();
+                    tiles.Add(new TileInfo(tile, pos));
+                }
             }
             else tiles.Add(new TileInfo(tile, pos));
         }
@@ -123,10 +127,9 @@ namespace flow
                 auxTile = tiles[tiles.Count - 1];
             }
             auxTile.tile.ResetData();
-            tiles.RemoveAt(tiles.Count - 1);
+            if(tiles.Count > 1) tiles.RemoveAt(tiles.Count - 1);
 
             return tiles[tiles.Count - 1].position;
-            
         }
 
         public int ProvisionalCut(int position)
