@@ -8,7 +8,7 @@ namespace flow
     /// Crea las categorias de niveles en el canvas
     /// </summary>
 
-    public class CategoriesManager : MonoBehaviour
+    public class MenuManager : MonoBehaviour
     {
         [SerializeField] Categories[] categories;
         [SerializeField] Transform categoriesParent;
@@ -21,7 +21,7 @@ namespace flow
             if (categories.Length == 0 || categoriesParent == null || categoryCardPrefab == null ||
                 levelPackCardPrefab == null)
             {
-                Debug.LogError("CategoriesManager: Alguna variable no tiene valor asociado desde el editor.");
+                Debug.LogError("MenuManager: Alguna variable no tiene valor asociado desde el editor.");
                 return;
             }
 #endif
@@ -37,20 +37,12 @@ namespace flow
                     LevelPackCard pack = Instantiate(levelPackCardPrefab, categoriesParent);
                     pack.ConfigureLevelPack(packs[j], categories[i]);
                 }
-
-                //card.button.onClick.AddListener(() =>
-                //{
-                //    SelectCategory(index);
-                //});
-
-                ////If it's not unlocked it can't be selected
-                //if (!ProgressManager.Instance.IsCategoryUnlocked(index))
-                //{
-                //    card.button.enabled = false;
-                //    card.image.sprite = deactivatedImage;
-                //    card.button.image.color = deactivatedCategoryColor;
-                //}
             }
+        }
+
+        public void OnExit() //Evento de salida al pulsar un boton
+        {
+            Application.Quit();
         }
     }
 }
