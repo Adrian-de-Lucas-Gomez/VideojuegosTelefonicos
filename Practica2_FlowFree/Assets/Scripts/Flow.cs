@@ -38,20 +38,24 @@ namespace flow
         public void StartBuildingFlow(Tile tile, int pos)
         {
             closed = false;
-            if (tiles.Count > 1) //El camino ya está empezado, hay que limpiarlo todo
+            SetTransparentBackground(false);
+            if (tile.IsOrigin())
             {
-                for (int k = 0; k < tiles.Count; k++)
+                if (tiles.Count > 1) //El camino ya está empezado, hay que limpiarlo todo
                 {
-                    tiles[k].tile.ResetData();
+                    for (int k = 0; k < tiles.Count; k++)
+                    {
+                        tiles[k].tile.ResetData();
+                    }
+                    if (pos == tiles[0].position) tiles.RemoveRange(1, tiles.Count - 1);
+                    else
+                    {
+                        tiles.Clear();
+                        tiles.Add(new TileInfo(tile, pos));
+                    }
                 }
-                if (pos == tiles[0].position) tiles.RemoveRange(1, tiles.Count - 1);
-                else
-                {
-                    tiles.Clear();
-                    tiles.Add(new TileInfo(tile, pos));
-                }
+                else tiles.Add(new TileInfo(tile, pos));
             }
-            else tiles.Add(new TileInfo(tile, pos));
         }
 
         public void CloseSmallCircle()
@@ -61,6 +65,7 @@ namespace flow
 
         public void StopBuldingFlow()
         {
+            SetTransparentBackground(true);
             if(!tiles[tiles.Count - 1].tile.IsOrigin()) tiles[tiles.Count - 1].tile.EnableSmallCircle(true);
         }
 
@@ -189,10 +194,25 @@ namespace flow
                 if (provisionalCutPosition < tiles.Count)
                 {
                     if (closed) closed = false;
+                    for (int k = provisionalCutPosition; k < tiles.Count; k++) tiles[k].tile.HideTransparentBackground();
                     tiles.RemoveRange(provisionalCutPosition, tiles.Count - provisionalCutPosition);
+                    if (tiles.Count == 1) tiles[0].tile.HideTransparentBackground();
                 }
                 provisionalCutPosition = -1;
             }
+        }
+
+        private void SetTransparentBackground(bool enable)
+        {
+            if (enable)
+            {
+                for (int k = 0; k < tiles.Count; k++)
+                {
+                    tiles[k].tile.ShowTransparentBackground(_renderColor);
+                }
+                if (tiles.Count == 1) tiles[0].tile.HideTransparentBackground();
+            }
+            else for (int k = 0; k < tiles.Count; k++) tiles[k].tile.HideTransparentBackground();
         }
 
         public void ClearFlow()

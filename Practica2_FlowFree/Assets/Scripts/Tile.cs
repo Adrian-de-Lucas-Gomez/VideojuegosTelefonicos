@@ -13,6 +13,7 @@ namespace flow
         [SerializeField] SpriteRenderer downBar;
         [SerializeField] SpriteRenderer leftBar;
         [SerializeField] SpriteRenderer rightBar;
+        [SerializeField] SpriteRenderer transparentBackground;
 
         private int color = int.MaxValue;
         private Color tempColor; //TODO: no se si esto es temporal
@@ -25,7 +26,7 @@ namespace flow
         {
 #if UNITY_EDITOR
            if(spriteBackground == null || bigCircle == null || upBar == null || downBar == null ||
-                leftBar == null || rightBar == null || smallCircle == null)
+                leftBar == null || rightBar == null || smallCircle == null || transparentBackground == null)
            {
                 Debug.LogError("Tile: Alguna variable no tiene valor asociado desde el editor.");
                 return;
@@ -77,6 +78,17 @@ namespace flow
         public void EnableSmallCircle(bool visible)
         {
             smallCircle.enabled = visible;
+        }
+
+        public void HideTransparentBackground()
+        {
+            transparentBackground.enabled = false;
+        }
+
+        public void ShowTransparentBackground(Color c)
+        {
+            transparentBackground.enabled = true;
+            transparentBackground.color = new Color(c.r, c.g, c.b, 0.2f);
         }
 
         public bool CanBeAccesed(Direction dir)
