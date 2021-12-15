@@ -30,10 +30,10 @@ namespace flow
         {
             if (pack == null) return;
 
-            levelPackTitle.text = pack.packName;
+            levelPackTitle.text = pack.title;
             levelPackTitle.color = category.color;
 
-            nLevels = pack.levelsString.ToString().Split('\n').Length - 1;
+            nLevels = pack.levelsFile.ToString().Split('\n').Length - 1;
             nLevelsText.text = "0" + "/" + nLevels.ToString(); //TODO:
         }
 

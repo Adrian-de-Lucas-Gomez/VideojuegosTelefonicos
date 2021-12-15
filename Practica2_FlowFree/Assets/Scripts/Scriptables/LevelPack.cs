@@ -9,14 +9,25 @@ namespace flow
     public class LevelPack : ScriptableObject
     {
         //Nombre del pack de niveles
-        public string packName;
+        public string title;
         //Fichero con el conjunto de niveles
-        public TextAsset levelsString;
+        public TextAsset levelsFile;
         //Colores del tema
         public ColorSkin skin;
-        //Texto de los grupos de niveles
-        public string[] texts;
+        //Titulos de los grupos de niveles
+        public string[] groupTitles;
         //Colores de los grupos de niveles
         public Color[] colors;
+
+        void OnEnable()
+        {
+#if UNITY_EDITOR
+            if (title == null || levelsFile == null || skin == null || groupTitles.Length == 0 || colors.Length == 0)
+            {
+                Debug.LogError("LevelPack: faltan variables por asignar en el ScriptableObject.");
+                return;
+            }
+#endif
+        }
     }
 }

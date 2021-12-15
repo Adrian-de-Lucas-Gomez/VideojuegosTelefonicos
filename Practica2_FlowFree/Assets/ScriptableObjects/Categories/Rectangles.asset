@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a862bad57349fd84782d313ce68eaba8, type: 3}
   m_Name: Rectangles
   m_EditorClassIdentifier: 
-  category: Rectangles
+  title: Rectangles
   packs:
   - {fileID: 11400000, guid: b168f293f1000b4438b4ca28f1467785, type: 2}
   - {fileID: 11400000, guid: ae7f7186e9b664645aa2eda175bb28d5, type: 2}

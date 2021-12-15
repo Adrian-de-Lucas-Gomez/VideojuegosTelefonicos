@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c5e198646f5f1a47819ad6cd59a40c0, type: 3}
   m_Name: GreenPack
   m_EditorClassIdentifier: 
-  packName: Green Pack
-  levelsString: {fileID: 4900000, guid: 2f3b95cd571254c40ae043867ae424a4, type: 3}
+  title: Green Pack
+  levelsFile: {fileID: 4900000, guid: 2f3b95cd571254c40ae043867ae424a4, type: 3}
   skin: {fileID: 11400000, guid: 431ed2c9b3db47b458349c96b12168da, type: 2}
-  texts:
+  groupTitles:
   - 5x5 - easy
   - 6x6
   - 7x7 - medium
-  - '8x8 '
+  - 8x8
   - 9x9 - hard
   colors:
-  - {r: 0.07525253, g: 0.6981132, b: 0, a: 1}
-  - {r: 0, g: 0.7529412, b: 0.018977446, a: 1}
-  - {r: 0.043747023, g: 0.764151, b: 0, a: 1}
-  - {r: 0.07897456, g: 0.8490566, b: 0, a: 1}
-  - {r: 0.04135754, g: 0.7830189, b: 0, a: 1}
+  - {r: 0, g: 0.5529412, b: 0, a: 1}
+  - {r: 0, g: 0.5529412, b: 0, a: 1}
+  - {r: 0, g: 0.5529412, b: 0, a: 1}
+  - {r: 0, g: 0.5529412, b: 0, a: 1}
+  - {r: 0, g: 0.5529412, b: 0, a: 1}

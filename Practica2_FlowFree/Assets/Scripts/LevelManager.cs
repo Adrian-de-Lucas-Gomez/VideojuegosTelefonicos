@@ -26,7 +26,7 @@ namespace flow
 
         public void initializeLevel(int levelNumber, LevelPack pack)
         {
-            string[] maps = pack.levelsString.ToString().Split('\n');
+            string[] maps = pack.levelsFile.ToString().Split('\n');
 
             string level = maps[levelNumber];
 

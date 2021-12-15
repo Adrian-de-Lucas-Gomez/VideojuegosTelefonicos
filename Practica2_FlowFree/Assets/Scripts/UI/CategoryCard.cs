@@ -29,7 +29,7 @@ namespace flow
         {
             if (category == null) return;
 
-            categoryTitle.text = category.category;
+            categoryTitle.text = category.title;
             Color aux = category.color;
             bottomLine.color = aux;
             aux.a = 110f/255f;

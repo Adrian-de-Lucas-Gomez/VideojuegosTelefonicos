@@ -10,5 +10,16 @@ namespace flow
     {
         //Colores del tema
         public Color[] colors;
+
+        void OnEnable()
+        {
+#if UNITY_EDITOR
+            if (colors.Length == 0)
+            {
+                Debug.LogError("ColorSkin: faltan variables por asignar en el ScriptableObject.");
+                return;
+            }
+#endif
+        }
     }
 }

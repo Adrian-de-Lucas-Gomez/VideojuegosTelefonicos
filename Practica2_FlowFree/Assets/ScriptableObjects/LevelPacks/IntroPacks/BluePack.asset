@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c5e198646f5f1a47819ad6cd59a40c0, type: 3}
   m_Name: BluePack
   m_EditorClassIdentifier: 
-  packName: Blue Pack
-  levelsString: {fileID: 4900000, guid: d3bac779666fdcc4895ba5b7a8ffd885, type: 3}
+  title: Blue Pack
+  levelsFile: {fileID: 4900000, guid: d3bac779666fdcc4895ba5b7a8ffd885, type: 3}
   skin: {fileID: 11400000, guid: 431ed2c9b3db47b458349c96b12168da, type: 2}
-  texts:
+  groupTitles:
   - 5x5 - easy
   - 6x6
   - 7x7 - medium
-  - '8x8 '
+  - 8x8
   - 9x9 - hard
   colors:
-  - {r: 0, g: 0.048205376, b: 1, a: 1}
-  - {r: 0, g: 0.050980393, b: 1, a: 1}
-  - {r: 0, g: 0.050980393, b: 1, a: 1}
-  - {r: 0, g: 0.050980393, b: 1, a: 1}
-  - {r: 0, g: 0.050980393, b: 1, a: 1}
+  - {r: 0.047058824, g: 0.16078432, b: 0.99607843, a: 1}
+  - {r: 0.047058824, g: 0.16078432, b: 0.99607843, a: 1}
+  - {r: 0.047058824, g: 0.16078432, b: 0.99607843, a: 1}
+  - {r: 0.047058824, g: 0.16078432, b: 0.99607843, a: 1}
+  - {r: 0.047058824, g: 0.16078432, b: 0.99607843, a: 1}
