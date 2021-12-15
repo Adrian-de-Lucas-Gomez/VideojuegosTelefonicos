@@ -12,11 +12,12 @@ public class FlexibleGridLayout : LayoutGroup
         FixedColumns
     }
 
+    public FitType constraint;
     public int rows;
     public int columns;
+
     public float cellAspect;
     public Vector2 spacing; //Espacio entre elementos del grid
-    public FitType constraint;
 
     private Vector2 cellSize;
 
