@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace flow
 {
     /// <summary>
-    /// Crea las categorias de niveles en el canvas
+    /// Gestiona los menus del juego
     /// </summary>
 
     public class MenuManager : MonoBehaviour
@@ -40,6 +40,9 @@ namespace flow
 
         private void LoadMainMenu()
         {
+            mainMenu.SetActive(true);
+            levelsMenu.SetActive(false);
+
             //Crear las categorias de niveles
             for (int i = 0; i < categories.Length; i++)
             {
@@ -51,7 +54,7 @@ namespace flow
                 for (int j = 0; j < packs.Length; ++j)
                 {
                     LevelPackCard pack = Instantiate(levelPackCardPrefab, categoriesParent);
-                    pack.ConfigureLevelPack(packs[j], categories[i]);
+                    pack.ConfigureLevelPack(this, packs[j], categories[i]);
                 }
             }
         }
@@ -71,6 +74,9 @@ namespace flow
                 LevelPage page = Instantiate(levelPagePrefab, levelPageParent);
                 page.ConfigureLevelPage(i, currentlevelPack);
             }
+
+            mainMenu.SetActive(false);
+            levelsMenu.SetActive(true);
         }
 
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -88,21 +94,22 @@ namespace flow
 #endif
             if(currentMenu == Menu.MAIN)
             {
-                mainMenu.SetActive(true);
-                levelsMenu.SetActive(false);
-
                 LoadMainMenu();
             }
         }
 
-        public void OnExit() //Evento de salida al pulsar un boton
+        public void OnChooseLevelPack(LevelPack pack, Categories packCategory)
         {
-            Application.Quit();
+            currentlevelPack = pack;
+            currentCategory = packCategory;
+            currentMenu = Menu.LEVELS;
+
+            LoadLevelsMenu();
         }
 
-        public void OnChooseLevelPack()
+        public void OnExitMainMenu()
         {
-
+            Application.Quit();
         }
     }
 }

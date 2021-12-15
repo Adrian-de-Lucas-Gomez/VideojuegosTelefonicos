@@ -11,9 +11,11 @@ namespace flow
         [SerializeField] Text levelPackTitle;
         [SerializeField] Text nLevelsText;
 
-        private LevelPack pack; //El scriptable
         private int nLevels;
+        private LevelPack pack; //El scriptable
         private Categories category;
+        private MenuManager menuManager;
+
 
         void Start()
         {
@@ -37,8 +39,9 @@ namespace flow
             nLevelsText.text = "0" + "/" + nLevels.ToString(); //TODO:
         }
 
-        public void ConfigureLevelPack(LevelPack pack, Categories category)
+        public void ConfigureLevelPack(MenuManager menuManager, LevelPack pack, Categories category)
         {
+            this.menuManager = menuManager;
             this.pack = pack;
             this.category = category;
             Configure();
@@ -47,6 +50,7 @@ namespace flow
         public void OnClick()
         {
             levelPackTitle.color = Color.white;
+            menuManager.OnChooseLevelPack(pack, category);
         }
     }
 }
