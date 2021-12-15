@@ -20,3 +20,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ef8f16637daa5a04b8232fe58591de84, type: 2}
   - {fileID: 11400000, guid: b3c018768049dc046a07eaca30a78f59, type: 2}
   color: {r: 1, g: 0, b: 0, a: 1}
+  levelsLocked: 1
