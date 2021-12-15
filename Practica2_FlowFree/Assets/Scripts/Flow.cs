@@ -99,6 +99,7 @@ namespace flow
             {
                 for (int k = 0; k < tiles.Count; k++)
                 {
+                    tiles[k].tile.HideTransparentBackground();
                     tiles[k].tile.ResetData();
                 }
                 tiles.RemoveRange(1, tiles.Count - 1);
@@ -128,6 +129,7 @@ namespace flow
             while (auxTile.position != tilePos)
             {
                 auxTile.tile.ResetData();
+                auxTile.tile.HideTransparentBackground();
                 tiles.RemoveAt(tiles.Count - 1);
                 auxTile = tiles[tiles.Count - 1];
             }
@@ -150,7 +152,7 @@ namespace flow
 
             if (closed)
             {
-                if(k > (tiles.Count - 1) / 2)
+                if(k < (tiles.Count - 1) / 2)
                 {
                     tiles.Reverse();
                     k = tiles.Count - k - 1;
