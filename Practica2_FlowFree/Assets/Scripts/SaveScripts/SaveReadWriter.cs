@@ -16,7 +16,7 @@ public class SaveReadWriter
         //Creamos el generador de hash
         hashMaker = SHA256.Create();
     }
-    public void SaveData(ProgressData data)
+    public void SaveData(flow.ProgressData data)
     {
         flow.SaveData saveFile = new flow.SaveData();
 
@@ -39,7 +39,7 @@ public class SaveReadWriter
         outStream.Close();
     }
 
-    public ProgressData LoadData()
+    public flow.ProgressData LoadData()
     {
         flow.SaveData dataFromJson;
         string jsonSave = File.ReadAllText(savePath + fileName, Encoding.UTF8);

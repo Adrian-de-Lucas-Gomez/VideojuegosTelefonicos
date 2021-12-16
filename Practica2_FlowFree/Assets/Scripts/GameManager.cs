@@ -18,6 +18,8 @@ namespace flow
         [SerializeField] Categories[] categories;
         [SerializeField] LevelManager levelManager;
 
+        [SerializeField] ProgressData data;
+
         public void Start()
         {
 #if UNITY_EDITOR
@@ -29,6 +31,7 @@ namespace flow
             }
 #endif
             levelManager.initializeLevel(levelIndex, categories[categoryIndex].packs[packIndex]);
+            data = new ProgressData(categories);
         }
     }
 }
