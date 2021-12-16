@@ -16,7 +16,6 @@ namespace flow
         private int provisionalCutPosition = -1;
 
         private List<TileInfo> tiles;
-        private List<TileInfo> solution;
         private TileInfo originAInfo, originBInfo;
         private int _color = 0;
         private int _boardWidth;
@@ -31,7 +30,6 @@ namespace flow
             _renderColor = rc;
             _boardWidth = boardWidth;
             tiles = new List<TileInfo>();
-            solution = new List<TileInfo>();
         }
 
         //Construcción del camino
@@ -77,16 +75,6 @@ namespace flow
             newTile.SetDirection(DirectionUtils.GetOppositeDirection(dir));
             newTile.SetColor(_color);
             newTile.SetTempColor(_renderColor);
-        }
-
-        public void ConstructSolution(Tile tile, int pos)
-        {
-            solution.Add(new TileInfo(tile, pos));
-        }
-
-        private void ConstructSolution(TileInfo tileInfo)
-        {
-            solution.Add(tileInfo);
         }
 
         public void CloseFlow()
@@ -208,7 +196,37 @@ namespace flow
             }
         }
 
-        private void SetTransparentBackground(bool enable)
+        public bool isSolved(List<int> solution)
+        {
+            if (!closed) return false;
+            bool isSolved = true;
+
+            //Busca por la solución y compara con la lista de tiles hasta que la recorre entera
+            //o se encuentra un tile que es diferente.
+
+            //La solución y la lista de tiles siguen el mismo orden
+            if (solution[0] == tiles[0].position) 
+            {
+                for (int k = 0; k < tiles.Count - 1 && isSolved; k++)
+                {
+                    isSolved = solution[k] == tiles[k].position;
+                }
+            }
+
+            //Hay que recorrerla en sentido contrario
+            else if (solution[0] == tiles[tiles.Count - 1].position)
+            {
+                int l = 0;
+                for (int k = tiles.Count - 1; k > 0 && isSolved; k--, l++)
+                {
+                    isSolved = solution[k] == tiles[l].position;
+                }
+            }
+
+            return isSolved;
+        }
+
+        public void SetTransparentBackground(bool enable)
         {
             if (enable)
             {
@@ -223,6 +241,11 @@ namespace flow
 
         public void ClearFlow()
         {
+            for(int k = 0; k < tiles.Count; k++)
+            {
+                tiles[k].tile.HideTransparentBackground();
+                tiles[k].tile.ResetData();
+            }
             tiles.Clear();
         }
 
@@ -235,7 +258,7 @@ namespace flow
             return false;
         }
 
-        private void PrintTiles() //DEBUG ONLY
+        public void PrintTiles() //DEBUG ONLY
         {
             string msg = _color + ": ";
             for (int k = 0; k < tiles.Count; k++)
@@ -259,11 +282,9 @@ namespace flow
             originAInfo.tile = origA;
             originAInfo.position = posOrigA;
             originAInfo.tile.SetAsOrigin(_color);
-            ConstructSolution(originAInfo);
             originBInfo.tile = origB;
             originBInfo.position = posOrigB;
             originBInfo.tile.SetAsOrigin(_color);
-            ConstructSolution(originBInfo);
         }
     }
 }

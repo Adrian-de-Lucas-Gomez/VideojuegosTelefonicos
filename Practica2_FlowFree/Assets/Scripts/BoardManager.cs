@@ -144,10 +144,10 @@ namespace flow
                 tiles[solution[i][solution[i].Count - 1]].SetTempColor(skin[i]);
 
                 //Le indicamos la solucion
-                for (int j = 1; j < solution[i].Count - 1; j++)
-                {
-                    flows[i].ConstructSolution(tiles[solution[i][j]], solution[i][j]);
-                }
+                //for (int j = 1; j < solution[i].Count - 1; j++)
+                //{
+                //    flows[i].ConstructSolution(tiles[solution[i][j]], solution[i][j]);
+                //}
             }
 
             //Asignar casillas vacias
@@ -174,6 +174,23 @@ namespace flow
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = Camera.main.nearClipPlane;
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos); //Escala??
+
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                int k = 0;
+                while (k < flows.Count && flows[k].isSolved(solution[k]))
+                {
+                    k++;
+                }
+                if(k < flows.Count)
+                {
+                    ApplyHint(k);
+                }
+                else
+                {
+                    Debug.Log("No hay pistas que completar eres un putisimo crack");
+                }
+            }
 
             if (Input.GetMouseButtonUp(0)) //Si el usuario acaba de liberar el boton izquierdo 
             {
@@ -275,6 +292,42 @@ namespace flow
                     }
                 }
             }
+        }
+
+        private void ApplyHint(int flowToChange)
+        {
+            flows[flowToChange].ClearFlow();
+
+            List<int> flowSolution = solution[flowToChange];
+
+            int previousTile = flowSolution[0];
+            int currentTile;
+
+            flows[flowToChange].StartBuildingFlow(tiles[previousTile], flowSolution[0]);
+
+            int occupyingFlow = 0;
+
+            for (int k = 1; k < flowSolution.Count; k++)
+            {
+                currentTile = flowSolution[k];
+
+                if (tiles[currentTile].IsActive())
+                {
+                    occupyingFlow = tiles[currentTile].GetColor();
+                    if (occupyingFlow != flowToChange)
+                    {
+                        flows[occupyingFlow].SetTransparentBackground(false);
+                        int prevPos = flows[occupyingFlow].CutFlow(currentTile);
+                        tiles[prevPos].ClearDirection(DirectionUtils.DirectionBetweenTiles(prevPos, currentTile, boardWidth));
+                        flows[occupyingFlow].SetTransparentBackground(true);
+                    }
+                }
+
+                flows[flowToChange].AddToFlow(tiles[flowSolution[k]], flowSolution[k], DirectionUtils.DirectionBetweenTiles(previousTile, currentTile, boardWidth));
+                previousTile = currentTile;
+            }
+            flows[flowToChange].SetTransparentBackground(true);
+            flows[flowToChange].CloseFlow();
         }
 
         private bool IsPosInBoard(Vector3 pos)
