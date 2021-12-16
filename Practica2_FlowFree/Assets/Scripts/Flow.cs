@@ -41,7 +41,7 @@ namespace flow
             SetTransparentBackground(false);
             if (tile.IsOrigin())
             {
-                if (tiles.Count > 1) //El camino ya está empezado, hay que limpiarlo todo
+                if (tiles.Count >= 1) //El camino ya está empezado, hay que limpiarlo todo
                 {
                     for (int k = 0; k < tiles.Count; k++)
                     {
@@ -99,7 +99,6 @@ namespace flow
             {
                 for (int k = 0; k < tiles.Count; k++)
                 {
-                    tiles[k].tile.HideTransparentBackground();
                     tiles[k].tile.ResetData();
                 }
                 tiles.RemoveRange(1, tiles.Count - 1);
@@ -110,6 +109,7 @@ namespace flow
             TileInfo auxTile = tiles[tiles.Count - 1];
             if (closed)
             {
+                //Buscamos la posicion de corte
                 closed = false;
                 int aux = 0;
                 while(auxTile.position != tilePos)
@@ -119,7 +119,10 @@ namespace flow
                 }
 
                 //El camino más largo es de Origen -> Punto a cortar
-                if (aux < (tiles.Count - 1 )/ 2) tiles.Reverse();
+                if (aux <= ((tiles.Count - 1) / 2))
+                {
+                    tiles.Reverse();
+                }
 
                 //Si no, el camino más largo es de Fin -> Punto a cortar
 
@@ -129,13 +132,11 @@ namespace flow
             while (auxTile.position != tilePos)
             {
                 auxTile.tile.ResetData();
-                auxTile.tile.HideTransparentBackground();
                 tiles.RemoveAt(tiles.Count - 1);
                 auxTile = tiles[tiles.Count - 1];
             }
             auxTile.tile.ResetData();
             if(tiles.Count > 1) tiles.RemoveAt(tiles.Count - 1);
-
             return tiles[tiles.Count - 1].position;
         }
 
@@ -152,7 +153,7 @@ namespace flow
 
             if (closed)
             {
-                if(k < (tiles.Count - 1) / 2)
+                if(k < ((tiles.Count - 1) / 2))
                 {
                     tiles.Reverse();
                     k = tiles.Count - k - 1;
