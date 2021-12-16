@@ -22,7 +22,8 @@ namespace flow
         private int _boardWidth;
         private Color _renderColor;
 
-        bool closed = false;
+        private bool closed = false;
+        private bool isComlpetedInProvisionalCut = true;
 
         public Flow(int c, Color rc, int boardWidth)
         {
@@ -153,11 +154,12 @@ namespace flow
 
             if (closed)
             {
-                if(k < ((tiles.Count - 1) / 2))
+                if(k < ((tiles.Count - 1) / 2) && isComlpetedInProvisionalCut)
                 {
                     tiles.Reverse();
                     k = tiles.Count - k - 1;
                 }
+                isComlpetedInProvisionalCut = false;
             }
 
             //Nos guardamos el resto de tiles en el flujo.
@@ -168,7 +170,6 @@ namespace flow
             }
 
             provisionalCutPosition = k;
-
             return tiles[k - 1].position;
         }
 
@@ -187,6 +188,7 @@ namespace flow
                     provisionalCutPosition++;
                     finished = (provisionalCutPosition >= tiles.Count || other.Contains(tiles[provisionalCutPosition].position));
                 }
+                isComlpetedInProvisionalCut = (closed && tiles[0].tile.GetColor() == _color);
             }
         }
 
@@ -194,6 +196,7 @@ namespace flow
         {
             if(provisionalCutPosition > 0)
             {
+                isComlpetedInProvisionalCut = true;
                 if (provisionalCutPosition < tiles.Count)
                 {
                     if (closed) closed = false;

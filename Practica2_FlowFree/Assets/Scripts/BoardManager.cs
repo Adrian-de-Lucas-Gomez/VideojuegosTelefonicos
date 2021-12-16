@@ -207,14 +207,13 @@ namespace flow
                         currentTile = newTile;
                         currentFlow = tiles[currentTile].GetColor();
                         //Partimos de un punto del flow. Cortamos hasta ese punto.
+                        flows[currentFlow].StartBuildingFlow(tiles[currentTile], currentTile);
+                        isBuildingFlow = true;
                         if (!tiles[newTile].IsOrigin())
                         {
                             int previousPos = flows[currentFlow].CutFlow(newTile);
                             flows[currentFlow].AddToFlow(tiles[newTile], newTile, DirectionUtils.DirectionBetweenTiles(previousPos, newTile, boardWidth));
                         }
-
-                        flows[currentFlow].StartBuildingFlow(tiles[currentTile], currentTile);
-                        isBuildingFlow = true;
                     }
                 }
 
