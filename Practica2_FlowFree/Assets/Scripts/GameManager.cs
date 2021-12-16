@@ -19,6 +19,7 @@ namespace flow
         [SerializeField] LevelManager levelManager;
 
         [SerializeField] ProgressData data;
+        [SerializeField] SaveReadWriter saveIO;
 
         public void Start()
         {
@@ -31,7 +32,15 @@ namespace flow
             }
 #endif
             levelManager.initializeLevel(levelIndex, categories[categoryIndex].packs[packIndex]);
-            data = new ProgressData(categories);
+            data = new ProgressData();
+            data.Init(categories);
+
+            saveIO = new SaveReadWriter();
+            saveIO.Init();
+            saveIO.SaveData(data);
+
+            data = saveIO.LoadData();
+            if (data == null) { Debug.Log("No cargó bien los archivos"); }
         }
     }
 }
