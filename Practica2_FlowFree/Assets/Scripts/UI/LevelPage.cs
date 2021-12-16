@@ -9,14 +9,16 @@ namespace flow
     {
         //Para UI
         [SerializeField] Text pageTitle;
+        [SerializeField] Transform buttonsParent;
 
         private int pageIndex;
         private LevelPack pack;
+        private MenuManager menuManager;
 
         void Start()
         {
 #if UNITY_EDITOR
-            if (pageTitle == null)
+            if (pageTitle == null || buttonsParent == null)
             {
                 Debug.LogError("LevelPage: Alguna variable no tiene valor asociado desde el editor.");
                 return;
@@ -36,6 +38,11 @@ namespace flow
             this.pack = pack;
             pageIndex = id;
             Configure();
+        }
+
+        public Transform GetButtonsParent()
+        {
+            return buttonsParent;
         }
     }
 }

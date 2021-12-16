@@ -11,6 +11,8 @@ namespace flow
 
     public class MenuManager : MonoBehaviour
     {
+        const int LEVELS_PER_PAGE = 30;
+
         public enum Menu
         {
             MAIN,
@@ -26,12 +28,14 @@ namespace flow
         [SerializeField] Transform categoriesParent;
         //Para LevelsMenu
         [SerializeField] Transform levelPageParent;
+        private Transform levelButtonParent;
         [SerializeField] Text levelsMenuTitle;
 
         //Prefabs
         [SerializeField] CategoryCard categoryCardPrefab;
         [SerializeField] LevelPackCard levelPackCardPrefab;
         [SerializeField] LevelPage levelPagePrefab;
+        [SerializeField] LevelButton levelButtonPrefab;
 
         private Menu currentMenu = Menu.MAIN;
         private Categories currentCategory = null;
@@ -61,22 +65,34 @@ namespace flow
 
         private void LoadLevelsMenu()
         {
+            mainMenu.SetActive(false);
+            levelsMenu.SetActive(true);
+
             //Configurar el menu de niveles
             levelsMenuTitle.text = currentlevelPack.title;
             levelsMenuTitle.color = currentCategory.color;
 
             //Crear las paginas de niveles
-            int nLevels = currentlevelPack.levelsFile.ToString().Split('\n').Length - 1;
-            int nPages = nLevels / 30;
+            string[] levelsStrings = currentlevelPack.levelsFile.ToString().Split('\n');
+            int nLevels = levelsStrings.Length - 1;
+            int nPages = nLevels / LEVELS_PER_PAGE;
 
             for (int i = 0; i < nPages; i++)
             {
                 LevelPage page = Instantiate(levelPagePrefab, levelPageParent);
                 page.ConfigureLevelPage(i, currentlevelPack);
-            }
 
-            mainMenu.SetActive(false);
-            levelsMenu.SetActive(true);
+                //Crear LEVELS_PER_PAGE botones
+                for (int j = 0; j < LEVELS_PER_PAGE; ++j)
+                {
+                    levelButtonParent = page.GetButtonsParent();
+                    LevelButton button = Instantiate(levelButtonPrefab, levelButtonParent);
+
+                    int levelIndex = j + LEVELS_PER_PAGE * i + 1;
+                    string levelButtonString = levelsStrings[j + LEVELS_PER_PAGE * i];
+                    button.ConfigureLevelButton(levelIndex, currentlevelPack.colors[i], levelButtonString);
+                }
+            }
         }
 
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -110,6 +126,26 @@ namespace flow
         public void OnExitMainMenu()
         {
             Application.Quit();
+        }
+
+        public void OnExitLevelMenu()
+        {
+            //TODO: ESTA MAL
+            // -El LevelPack del que se quiere salir para actualizar si has completado niveles
+            // -Borrar todo lo instanciado (level pages) en LEVELS 
+
+            for (int i = levelPageParent.childCount - 1; i >= 0; ++i)
+            {
+                GameObject child = levelPageParent.GetChild(i).gameObject;
+                Destroy(child);
+            }
+
+            currentlevelPack = null;
+            currentCategory = null;
+            currentMenu = Menu.MAIN;
+
+            mainMenu.SetActive(true);
+            levelsMenu.SetActive(false);
         }
     }
 }
