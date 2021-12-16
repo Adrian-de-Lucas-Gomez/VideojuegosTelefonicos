@@ -23,6 +23,7 @@ namespace flow
 
         private bool closed = false;
         private bool isComlpetedInProvisionalCut = true;
+        private bool wasSolvedByHint = false;
 
         public Flow(int c, Color rc, int boardWidth)
         {
@@ -36,25 +37,15 @@ namespace flow
 
         public void StartBuildingFlow(Tile tile, int pos)
         {
-            closed = false;
-            SetTransparentBackground(false);
             if (tile.IsOrigin())
             {
                 if (tiles.Count >= 1) //El camino ya está empezado, hay que limpiarlo todo
                 {
-                    for (int k = 0; k < tiles.Count; k++)
-                    {
-                        tiles[k].tile.ResetData();
-                    }
-                    if (pos == tiles[0].position) tiles.RemoveRange(1, tiles.Count - 1);
-                    else
-                    {
-                        tiles.Clear();
-                        tiles.Add(new TileInfo(tile, pos));
-                    }
+                    ClearFlow();
                 }
-                else tiles.Add(new TileInfo(tile, pos));
+                tiles.Add(new TileInfo(tile, pos));
             }
+            else SetTransparentBackground(false);
         }
 
         public void CloseSmallCircle()
@@ -77,9 +68,18 @@ namespace flow
             newTile.SetTempColor(_renderColor);
         }
 
-        public void CloseFlow()
+        public void SetClosed(bool state)
         {
-            closed = true;
+            closed = state;
+        }
+
+        public void SetHintMarkerVisibility(bool visibility)
+        {
+            if (wasSolvedByHint)
+            {
+                tiles[0].tile.setHintMarker(visibility);
+                tiles[tiles.Count - 1].tile.setHintMarker(visibility);
+            }
         }
 
         public int CutFlow(int tilePos)
@@ -98,8 +98,9 @@ namespace flow
             TileInfo auxTile = tiles[tiles.Count - 1];
             if (closed)
             {
+                SetClosed(false);
+                SetHintMarkerVisibility(false);
                 //Buscamos la posicion de corte
-                closed = false;
                 int aux = 0;
                 while(auxTile.position != tilePos)
                 {
@@ -147,6 +148,7 @@ namespace flow
                     tiles.Reverse();
                     k = tiles.Count - k - 1;
                 }
+                SetHintMarkerVisibility(false);
                 isComlpetedInProvisionalCut = false;
             }
 
@@ -176,7 +178,11 @@ namespace flow
                     provisionalCutPosition++;
                     finished = (provisionalCutPosition >= tiles.Count || other.Contains(tiles[provisionalCutPosition].position));
                 }
-                isComlpetedInProvisionalCut = (closed && tiles[0].tile.GetColor() == _color);
+                if (closed && tiles[0].tile.GetColor() == _color)
+                {
+                    isComlpetedInProvisionalCut = true;
+                    SetHintMarkerVisibility(true);
+                }
             }
         }
 
@@ -187,7 +193,7 @@ namespace flow
                 isComlpetedInProvisionalCut = true;
                 if (provisionalCutPosition < tiles.Count)
                 {
-                    if (closed) closed = false;
+                    SetClosed(false);
                     for (int k = provisionalCutPosition; k < tiles.Count; k++) tiles[k].tile.HideTransparentBackground();
                     tiles.RemoveRange(provisionalCutPosition, tiles.Count - provisionalCutPosition);
                     if (tiles.Count == 1) tiles[0].tile.HideTransparentBackground();
@@ -196,7 +202,7 @@ namespace flow
             }
         }
 
-        public bool isSolved(List<int> solution)
+        public bool IsSolved(List<int> solution)
         {
             if (!closed) return false;
             bool isSolved = true;
@@ -226,6 +232,11 @@ namespace flow
             return isSolved;
         }
 
+        public void SetAsSolvedByHint()
+        {
+            wasSolvedByHint = true;
+        }
+
         public void SetTransparentBackground(bool enable)
         {
             if (enable)
@@ -241,6 +252,7 @@ namespace flow
 
         public void ClearFlow()
         {
+            if (closed) SetHintMarkerVisibility(false);
             for(int k = 0; k < tiles.Count; k++)
             {
                 tiles[k].tile.HideTransparentBackground();
@@ -258,7 +270,7 @@ namespace flow
             return false;
         }
 
-        public void PrintTiles() //DEBUG ONLY
+        public void PrintTiles() //DEBUG ONLY PORFA BORRAME AL TERMINAR
         {
             string msg = _color + ": ";
             for (int k = 0; k < tiles.Count; k++)

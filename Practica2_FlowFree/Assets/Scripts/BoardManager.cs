@@ -178,7 +178,7 @@ namespace flow
             if (Input.GetKeyDown(KeyCode.F))
             {
                 int k = 0;
-                while (k < flows.Count && flows[k].isSolved(solution[k]))
+                while (k < flows.Count && flows[k].IsSolved(solution[k]))
                 {
                     k++;
                 }
@@ -231,6 +231,7 @@ namespace flow
                             int previousPos = flows[currentFlow].CutFlow(newTile);
                             flows[currentFlow].AddToFlow(tiles[newTile], newTile, DirectionUtils.DirectionBetweenTiles(previousPos, newTile, boardWidth));
                         }
+                        flows[currentFlow].SetClosed(false);
                     }
                 }
 
@@ -263,7 +264,8 @@ namespace flow
                                         if(!flows[currentFlow].Contains(newTile))
                                         {
                                             flows[currentFlow].AddToFlow(tiles[newTile], newTile, DirectionUtils.DirectionBetweenTiles(currentTile, newTile, boardWidth));
-                                            flows[currentFlow].CloseFlow();
+                                            flows[currentFlow].SetClosed(true);
+                                            flows[currentFlow].SetHintMarkerVisibility(true);
                                         }
                                         else
                                         {
@@ -305,7 +307,7 @@ namespace flow
 
             flows[flowToChange].StartBuildingFlow(tiles[previousTile], flowSolution[0]);
 
-            int occupyingFlow = 0;
+            int occupyingFlow;
 
             for (int k = 1; k < flowSolution.Count; k++)
             {
@@ -326,8 +328,10 @@ namespace flow
                 flows[flowToChange].AddToFlow(tiles[flowSolution[k]], flowSolution[k], DirectionUtils.DirectionBetweenTiles(previousTile, currentTile, boardWidth));
                 previousTile = currentTile;
             }
+            flows[flowToChange].SetAsSolvedByHint();
             flows[flowToChange].SetTransparentBackground(true);
-            flows[flowToChange].CloseFlow();
+            flows[flowToChange].SetClosed(true);
+            flows[flowToChange].SetHintMarkerVisibility(true);
         }
 
         private bool IsPosInBoard(Vector3 pos)

@@ -14,6 +14,7 @@ namespace flow
         [SerializeField] SpriteRenderer leftBar;
         [SerializeField] SpriteRenderer rightBar;
         [SerializeField] SpriteRenderer transparentBackground;
+        [SerializeField] SpriteRenderer hintMarker;
 
         private int color = int.MaxValue;
         private Color tempColor; //TODO: no se si esto es temporal
@@ -26,7 +27,7 @@ namespace flow
         {
 #if UNITY_EDITOR
            if(spriteBackground == null || bigCircle == null || upBar == null || downBar == null ||
-                leftBar == null || rightBar == null || smallCircle == null || transparentBackground == null)
+                leftBar == null || rightBar == null || smallCircle == null || transparentBackground == null || hintMarker == null)
            {
                 Debug.LogError("Tile: Alguna variable no tiene valor asociado desde el editor.");
                 return;
@@ -94,6 +95,11 @@ namespace flow
         public bool CanBeAccesed(Direction dir)
         {
             return !walls[(int)dir] && !isEmpty;
+        }
+
+        public void setHintMarker(bool enable)
+        {
+            hintMarker.enabled = enable;
         }
 
         private SpriteRenderer GetDirectionSprite(Direction dir)
