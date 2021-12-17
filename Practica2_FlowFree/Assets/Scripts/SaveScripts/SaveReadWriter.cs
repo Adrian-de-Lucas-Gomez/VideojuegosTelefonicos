@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
@@ -52,6 +50,7 @@ public class SaveReadWriter
     {
         if (!File.Exists(savePath + fileName))  //Si no existe no se busca
         {
+            Debug.Log("No hay guardados previos...Omitiendo carga...");
             return null;
         }
 
@@ -71,8 +70,8 @@ public class SaveReadWriter
 
         string oldHash = dataFromJson.hash;
 
-        Debug.Log(oldHash);
-        Debug.Log(newHash);
+        //Debug.Log(oldHash);
+        //Debug.Log(newHash);
 
         if (string.Compare(newHash, oldHash) != 0)
         {
