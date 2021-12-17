@@ -45,7 +45,11 @@ namespace flow
                 }
                 tiles.Add(new TileInfo(tile, pos));
             }
-            else SetTransparentBackground(false);
+            else
+            {
+                SetTransparentBackground(false);
+                CloseSmallCircle();
+            }
         }
 
         public void CloseSmallCircle()
@@ -82,7 +86,7 @@ namespace flow
             }
         }
 
-        public int CutFlow(int tilePos)
+        public void CutFlow(int tilePos, out int prevTile)
         {
             if(tilePos == tiles[0].position)
             {
@@ -91,8 +95,6 @@ namespace flow
                     tiles[k].tile.ResetData();
                 }
                 tiles.RemoveRange(1, tiles.Count - 1);
-
-                return tiles[0].position;
             }
 
             TileInfo auxTile = tiles[tiles.Count - 1];
@@ -118,19 +120,22 @@ namespace flow
 
                 auxTile = tiles[tiles.Count - 1];
             }
-            
+
+            int previousTile = auxTile.position;
             while (auxTile.position != tilePos)
             {
                 auxTile.tile.ResetData();
+                previousTile = auxTile.position;
                 tiles.RemoveAt(tiles.Count - 1);
                 auxTile = tiles[tiles.Count - 1];
             }
             auxTile.tile.ResetData();
+            //auxTile.tile.ClearDirection(DirectionUtils.DirectionBetweenTiles(auxTile.position, previousTile, _boardWidth));
             if(tiles.Count > 1) tiles.RemoveAt(tiles.Count - 1);
-            return tiles[tiles.Count - 1].position;
+            prevTile = tiles[tiles.Count - 1].position;
         }
 
-        public int ProvisionalCut(int position)
+        public void ProvisionalCut(int position, out int prevTile)
         {
             TileInfo searchTile = tiles[0];
             int k = 0;
@@ -160,7 +165,9 @@ namespace flow
             }
 
             provisionalCutPosition = k;
-            return tiles[k - 1].position;
+
+            prevTile = tiles[k - 1].position;
+            //return tiles[k - 1].position;
         }
 
         public void RecalculateCut(Flow other, int position)

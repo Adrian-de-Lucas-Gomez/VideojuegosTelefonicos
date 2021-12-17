@@ -228,8 +228,10 @@ namespace flow
                         isBuildingFlow = true;
                         if (!tiles[newTile].IsOrigin())
                         {
-                            int previousPos = flows[currentFlow].CutFlow(newTile);
-                            flows[currentFlow].AddToFlow(tiles[newTile], newTile, DirectionUtils.DirectionBetweenTiles(previousPos, newTile, boardWidth));
+                            int prevPos;
+                            flows[currentFlow].CutFlow(newTile, out prevPos);
+                            //Debug.Log(prevPos);
+                            flows[currentFlow].AddToFlow(tiles[newTile], newTile, DirectionUtils.DirectionBetweenTiles(prevPos, newTile, boardWidth));
                         }
                         flows[currentFlow].SetClosed(false);
                     }
@@ -245,13 +247,14 @@ namespace flow
                         {
                             if (tiles[newTile].IsActive()) //La casilla forma parte de un flujo
                             {
+                                int prevPos;
                                 if (newFlow != currentFlow) //Nos hemos cruzado con otro flujo
                                 {
                                     if (!tiles[newTile].IsOrigin())
                                     {
                                         //Cortar el otro flujo y avanzar en esa direccion
-                                        int previousTile = flows[newFlow].ProvisionalCut(newTile);
-                                        tiles[previousTile].ClearDirection(DirectionUtils.DirectionBetweenTiles(previousTile, newTile, boardWidth));
+                                        flows[newFlow].ProvisionalCut(newTile, out prevPos);
+                                        tiles[prevPos].ClearDirection(DirectionUtils.DirectionBetweenTiles(prevPos, newTile, boardWidth));
                                         flows[currentFlow].AddToFlow(tiles[newTile], newTile, DirectionUtils.DirectionBetweenTiles(currentTile, newTile, boardWidth));
                                         currentTile = newTile;
                                     }
@@ -269,16 +272,16 @@ namespace flow
                                         }
                                         else
                                         {
-                                            flows[currentFlow].CutFlow(newTile);
+                                            flows[currentFlow].CutFlow(newTile, out prevPos);
                                             for (int k = 0; k < flows.Count; k++) if (k != currentFlow) flows[k].RecalculateCut(flows[currentFlow], newTile);
-                                            //flows[currentFlow].addToFlow(tiles[newTile], newTile, DirectionFromTile(lastTileInFlow, newTile));
+                                            //flows[currentFlow].AddToFlow(tiles[newTile], newTile, DirectionFromTile(prevPos, newTile));
                                             currentTile = newTile;
                                         }
                                     }
                                     else
                                     {
-                                        int lastTileInFlow = flows[currentFlow].CutFlow(newTile);
-                                        flows[currentFlow].AddToFlow(tiles[newTile], newTile, DirectionUtils.DirectionBetweenTiles(lastTileInFlow, newTile, boardWidth));
+                                        flows[currentFlow].CutFlow(newTile, out prevPos);
+                                        flows[currentFlow].AddToFlow(tiles[newTile], newTile, DirectionUtils.DirectionBetweenTiles(prevPos, newTile, boardWidth));
                                         for (int k = 0; k < flows.Count; k++) if (k != currentFlow) flows[k].RecalculateCut(flows[currentFlow], newTile);
                                         currentTile = newTile;
                                     }
@@ -319,7 +322,8 @@ namespace flow
                     if (occupyingFlow != flowToChange)
                     {
                         flows[occupyingFlow].SetTransparentBackground(false);
-                        int prevPos = flows[occupyingFlow].CutFlow(currentTile);
+                        int prevPos;
+                        flows[occupyingFlow].CutFlow(currentTile, out prevPos);
                         tiles[prevPos].ClearDirection(DirectionUtils.DirectionBetweenTiles(prevPos, currentTile, boardWidth));
                         flows[occupyingFlow].SetTransparentBackground(true);
                     }
