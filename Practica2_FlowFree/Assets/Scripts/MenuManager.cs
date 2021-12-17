@@ -28,7 +28,6 @@ namespace flow
         [SerializeField] Transform categoriesParent;
         //Para LevelsMenu
         [SerializeField] Transform levelPageParent;
-        private Transform levelButtonParent;
         [SerializeField] Text levelsMenuTitle;
 
         //Prefabs
@@ -40,6 +39,7 @@ namespace flow
         private Menu currentMenu = Menu.MAIN;
         private Categories currentCategory = null;
         private LevelPack currentlevelPack = null;
+        private Transform levelButtonParent;
 
 
         private void LoadMainMenu()
@@ -100,10 +100,9 @@ namespace flow
         void Start()
         {
 #if UNITY_EDITOR
-            if (mainMenu == null || levelsMenu == null || categories.Length == 0 || categoriesParent == null ||
+            if (mainMenu == null || levelsMenu == null || categoriesParent == null ||
                 categoryCardPrefab == null || levelPackCardPrefab == null || levelPagePrefab == null ||
-                levelPageParent == null || levelsMenuTitle == null || levelButtonParent == null ||
-                levelButtonPrefab == null)
+                levelPageParent == null || levelsMenuTitle == null || levelButtonPrefab == null)
             {
                 Debug.LogError("MenuManager: Alguna variable no tiene valor asociado desde el editor.");
                 return;
