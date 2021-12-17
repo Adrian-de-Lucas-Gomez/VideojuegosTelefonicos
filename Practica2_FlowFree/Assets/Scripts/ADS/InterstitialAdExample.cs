@@ -1,14 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 using UnityEngine.Advertisements;
 
-public class InterstitialAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
+public class InterstitialAdExample : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
 {
     [SerializeField] string _androidAdUnitId = "Interstitial_Android";
     [SerializeField] string _iOsAdUnitId = "Interstitial_iOS";
-    string _adUnitId=null;
+    string _adUnitId;
 
     void Awake()
     {
@@ -16,14 +13,6 @@ public class InterstitialAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnit
         _adUnitId = (Application.platform == RuntimePlatform.IPhonePlayer)
             ? _iOsAdUnitId
             : _androidAdUnitId;
-
-        Advertisement.Initialize(_adUnitId, true);
-
-    }
-
-    void Start()
-    {
-
     }
 
     // Load content to the Ad Unit:

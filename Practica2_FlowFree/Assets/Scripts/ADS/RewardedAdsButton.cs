@@ -7,29 +7,18 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
     [SerializeField] Button _showAdButton;
     [SerializeField] string _androidAdUnitId = "Rewarded_Android";
     [SerializeField] string _iOSAdUnitId = "Rewarded_iOS";
-    string _adUnitId = null;
+    string _adUnitId;
 
     // Get the Ad Unit ID for the current platform:
-    //_adUnitId = null; // This will remain null for unsupported platforms
-//#if UNITY_IOS
-//		            _adUnitId = _iOsAdUnitId;
-//#elif UNITY_ANDROID
-//    _adUnitId = _androidAdUnitId;
-//#endif
+    
 
     void Awake()
     {
-        //Disable button until ad is ready to show
-        //_showAdButton.interactable = false;
-        // Get the Ad Unit ID for the current platform:
         _adUnitId = (Application.platform == RuntimePlatform.IPhonePlayer)
             ? _iOSAdUnitId
             : _androidAdUnitId;
-    }
-
-    void Start()
-    {
-        Advertisement.Initialize(_adUnitId, true);
+        //Disable button until ad is ready to show
+        //_showAdButton.interactable = false;
     }
 
     // Load content to the Ad Unit:
@@ -50,7 +39,7 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
             // Configure the button to call the ShowAd() method when clicked:
             _showAdButton.onClick.AddListener(ShowAd);
             // Enable the button for users to click:
-            _showAdButton.interactable = true;
+            //_showAdButton.interactable = true;
         }
     }
 
@@ -58,7 +47,7 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
     public void ShowAd()
     {
         // Disable the button: 
-        _showAdButton.interactable = false;
+        //_showAdButton.interactable = false;
         // Then show the ad:
         Advertisement.Show(_adUnitId, this);
     }

@@ -1,9 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
-
 using UnityEngine.Advertisements;
 
-public class BannerAds : MonoBehaviour
+public class BannerAdExample : MonoBehaviour
 {
     // For the purpose of this example, these buttons are for functionality testing:
     [SerializeField] Button _loadBannerButton;
@@ -22,7 +21,6 @@ public class BannerAds : MonoBehaviour
         _showBannerButton.interactable = false;
         _hideBannerButton.interactable = false;
 
-        Advertisement.Initialize(_adUnitId, true);
         // Set the banner position:
         Advertisement.Banner.SetPosition(_bannerPosition);
 

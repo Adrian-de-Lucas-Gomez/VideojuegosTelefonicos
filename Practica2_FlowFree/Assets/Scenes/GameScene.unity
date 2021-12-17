@@ -1273,6 +1273,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2b144e0e5a743d645a04295ef9e5539d, type: 2}
   - {fileID: 11400000, guid: 9fb0086823088564ab02409289d63c9e, type: 2}
   levelManager: {fileID: 1462976382}
+  data:
+    categories: []
+    hints: 0
 --- !u!4 &2089665304
 Transform:
   m_ObjectHideFlags: 0
