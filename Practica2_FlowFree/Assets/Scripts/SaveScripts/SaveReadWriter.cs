@@ -24,14 +24,15 @@ public class SaveReadWriter
         saveFile.data = data;   //Metemos los datos del progreso
 
         //Generamos el JSON solo con data (ignoramos el hash)
-        string serializedData = JsonUtility.ToJson(saveFile.data, true);
+        string serializedData = JsonUtility.ToJson(saveFile.data);
 
         //Sacamos el hash de los datos serializados
         byte[] aux = Encoding.UTF8.GetBytes(serializedData);
-        saveFile.hash = Encoding.UTF8.GetString(hashMaker.ComputeHash(aux));
+        byte[] byteHash = hashMaker.ComputeHash(aux);
+        saveFile.hash = Encoding.UTF8.GetString(byteHash);
 
         //Volvemos a hacer un Json ahora teniendo hash y progreso
-        string reSerializedData = JsonUtility.ToJson(saveFile, true);
+        string reSerializedData = JsonUtility.ToJson(saveFile);
 
         if (File.Exists(savePath + fileName))
         {
@@ -64,10 +65,16 @@ public class SaveReadWriter
         //Comprobacion del hash guardado y el que crearemos
         string auxJson = JsonUtility.ToJson(dataFromJson.data);
         byte[] progressRead = Encoding.UTF8.GetBytes(auxJson);
+        byte[] byteHash = hashMaker.ComputeHash(progressRead);
 
-        string newHash = Encoding.UTF8.GetString(hashMaker.ComputeHash(progressRead));
+        string newHash = Encoding.UTF8.GetString(byteHash);
 
-        if (dataFromJson.hash != newHash)
+        string oldHash = dataFromJson.hash;
+
+        Debug.Log(oldHash);
+        Debug.Log(newHash);
+
+        if (string.Compare(newHash, oldHash) != 0)
         {
             //Los hash no coinciden y por lo tantose ha modificado externamente
             Debug.Log("Error: Archivo modificado externamente");
