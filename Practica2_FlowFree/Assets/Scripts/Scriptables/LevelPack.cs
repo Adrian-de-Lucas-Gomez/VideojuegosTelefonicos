@@ -22,7 +22,7 @@ namespace flow
         void OnEnable()
         {
 #if UNITY_EDITOR
-            if (title == null || levelsFile == null || skin == null || groupTitles.Length == 0 || colors.Length == 0)
+            if (title == null || levelsFile == null || skin == null)
             {
                 Debug.LogError("LevelPack: faltan variables por asignar en el ScriptableObject.");
                 return;
