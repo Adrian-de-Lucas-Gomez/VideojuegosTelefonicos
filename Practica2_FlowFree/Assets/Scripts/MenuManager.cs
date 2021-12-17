@@ -100,9 +100,10 @@ namespace flow
         void Start()
         {
 #if UNITY_EDITOR
-            if (categories.Length == 0 || categoriesParent == null || categoryCardPrefab == null ||
-                levelPackCardPrefab == null || levelPagePrefab == null || levelPageParent == null ||
-                levelsMenuTitle == null)
+            if (mainMenu == null || levelsMenu == null || categories.Length == 0 || categoriesParent == null ||
+                categoryCardPrefab == null || levelPackCardPrefab == null || levelPagePrefab == null ||
+                levelPageParent == null || levelsMenuTitle == null || levelButtonParent == null ||
+                levelButtonPrefab == null)
             {
                 Debug.LogError("MenuManager: Alguna variable no tiene valor asociado desde el editor.");
                 return;
@@ -134,10 +135,9 @@ namespace flow
             // -El LevelPack del que se quiere salir para actualizar si has completado niveles
             // -Borrar todo lo instanciado (level pages) en LEVELS 
 
-            for (int i = levelPageParent.childCount - 1; i >= 0; ++i)
+            foreach (Transform child in levelPageParent.transform)
             {
-                GameObject child = levelPageParent.GetChild(i).gameObject;
-                Destroy(child);
+                GameObject.Destroy(child.gameObject);
             }
 
             currentlevelPack = null;
