@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
@@ -8,15 +6,15 @@ using System.Security.Cryptography;
 
 public class SaveReadWriter
 {
-    [SerializeField] string fileName;
-    private string savePath = "Assets/SaveProgress/";
+    private string fileName = "SaveFile.json";
+    private string savePath = "Assets/";
     SHA256 hashMaker;
     public void Init()
     {
         //Creamos el generador de hash
         hashMaker = SHA256.Create();
     }
-    public void SaveData(flow.ProgressData data)
+    public void SaveData(in flow.ProgressData data)
     {
         flow.SaveData saveFile = new flow.SaveData();
 
@@ -28,19 +26,34 @@ public class SaveReadWriter
 
         //Sacamos el hash de los datos serializados
         byte[] aux = Encoding.UTF8.GetBytes(serializedData);
-        saveFile.hash = Encoding.UTF8.GetString(hashMaker.ComputeHash(aux));
-    
+        byte[] byteHash = hashMaker.ComputeHash(aux);
+        saveFile.hash = Encoding.UTF8.GetString(byteHash);
+
         //Volvemos a hacer un Json ahora teniendo hash y progreso
-        serializedData = JsonUtility.ToJson(saveFile);
+        string reSerializedData = JsonUtility.ToJson(saveFile);
+
+        if (File.Exists(savePath + fileName))
+        {
+            File.Delete(savePath + fileName);
+        }
 
         //Escribimos el Json generado
-        FileStream outStream = File.Open(savePath, FileMode.Create);
-        outStream.Write(Encoding.UTF8.GetBytes(serializedData), 0, serializedData.Length);
+        FileStream outStream = File.Open(savePath + fileName, FileMode.Create);
+
+        byte[] aux2= Encoding.UTF8.GetBytes(reSerializedData);
+
+        outStream.Write(aux2, 0, aux2.Length);
         outStream.Close();
     }
 
     public flow.ProgressData LoadData()
     {
+        if (!File.Exists(savePath + fileName))  //Si no existe no se busca
+        {
+            Debug.Log("No hay guardados previos...Omitiendo carga...");
+            return null;
+        }
+
         flow.SaveData dataFromJson;
         string jsonSave = File.ReadAllText(savePath + fileName, Encoding.UTF8);
 
@@ -51,10 +64,16 @@ public class SaveReadWriter
         //Comprobacion del hash guardado y el que crearemos
         string auxJson = JsonUtility.ToJson(dataFromJson.data);
         byte[] progressRead = Encoding.UTF8.GetBytes(auxJson);
+        byte[] byteHash = hashMaker.ComputeHash(progressRead);
 
-        string newHash = Encoding.UTF8.GetString(hashMaker.ComputeHash(progressRead));
+        string newHash = Encoding.UTF8.GetString(byteHash);
 
-        if (dataFromJson.hash != newHash)
+        string oldHash = dataFromJson.hash;
+
+        //Debug.Log(oldHash);
+        //Debug.Log(newHash);
+
+        if (string.Compare(newHash, oldHash) != 0)
         {
             //Los hash no coinciden y por lo tantose ha modificado externamente
             Debug.Log("Error: Archivo modificado externamente");

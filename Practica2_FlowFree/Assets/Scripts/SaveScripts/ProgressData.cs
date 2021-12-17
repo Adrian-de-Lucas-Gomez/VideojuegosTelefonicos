@@ -1,16 +1,17 @@
 using System;
+using UnityEngine;
 
 namespace flow
 {
     [Serializable]
-    public struct CategoryProgress
+    public class CategoryProgress
     {
         public string categoryName;
         public PackProgress[] packs;
     }
 
     [Serializable]
-    public struct PackProgress
+    public class PackProgress
     {
         public string packName;
         public LevelProgress[] levels;
@@ -19,7 +20,7 @@ namespace flow
     }
 
     [Serializable]
-    public struct LevelProgress
+    public class LevelProgress
     {
         public int moveRecord;
         public bool completed;
@@ -29,11 +30,11 @@ namespace flow
     public class ProgressData
     {
         //Poner aquí los datos relevantes para el guardado
-        private CategoryProgress[] categories;
-        private int hints;
+        public CategoryProgress[] categories;
+        public int hints;
 
         //Array de categorias dado por el GameManager
-        public ProgressData(Categories[] cat)
+        public void Init(Categories[] cat)
         {
             hints = 3;
 
@@ -41,6 +42,8 @@ namespace flow
 
             for(int i=0; i < categories.Length; i++)
             {
+                categories[i] = new CategoryProgress();
+
                 categories[i].categoryName = cat[i].title;
 
                 categories[i].packs = new PackProgress[cat[i].packs.Length];
@@ -48,6 +51,8 @@ namespace flow
                 for(int j=0; j < categories[i].packs.Length; j++)
                 {
                     PackProgress[] aux = categories[i].packs;
+
+                    aux[j] = new PackProgress();
 
                     aux[j].packName = cat[i].packs[j].title;
                     aux[j].levelsCompleted = 0;
@@ -64,7 +69,8 @@ namespace flow
 
                     for (int k = 0; k < numLevels; k++)
                     {
-                        //aux[j].levels[k] = new LevelProgress();
+                        aux[j].levels[k] = new LevelProgress();
+
                         aux[j].levels[k].moveRecord = 0;
                         aux[j].levels[k].completed = false;
                     }
@@ -72,12 +78,12 @@ namespace flow
             }
         }
 
-        //Para recuperar datos de otros guardados
-        public ProgressData(ProgressData data)
-        {
-            hints = data.hints;
-            categories = data.categories;
-        }
+        ////Para recuperar datos de otros guardados
+        //public ProgressData(ProgressData data)
+        //{
+        //    hints = data.hints;
+        //    categories = data.categories;
+        //}
 
 
         //Métodos para modificar el progeso en el juego
