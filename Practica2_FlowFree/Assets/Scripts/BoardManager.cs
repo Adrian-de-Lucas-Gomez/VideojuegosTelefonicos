@@ -32,12 +32,14 @@ namespace flow
 
         //+++++++++++
 
-        //Input
+        //Gameplay
         private int currentTile = 0;
         private int currentFlow = 0;
         private int previousFlow = int.MaxValue;
         private bool isBuildingFlow = false;
 
+        private int numFillableTiles = 0;
+        private int numFilledTiles = 0;
 
         public void Start()
         {
@@ -53,7 +55,8 @@ namespace flow
         public void Update()
         {
             HandleInput(); //TODO:
-
+            GetPercentageFilled();
+            if(!finished)Debug.Log("Porcentaje completado: " + (float)(float)numFilledTiles / (float)numFillableTiles +". Fichas rellenadas: " + numFilledTiles);
             if (!finished) { checkFlows(); }
         }
 
@@ -84,8 +87,8 @@ namespace flow
 
                 if (correct)
                 {
-                    //Avisamos al level manager para que muestre la interfaz correspondiente y ya el avisará a quien toque
-                    Debug.Log("Menuda leyenda de los flujos estás hecho");
+                    //Avisamos al level manager para que muestre la interfaz correspondiente y ya el avisarï¿½ a quien toque
+                    Debug.Log("Menuda leyenda de los flujos estï¿½s hecho");
                     finished = true;
 
                     //Llamada al metodo boardSolved de LevelManager
@@ -116,6 +119,9 @@ namespace flow
             {
                 boardWidth = boardHeight = int.Parse(auxInfo[0]);
             }
+
+            numFillableTiles = boardWidth * boardHeight - (nFlows * 2);
+            Debug.Log("Tiles jugables: " + numFillableTiles);
 
             //auxInfo[4] son los puentes: No se procesan
 
@@ -266,15 +272,21 @@ namespace flow
                         currentTile = newTile;
                         currentFlow = tiles[currentTile].GetColor();
                         //Partimos de un punto del flow. Cortamos hasta ese punto.
-                        flows[currentFlow].StartBuildingFlow(tiles[currentTile], currentTile);
                         isBuildingFlow = true;
-                        if (!tiles[newTile].IsOrigin())
+                        flows[currentFlow].SetTransparentBackground(false);
+                        if (!tiles[newTile].IsOrigin()) //Si NO es origen
                         {
                             int prevPos;
                             flows[currentFlow].CutFlow(newTile, out prevPos);
                             //Debug.Log(prevPos);
                             flows[currentFlow].AddToFlow(tiles[newTile], newTile, DirectionUtils.DirectionBetweenTiles(prevPos, newTile, boardWidth));
+                            numFilledTiles++;
                         }
+                        else
+                        {
+                            flows[currentFlow].ClearFlow();
+                        }
+                        flows[currentFlow].StartBuildingFlow(tiles[currentTile], currentTile);
                         flows[currentFlow].SetClosed(false);
                     }
                 }
@@ -298,6 +310,7 @@ namespace flow
                                         flows[newFlow].ProvisionalCut(newTile, out prevPos);
                                         tiles[prevPos].ClearDirection(DirectionUtils.DirectionBetweenTiles(prevPos, newTile, boardWidth));
                                         flows[currentFlow].AddToFlow(tiles[newTile], newTile, DirectionUtils.DirectionBetweenTiles(currentTile, newTile, boardWidth));
+                                        numFilledTiles++;
                                         currentTile = newTile;
                                     }
                                 }
@@ -324,6 +337,7 @@ namespace flow
                                     {
                                         flows[currentFlow].CutFlow(newTile, out prevPos);
                                         flows[currentFlow].AddToFlow(tiles[newTile], newTile, DirectionUtils.DirectionBetweenTiles(prevPos, newTile, boardWidth));
+                                        numFilledTiles++;
                                         for (int k = 0; k < flows.Count; k++) if (k != currentFlow) flows[k].RecalculateCut(flows[currentFlow], newTile);
                                         currentTile = newTile;
                                     }
@@ -333,6 +347,7 @@ namespace flow
                             else //La casilla esta vacia
                             {
                                 flows[currentFlow].AddToFlow(tiles[newTile], newTile, DirectionUtils.DirectionBetweenTiles(currentTile, newTile, boardWidth));
+                                numFilledTiles++;
                                 currentTile = newTile;
                             }
                         }
@@ -341,19 +356,28 @@ namespace flow
             }
         }
 
+        private void GetPercentageFilled()
+        {
+            numFilledTiles = 0;
+            for(int k = 0; k < flows.Count; k++)
+            {
+                numFilledTiles += flows[k].GetFilledTiles();
+            }
+        }
+
         private void ApplyHint(int flowToChange)
         {
             flows[flowToChange].ClearFlow();
-
             List<int> flowSolution = solution[flowToChange];
 
             int previousTile = flowSolution[0];
             int currentTile;
 
+            flows[flowToChange].ClearFlow();
+            flows[flowToChange].SetTransparentBackground(false);
             flows[flowToChange].StartBuildingFlow(tiles[previousTile], flowSolution[0]);
 
             int occupyingFlow;
-
             for (int k = 1; k < flowSolution.Count; k++)
             {
                 currentTile = flowSolution[k];

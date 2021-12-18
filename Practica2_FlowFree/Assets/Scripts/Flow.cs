@@ -22,7 +22,7 @@ namespace flow
         private Color _renderColor;
 
         private bool closed = false;
-        private bool isComlpetedInProvisionalCut = true;
+        private bool closedInProvisionalCut = false;
         private bool wasSolvedByHint = false;
 
         public Flow(int c, Color rc, int boardWidth)
@@ -37,19 +37,8 @@ namespace flow
 
         public void StartBuildingFlow(Tile tile, int pos)
         {
-            if (tile.IsOrigin())
-            {
-                if (tiles.Count >= 1) //El camino ya está empezado, hay que limpiarlo todo
-                {
-                    ClearFlow();
-                }
-                tiles.Add(new TileInfo(tile, pos));
-            }
-            else
-            {
-                SetTransparentBackground(false);
-                CloseSmallCircle();
-            }
+            if (tiles.Count == 0) tiles.Add(new TileInfo(tile, pos));
+            CloseSmallCircle();
         }
 
         public void CloseSmallCircle()
@@ -75,6 +64,7 @@ namespace flow
         public void SetClosed(bool state)
         {
             closed = state;
+            closedInProvisionalCut = state;
         }
 
         public void SetHintMarkerVisibility(bool visibility)
@@ -95,44 +85,48 @@ namespace flow
                     tiles[k].tile.ResetData();
                 }
                 tiles.RemoveRange(1, tiles.Count - 1);
+                prevTile = tiles[0].position;
             }
 
-            TileInfo auxTile = tiles[tiles.Count - 1];
-            if (closed)
+            else
             {
-                SetClosed(false);
-                SetHintMarkerVisibility(false);
-                //Buscamos la posicion de corte
-                int aux = 0;
-                while(auxTile.position != tilePos)
+                TileInfo auxTile = tiles[tiles.Count - 1];
+                if (closed)
                 {
-                    auxTile = tiles[aux];
-                    aux++;
+                    SetClosed(false);
+                    SetHintMarkerVisibility(false);
+                    //Buscamos la posicion de corte
+                    int aux = 0;
+                    while (auxTile.position != tilePos)
+                    {
+                        auxTile = tiles[aux];
+                        aux++;
+                    }
+
+                    //El camino más largo es de Origen -> Punto a cortar
+                    if (aux <= ((tiles.Count - 1) / 2))
+                    {
+                        tiles.Reverse();
+                    }
+
+                    //Si no, el camino más largo es de Fin -> Punto a cortar
+
+                    auxTile = tiles[tiles.Count - 1];
                 }
 
-                //El camino más largo es de Origen -> Punto a cortar
-                if (aux <= ((tiles.Count - 1) / 2))
+                while (auxTile.position != tilePos)
                 {
-                    tiles.Reverse();
+                    auxTile.tile.ResetData();
+                    tiles.RemoveAt(tiles.Count - 1);
+                    auxTile = tiles[tiles.Count - 1];
                 }
-
-                //Si no, el camino más largo es de Fin -> Punto a cortar
-
-                auxTile = tiles[tiles.Count - 1];
-            }
-
-            int previousTile = auxTile.position;
-            while (auxTile.position != tilePos)
-            {
                 auxTile.tile.ResetData();
-                previousTile = auxTile.position;
-                tiles.RemoveAt(tiles.Count - 1);
-                auxTile = tiles[tiles.Count - 1];
+                if (tiles.Count > 1)
+                {
+                    tiles.RemoveAt(tiles.Count - 1);
+                }
+                prevTile = tiles[tiles.Count - 1].position;
             }
-            auxTile.tile.ResetData();
-            //auxTile.tile.ClearDirection(DirectionUtils.DirectionBetweenTiles(auxTile.position, previousTile, _boardWidth));
-            if(tiles.Count > 1) tiles.RemoveAt(tiles.Count - 1);
-            prevTile = tiles[tiles.Count - 1].position;
         }
 
         public void ProvisionalCut(int position, out int prevTile)
@@ -148,26 +142,22 @@ namespace flow
 
             if (closed)
             {
-                if(k < ((tiles.Count - 1) / 2) && isComlpetedInProvisionalCut)
+                if(k < ((tiles.Count - 1) / 2) && closedInProvisionalCut)
                 {
                     tiles.Reverse();
                     k = tiles.Count - k - 1;
                 }
                 SetHintMarkerVisibility(false);
-                isComlpetedInProvisionalCut = false;
+                closedInProvisionalCut = false;
             }
-
             //Nos guardamos el resto de tiles en el flujo.
             //Al resto les quitamos los dibujitos.
             for(int l = k; l < tiles.Count; l++)
             {
                 if (tiles[l].tile.GetColor() == _color) tiles[l].tile.ResetData();
             }
-
             provisionalCutPosition = k;
-
             prevTile = tiles[k - 1].position;
-            //return tiles[k - 1].position;
         }
 
         public void RecalculateCut(Flow other, int position)
@@ -182,12 +172,13 @@ namespace flow
                     tiles[provisionalCutPosition].tile.SetDirection(DirectionUtils.GetOppositeDirection(dir));
                     tiles[provisionalCutPosition].tile.SetColor(_color);
                     tiles[provisionalCutPosition].tile.SetTempColor(_renderColor);
+                    tiles[provisionalCutPosition].tile.ShowTransparentBackground(_renderColor);
                     provisionalCutPosition++;
                     finished = (provisionalCutPosition >= tiles.Count || other.Contains(tiles[provisionalCutPosition].position));
                 }
                 if (closed && tiles[0].tile.GetColor() == _color)
                 {
-                    isComlpetedInProvisionalCut = true;
+                    closedInProvisionalCut = true;
                     SetHintMarkerVisibility(true);
                 }
             }
@@ -197,7 +188,7 @@ namespace flow
         {
             if(provisionalCutPosition > 0)
             {
-                isComlpetedInProvisionalCut = true;
+                closedInProvisionalCut = true;
                 if (provisionalCutPosition < tiles.Count)
                 {
                     SetClosed(false);
@@ -239,6 +230,18 @@ namespace flow
             return isSolved;
         }
 
+        public int GetFilledTiles()
+        {
+            if(provisionalCutPosition > -1) //Si está siendo cortado por otro flow pero no se ha aplicado aún
+            {
+                if (closedInProvisionalCut) return tiles.Count - 2; //No cuentan los extremos
+                else return provisionalCutPosition - 1;
+            }
+            if (closed) return tiles.Count - 2;
+            if (tiles.Count > 1) return tiles.Count - 1;
+            return 0;
+        }
+
         public void SetAsSolvedByHint()
         {
             wasSolvedByHint = true;
@@ -259,12 +262,12 @@ namespace flow
 
         public void ClearFlow()
         {
-            if (closed) SetHintMarkerVisibility(false);
             for(int k = 0; k < tiles.Count; k++)
             {
                 tiles[k].tile.HideTransparentBackground();
                 tiles[k].tile.ResetData();
             }
+            int tilesChanged = tiles.Count - 1;
             tiles.Clear();
         }
 
