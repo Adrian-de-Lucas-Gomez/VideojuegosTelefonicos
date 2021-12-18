@@ -11,6 +11,7 @@ namespace flow
     /// </summary>
     public class LevelManager : MonoBehaviour
     {
+        [SerializeField] GameObject winPanel;
         [SerializeField] BoardManager boardManager;
 
         private void Start()
@@ -21,7 +22,13 @@ namespace flow
                 Debug.LogError("LevelManager: Alguna variable no tiene valor asociado desde el editor.");
                 return;
             }
-#endif
+            if(winPanel == null)
+            {
+                Debug.LogError("LevelManager: No se asigno el panel de victoria desde el editor.");
+                return;
+            }
+#endif      
+            winPanel.SetActive(false);
         }
 
         public void initializeLevel(int levelNumber, LevelPack pack)
@@ -33,10 +40,11 @@ namespace flow
             boardManager.GenerateBoard(level, pack.colors);
         }
 
-        public void boardSolved()
+        public void onLevelFinished()
         {
             //Aqui activamos el panel de "felicidades has ganado"
             Debug.Log("UWU resolviste el tablero");
+            winPanel.SetActive(true);
         }
     }
 }
