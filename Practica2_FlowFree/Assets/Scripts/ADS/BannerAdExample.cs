@@ -17,6 +17,10 @@ public class BannerAdExample : MonoBehaviour
 
     void Start()
     {
+        _adUnitId = (Application.platform == RuntimePlatform.IPhonePlayer)
+            ? _iOsAdUnitId
+            : _androidAdUnitId;
+
         // Disable the button until an ad is ready to show:
         _showBannerButton.interactable = false;
         _hideBannerButton.interactable = false;

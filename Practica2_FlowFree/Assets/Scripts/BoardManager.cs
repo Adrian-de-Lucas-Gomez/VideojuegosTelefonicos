@@ -28,6 +28,7 @@ namespace flow
 
         //++++Pruebas TODO:
         public Vector2 offset;
+        bool finished = false;
 
         //+++++++++++
 
@@ -52,6 +53,47 @@ namespace flow
         public void Update()
         {
             HandleInput(); //TODO:
+
+            if (!finished) { checkFlows(); }
+        }
+
+        private void checkFlows()
+        {
+            int i = 0;
+            //bool j = false;
+            bool closed = true;
+
+            while (i < flows.Count && closed)
+            {
+                closed = flows[i].isClosed();
+                i++;
+            }
+
+            if (closed)
+            {
+                Debug.Log("Flujos cerrados");
+                //j = true;
+                bool correct = true;
+                int flow = 0;
+
+                while (flow < flows.Count)
+                {
+                    correct = flows[flow].IsSolved(solution[flow]);
+                    flow++;
+                }
+
+                if (correct)
+                {
+                    //Avisamos al level manager para que muestre la interfaz correspondiente y ya el avisará a quien toque
+                    Debug.Log("Menuda leyenda de los flujos estás hecho");
+                    finished = true;
+
+                    //Llamada al metodo boardSolved de LevelManager
+                }
+                else {
+                    Debug.Log("Buen intento pero no");
+                }
+            }
         }
 
         public void ReadLevel(string level, ref List<int> emptyTiles, ref List<(int, int)> walls) //TODO: dberia estar aqui? o en un script bobo "board"??

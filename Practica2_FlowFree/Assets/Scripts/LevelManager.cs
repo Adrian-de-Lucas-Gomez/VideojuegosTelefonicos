@@ -32,5 +32,11 @@ namespace flow
 
             boardManager.GenerateBoard(level, pack.colors);
         }
+
+        public void boardSolved()
+        {
+            //Aqui activamos el panel de "felicidades has ganado"
+            Debug.Log("UWU resolviste el tablero");
+        }
     }
 }
