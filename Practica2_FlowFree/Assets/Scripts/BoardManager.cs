@@ -41,6 +41,8 @@ namespace flow
         private int numFillableTiles = 0;
         private int numFilledTiles = 0;
 
+        private int numMoves = 0;
+
         public void Start()
         {
 #if UNITY_EDITOR
@@ -56,7 +58,7 @@ namespace flow
         {
             HandleInput(); //TODO:
             GetPercentageFilled();
-            if(!finished)Debug.Log("Porcentaje completado: " + (float)(float)numFilledTiles / (float)numFillableTiles +". Fichas rellenadas: " + numFilledTiles);
+            //if(!finished)Debug.Log("Porcentaje completado: " + (float)(float)numFilledTiles / (float)numFillableTiles +". Fichas rellenadas: " + numFilledTiles);
             if (!finished) { checkFlows(); }
         }
 
@@ -190,12 +192,6 @@ namespace flow
 
                 tiles[solution[i][0]].SetTempColor(skin[i]);
                 tiles[solution[i][solution[i].Count - 1]].SetTempColor(skin[i]);
-
-                //Le indicamos la solucion
-                //for (int j = 1; j < solution[i].Count - 1; j++)
-                //{
-                //    flows[i].ConstructSolution(tiles[solution[i][j]], solution[i][j]);
-                //}
             }
 
             //Asignar casillas vacias
@@ -247,16 +243,17 @@ namespace flow
                     flows[previousFlow].CloseSmallCircle();
                 }
 
-                previousFlow = currentFlow;
-
                 if (currentFlow != int.MaxValue)
                 {
                     for (int k = 0; k < flows.Count; k++) if (k != currentFlow) flows[k].ApplyProvisionalCut();
                     flows[currentFlow].StopBuldingFlow();
-                    currentTile = int.MaxValue;
-                    currentFlow = int.MaxValue;
-                    isBuildingFlow = false;
+                    if (flows[currentFlow].ChangedInMove() && currentFlow != previousFlow) numMoves++;
                 }
+
+                previousFlow = currentFlow;
+                currentTile = int.MaxValue;
+                currentFlow = int.MaxValue;
+                isBuildingFlow = false;
             }
 
             if (IsPosInBoard(worldPos))

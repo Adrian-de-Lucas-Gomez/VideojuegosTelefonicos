@@ -25,6 +25,9 @@ namespace flow
         private bool closedInProvisionalCut = false;
         private bool wasSolvedByHint = false;
 
+        private int initialPosition = 0;
+        private bool hasChanged = false;
+
         public Flow(int c, Color rc, int boardWidth)
         {
             _color = c;
@@ -38,6 +41,8 @@ namespace flow
         public void StartBuildingFlow(Tile tile, int pos)
         {
             if (tiles.Count == 0) tiles.Add(new TileInfo(tile, pos));
+            initialPosition = pos;
+            hasChanged = false;
             CloseSmallCircle();
         }
 
@@ -49,7 +54,13 @@ namespace flow
         public void StopBuldingFlow()
         {
             SetTransparentBackground(true);
+            hasChanged = (initialPosition != tiles[tiles.Count - 1].position);
             if(!tiles[tiles.Count - 1].tile.IsOrigin()) tiles[tiles.Count - 1].tile.EnableSmallCircle(true);
+        }
+
+        public bool ChangedInMove()
+        {
+            return hasChanged;
         }
 
         public void AddToFlow(Tile newTile, int pos, Direction dir)
