@@ -30,8 +30,8 @@ namespace flow
     public class ProgressData
     {
         //Poner aquí los datos relevantes para el guardado
-        public CategoryProgress[] categories;
         public int hints;
+        public CategoryProgress[] categories;
 
         //Array de categorias dado por el GameManager
         public void Init(Categories[] cat)
@@ -91,17 +91,32 @@ namespace flow
         {
             LevelProgress aux = categories[nCat].packs[nPack].levels[nLevel];
             //En el progreso del propio nivel
-            aux.completed = true;
-            aux.moveRecord = nMoves;
-
-            //En el progreso del pack
-            PackProgress auxPack = categories[nCat].packs[nPack];
-
-            auxPack.levelsCompleted++;
-
-            if(auxPack.levelsUnlocked < auxPack.levels.Length)
+            
+            if (aux.completed)  //Si lo estamos rejugando
             {
-                auxPack.levelsUnlocked++;
+                Debug.Log("Rejugado");
+                if (nMoves < aux.moveRecord)  //Si mejoramos el record previo
+                {
+                    Debug.Log("Nuevo record");
+                    aux.moveRecord = nMoves;
+                }
+            }
+            else    //Si es la primera vez que lo jugamos
+            {
+                Debug.Log("Nueva entrada");
+
+                aux.completed = true;
+                aux.moveRecord = nMoves;
+
+                //En el progreso del pack
+                PackProgress auxPack = categories[nCat].packs[nPack];
+
+                auxPack.levelsCompleted++;
+
+                if (auxPack.levelsUnlocked < auxPack.levels.Length)
+                {
+                    auxPack.levelsUnlocked++;
+                }
             }
         }
 

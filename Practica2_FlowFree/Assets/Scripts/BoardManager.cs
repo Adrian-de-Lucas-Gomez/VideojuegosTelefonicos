@@ -93,7 +93,7 @@ namespace flow
                     finished = true;
 
                     //Llamada al onLevelFinished del GameManager para que guarde y avise al Level para que ponga la interfaz correspondiente
-                    GameManager.GetInstance().onLevelFinished(2);   //TODO el 2 es temporal, son los moves usados
+                    GameManager.GetInstance().onLevelFinished(numMoves);   //Son los moves usados
                 }
                 else {
                     Debug.Log("Buen intento pero no");

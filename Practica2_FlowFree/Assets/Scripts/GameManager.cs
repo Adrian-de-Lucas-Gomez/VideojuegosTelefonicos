@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -33,8 +35,16 @@ namespace flow
             }
             else
             {
+                //Pillar info del gameManager de esta escena
+                GetGMInfo(levelManager, categories);
                 Destroy(this);
             }
+        }
+
+        private void GetGMInfo(LevelManager levelManager, Categories[] categories)
+        {
+            instance.categories = categories;
+            instance.levelManager = levelManager; 
         }
 
         public static GameManager GetInstance()
@@ -52,15 +62,29 @@ namespace flow
                 return;
             }
 #endif
+            //Esto se debe de llamar cuando se cambie a una GameScene
+
             levelManager.initializeLevel(levelIndex, categories[categoryIndex].packs[packIndex]);
-            data = new ProgressData();
-            data.Init(categories);
 
             saveIO = new SaveReadWriter();
             saveIO.Init();
-            saveIO.SaveData(data);
 
-            data = saveIO.LoadData();
+            //Para limpiar archivo de guardado
+
+            //data = new ProgressData();
+            //data.Init(categories);
+            //saveIO.SaveData(data);
+
+            if (File.Exists("Assets/SaveFile.json"))
+            {
+                data = saveIO.LoadData();
+            }
+            else
+            {
+                data = new ProgressData();
+                data.Init(categories);
+            }
+
             if (data == null) { Debug.Log("No cargó bien los archivos"); }
         }
 
@@ -68,24 +92,20 @@ namespace flow
         {
             LevelProgress aux = data.categories[categoryIndex].packs[packIndex].levels[levelIndex];
 
-            if (aux.completed)  //Si lo estamos rejugando
-            {
-                if (moves < aux.moveRecord)  //Si mejoramos el record previo
-                {
-                    aux.moveRecord = moves;
-                }
-            }
-            else    //Si es la primera vez que lo jugamos
-            {
-                aux.completed = true;
-                aux.moveRecord = moves;
-            }
+            data.onLevelCompleted(categoryIndex, packIndex, levelIndex, moves);
+
             Debug.Log("Guardando datos");
             saveIO.SaveData(data);  //Guardamos el progreso al acabar el nivel
 
-
             //Avisamos al LevelManager para que ponga la ventanita correspondiente
             levelManager.onLevelFinished();
+        }
+
+        public void onHintUsed()
+        {
+            data.onHintUsed();
+            Debug.Log("Guardando datos");
+            saveIO.SaveData(data);  //Guardamos
         }
 
         public void ChangeScene(string name)
