@@ -16,7 +16,7 @@ namespace flow
         [SerializeField] Transform boardObject;
         [SerializeField] Vector2 posIni;
 
-        //Para nivel
+        //Generación del nivel
         //private string level = "5,0,1,5;18,17,12;21,16,11,6;3,4,9;0,1,2,7,8,13,14,19,24,23,22;20,15,10,5";
         private int levelNumber;
         private int nFlows;
@@ -32,7 +32,7 @@ namespace flow
 
         //+++++++++++
 
-        //Gameplay
+        //Lógica
         private int currentTile = 0;
         private int currentFlow = 0;
         private int previousFlow = int.MaxValue;
@@ -215,9 +215,7 @@ namespace flow
 
         private void HandleInput()
         {
-            Vector3 mousePos = Input.mousePosition;
-            mousePos.z = Camera.main.nearClipPlane;
-            Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos); //Escala??
+            Vector3 worldPos = PlayerInput.GetPointerPosition();
 
             if (Input.GetKeyDown(KeyCode.F))
             {
@@ -236,7 +234,7 @@ namespace flow
                 }
             }
 
-            if (Input.GetMouseButtonUp(0)) //Si el usuario acaba de liberar el boton izquierdo 
+            if (PlayerInput.JustUnpressed()) //Si el usuario acaba de liberar el boton izquierdo 
             {
                 if (previousFlow != int.MaxValue)
                 {
@@ -262,7 +260,7 @@ namespace flow
                 int newFlow = tiles[newTile].GetColor();
 
                 //0: boton izq, 1: boton der
-                if (Input.GetMouseButtonDown(0)) //Si el usuario acaba de pulsar el boton izquierdo 
+                if (PlayerInput.JustPressed()) //Si el usuario acaba de pulsar el boton izquierdo 
                 {
                     if (tiles[newTile].IsActive())
                     {
@@ -288,7 +286,7 @@ namespace flow
                     }
                 }
 
-                else if (Input.GetMouseButton(0) && isBuildingFlow) //Si el usuario esta pulsando el boton izquierdo
+                else if (PlayerInput.IsPressed() && isBuildingFlow) //Si el usuario esta pulsando el boton izquierdo
                 {
                     if(newTile != currentTile && !flows[currentFlow].isClosed()) //Nos hemos movido de casilla
                     {
