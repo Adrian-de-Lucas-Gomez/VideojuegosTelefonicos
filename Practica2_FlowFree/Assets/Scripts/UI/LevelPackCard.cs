@@ -49,7 +49,7 @@ namespace flow
 
         public void OnClick()
         {
-            levelPackTitle.color = Color.white;
+            //levelPackTitle.color = Color.white;
             menuManager.OnChooseLevelPack(pack, category);
         }
     }

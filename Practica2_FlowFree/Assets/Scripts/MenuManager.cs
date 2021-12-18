@@ -134,6 +134,7 @@ namespace flow
             // -El LevelPack del que se quiere salir para actualizar si has completado niveles
             // -Borrar todo lo instanciado (level pages) en LEVELS 
 
+            levelPageParent.transform.localPosition = Vector3.zero;
             foreach (Transform child in levelPageParent.transform)
             {
                 GameObject.Destroy(child.gameObject);
