@@ -1267,7 +1267,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   categoryIndex: 0
   packIndex: 0
-  levelIndex: 5
+  levelIndex: 0
   categories:
   - {fileID: 11400000, guid: 7f4a159cdad94794aa28c5ec8af02039, type: 2}
   - {fileID: 11400000, guid: 2b144e0e5a743d645a04295ef9e5539d, type: 2}

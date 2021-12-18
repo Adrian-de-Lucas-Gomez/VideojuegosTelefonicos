@@ -56,7 +56,7 @@ namespace flow
         {
             HandleInput(); //TODO:
             GetPercentageFilled();
-            if(!finished)Debug.Log("Porcentaje completado: " + (float)(float)numFilledTiles / (float)numFillableTiles +". Fichas rellenadas: " + numFilledTiles);
+            //if(!finished)Debug.Log("Porcentaje completado: " + (float)(float)numFilledTiles / (float)numFillableTiles +". Fichas rellenadas: " + numFilledTiles);
             if (!finished) { checkFlows(); }
         }
 
@@ -92,6 +92,7 @@ namespace flow
                     finished = true;
 
                     //Llamada al metodo boardSolved de LevelManager
+                    GameManager.GetInstance().onLevelFinished(2);   //TODO el 2 es temporal
                 }
                 else {
                     Debug.Log("Buen intento pero no");

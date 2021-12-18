@@ -21,6 +21,26 @@ namespace flow
         [SerializeField] ProgressData data;
         [SerializeField] SaveReadWriter saveIO;
 
+        private static GameManager instance;
+
+        void Awake()
+        {
+            if (instance == null)
+            {
+                instance = this;
+                DontDestroyOnLoad(this.gameObject);
+            }
+            else
+            {
+                Destroy(this);
+            }
+        }
+
+        public static GameManager GetInstance()
+        {
+            return instance;
+        }
+
         public void Start()
         {
 #if UNITY_EDITOR
@@ -41,6 +61,26 @@ namespace flow
 
             data = saveIO.LoadData();
             if (data == null) { Debug.Log("No cargó bien los archivos"); }
+        }
+
+        public void onLevelFinished(int moves)
+        {
+            LevelProgress aux = data.categories[categoryIndex].packs[packIndex].levels[levelIndex];
+
+            if (aux.completed)  //Si lo estamos rejugando
+            {
+                if (moves < aux.moveRecord)  //Si mejoramos el record previo
+                {
+                    aux.moveRecord = moves;
+                }
+            }
+            else    //Si es la primera vez que lo jugamos
+            {
+                aux.completed = true;
+                aux.moveRecord = moves;
+            }
+            Debug.Log("Guardadndo datos");
+            saveIO.SaveData(data);  //Guardamos el progreso al acabar el nivel
         }
     }
 }
