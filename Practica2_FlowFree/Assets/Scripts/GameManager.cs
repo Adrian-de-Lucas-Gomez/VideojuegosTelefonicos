@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace flow
 {
@@ -79,8 +80,17 @@ namespace flow
                 aux.completed = true;
                 aux.moveRecord = moves;
             }
-            Debug.Log("Guardadndo datos");
+            Debug.Log("Guardando datos");
             saveIO.SaveData(data);  //Guardamos el progreso al acabar el nivel
+
+
+            //Avisamos al LevelManager para que ponga la ventanita correspondiente
+            levelManager.onLevelFinished();
+        }
+
+        public void ChangeScene(string name)
+        {
+            SceneManager.LoadScene(name, LoadSceneMode.Single);
         }
     }
 }
