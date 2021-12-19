@@ -220,6 +220,7 @@ GameObject:
   - component: {fileID: 28513619}
   - component: {fileID: 28513618}
   - component: {fileID: 28513617}
+  - component: {fileID: 28513621}
   - component: {fileID: 28513620}
   m_Layer: 5
   m_Name: ExitButton
@@ -291,10 +292,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2089665303}
-        m_TargetAssemblyTypeName: flow.GameManager, Assembly-CSharp
-        m_MethodName: ChangeScene
-        m_Mode: 5
+      - m_Target: {fileID: 28513621}
+        m_TargetAssemblyTypeName: flow.GoMainMenuButton, Assembly-CSharp
+        m_MethodName: OnPressed
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -361,6 +362,18 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &28513621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28513615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 923f336c695aae2418a73e16d8d3b240, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &91239314
 GameObject:
   m_ObjectHideFlags: 0
