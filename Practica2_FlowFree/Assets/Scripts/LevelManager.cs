@@ -70,6 +70,20 @@ namespace flow
             boardManager.GenerateBoard(levelString, pack.skin.colors, boardScale());
         }
 
+        public void tryNextLevel()
+        {
+            GameManager auxMan = GameManager.GetInstance();
+
+            auxMan.NextLevel();
+
+            InitializeLevel(auxMan.selectedLevelString, auxMan.GetSelectedPack());
+        }
+        public void tryPrevLevel()
+        {
+            GameManager auxMan = GameManager.GetInstance();
+            auxMan.PrevLevel();
+            InitializeLevel(auxMan.selectedLevelString, auxMan.GetSelectedPack());
+        }
         public void OnLevelFinished()
         {
             //Aqui activamos el panel de "felicidades has ganado"

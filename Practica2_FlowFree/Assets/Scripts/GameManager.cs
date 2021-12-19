@@ -120,6 +120,21 @@ namespace flow
             levelManager.OnLevelFinished();
         }
 
+        public void NextLevel()
+        {
+            if(levelIndex < data.categories[categoryIndex].packs[packIndex].levels.Length - 1)
+            {
+                levelIndex++;
+            }
+            
+        }
+        public void PrevLevel()
+        {
+            if (levelIndex > 0)
+            {
+                levelIndex--;
+            }
+        }
         public void OnHintUsed()
         {
             data.OnHintUsed();
