@@ -56,10 +56,12 @@ namespace flow
 
         public void Update()
         {
-            HandleInput(); //TODO:
-            GetPercentageFilled();
-            //if(!finished)Debug.Log("Porcentaje completado: " + (float)(float)numFilledTiles / (float)numFillableTiles +". Fichas rellenadas: " + numFilledTiles);
-            if (!finished) { checkFlows(); }
+            if (!finished)
+            {
+                HandleInput(); //TODO:
+                GetPercentageFilled();
+                checkFlows();
+            }
         }
 
         private void checkFlows()
