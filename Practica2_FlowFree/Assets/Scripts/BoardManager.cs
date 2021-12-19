@@ -14,6 +14,7 @@ namespace flow
     {
         [SerializeField] GameObject tilePrefab;
         [SerializeField] Transform boardObject;
+        [SerializeField] SpriteRenderer pointerIndicatorSprite;
 
         //Generación del nivel
         private int levelNumber;
@@ -24,6 +25,8 @@ namespace flow
         private List<List<int>> solution;
         private List<Flow> flows;
         private List<Tile> tiles;
+        private PointerIndicator pointerIndicator;
+        private Color[] colors;
 
 
         //Lógica
@@ -43,7 +46,7 @@ namespace flow
         void Start()
         {
 #if UNITY_EDITOR
-            if (tilePrefab == null || boardObject == null)
+            if (tilePrefab == null || boardObject == null || pointerIndicatorSprite == null)
             {
                 Debug.LogError("BoardManager: Alguna variable no tiene valor asociado desde el editor.");
                 return;
@@ -88,7 +91,7 @@ namespace flow
 
                 if (correct)
                 {
-                    Debug.Log("Menuda leyenda de los flujos est�s hecho");
+                    Debug.Log("Menuda leyenda de los flujos estas hecho");
                     finished = true;
                     for (int k = 0; k < flows.Count; k++) flows[k].PlayEndingAnimation();
                     //Llamada al onLevelFinished del GameManager para que guarde y avise al Level para que ponga la interfaz correspondiente
@@ -176,9 +179,10 @@ namespace flow
         public int GetNumFlows()
         {
             int flowsDone = 0;
-            for(int i =0; i < flows.Count; i++)
+            for (int i = 0; i < flows.Count; i++)
             {
-                if (flows[i].IsSolved(solution[i])){
+                if (flows[i].IsSolved(solution[i]))
+                {
                     flowsDone++;
                 }
             }
@@ -191,13 +195,17 @@ namespace flow
         public float GetPercentage()
         {
             float aux = numFilledTiles;
-            return (aux/numFillableTiles)*100;
+            return (aux / numFillableTiles) * 100;
         }
+
         public void GenerateBoard(string level, Color[] skin)
         {
             tiles = new List<Tile>();
             flows = new List<Flow>();
             solution = new List<List<int>>();
+            colors = skin;
+            pointerIndicator = new PointerIndicator();
+            pointerIndicator.SetSprite(pointerIndicatorSprite);
 
             List<int> emptyTiles = new List<int>();
             List<(int, int)> walls = new List<(int, int)>();
@@ -221,13 +229,13 @@ namespace flow
             //Set-up de los caminos
             for(int i = 0; i < solution.Count; i++)
             {
-                flows.Add(new Flow(i, skin[i], boardWidth));
+                flows.Add(new Flow(i, colors[i], boardWidth));
 
                 //Asignamos el origen y el final de los caminos
                 flows[i].setOrigins(tiles[solution[i][0]], solution[i][0], tiles[solution[i][solution[i].Count - 1]], solution[i][solution[i].Count - 1]);
 
-                tiles[solution[i][0]].SetTempColor(skin[i]);
-                tiles[solution[i][solution[i].Count - 1]].SetTempColor(skin[i]);
+                tiles[solution[i][0]].SetTempColor(colors[i]);
+                tiles[solution[i][solution[i].Count - 1]].SetTempColor(colors[i]);
             }
 
             //Asignar casillas vacias
@@ -254,6 +262,7 @@ namespace flow
         private void HandleInput()
         {
             Vector3 worldPos = PlayerInput.GetPointerPosition();
+            pointerIndicator.SetPosition(worldPos);
 
             if (Input.GetKeyDown(KeyCode.F))
             {
@@ -286,6 +295,7 @@ namespace flow
                     if (flows[currentFlow].ChangedInMove() && currentFlow != previousFlow) numMoves++;
                 }
 
+                pointerIndicator.Hide();
                 previousFlow = currentFlow;
                 currentTile = int.MaxValue;
                 currentFlow = int.MaxValue;
@@ -320,12 +330,17 @@ namespace flow
                             flows[currentFlow].ClearFlow();
                         }
                         flows[currentFlow].StartBuildingFlow(tiles[currentTile], currentTile);
+                        pointerIndicator.Show(colors[currentFlow]);
+                        pointerIndicator.SetDarkened(false);
                         flows[currentFlow].SetClosed(false);
                     }
                 }
 
                 else if (PlayerInput.IsPressed() && isBuildingFlow) //Si el usuario esta pulsando el boton izquierdo
                 {
+                    if (tiles[newTile].GetColor() == currentFlow || !tiles[newTile].IsActive()) pointerIndicator.SetDarkened(false);
+                    else pointerIndicator.SetDarkened(true);
+
                     if (newTile != currentTile && !flows[currentFlow].isClosed()) //Nos hemos movido de casilla
                     {
                         Direction dir = DirectionUtils.DirectionBetweenTiles(currentTile, newTile, boardWidth);
@@ -386,6 +401,10 @@ namespace flow
                         }
                     }
                 }
+            }
+            else
+            {
+                pointerIndicator.SetDarkened(true);
             }
         }
 
