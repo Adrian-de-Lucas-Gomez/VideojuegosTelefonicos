@@ -24,6 +24,8 @@ namespace flow
         [SerializeField] ProgressData data;
         [SerializeField] SaveReadWriter saveIO;
 
+        [SerializeField] InterstitialAd interstitialAd;
+
         private static GameManager instance;
 
         void Awake()
@@ -44,7 +46,7 @@ namespace flow
         private void GetGMInfo(LevelManager levelManager, Categories[] categories)
         {
             instance.categories = categories;
-            instance.levelManager = levelManager; 
+            instance.levelManager = levelManager;
         }
 
         public static GameManager GetInstance()
@@ -66,6 +68,11 @@ namespace flow
 
             levelManager.initializeLevel(levelIndex, categories[categoryIndex].packs[packIndex]);
 
+            LoadCreateProgress();
+        }
+
+        public void LoadCreateProgress()
+        {
             saveIO = new SaveReadWriter();
             saveIO.Init();
 
@@ -79,13 +86,12 @@ namespace flow
             {
                 data = saveIO.LoadData();
             }
-            else
-            {
+
+            if (data == null) { 
+                Debug.Log("Creando nuevos datos");
                 data = new ProgressData();
                 data.Init(categories);
             }
-
-            if (data == null) { Debug.Log("No cargó bien los archivos"); }
         }
 
         public void onLevelFinished(int moves)
@@ -108,9 +114,19 @@ namespace flow
             saveIO.SaveData(data);  //Guardamos
         }
 
+        public void onHintAdded()
+        {
+            data.onHintAdded();
+            Debug.Log("Guardando datos");
+            saveIO.SaveData(data);  //Guardamos
+        }
+
         public void ChangeScene(string name)
         {
             SceneManager.LoadScene(name, LoadSceneMode.Single);
+
+            //Probabilidad de anuncio intersticial ????
+            interstitialAd.ShowAd();
         }
     }
 }

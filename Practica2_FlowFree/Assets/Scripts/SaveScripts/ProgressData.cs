@@ -122,7 +122,14 @@ namespace flow
 
         public void onHintUsed()
         {
+            //Quitamos pistas hasta que sean 0
             if (hints > 0) hints--;
+        }
+
+        public void onHintAdded()
+        {
+            //Añadimos pistas por ver el anuncio bonificado
+            hints++;
         }
     }
 
