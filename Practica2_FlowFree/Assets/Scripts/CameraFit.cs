@@ -76,10 +76,4 @@ public class CameraFit : MonoBehaviour
             }
         }
     }
-
-    //public void SetViewPort(RectTransform viewport)
-    //{
-    //    this.viewportRect = viewport;
-    //    FitViewPort();
-    //}
 }
