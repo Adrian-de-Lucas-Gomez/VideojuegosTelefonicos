@@ -185,5 +185,10 @@ namespace flow
         {
             return categories[categoryIndex].packs[packIndex];
         }
+
+        public ProgressData GetData()
+        {
+            return data;
+        }
     }
 }

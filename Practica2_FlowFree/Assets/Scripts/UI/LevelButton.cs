@@ -15,6 +15,7 @@ namespace flow
 
         private int levelIndex;
         private string levelString;
+        private bool _locked;
 
         void Start()
         {
@@ -27,26 +28,46 @@ namespace flow
 #endif
         }
 
-        public void ConfigureLevelButton(int id, Color color, string levelString)
+        public void ConfigureLevelButton(int id, Color color, string levelString, bool locked)
         {
             levelIndex = id;
             this.levelString = levelString;
 
             levelNumberText.text = levelIndex.ToString();
 
-            Color aux = color;
-            leftRightLines.color = aux;
-            upDownLines.color = aux;
-            aux.a = 110f / 255f;
-            background.color = aux;
+            _locked = locked;
+
+            if (!locked)
+            {
+                Color aux = color;
+                leftRightLines.color = aux;
+                upDownLines.color = aux;
+                aux.a = 110f / 255f;
+                background.color = aux;
+
+            }
+            else
+            {
+                Color aux = Color.grey;
+                leftRightLines.color = aux;
+                upDownLines.color = aux;
+                aux.a = 110f / 255f;
+                background.color = aux;
+            }
         }
 
         public void OnChooseLevel()
         {
-            GameManager gMng = GameManager.GetInstance();
-            gMng.selectedLevel = levelIndex;
-            gMng.selectedLevelString = levelString;
-            gMng.ChangeScene("GameScene");
+            if (!_locked) {
+                GameManager gMng = GameManager.GetInstance();
+                gMng.selectedLevel = levelIndex;
+                gMng.selectedLevelString = levelString;
+                gMng.ChangeScene("GameScene");
+            }
+            else
+            {
+                Debug.Log("Nivel no desbloqueado");
+            }
         }
     }
 }
