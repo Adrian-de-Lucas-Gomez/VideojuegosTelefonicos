@@ -1,18 +1,29 @@
 using UnityEngine;
 using UnityEngine.Advertisements;
 
-public class InterstitialAdExample : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
+public class InterstitialAd : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
 {
     [SerializeField] string _androidAdUnitId = "Interstitial_Android";
     [SerializeField] string _iOsAdUnitId = "Interstitial_iOS";
     string _adUnitId;
 
+    //Variable para la primera carga de un anuncio
+    private bool firstLoad = false;
     void Awake()
     {
         // Get the Ad Unit ID for the current platform:
         _adUnitId = (Application.platform == RuntimePlatform.IPhonePlayer)
             ? _iOsAdUnitId
             : _androidAdUnitId;
+    }
+
+    public void Update()
+    {
+        if (Advertisement.IsReady() && !firstLoad)
+        {
+            LoadAd();
+            firstLoad = true;
+        }
     }
 
     // Load content to the Ad Unit:
