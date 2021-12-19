@@ -78,7 +78,7 @@ namespace flow
                 i++;
             }
 
-            if (closed)
+            if (closed && !isBuildingFlow)
             {
                 Debug.Log("Flujos cerrados");
                 //j = true;
