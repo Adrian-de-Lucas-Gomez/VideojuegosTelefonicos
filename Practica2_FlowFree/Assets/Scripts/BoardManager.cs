@@ -35,7 +35,7 @@ namespace flow
         private Vector2 posIni;
         private Vector2 offset; //Pruebas
         private int currentTile = 0;
-        private int currentFlow = 0;
+        private int currentFlow = int.MaxValue;
         private int previousFlow = int.MaxValue;
         private bool isBuildingFlow = false;
 
@@ -308,11 +308,11 @@ namespace flow
 
                 else if (PlayerInput.IsPressed() && isBuildingFlow) //Si el usuario esta pulsando el boton izquierdo
                 {
-                    if(newTile != currentTile && !flows[currentFlow].isClosed()) //Nos hemos movido de casilla
+                    if (newTile != currentTile && !flows[currentFlow].isClosed()) //Nos hemos movido de casilla
                     {
                         Direction dir = DirectionUtils.DirectionBetweenTiles(currentTile, newTile, boardWidth);
 
-                        if(dir != Direction.None && tiles[newTile].CanBeAccesed(dir)) //Si el movimiento ha sido valido (El movimiento en diagonal es demasiado poderoso)
+                        if (dir != Direction.None && tiles[newTile].CanBeAccesed(dir)) //Si el movimiento ha sido valido (El movimiento en diagonal es demasiado poderoso)
                         {
                             if (tiles[newTile].IsActive()) //La casilla forma parte de un flujo
                             {
@@ -334,7 +334,7 @@ namespace flow
                                 {
                                     if (tiles[newTile].IsOrigin()) //Nos tenemos que asegurar que NO es el origen del que estamos construyendo
                                     {
-                                        if(!flows[currentFlow].Contains(newTile))
+                                        if (!flows[currentFlow].Contains(newTile))
                                         {
                                             flows[currentFlow].AddToFlow(tiles[newTile], newTile, DirectionUtils.DirectionBetweenTiles(currentTile, newTile, boardWidth));
                                             flows[currentFlow].SetClosed(true);
@@ -429,8 +429,8 @@ namespace flow
 
         private bool IsPosInBoard(Vector3 pos)
         {
-            if (pos.x >= posIni.x && pos.x < posIni.x + boardWidth * offset.x &&
-                pos.y <= posIni.y && pos.y > posIni.y - boardHeight * offset.y)
+            if (pos.x >= posIni.x && pos.x < (posIni.x + boardWidth) * offset.x &&
+                pos.y <= posIni.y && pos.y > (posIni.y - boardHeight) * offset.y)
                 return true;
 
             return false;
