@@ -33,6 +33,8 @@ namespace flow
         public int selectedLevel { get; set; }
         public string selectedLevelString { get; set; }
 
+        private List<List<string>> levelStrings;
+
         private Color[] theme;
 
         void Awake()
@@ -120,20 +122,26 @@ namespace flow
             levelManager.OnLevelFinished();
         }
 
-        public void NextLevel()
+        public bool NextLevel()
         {
             if(levelIndex < data.categories[categoryIndex].packs[packIndex].levels.Length - 1)
             {
                 levelIndex++;
+                selectedLevelString = selectedPack.levelsFile.ToString().Split('\n')[levelIndex];
+                return true;
             }
-            
+            return false;
         }
-        public void PrevLevel()
+
+        public bool PrevLevel()
         {
             if (levelIndex > 0)
             {
                 levelIndex--;
+                selectedLevelString = selectedPack.levelsFile.ToString().Split('\n')[levelIndex];
+                return true;
             }
+            return false;
         }
         public void OnHintUsed()
         {
