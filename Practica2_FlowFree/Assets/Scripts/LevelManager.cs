@@ -34,6 +34,11 @@ namespace flow
             winPanel.SetActive(false);
 
             nHintsText.text = GameManager.GetInstance().GetNHints().ToString() + "x";
+
+            //Cargamos el nivel con lo que nos diga el GameManager
+            GameManager auxMan = GameManager.GetInstance();
+
+            InitializeLevel(auxMan.GetSelectedLevelIndex(), auxMan.GetSelectedPack());
         }
 
         public void Update()

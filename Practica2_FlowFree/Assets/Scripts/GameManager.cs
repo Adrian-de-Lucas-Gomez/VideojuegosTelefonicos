@@ -81,7 +81,7 @@ namespace flow
             //Esto se debe de llamar cuando se cambie a una GameScene
             theme = categories[categoryIndex].packs[packIndex].skin.colors;
 
-            levelManager.InitializeLevel(levelIndex, categories[categoryIndex].packs[packIndex]);
+            //levelManager.InitializeLevel(levelIndex, categories[categoryIndex].packs[packIndex]);
         }
 
         public void LoadCreateProgress()
@@ -153,6 +153,17 @@ namespace flow
         public int GetNHints()
         {
             return data.hints;
+        }
+
+        //Para pedirlos desde el LevelManager
+        public int GetSelectedLevelIndex()
+        {
+            return levelIndex;
+        }
+
+        public LevelPack GetSelectedPack()
+        {
+            return categories[categoryIndex].packs[packIndex];
         }
     }
 }
