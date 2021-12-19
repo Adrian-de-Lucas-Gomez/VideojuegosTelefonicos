@@ -199,8 +199,6 @@ namespace flow
 
         public (int, int) GenerateBoard(string level, Color[] skin, float boardScale)
         {
-            //El tamaño de un tile en pantalla
-
             tiles = new List<Tile>();
             flows = new List<Flow>();
             solution = new List<List<int>>();
@@ -214,7 +212,9 @@ namespace flow
             //Lectura del nivel
             ReadLevel(level, ref emptyTiles, ref walls);
 
-            tileSize = new Vector2((int)boardScale / boardWidth, (int)boardScale / boardHeight);
+            //El tamaño de un tile en pantalla
+            tileSize = Vector2.one;
+            //tileSize = new Vector2((int)boardScale / boardWidth, (int)boardScale / boardHeight);
 
             //Generar nivel
             for (int j = 0; j < boardHeight; ++j)

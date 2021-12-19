@@ -158,7 +158,7 @@ namespace flow
         {
             SceneManager.LoadScene(name, LoadSceneMode.Single);
 
-            //Probabilidad de anuncio intersticial ????
+            //TODO: Probabilidad de anuncio intersticial ????
             interstitialAd.ShowAd();
         }
 
