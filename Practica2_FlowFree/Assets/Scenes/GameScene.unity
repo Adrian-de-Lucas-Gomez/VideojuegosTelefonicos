@@ -1290,8 +1290,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneWidth: 10
-  sceneViewport: {fileID: 1909632819}
   mainCamera: {fileID: 519420031}
+  renderTexture: {fileID: 0}
+  contentRect: {fileID: 1723568014}
+  sceneViewport: {fileID: 1909632819}
+  boardManager: {fileID: 1649278888}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -3345,6 +3348,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1909632819}
+  - component: {fileID: 1909632821}
   m_Layer: 5
   m_Name: SceneViewport
   m_TagString: Untagged
@@ -3371,6 +3375,14 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1909632821
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909632818}
+  m_CullTransparentMesh: 1
 --- !u!1 &1917141523
 GameObject:
   m_ObjectHideFlags: 0

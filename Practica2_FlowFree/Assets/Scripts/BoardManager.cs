@@ -491,5 +491,10 @@ namespace flow
             return (tile >= 0 && tile < (boardWidth * boardHeight));
         }
 
+        public Vector2 GetBoardSize()
+        {
+            return new Vector2(boardWidth, boardHeight);
+        }
+
     }
 }
