@@ -264,23 +264,6 @@ namespace flow
             Vector3 worldPos = PlayerInput.GetPointerPosition();
             pointerIndicator.SetPosition(worldPos);
 
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                int k = 0;
-                while (k < flows.Count && flows[k].IsSolved(solution[k]))
-                {
-                    k++;
-                }
-                if(k < flows.Count)
-                {
-                    ApplyHint(k);
-                }
-                else
-                {
-                    Debug.Log("No hay pistas que completar eres un putisimo crack");
-                }
-            }
-
             if (PlayerInput.JustUnpressed()) //Si el usuario acaba de liberar el boton izquierdo 
             {
                 if (previousFlow != int.MaxValue)
@@ -533,5 +516,23 @@ namespace flow
             return new Vector2(boardWidth, boardHeight);
         }
 
+        public void UseHint()
+        {
+            int k = 0;
+            while (k < flows.Count && flows[k].IsSolved(solution[k]))
+            {
+                k++;
+            }
+
+            if (k < flows.Count)
+            {
+                ApplyHint(k);
+                
+            }
+            else
+            {
+                Debug.Log("No hay pistas que completar eres un putisimo crack");
+            }
+        }
     }
 }

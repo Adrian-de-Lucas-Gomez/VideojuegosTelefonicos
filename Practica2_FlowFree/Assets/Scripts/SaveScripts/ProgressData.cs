@@ -87,7 +87,7 @@ namespace flow
 
 
         //Métodos para modificar el progeso en el juego
-        public void onLevelCompleted(int nCat, int nPack, int nLevel, int nMoves)
+        public void OnLevelCompleted(int nCat, int nPack, int nLevel, int nMoves)
         {
             LevelProgress aux = categories[nCat].packs[nPack].levels[nLevel];
             //En el progreso del propio nivel
@@ -120,13 +120,13 @@ namespace flow
             }
         }
 
-        public void onHintUsed()
+        public void OnHintUsed()
         {
             //Quitamos pistas hasta que sean 0
             if (hints > 0) hints--;
         }
 
-        public void onHintAdded()
+        public void OnHintAdded()
         {
             //Añadimos pistas por ver el anuncio bonificado
             hints++;

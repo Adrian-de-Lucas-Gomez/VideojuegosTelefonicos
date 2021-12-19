@@ -19,12 +19,13 @@ namespace flow
         [SerializeField] Text movesText;
         [SerializeField] Text bestText;
         [SerializeField] Text percentageText;
+        [SerializeField] Text nHintsText;
 
         private void Start()
         {
 #if UNITY_EDITOR
             if (boardManager == null || winPanel == null || totalFlowsText == null ||
-                movesText == null || bestText == null || percentageText == null)
+                movesText == null || bestText == null || percentageText == null || nHintsText == null)
             {
                 Debug.LogError("LevelManager: Alguna variable no tiene valor asociado desde el editor.");
                 return;
@@ -39,6 +40,8 @@ namespace flow
             movesText.text = boardManager.GetNumMoves().ToString();
             bestText.text = GameManager.GetInstance().GetLevelRecord().ToString();
             percentageText.text = boardManager.GetPercentage().ToString("F2") + "%";
+
+
         }
 
         public void InitializeLevel(int levelNumber, LevelPack pack)
@@ -55,6 +58,12 @@ namespace flow
             //Aqui activamos el panel de "felicidades has ganado"
             Debug.Log("UWU resolviste el tablero");
             winPanel.SetActive(true);
+        }
+
+        public void OnUseHint()
+        {
+            boardManager.UseHint();
+            GameManager.GetInstance().OnHintUsed();
         }
     }
 }

@@ -114,7 +114,7 @@ namespace flow
         {
             LevelProgress aux = data.categories[categoryIndex].packs[packIndex].levels[levelIndex];
 
-            data.onLevelCompleted(categoryIndex, packIndex, levelIndex, moves);
+            data.OnLevelCompleted(categoryIndex, packIndex, levelIndex, moves);
 
             Debug.Log("Guardando datos");
             saveIO.SaveData(data);  //Guardamos el progreso al acabar el nivel
@@ -125,14 +125,14 @@ namespace flow
 
         public void OnHintUsed()
         {
-            data.onHintUsed();
+            data.OnHintUsed();
             Debug.Log("Guardando datos");
             saveIO.SaveData(data);  //Guardamos
         }
 
         public void OnHintAdded()
         {
-            data.onHintAdded();
+            data.OnHintAdded();
             Debug.Log("Guardando datos");
             saveIO.SaveData(data);  //Guardamos
         }
