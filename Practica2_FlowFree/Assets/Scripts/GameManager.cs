@@ -139,6 +139,7 @@ namespace flow
             {
                 levelIndex--;
                 selectedLevelString = selectedPack.levelsFile.ToString().Split('\n')[levelIndex];
+                selectedLevel = levelIndex;
                 return true;
             }
             return false;
