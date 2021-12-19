@@ -82,6 +82,20 @@ namespace flow
             nHintsText.text = GameManager.GetInstance().GetNHints().ToString() + "x";
         }
 
+        public void tryNextLevel()
+        {
+            GameManager auxMan = GameManager.GetInstance();
+
+            auxMan.NextLevel();
+
+            InitializeLevel(auxMan.selectedLevelString, auxMan.GetSelectedPack());
+        }
+        public void tryPrevLevel()
+        {
+            GameManager auxMan = GameManager.GetInstance();
+            auxMan.PrevLevel();
+            InitializeLevel(auxMan.selectedLevelString, auxMan.GetSelectedPack());
+        }
         public void OnLevelFinished()
         {
             //Aqui activamos el panel de "felicidades has ganado"

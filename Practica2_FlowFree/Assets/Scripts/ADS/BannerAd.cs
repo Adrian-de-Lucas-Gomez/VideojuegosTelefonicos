@@ -53,7 +53,7 @@ namespace flow
             Debug.Log("Banner loaded");
 
             //Test
-            ShowBannerAd();
+            //ShowBannerAd();
         }
 
         // Implement code to execute when the load errorCallback event triggers:
