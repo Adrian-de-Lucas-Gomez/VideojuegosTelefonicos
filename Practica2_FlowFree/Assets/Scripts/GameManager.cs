@@ -150,5 +150,9 @@ namespace flow
             interstitialAd.ShowAd();
         }
 
+        public int GetNHints()
+        {
+            return data.hints;
+        }
     }
 }

@@ -1142,7 +1142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.46666667}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2167,10 +2167,10 @@ RectTransform:
   m_Father: {fileID: 413086312}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.44409856}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &857555160
 MonoBehaviour:
@@ -2185,7 +2185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2193,13 +2193,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 3215538a9b72fcf4dbd1281935bcefd2, type: 3}
     m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 6
     m_MaxSize: 60
-    m_Alignment: 1
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -2390,10 +2390,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2089665303}
-        m_TargetAssemblyTypeName: flow.GameManager, Assembly-CSharp
-        m_MethodName: ChangeScene
-        m_Mode: 5
+      - m_Target: {fileID: 1462976382}
+        m_TargetAssemblyTypeName: flow.LevelManager, Assembly-CSharp
+        m_MethodName: OnUseHint
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3017,6 +3017,7 @@ MonoBehaviour:
   movesText: {fileID: 413684038}
   bestText: {fileID: 395722418}
   percentageText: {fileID: 1078422626}
+  nHintsText: {fileID: 0}
 --- !u!4 &1462976383
 Transform:
   m_ObjectHideFlags: 0

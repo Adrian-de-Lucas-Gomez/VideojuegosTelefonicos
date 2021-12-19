@@ -32,6 +32,8 @@ namespace flow
             }
 #endif      
             winPanel.SetActive(false);
+
+            nHintsText.text = GameManager.GetInstance().GetNHints().ToString() + "x";
         }
 
         public void Update()
@@ -40,8 +42,6 @@ namespace flow
             movesText.text = boardManager.GetNumMoves().ToString();
             bestText.text = GameManager.GetInstance().GetLevelRecord().ToString();
             percentageText.text = boardManager.GetPercentage().ToString("F2") + "%";
-
-
         }
 
         public void InitializeLevel(int levelNumber, LevelPack pack)
@@ -60,10 +60,13 @@ namespace flow
             winPanel.SetActive(true);
         }
 
+        //Al usar una pista se actualiza la UI y el numero de pistas
         public void OnUseHint()
         {
             boardManager.UseHint();
+
             GameManager.GetInstance().OnHintUsed();
+            nHintsText.text = GameManager.GetInstance().GetNHints().ToString() + " x";
         }
     }
 }
