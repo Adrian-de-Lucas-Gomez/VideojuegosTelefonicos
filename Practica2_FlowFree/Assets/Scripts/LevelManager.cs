@@ -15,6 +15,8 @@ namespace flow
         [SerializeField] GameObject winPanel;
         [SerializeField] BoardManager boardManager;
 
+        [SerializeField] Text levelText;
+        [SerializeField] Text levelSizeText;
         [SerializeField] RectTransform boardViewport;
         [SerializeField] Text totalFlowsText;
         [SerializeField] Text movesText;
@@ -26,7 +28,8 @@ namespace flow
         {
 #if UNITY_EDITOR
             if (boardManager == null || winPanel == null || boardViewport == null || totalFlowsText == null ||
-                movesText == null || bestText == null || percentageText == null || nHintsText == null)
+                movesText == null || bestText == null || percentageText == null || nHintsText == null ||
+                levelText == null || levelSizeText == null)
             {
                 Debug.LogError("LevelManager: Alguna variable no tiene valor asociado desde el editor.");
                 return;
@@ -34,11 +37,8 @@ namespace flow
 #endif      
             winPanel.SetActive(false);
 
-            nHintsText.text = GameManager.GetInstance().GetNHints().ToString() + "x";
-
             //Cargamos el nivel con lo que nos diga el GameManager
             GameManager auxMan = GameManager.GetInstance();
-
             InitializeLevel(auxMan.selectedLevelString, auxMan.GetSelectedPack());
         }
 
@@ -67,7 +67,19 @@ namespace flow
         {
             string[] maps = pack.levelsFile.ToString().Split('\n');
 
-            boardManager.GenerateBoard(levelString, pack.skin.colors, boardScale());
+            (int, int) boardSize = boardManager.GenerateBoard(levelString, pack.skin.colors, boardScale());
+
+            ConfigLevelUI(boardSize.Item1, boardSize.Item2);
+        }
+
+        private void ConfigLevelUI(int w, int h)
+        {
+            GameManager auxMan = GameManager.GetInstance();
+
+            levelText.text = "level " + auxMan.selectedLevel.ToString();
+            levelText.color = auxMan.selectedCategory.color;
+            levelSizeText.text = w.ToString() + "x" + h.ToString();
+            nHintsText.text = GameManager.GetInstance().GetNHints().ToString() + "x";
         }
 
         public void OnLevelFinished()

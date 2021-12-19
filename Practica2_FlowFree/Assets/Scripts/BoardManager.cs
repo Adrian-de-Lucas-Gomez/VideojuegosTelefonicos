@@ -197,7 +197,7 @@ namespace flow
             return (aux / numFillableTiles) * 100;
         }
 
-        public void GenerateBoard(string level, Color[] skin, float boardScale)
+        public (int, int) GenerateBoard(string level, Color[] skin, float boardScale)
         {
             //El tamaño de un tile en pantalla
 
@@ -261,6 +261,8 @@ namespace flow
             }
             if (isSurroundedByWalls) SurrondBoardByWalls();
             SetWallsOnEmptyTiles(emptyTiles);
+
+            return (boardWidth, boardHeight);
         }
 
 
