@@ -46,6 +46,7 @@ namespace flow
             GameManager gMng = GameManager.GetInstance();
             gMng.selectedLevel = levelIndex;
             gMng.selectedLevelString = levelString;
+            gMng.ChangeScene("GameScene");
         }
     }
 }

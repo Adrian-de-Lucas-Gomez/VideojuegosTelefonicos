@@ -38,7 +38,7 @@ namespace flow
             //Cargamos el nivel con lo que nos diga el GameManager
             GameManager auxMan = GameManager.GetInstance();
 
-            InitializeLevel(auxMan.GetSelectedLevelIndex(), auxMan.GetSelectedPack());
+            InitializeLevel(auxMan.selectedLevelString, auxMan.GetSelectedPack());
         }
 
         public void Update()
@@ -49,11 +49,9 @@ namespace flow
             percentageText.text = boardManager.GetPercentage().ToString("F2") + "%";
         }
 
-        public void InitializeLevel(int levelNumber, LevelPack pack)
+        public void InitializeLevel(string level, LevelPack pack)
         {
             string[] maps = pack.levelsFile.ToString().Split('\n');
-
-            string level = maps[levelNumber];
 
             boardManager.GenerateBoard(level, pack.skin.colors);
         }

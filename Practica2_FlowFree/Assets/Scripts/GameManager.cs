@@ -78,10 +78,7 @@ namespace flow
 
             LoadCreateProgress();
 
-            //Esto se debe de llamar cuando se cambie a una GameScene
             theme = categories[categoryIndex].packs[packIndex].skin.colors;
-
-            //levelManager.InitializeLevel(levelIndex, categories[categoryIndex].packs[packIndex]);
         }
 
         public void LoadCreateProgress()
