@@ -28,6 +28,12 @@ namespace flow
 
         private static GameManager instance;
 
+        public Categories selectedCategory { get; set; }
+        public LevelPack selectedPack { get; set; }
+        public int selectedLevel { get; set; }
+        public string selectedLevelString { get; set; }
+
+
         void Awake()
         {
             if (instance == null)
@@ -58,7 +64,7 @@ namespace flow
         {
 #if UNITY_EDITOR
             if (categoryIndex == -1 || packIndex == -1 || levelIndex == -1 ||
-                categories == null || levelManager == null)
+                categories == null)
             {
                 Debug.LogError("GameManager: Alguna variable no tiene valor asociado desde el editor.");
                 return;
@@ -94,7 +100,7 @@ namespace flow
             }
         }
 
-        public void onLevelFinished(int moves)
+        public void OnLevelFinished(int moves)
         {
             LevelProgress aux = data.categories[categoryIndex].packs[packIndex].levels[levelIndex];
 
@@ -107,14 +113,14 @@ namespace flow
             levelManager.onLevelFinished();
         }
 
-        public void onHintUsed()
+        public void OnHintUsed()
         {
             data.onHintUsed();
             Debug.Log("Guardando datos");
             saveIO.SaveData(data);  //Guardamos
         }
 
-        public void onHintAdded()
+        public void OnHintAdded()
         {
             data.onHintAdded();
             Debug.Log("Guardando datos");
@@ -128,5 +134,6 @@ namespace flow
             //Probabilidad de anuncio intersticial ????
             interstitialAd.ShowAd();
         }
+
     }
 }

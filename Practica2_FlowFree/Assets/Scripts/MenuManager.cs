@@ -120,6 +120,9 @@ namespace flow
             currentCategory = packCategory;
             currentMenu = Menu.LEVELS;
 
+            GameManager.GetInstance().selectedCategory = currentCategory;
+            GameManager.GetInstance().selectedPack = currentlevelPack;
+
             LoadLevelsMenu();
         }
 

@@ -97,7 +97,7 @@ namespace flow
                     finished = true;
                     for (int k = 0; k < flows.Count; k++) flows[k].PlayEndingAnimation();
                     //Llamada al onLevelFinished del GameManager para que guarde y avise al Level para que ponga la interfaz correspondiente
-                    GameManager.GetInstance().onLevelFinished(numMoves); //Son los moves usados
+                    GameManager.GetInstance().OnLevelFinished(numMoves); //Son los moves usados
                 }
                 else {
                     Debug.Log("Buen intento pero no");
@@ -429,8 +429,8 @@ namespace flow
 
         private bool IsPosInBoard(Vector3 pos)
         {
-            if (pos.x >= posIni.x && pos.x < (posIni.x + boardWidth) * offset.x &&
-                pos.y <= posIni.y && pos.y > (posIni.y - boardHeight) * offset.y)
+            if (pos.x >= posIni.x && pos.x < posIni.x + boardWidth * offset.x &&
+                pos.y <= posIni.y && pos.y > posIni.y - boardHeight * offset.y)
                 return true;
 
             return false;

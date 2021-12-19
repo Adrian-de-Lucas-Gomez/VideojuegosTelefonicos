@@ -40,5 +40,12 @@ namespace flow
             aux.a = 110f / 255f;
             background.color = aux;
         }
+
+        public void OnChooseLevel()
+        {
+            GameManager gMng = GameManager.GetInstance();
+            gMng.selectedLevel = levelIndex;
+            gMng.selectedLevelString = levelString;
+        }
     }
 }

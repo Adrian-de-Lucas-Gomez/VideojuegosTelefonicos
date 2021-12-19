@@ -80,7 +80,7 @@ namespace flow
             {
                 Debug.Log("Unity Ads Rewarded Ad Completed");
                 // Grant a reward.
-                GameManager.GetInstance().onHintAdded();
+                GameManager.GetInstance().OnHintAdded();
 
                 // Load another ad:
                 Advertisement.Load(_adUnitId, this);
@@ -104,7 +104,7 @@ namespace flow
         public void OnUnityAdsShowStart(string adUnitId)
         {
             //Para probar en el editor
-            GameManager.GetInstance().onHintAdded();
+            GameManager.GetInstance().OnHintAdded();
 
             //pistas++;
             // Load another ad:
