@@ -15,6 +15,11 @@ namespace flow
         [SerializeField] SpriteRenderer rightBar;
         [SerializeField] SpriteRenderer transparentBackground;
         [SerializeField] SpriteRenderer hintMarker;
+        [SerializeField] SpriteRenderer fadingCircle;
+
+        [SerializeField] Animator smallCircleAnimator;
+        [SerializeField] Animator bigCircleAnimator;
+        [SerializeField] Animator fadingCircleAnimator;
 
         private int color = int.MaxValue;
         private Color tempColor; //TODO: no se si esto es temporal
@@ -27,7 +32,8 @@ namespace flow
         {
 #if UNITY_EDITOR
            if(spriteBackground == null || bigCircle == null || upBar == null || downBar == null ||
-                leftBar == null || rightBar == null || smallCircle == null || transparentBackground == null || hintMarker == null)
+                leftBar == null || rightBar == null || smallCircle == null || transparentBackground == null || hintMarker == null
+                || smallCircleAnimator == null || bigCircleAnimator == null || fadingCircle == null || fadingCircleAnimator == null)
            {
                 Debug.LogError("Tile: Alguna variable no tiene valor asociado desde el editor.");
                 return;
@@ -79,6 +85,7 @@ namespace flow
         public void EnableSmallCircle(bool visible)
         {
             smallCircle.enabled = visible;
+            if (visible) smallCircleAnimator.Play("Trigger");
         }
 
         public void HideTransparentBackground()
@@ -133,6 +140,16 @@ namespace flow
             sprite.enabled = false;
         }
 
+        public void PlayBigCircleAnimation()
+        {
+            bigCircleAnimator.Play("Trigger");
+        }
+
+        public void PlayFadingCircleAnimation()
+        {
+            fadingCircleAnimator.Play("Trigger");
+        }
+
     //Setters
     //----------------------------------------------
 
@@ -151,6 +168,7 @@ namespace flow
             leftBar.material.color = c;
             rightBar.material.color = c;
             smallCircle.material.color = c;
+            fadingCircle.material.color = c;
 
             tempColor = c;
         }

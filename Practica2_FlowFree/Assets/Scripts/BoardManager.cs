@@ -91,9 +91,9 @@ namespace flow
                 {
                     Debug.Log("Menuda leyenda de los flujos est�s hecho");
                     finished = true;
-
+                    for (int k = 0; k < flows.Count; k++) flows[k].PlayEndingAnimation();
                     //Llamada al onLevelFinished del GameManager para que guarde y avise al Level para que ponga la interfaz correspondiente
-                    GameManager.GetInstance().onLevelFinished(numMoves);   //Son los moves usados
+                    GameManager.GetInstance().onLevelFinished(numMoves); //Son los moves usados
                 }
                 else {
                     Debug.Log("Buen intento pero no");
@@ -259,7 +259,6 @@ namespace flow
                 int newTile = WorldPosToTile(worldPos);
                 int newFlow = tiles[newTile].GetColor();
 
-                //0: boton izq, 1: boton der
                 if (PlayerInput.JustPressed()) //Si el usuario acaba de pulsar el boton izquierdo 
                 {
                     if (tiles[newTile].IsActive())
@@ -269,6 +268,7 @@ namespace flow
                         //Partimos de un punto del flow. Cortamos hasta ese punto.
                         isBuildingFlow = true;
                         flows[currentFlow].SetTransparentBackground(false);
+                        tiles[GetOppositeOrigin(currentFlow, currentTile)].PlayBigCircleAnimation();
                         if (!tiles[newTile].IsOrigin()) //Si NO es origen
                         {
                             int prevPos;
@@ -397,6 +397,14 @@ namespace flow
             flows[flowToChange].SetTransparentBackground(true);
             flows[flowToChange].SetClosed(true);
             flows[flowToChange].SetHintMarkerVisibility(true);
+            flows[flowToChange].PlayEndingAnimation();
+        }
+
+        private int GetOppositeOrigin(int flow, int tile)
+        {
+            List<int> sol = solution[flow];
+            if (sol[0] == tile) return sol[sol.Count - 1];
+            else return sol[0];
         }
 
         private bool IsPosInBoard(Vector3 pos)

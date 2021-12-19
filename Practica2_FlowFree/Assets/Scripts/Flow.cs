@@ -55,7 +55,8 @@ namespace flow
         {
             SetTransparentBackground(true);
             hasChanged = (initialPosition != tiles[tiles.Count - 1].position);
-            if(!tiles[tiles.Count - 1].tile.IsOrigin()) tiles[tiles.Count - 1].tile.EnableSmallCircle(true);
+            if (!tiles[tiles.Count - 1].tile.IsOrigin()) tiles[tiles.Count - 1].tile.EnableSmallCircle(true);
+            else if (closed) tiles[tiles.Count - 1].tile.PlayFadingCircleAnimation();
         }
 
         public bool ChangedInMove()
@@ -289,6 +290,12 @@ namespace flow
                 if (tiles[k].position == position) return true;
             }
             return false;
+        }
+
+        public void PlayEndingAnimation()
+        {
+            tiles[0].tile.PlayFadingCircleAnimation();
+            tiles[tiles.Count - 1].tile.PlayFadingCircleAnimation();
         }
 
         public void PrintTiles() //DEBUG ONLY PORFA BORRAME AL TERMINAR
