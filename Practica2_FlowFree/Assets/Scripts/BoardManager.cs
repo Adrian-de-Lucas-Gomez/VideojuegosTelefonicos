@@ -58,7 +58,7 @@ namespace flow
         {
             if (!finished)
             {
-                HandleInput(); //TODO:
+                HandleInput();
                 GetPercentageFilled();
                 checkFlows();
             }
@@ -103,7 +103,7 @@ namespace flow
             }
         }
 
-        public void ReadLevel(string level, ref List<int> emptyTiles, ref List<(int, int)> walls) //TODO: dberia estar aqui? o en un script bobo "board"??
+        public void ReadLevel(string level, ref List<int> emptyTiles, ref List<(int, int)> walls)
         {
             string[] levelInfo = level.Split(';');
             string[] auxInfo;
@@ -197,6 +197,20 @@ namespace flow
             return (aux / numFillableTiles) * 100;
         }
 
+        public void ResetLevel()
+        {
+            currentTile = 0;
+            currentFlow = int.MaxValue;
+            previousFlow = int.MaxValue;
+            isBuildingFlow = false;
+
+            numFilledTiles = 0;
+            numMoves = 0;
+            finished = false;
+
+            for (int k = 0; k < flows.Count; k++) flows[k].ClearFlow();
+        }
+
         private void Setup()
         {
             currentTile = 0;
@@ -233,7 +247,6 @@ namespace flow
             List<int> emptyTiles = new List<int>();
             List<(int, int)> walls = new List<(int, int)>();
             ReadLevel(level, ref emptyTiles, ref walls);
-
             //El tamanho de un tile en pantalla
             tileSize = Vector2.one;
             //TODO: no funciona el escalado

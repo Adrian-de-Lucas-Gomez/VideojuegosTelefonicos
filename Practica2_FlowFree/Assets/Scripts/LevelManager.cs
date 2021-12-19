@@ -97,6 +97,11 @@ namespace flow
             InitializeLevel(auxMan.selectedLevelString, auxMan.GetSelectedPack());
         }
 
+        public void ResetLevel()
+        {
+            boardManager.ResetLevel();
+        }
+
         public void OnLevelFinished()
         {
             winPanel.SetActive(true);

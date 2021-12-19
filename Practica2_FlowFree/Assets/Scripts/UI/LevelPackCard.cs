@@ -36,7 +36,7 @@ namespace flow
             levelPackTitle.color = category.color;
 
             nLevels = pack.levelsFile.ToString().Split('\n').Length - 1;
-            nLevelsText.text = "0" + "/" + nLevels.ToString(); //TODO:
+            nLevelsText.text = "0" + "/" + nLevels.ToString();
         }
 
         public void ConfigureLevelPack(MenuManager menuManager, LevelPack pack, Categories category)

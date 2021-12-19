@@ -160,9 +160,6 @@ namespace flow
 
         public void OnExitLevelMenu()
         {
-            //TODO: ESTA MAL
-            // -El LevelPack del que se quiere salir para actualizar si has completado niveles
-
             levelPageParent.transform.localPosition = Vector3.zero;
             foreach (Transform child in levelPageParent.transform)
             {

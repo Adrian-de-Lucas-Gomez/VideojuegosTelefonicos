@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine; //SOLO PARA DEBUGEAR PORFA QUITAME CUANDO ACABEMOS TODO ESTO :)
+using UnityEngine;
 
 namespace flow
 {
@@ -216,7 +216,6 @@ namespace flow
         {
             if (!closed) return false;
             bool isSolved = true;
-
             //Busca por la solución y compara con la lista de tiles hasta que la recorre entera
             //o se encuentra un tile que es diferente.
 
@@ -296,16 +295,6 @@ namespace flow
         {
             tiles[0].tile.PlayFadingCircleAnimation();
             tiles[tiles.Count - 1].tile.PlayFadingCircleAnimation();
-        }
-
-        public void PrintTiles() //DEBUG ONLY PORFA BORRAME AL TERMINAR
-        {
-            string msg = _color + ": ";
-            for (int k = 0; k < tiles.Count; k++)
-            {
-                msg += tiles[k].position + ", ";
-            }
-            Debug.Log(msg);
         }
 
         //Getters
