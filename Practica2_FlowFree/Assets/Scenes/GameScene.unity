@@ -3017,7 +3017,7 @@ MonoBehaviour:
   movesText: {fileID: 413684038}
   bestText: {fileID: 395722418}
   percentageText: {fileID: 1078422626}
-  nHintsText: {fileID: 0}
+  nHintsText: {fileID: 1873955667}
 --- !u!4 &1462976383
 Transform:
   m_ObjectHideFlags: 0
