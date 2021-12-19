@@ -7,6 +7,7 @@ namespace flow
     public class Tile : MonoBehaviour
     {
         [SerializeField] SpriteRenderer spriteBackground;
+        [SerializeField] SpriteRenderer outline;
         [SerializeField] SpriteRenderer bigCircle;
         [SerializeField] SpriteRenderer smallCircle;
         [SerializeField] SpriteRenderer upBar;
@@ -16,6 +17,10 @@ namespace flow
         [SerializeField] SpriteRenderer transparentBackground;
         [SerializeField] SpriteRenderer hintMarker;
         [SerializeField] SpriteRenderer fadingCircle;
+        [SerializeField] SpriteRenderer upWall;
+        [SerializeField] SpriteRenderer downWall;
+        [SerializeField] SpriteRenderer leftWall;
+        [SerializeField] SpriteRenderer rightWall;
 
         [SerializeField] Animator smallCircleAnimator;
         [SerializeField] Animator bigCircleAnimator;
@@ -25,6 +30,7 @@ namespace flow
         private Color tempColor; //TODO: no se si esto es temporal
         private bool isOrigin = false;
         private bool isEmpty = false;
+        private List<SpriteRenderer> wallsSprites;
         private List<bool> walls;
 
 
@@ -33,27 +39,31 @@ namespace flow
 #if UNITY_EDITOR
            if(spriteBackground == null || bigCircle == null || upBar == null || downBar == null ||
                 leftBar == null || rightBar == null || smallCircle == null || transparentBackground == null || hintMarker == null
-                || smallCircleAnimator == null || bigCircleAnimator == null || fadingCircle == null || fadingCircleAnimator == null)
+                || smallCircleAnimator == null || bigCircleAnimator == null || fadingCircle == null || fadingCircleAnimator == null
+                || upWall == null || downWall == null || leftWall == null || rightWall == null || outline == null)
            {
                 Debug.LogError("Tile: Alguna variable no tiene valor asociado desde el editor.");
                 return;
            }
 #endif
+        }
+
+        public void Initialize()
+        {
             tempColor = Color.white;
             tempColor.a = 1;
 
-            //bigCircle.color = tempColor;
-            //upBar.color = tempColor;
-            //downBar.color = tempColor;
-            //leftBar.color = tempColor;
-            //rightBar.color = tempColor;
-            //smallCircle.color = tempColor;
-
             //Lista de muros
             walls = new List<bool>();
-            for(int i = 0; i < (int)Direction.None; ++i) {
+            for (int i = 0; i < (int)Direction.None; ++i)
+            {
                 walls.Add(false);
             }
+            wallsSprites = new List<SpriteRenderer>();
+            wallsSprites.Add(upWall);
+            wallsSprites.Add(downWall);
+            wallsSprites.Add(leftWall);
+            wallsSprites.Add(rightWall);
         }
 
         public void ResetData()
@@ -176,6 +186,7 @@ namespace flow
         public void SetWall(Direction dir, bool isWall)
         {
             walls[(int)dir] = isWall;
+            wallsSprites[(int)dir].enabled = isWall;
         }
 
     //Getters
@@ -204,6 +215,8 @@ namespace flow
         public void SetEmpty()
         {
             isEmpty = true;
+            outline.enabled = false;
+            spriteBackground.enabled = false;
         }
 
         public bool IsEmpty()

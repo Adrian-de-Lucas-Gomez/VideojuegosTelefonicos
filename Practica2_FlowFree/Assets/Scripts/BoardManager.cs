@@ -14,12 +14,12 @@ namespace flow
     {
         [SerializeField] GameObject tilePrefab;
         [SerializeField] Transform boardObject;
-        [SerializeField] Vector2 posIni;
 
         //Generación del nivel
         //private string level = "5,0,1,5;18,17,12;21,16,11,6;3,4,9;0,1,2,7,8,13,14,19,24,23,22;20,15,10,5";
         private int levelNumber;
         private int nFlows;
+        private bool isSurroundedByWalls = false;
         private int boardWidth;
         private int boardHeight;
         private List<List<int>> solution;
@@ -27,12 +27,13 @@ namespace flow
         private List<Tile> tiles;
 
         //++++Pruebas TODO:
-        public Vector2 offset;
         bool finished = false;
 
         //+++++++++++
 
         //Lógica
+        private Vector2 posIni;
+        private Vector2 offset; //Pruebas
         private int currentTile = 0;
         private int currentFlow = 0;
         private int previousFlow = int.MaxValue;
@@ -43,10 +44,11 @@ namespace flow
 
         private int numMoves = 0;
 
+
         public void Start()
         {
 #if UNITY_EDITOR
-            if (tilePrefab == null || boardObject == null || posIni == null || offset == null)
+            if (tilePrefab == null || boardObject == null)
             {
                 Debug.LogError("BoardManager: Alguna variable no tiene valor asociado desde el editor.");
                 return;
@@ -117,12 +119,25 @@ namespace flow
             { 
                 string[] levelSize = auxInfo[0].Split(':');
                 boardWidth = int.Parse(levelSize[0]);
-                boardHeight = int.Parse(levelSize[1]);
+                if(levelSize[1].Contains("+")) {
+                    boardHeight = int.Parse(levelSize[1].Split('+')[0]);
+                    isSurroundedByWalls = levelSize[1].Split('+')[1] == "B";
+                }
+                else boardHeight = int.Parse(levelSize[1]);
             }
             else
             {
+                if(auxInfo[0].Contains("+"))
+                {
+                    boardWidth = boardHeight = int.Parse(auxInfo[0].Split('+')[0]);
+                    isSurroundedByWalls = auxInfo[0].Split('+')[1] == "B";
+                }
                 boardWidth = boardHeight = int.Parse(auxInfo[0]);
             }
+
+            //Calcular la posicion desde la que se instanciaran las casillas
+            posIni = new Vector2(-(float)boardWidth / 2f, (float)boardHeight / 2f);
+            offset = Vector2.one;
 
             numFillableTiles = boardWidth * boardHeight - (nFlows * 2);
             Debug.Log("Tiles jugables: " + numFillableTiles);
@@ -143,7 +158,6 @@ namespace flow
                     for (int i = 0; i < listWalls.Length; ++i) //(0|6)
                     {
                         string[] aux = listWalls[i].Split('|');
-
                         walls.Add((int.Parse(aux[0]), int.Parse(aux[1])));
                     }
                 }
@@ -203,6 +217,8 @@ namespace flow
                 {
                     GameObject t = Instantiate(tilePrefab, new Vector2(posIni.x + offset.x / 2 + i * offset.x, posIni.y - offset.y / 2 - j * offset.y),
                         Quaternion.identity, boardObject);
+                    Tile newTile = t.GetComponent<Tile>();
+                    newTile.Initialize();
                     tiles.Add(t.GetComponent<Tile>());
                 }
             }
@@ -235,6 +251,8 @@ namespace flow
                 tiles[tile1].SetWall(aux, true);
                 tiles[tile2].SetWall(DirectionUtils.GetOppositeDirection(aux), true);
             }
+            if (isSurroundedByWalls) SurrondBoardByWalls();
+            SetWallsOnEmptyTiles(emptyTiles);
         }
 
 
@@ -441,6 +459,33 @@ namespace flow
             return false;
         }
 
+        private void SetWallsOnEmptyTiles(List<int> emptyTiles)
+        {
+            int auxTile;
+            for(int k = 0; k < emptyTiles.Count; k++)
+            {
+                for(int l = 0; l < (int)Direction.None; l++) { 
+                    if(NavigateTile(emptyTiles[k], out auxTile, (Direction)l))
+                    {
+                        if (!tiles[auxTile].IsEmpty()) tiles[emptyTiles[k]].SetWall((Direction)l, true);
+                    }
+                }
+            }
+        }
+
+        private void SurrondBoardByWalls()
+        {
+            for(int k = 0; k < boardWidth; k++)
+            {
+                if(!tiles[k].IsEmpty()) tiles[k].SetWall(Direction.Up, true);
+                if(!tiles[k + boardWidth * (boardHeight - 1)].IsEmpty()) tiles[k + boardWidth * (boardHeight - 1)].SetWall(Direction.Down, true);
+            }
+            for (int k = 0; k < boardHeight; k++)
+            {
+                if(!tiles[k * boardWidth].IsEmpty()) tiles[k * boardWidth].SetWall(Direction.Left, true);
+                if(!tiles[(k * boardWidth) + boardWidth - 1].IsEmpty()) tiles[(k * boardWidth) + boardWidth - 1].SetWall(Direction.Right, true);
+            }
+        }
 
         private int WorldPosToTile(Vector3 pos)
         {
@@ -450,5 +495,24 @@ namespace flow
 
             return (row * boardWidth + col);
         }
+
+        private bool NavigateTile(int tile, out int destination, Direction dir)
+        {
+            destination = 0;
+            if (dir == Direction.Up) destination = tile - boardWidth;
+            else if (dir == Direction.Down) destination = tile + boardWidth;
+            else if (dir == Direction.Left)
+            {
+                destination = tile - 1;
+                return (tile % boardWidth > 0);
+            }
+            else if (dir == Direction.Right)
+            {
+                destination = tile + 1;
+                return (tile % boardWidth != boardWidth - 1);
+            }
+            return (tile >= 0 && tile < (boardWidth * boardHeight));
+        }
+
     }
 }
