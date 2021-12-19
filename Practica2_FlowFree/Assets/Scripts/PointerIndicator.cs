@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace flow
 {
-    public class PointerIndicator : MonoBehaviour
+    public class PointerIndicator
     {
         private SpriteRenderer sprite;
         private Color color;

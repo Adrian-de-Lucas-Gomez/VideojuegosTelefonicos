@@ -70,7 +70,7 @@ namespace flow
             tiles.Add(new TileInfo(newTile, pos));
             newTile.SetDirection(DirectionUtils.GetOppositeDirection(dir));
             newTile.SetColor(_color);
-            newTile.SetTempColor(_renderColor);
+            newTile.SetRenderColor(_renderColor);
         }
 
         public void SetClosed(bool state)
@@ -183,7 +183,7 @@ namespace flow
                     tiles[provisionalCutPosition - 1].tile.SetDirection(dir);
                     tiles[provisionalCutPosition].tile.SetDirection(DirectionUtils.GetOppositeDirection(dir));
                     tiles[provisionalCutPosition].tile.SetColor(_color);
-                    tiles[provisionalCutPosition].tile.SetTempColor(_renderColor);
+                    tiles[provisionalCutPosition].tile.SetRenderColor(_renderColor);
                     tiles[provisionalCutPosition].tile.ShowTransparentBackground(_renderColor);
                     provisionalCutPosition++;
                     finished = (provisionalCutPosition >= tiles.Count || other.Contains(tiles[provisionalCutPosition].position));
@@ -309,14 +309,12 @@ namespace flow
         }
 
         //Getters
-
         public bool isClosed()
         {
             return closed;
         }
 
         //Setters
-
         public void setOrigins(Tile origA, int posOrigA, Tile origB, int posOrigB)
         {
             originAInfo.tile = origA;

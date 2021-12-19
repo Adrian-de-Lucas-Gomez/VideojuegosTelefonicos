@@ -234,8 +234,8 @@ namespace flow
                 //Asignamos el origen y el final de los caminos
                 flows[i].setOrigins(tiles[solution[i][0]], solution[i][0], tiles[solution[i][solution[i].Count - 1]], solution[i][solution[i].Count - 1]);
 
-                tiles[solution[i][0]].SetTempColor(colors[i]);
-                tiles[solution[i][solution[i].Count - 1]].SetTempColor(colors[i]);
+                tiles[solution[i][0]].SetRenderColor(colors[i]);
+                tiles[solution[i][solution[i].Count - 1]].SetRenderColor(colors[i]);
             }
 
             //Asignar casillas vacias

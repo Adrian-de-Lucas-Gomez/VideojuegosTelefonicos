@@ -27,7 +27,7 @@ namespace flow
         [SerializeField] Animator fadingCircleAnimator;
 
         private int color = int.MaxValue;
-        private Color tempColor; //TODO: no se si esto es temporal
+        private Color renderColor;
         private bool isOrigin = false;
         private bool isEmpty = false;
         private List<SpriteRenderer> wallsSprites;
@@ -50,8 +50,8 @@ namespace flow
 
         public void Initialize()
         {
-            tempColor = Color.white;
-            tempColor.a = 1;
+            renderColor = Color.white;
+            renderColor.a = 1;
 
             //Lista de muros
             walls = new List<bool>();
@@ -165,11 +165,10 @@ namespace flow
 
         public void SetColor(int c)
         {
-            //bigCircle.material.color = c;
             color = c;
         }
 
-        public void SetTempColor(Color c) //TODO: ESTE TIENE QUE REEMPLAZAR AL DE ARRIBA
+        public void SetRenderColor(Color c)
         {
             c.a = 1;
             bigCircle.color = c;
@@ -180,7 +179,7 @@ namespace flow
             smallCircle.material.color = c;
             fadingCircle.material.color = c;
 
-            tempColor = c;
+            renderColor = c;
         }
 
         public void SetWall(Direction dir, bool isWall)
@@ -204,7 +203,7 @@ namespace flow
 
         public Color GetTempColor()
         {
-            return tempColor;
+            return renderColor;
         }
 
         public bool IsActive()
