@@ -63,11 +63,11 @@ namespace flow
             return auxBoardSize;
         }
 
-        public void InitializeLevel(int levelNumber, LevelPack pack)
+        public void InitializeLevel(string levelString, LevelPack pack)
         {
             string[] maps = pack.levelsFile.ToString().Split('\n');
 
-            boardManager.GenerateBoard(level, pack.skin.colors, boardScale());
+            boardManager.GenerateBoard(levelString, pack.skin.colors, boardScale());
         }
 
         public void OnLevelFinished()
