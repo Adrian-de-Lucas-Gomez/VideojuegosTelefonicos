@@ -78,7 +78,7 @@ namespace flow
                 i++;
             }
 
-            if (closed)
+            if (closed && !isBuildingFlow)
             {
                 Debug.Log("Flujos cerrados");
                 //j = true;
@@ -174,7 +174,30 @@ namespace flow
             }
         }
 
-
+        public int GetTotalFlows()
+        {
+            return nFlows;
+        }
+        public int GetNumFlows()
+        {
+            int flowsDone = 0;
+            for(int i =0; i < flows.Count; i++)
+            {
+                if (flows[i].IsSolved(solution[i])){
+                    flowsDone++;
+                }
+            }
+            return flowsDone;
+        }
+        public int GetNumMoves()
+        {
+            return numMoves;
+        }
+        public float GetPercentage()
+        {
+            float aux = numFilledTiles;
+            return (aux/numFillableTiles)*100;
+        }
         public void GenerateBoard(string level, Color[] skin)
         {
             tiles = new List<Tile>();

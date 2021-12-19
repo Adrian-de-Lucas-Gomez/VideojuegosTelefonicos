@@ -1455,6 +1455,13 @@ MonoBehaviour:
   levelPackCardPrefab: {fileID: -7039237724525266786, guid: eb828b5f16d76254492e86457d070f6c, type: 3}
   levelPagePrefab: {fileID: 608223501079213657, guid: ae85196ac992c7042b32cb0d9187c5db, type: 3}
   levelButtonPrefab: {fileID: 992441513259388888, guid: 720ca4466e8f41e4791a19c529af6dd7, type: 3}
+  colorLetters:
+  - {fileID: 1018500301}
+  - {fileID: 1983027088}
+  - {fileID: 1375136207}
+  - {fileID: 836827788}
+  - {fileID: 1050669554}
+  - {fileID: 1099202518}
 --- !u!4 &1104092758
 Transform:
   m_ObjectHideFlags: 0

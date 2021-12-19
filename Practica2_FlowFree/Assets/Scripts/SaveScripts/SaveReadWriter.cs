@@ -48,12 +48,6 @@ public class SaveReadWriter
 
     public flow.ProgressData LoadData()
     {
-        if (!File.Exists(savePath + fileName))  //Si no existe no se busca
-        {
-            Debug.Log("No hay guardados previos...Omitiendo carga...");
-            return null;
-        }
-
         flow.SaveData dataFromJson;
         string jsonSave = File.ReadAllText(savePath + fileName, Encoding.UTF8);
 

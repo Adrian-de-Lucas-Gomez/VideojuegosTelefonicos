@@ -33,6 +33,7 @@ namespace flow
         public int selectedLevel { get; set; }
         public string selectedLevelString { get; set; }
 
+        private Color[] theme;
 
         void Awake()
         {
@@ -60,6 +61,10 @@ namespace flow
             return instance;
         }
 
+        public Color[] GetTheme()
+        {
+            return theme;
+        }
         public void Start()
         {
 #if UNITY_EDITOR
@@ -70,11 +75,13 @@ namespace flow
                 return;
             }
 #endif
-            //Esto se debe de llamar cuando se cambie a una GameScene
-
-            levelManager.initializeLevel(levelIndex, categories[categoryIndex].packs[packIndex]);
 
             LoadCreateProgress();
+
+            //Esto se debe de llamar cuando se cambie a una GameScene
+            theme = categories[categoryIndex].packs[packIndex].skin.colors;
+
+            levelManager.initializeLevel(levelIndex, categories[categoryIndex].packs[packIndex]);
         }
 
         public void LoadCreateProgress()
@@ -87,10 +94,13 @@ namespace flow
             //data = new ProgressData();
             //data.Init(categories);
             //saveIO.SaveData(data);
+            Debug.Log("Procediendo");
+            data = null;    //Para evitar problemas
 
             if (File.Exists("Assets/SaveFile.json"))
             {
                 data = saveIO.LoadData();
+                Debug.Log("Cargados los datos");
             }
 
             if (data == null) { 
@@ -125,6 +135,11 @@ namespace flow
             data.onHintAdded();
             Debug.Log("Guardando datos");
             saveIO.SaveData(data);  //Guardamos
+        }
+
+        public int GetLevelRecord()
+        {
+            return data.categories[categoryIndex].packs[packIndex].levels[levelIndex].moveRecord;
         }
 
         public void ChangeScene(string name)
