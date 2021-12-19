@@ -37,7 +37,7 @@ namespace flow
 
             string level = maps[levelNumber];
 
-            boardManager.GenerateBoard(level, pack.colors);
+            boardManager.GenerateBoard(level, pack.skin.colors);
         }
 
         public void onLevelFinished()
