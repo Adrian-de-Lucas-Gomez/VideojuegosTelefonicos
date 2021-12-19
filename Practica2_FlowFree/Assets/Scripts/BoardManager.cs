@@ -197,21 +197,41 @@ namespace flow
             return (aux / numFillableTiles) * 100;
         }
 
-        public (int, int) GenerateBoard(string level, Color[] skin, float boardScale)
+        private void Setup()
         {
-            //El tamaño de un tile en pantalla
+            currentTile = 0;
+            currentFlow = int.MaxValue;
+            previousFlow = int.MaxValue;
+            isBuildingFlow = false;
+
+            numFillableTiles = 0;
+            numFilledTiles = 0;
+            numMoves = 0;
+            finished = false;
+
+            if(tiles != null)
+            {
+                foreach (Transform child in boardObject.transform)
+                {
+                    GameObject.Destroy(child.gameObject);
+                }
+            }
 
             tiles = new List<Tile>();
             flows = new List<Flow>();
             solution = new List<List<int>>();
-            colors = skin;
+
             pointerIndicator = new PointerIndicator();
             pointerIndicator.SetSprite(pointerIndicatorSprite);
+        }
 
+        public (int, int) GenerateBoard(string level, Color[] skin, float boardScale)
+        {
+            Setup();
+            colors = skin;
+            //Lectura del nivel
             List<int> emptyTiles = new List<int>();
             List<(int, int)> walls = new List<(int, int)>();
-
-            //Lectura del nivel
             ReadLevel(level, ref emptyTiles, ref walls);
 
             tileSize = new Vector2((int)boardScale / boardWidth, (int)boardScale / boardHeight);

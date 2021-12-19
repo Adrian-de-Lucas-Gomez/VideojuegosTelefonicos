@@ -85,9 +85,7 @@ namespace flow
         public void tryNextLevel()
         {
             GameManager auxMan = GameManager.GetInstance();
-
             auxMan.NextLevel();
-
             InitializeLevel(auxMan.selectedLevelString, auxMan.GetSelectedPack());
         }
         public void tryPrevLevel()
@@ -98,8 +96,6 @@ namespace flow
         }
         public void OnLevelFinished()
         {
-            //Aqui activamos el panel de "felicidades has ganado"
-            Debug.Log("UWU resolviste el tablero");
             winPanel.SetActive(true);
         }
 
