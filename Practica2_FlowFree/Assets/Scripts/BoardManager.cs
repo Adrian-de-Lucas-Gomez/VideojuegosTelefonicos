@@ -31,7 +31,7 @@ namespace flow
 
         //Lógica
         private Vector2 posIni;
-        private Vector2 offset; //Pruebas
+        private Vector2 tileSize;
         private int currentTile = 0;
         private int currentFlow = int.MaxValue;
         private int previousFlow = int.MaxValue;
@@ -135,7 +135,6 @@ namespace flow
 
             //Calcular la posicion desde la que se instanciaran las casillas
             posIni = new Vector2(-(float)boardWidth / 2f, (float)boardHeight / 2f);
-            offset = Vector2.one;
 
             numFillableTiles = boardWidth * boardHeight - (nFlows * 2);
             Debug.Log("Tiles jugables: " + numFillableTiles);
@@ -198,8 +197,11 @@ namespace flow
             return (aux / numFillableTiles) * 100;
         }
 
-        public void GenerateBoard(string level, Color[] skin)
+        public void GenerateBoard(string level, Color[] skin, float boardScale)
         {
+            //El tamaño de un tile en pantalla
+            tileSize = new Vector2((int)boardScale / boardWidth, (int)boardScale / boardHeight);
+
             tiles = new List<Tile>();
             flows = new List<Flow>();
             solution = new List<List<int>>();
@@ -218,8 +220,10 @@ namespace flow
             {
                 for (int i = 0; i < boardWidth; ++i)
                 {
-                    GameObject t = Instantiate(tilePrefab, new Vector2(posIni.x + offset.x / 2 + i * offset.x, posIni.y - offset.y / 2 - j * offset.y),
+                    GameObject t = Instantiate(tilePrefab, new Vector2(posIni.x + tileSize.x / 2 + i * tileSize.x, posIni.y - tileSize.y / 2 - j * tileSize.y),
                         Quaternion.identity, boardObject);
+                    t.transform.localScale = tileSize; //Escalamos el tile
+                    
                     Tile newTile = t.GetComponent<Tile>();
                     newTile.Initialize();
                     tiles.Add(t.GetComponent<Tile>());
@@ -449,8 +453,8 @@ namespace flow
 
         private bool IsPosInBoard(Vector3 pos)
         {
-            if (pos.x >= posIni.x && pos.x < posIni.x + boardWidth * offset.x &&
-                pos.y <= posIni.y && pos.y > posIni.y - boardHeight * offset.y)
+            if (pos.x >= posIni.x && pos.x < posIni.x + boardWidth * tileSize.x &&
+                pos.y <= posIni.y && pos.y > posIni.y - boardHeight * tileSize.y)
                 return true;
 
             return false;
@@ -487,8 +491,8 @@ namespace flow
         private int WorldPosToTile(Vector3 pos)
         {
             Vector2 posBoard = new Vector2(Mathf.Abs(pos.x - posIni.x), Mathf.Abs(pos.y - posIni.y));
-            int col = (int)(posBoard.x / offset.x);
-            int row = (int)(posBoard.y / offset.y);
+            int col = (int)(posBoard.x / tileSize.x);
+            int row = (int)(posBoard.y / tileSize.y);
 
             return (row * boardWidth + col);
         }

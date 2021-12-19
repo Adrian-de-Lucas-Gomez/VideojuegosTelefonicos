@@ -3013,6 +3013,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   winPanel: {fileID: 413086311}
   boardManager: {fileID: 1649278888}
+  boardViewport: {fileID: 1909632819}
   totalFlowsText: {fileID: 91239316}
   movesText: {fileID: 413684038}
   bestText: {fileID: 395722418}

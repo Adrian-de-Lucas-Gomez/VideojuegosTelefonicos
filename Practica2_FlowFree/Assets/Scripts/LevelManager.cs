@@ -15,6 +15,7 @@ namespace flow
         [SerializeField] GameObject winPanel;
         [SerializeField] BoardManager boardManager;
 
+        [SerializeField] RectTransform boardViewport;
         [SerializeField] Text totalFlowsText;
         [SerializeField] Text movesText;
         [SerializeField] Text bestText;
@@ -24,7 +25,7 @@ namespace flow
         private void Start()
         {
 #if UNITY_EDITOR
-            if (boardManager == null || winPanel == null || totalFlowsText == null ||
+            if (boardManager == null || winPanel == null || boardViewport == null || totalFlowsText == null ||
                 movesText == null || bestText == null || percentageText == null || nHintsText == null)
             {
                 Debug.LogError("LevelManager: Alguna variable no tiene valor asociado desde el editor.");
@@ -44,13 +45,26 @@ namespace flow
             percentageText.text = boardManager.GetPercentage().ToString("F2") + "%";
         }
 
+        //Calculamos el tamaño de un tile
+        private float boardScale()
+        {
+            float aspect = boardViewport.rect.height / Screen.height;
+            float auxBoardWidth = boardViewport.rect.width / aspect;
+            float auxBoardHeight = boardViewport.rect.height / aspect;
+
+            //El menor porque es el que se ajusta a la pantalla sin salirse
+            float auxBoardSize = Mathf.Min(auxBoardWidth, auxBoardHeight);
+
+            return auxBoardSize;
+        }
+
         public void InitializeLevel(int levelNumber, LevelPack pack)
         {
             string[] maps = pack.levelsFile.ToString().Split('\n');
 
             string level = maps[levelNumber];
 
-            boardManager.GenerateBoard(level, pack.skin.colors);
+            boardManager.GenerateBoard(level, pack.skin.colors, boardScale());
         }
 
         public void OnLevelFinished()
