@@ -2944,6 +2944,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   winPanel: {fileID: 306647625}
   boardManager: {fileID: 1649278888}
+  totalFlowsText: {fileID: 600642974}
+  movesText: {fileID: 1881557772}
+  bestText: {fileID: 1078422626}
+  percentageText: {fileID: 516385585}
 --- !u!4 &1462976383
 Transform:
   m_ObjectHideFlags: 0

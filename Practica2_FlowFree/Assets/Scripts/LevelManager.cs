@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace flow
 {
@@ -13,6 +14,11 @@ namespace flow
     {
         [SerializeField] GameObject winPanel;
         [SerializeField] BoardManager boardManager;
+
+        [SerializeField] Text totalFlowsText;   // 0/?
+        [SerializeField] Text movesText;
+        [SerializeField] Text bestText;
+        [SerializeField] Text percentageText;   // ?%
 
         private void Start()
         {
@@ -29,15 +35,23 @@ namespace flow
             }
 #endif      
             winPanel.SetActive(false);
+
+            
         }
 
+        public void Update() {
+            totalFlowsText.text = boardManager.GetNumFlows() + " /" + boardManager.GetTotalFlows();
+            movesText.text = boardManager.GetNumMoves().ToString();
+            bestText.text = GameManager.GetInstance().GetLevelRecord().ToString();
+            percentageText.text = boardManager.GetPercentage().ToString("F2") + "%";
+        }
         public void initializeLevel(int levelNumber, LevelPack pack)
         {
             string[] maps = pack.levelsFile.ToString().Split('\n');
 
             string level = maps[levelNumber];
 
-            boardManager.GenerateBoard(level, pack.colors);
+            boardManager.GenerateBoard(level, pack.skin.colors);
         }
 
         public void onLevelFinished()
