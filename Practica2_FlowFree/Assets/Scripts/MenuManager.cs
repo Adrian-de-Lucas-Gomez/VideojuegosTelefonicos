@@ -41,7 +41,7 @@ namespace flow
         private LevelPack currentlevelPack = null;
         private Transform levelButtonParent;
 
-
+        [SerializeField] Text[] colorLetters;
         private void LoadMainMenu()
         {
             mainMenu.SetActive(true);
@@ -60,6 +60,16 @@ namespace flow
                     LevelPackCard pack = Instantiate(levelPackCardPrefab, categoriesParent);
                     pack.ConfigureLevelPack(this, packs[j], categories[i]);
                 }
+            }
+
+            Color[] colors = GameManager.GetInstance().GetTheme();
+
+            for(int i=0; i < colorLetters.Length; i++)
+            {
+                Color aux = colors[i];
+                aux.a = 1.0f;
+                colorLetters[i].color = aux;
+                //colorLetters[i].color.a = 1.0f;
             }
         }
 

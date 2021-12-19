@@ -28,6 +28,8 @@ namespace flow
 
         private static GameManager instance;
 
+        private Color[] theme;
+
         void Awake()
         {
             if (instance == null)
@@ -54,6 +56,10 @@ namespace flow
             return instance;
         }
 
+        public Color[] GetTheme()
+        {
+            return theme;
+        }
         public void Start()
         {
 #if UNITY_EDITOR
@@ -68,6 +74,7 @@ namespace flow
             LoadCreateProgress();
 
             //Esto se debe de llamar cuando se cambie a una GameScene
+            theme = categories[categoryIndex].packs[packIndex].skin.colors;
 
             levelManager.initializeLevel(levelIndex, categories[categoryIndex].packs[packIndex]);
         }
