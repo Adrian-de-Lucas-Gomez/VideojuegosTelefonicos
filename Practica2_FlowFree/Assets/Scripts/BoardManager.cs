@@ -14,7 +14,6 @@ namespace flow
     {
         [SerializeField] GameObject tilePrefab;
         [SerializeField] Transform boardObject;
-        [SerializeField] Vector2 posIni;
 
         //Generación del nivel
         //private string level = "5,0,1,5;18,17,12;21,16,11,6;3,4,9;0,1,2,7,8,13,14,19,24,23,22;20,15,10,5";
@@ -27,12 +26,13 @@ namespace flow
         private List<Tile> tiles;
 
         //++++Pruebas TODO:
-        public Vector2 offset;
         bool finished = false;
 
         //+++++++++++
 
         //Lógica
+        private Vector2 posIni;
+        private Vector2 offset; //Pruebas
         private int currentTile = 0;
         private int currentFlow = 0;
         private int previousFlow = int.MaxValue;
@@ -43,10 +43,11 @@ namespace flow
 
         private int numMoves = 0;
 
+
         public void Start()
         {
 #if UNITY_EDITOR
-            if (tilePrefab == null || boardObject == null || posIni == null || offset == null)
+            if (tilePrefab == null || boardObject == null)
             {
                 Debug.LogError("BoardManager: Alguna variable no tiene valor asociado desde el editor.");
                 return;
@@ -123,6 +124,10 @@ namespace flow
             {
                 boardWidth = boardHeight = int.Parse(auxInfo[0]);
             }
+
+            //Calcular la posicion desde la que se instanciaran las casillas
+            posIni = new Vector2(-(float)boardWidth / 2f, (float)boardHeight / 2f);
+            offset = Vector2.one;
 
             numFillableTiles = boardWidth * boardHeight - (nFlows * 2);
             Debug.Log("Tiles jugables: " + numFillableTiles);
