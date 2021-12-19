@@ -2506,7 +2506,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 3881729661027634210, guid: e9a3465a4d7c26047a5525c9a67b9809, type: 3}
-  boardObject: {fileID: 0}
+  boardObject: {fileID: 325568757}
   posIni: {x: -2, y: 3}
   offset: {x: 1, y: 1}
 --- !u!4 &1649278889
