@@ -47,12 +47,13 @@ namespace flow
             totalFlowsText.text = boardManager.GetNumFlows().ToString() + " /" + boardManager.GetTotalFlows().ToString();
             movesText.text = boardManager.GetNumMoves().ToString();
             bestText.text = GameManager.GetInstance().GetLevelRecord().ToString();
-            percentageText.text = boardManager.GetPercentage().ToString("F2") + "%";
+            percentageText.text = ((int)boardManager.GetPercentage()).ToString() + "%";
         }
 
         //Calculamos el tamanho de un tile
         private float boardScale()
         {
+            //TODO: esta mal
             float aspect = boardViewport.rect.height / Screen.height;
             float auxBoardWidth = boardViewport.rect.width / aspect;
             float auxBoardHeight = boardViewport.rect.height / aspect;
@@ -82,18 +83,20 @@ namespace flow
             nHintsText.text = GameManager.GetInstance().GetNHints().ToString() + "x";
         }
 
-        public void tryNextLevel()
+        public void TryNextLevel()
         {
             GameManager auxMan = GameManager.GetInstance();
             auxMan.NextLevel();
             InitializeLevel(auxMan.selectedLevelString, auxMan.GetSelectedPack());
         }
-        public void tryPrevLevel()
+
+        public void TryPrevLevel()
         {
             GameManager auxMan = GameManager.GetInstance();
             auxMan.PrevLevel();
             InitializeLevel(auxMan.selectedLevelString, auxMan.GetSelectedPack());
         }
+
         public void OnLevelFinished()
         {
             winPanel.SetActive(true);

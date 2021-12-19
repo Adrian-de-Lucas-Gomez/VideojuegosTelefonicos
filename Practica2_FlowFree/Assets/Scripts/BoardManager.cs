@@ -236,6 +236,7 @@ namespace flow
 
             //El tamanho de un tile en pantalla
             tileSize = Vector2.one;
+            //TODO: no funciona el escalado
             //tileSize = new Vector2((int)boardScale / boardWidth, (int)boardScale / boardHeight);
 
             //Generar nivel
