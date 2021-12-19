@@ -24,6 +24,7 @@ namespace flow
     {
         public int moveRecord;
         public bool completed;
+        public bool locked;
     }
 
     [Serializable]
@@ -73,6 +74,7 @@ namespace flow
 
                         aux[j].levels[k].moveRecord = 0;
                         aux[j].levels[k].completed = false;
+                        aux[j].levels[k].locked = true;
                     }
                 }
             }

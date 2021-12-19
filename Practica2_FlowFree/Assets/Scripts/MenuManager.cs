@@ -87,20 +87,37 @@ namespace flow
             int nLevels = levelsStrings.Length - 1;
             int nPages = nLevels / LEVELS_PER_PAGE;
 
+
+            ProgressData data = GameManager.GetInstance().GetData();
+
             for (int i = 0; i < nPages; i++)
             {
                 LevelPage page = Instantiate(levelPagePrefab, levelPageParent);
                 page.ConfigureLevelPage(i, currentlevelPack);
 
+
+                levelButtonParent = page.GetButtonsParent();
+                LevelButton buttonOne = Instantiate(levelButtonPrefab, levelButtonParent);
+
+                int levelIndexAUX = 0 + LEVELS_PER_PAGE * i + 1;
+                string levelButtonStringAux = levelsStrings[0 + LEVELS_PER_PAGE * i];
+                buttonOne.ConfigureLevelButton(levelIndexAUX, currentlevelPack.colors[i], levelButtonStringAux, false);
+
                 //Crear LEVELS_PER_PAGE botones
-                for (int j = 0; j < LEVELS_PER_PAGE; ++j)
+                for (int j = 1; j < LEVELS_PER_PAGE; ++j)
                 {
                     levelButtonParent = page.GetButtonsParent();
                     LevelButton button = Instantiate(levelButtonPrefab, levelButtonParent);
 
+                    bool locked = false;
+                    if(currentCategory.levelsLocked)
+                    {
+                        locked = true;
+                    }
+
                     int levelIndex = j + LEVELS_PER_PAGE * i + 1;
                     string levelButtonString = levelsStrings[j + LEVELS_PER_PAGE * i];
-                    button.ConfigureLevelButton(levelIndex, currentlevelPack.colors[i], levelButtonString);
+                    button.ConfigureLevelButton(levelIndex, currentlevelPack.colors[i], levelButtonString, locked);
                 }
             }
         }
