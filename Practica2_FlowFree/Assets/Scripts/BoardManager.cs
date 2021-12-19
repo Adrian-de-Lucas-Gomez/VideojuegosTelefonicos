@@ -16,7 +16,6 @@ namespace flow
         [SerializeField] Transform boardObject;
 
         //Generación del nivel
-        //private string level = "5,0,1,5;18,17,12;21,16,11,6;3,4,9;0,1,2,7,8,13,14,19,24,23,22;20,15,10,5";
         private int levelNumber;
         private int nFlows;
         private bool isSurroundedByWalls = false;
@@ -26,10 +25,6 @@ namespace flow
         private List<Flow> flows;
         private List<Tile> tiles;
 
-        //++++Pruebas TODO:
-        bool finished = false;
-
-        //+++++++++++
 
         //Lógica
         private Vector2 posIni;
@@ -41,11 +36,11 @@ namespace flow
 
         private int numFillableTiles = 0;
         private int numFilledTiles = 0;
-
         private int numMoves = 0;
+        private bool finished = false;
 
 
-        public void Start()
+        void Start()
         {
 #if UNITY_EDITOR
             if (tilePrefab == null || boardObject == null)

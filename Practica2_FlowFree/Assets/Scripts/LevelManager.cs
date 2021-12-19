@@ -15,37 +15,33 @@ namespace flow
         [SerializeField] GameObject winPanel;
         [SerializeField] BoardManager boardManager;
 
-        [SerializeField] Text totalFlowsText;   // 0/?
+        [SerializeField] Text totalFlowsText;
         [SerializeField] Text movesText;
         [SerializeField] Text bestText;
-        [SerializeField] Text percentageText;   // ?%
+        [SerializeField] Text percentageText;
 
         private void Start()
         {
 #if UNITY_EDITOR
-            if (boardManager == null)
+            if (boardManager == null || winPanel == null || totalFlowsText == null ||
+                movesText == null || bestText == null || percentageText == null)
             {
                 Debug.LogError("LevelManager: Alguna variable no tiene valor asociado desde el editor.");
                 return;
             }
-            if(winPanel == null)
-            {
-                Debug.LogError("LevelManager: No se asigno el panel de victoria desde el editor.");
-                return;
-            }
 #endif      
             winPanel.SetActive(false);
-
-            
         }
 
-        public void Update() {
-            totalFlowsText.text = boardManager.GetNumFlows() + " /" + boardManager.GetTotalFlows();
+        public void Update()
+        {
+            totalFlowsText.text = boardManager.GetNumFlows().ToString() + " /" + boardManager.GetTotalFlows().ToString();
             movesText.text = boardManager.GetNumMoves().ToString();
             bestText.text = GameManager.GetInstance().GetLevelRecord().ToString();
             percentageText.text = boardManager.GetPercentage().ToString("F2") + "%";
         }
-        public void initializeLevel(int levelNumber, LevelPack pack)
+
+        public void InitializeLevel(int levelNumber, LevelPack pack)
         {
             string[] maps = pack.levelsFile.ToString().Split('\n');
 
@@ -54,7 +50,7 @@ namespace flow
             boardManager.GenerateBoard(level, pack.skin.colors);
         }
 
-        public void onLevelFinished()
+        public void OnLevelFinished()
         {
             //Aqui activamos el panel de "felicidades has ganado"
             Debug.Log("UWU resolviste el tablero");

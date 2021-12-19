@@ -81,7 +81,7 @@ namespace flow
             //Esto se debe de llamar cuando se cambie a una GameScene
             theme = categories[categoryIndex].packs[packIndex].skin.colors;
 
-            levelManager.initializeLevel(levelIndex, categories[categoryIndex].packs[packIndex]);
+            levelManager.InitializeLevel(levelIndex, categories[categoryIndex].packs[packIndex]);
         }
 
         public void LoadCreateProgress()
@@ -120,7 +120,7 @@ namespace flow
             saveIO.SaveData(data);  //Guardamos el progreso al acabar el nivel
 
             //Avisamos al LevelManager para que ponga la ventanita correspondiente
-            levelManager.onLevelFinished();
+            levelManager.OnLevelFinished();
         }
 
         public void OnHintUsed()
