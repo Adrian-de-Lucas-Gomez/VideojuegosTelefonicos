@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Intro
   packs:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  color: {r: 0, g: 0.5529412, b: 0, a: 0}
+  - {fileID: 11400000, guid: 1241e5ec3111c30478244b7e3bc3e1c3, type: 2}
+  - {fileID: 11400000, guid: 384a55ed6c007fc4a855c553f9f28dd9, type: 2}
+  - {fileID: 11400000, guid: aaeef0313c9022940bf55d6610a47402, type: 2}
+  - {fileID: 11400000, guid: 988166da12547ab408c1605826dbe427, type: 2}
+  color: {r: 0, g: 0.5529412, b: 0, a: 1}
   levelsLocked: 0

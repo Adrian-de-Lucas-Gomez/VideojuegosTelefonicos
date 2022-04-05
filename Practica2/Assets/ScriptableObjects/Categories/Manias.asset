@@ -12,7 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f232b29c415746448b499da7a70266a, type: 3}
   m_Name: Manias
   m_EditorClassIdentifier: 
-  title: 
-  packs: []
-  color: {r: 0, g: 0, b: 0, a: 0}
-  levelsLocked: 0
+  title: Manias
+  packs:
+  - {fileID: 11400000, guid: 2428cdee820d6584199e1a52b9a30f52, type: 2}
+  - {fileID: 11400000, guid: 5f8dfd6a6d1ed5e459022bbf8632bb2e, type: 2}
+  - {fileID: 11400000, guid: 3d608485e96853b43b97dac504467527, type: 2}
+  - {fileID: 11400000, guid: 30a8ccca49371e244ba3bbb73bcb692d, type: 2}
+  - {fileID: 11400000, guid: a9e4226096164d74cba7cc315fa10b8e, type: 2}
+  color: {r: 1, g: 0, b: 0, a: 1}
+  levelsLocked: 1

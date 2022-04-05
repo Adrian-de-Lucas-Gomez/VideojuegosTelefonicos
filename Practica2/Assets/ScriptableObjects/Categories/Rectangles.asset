@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: Rectangles
   m_EditorClassIdentifier: 
   title: 
-  packs: []
-  color: {r: 0, g: 0, b: 0, a: 0}
-  levelsLocked: 0
+  packs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  color: {r: 0.9843137, g: 0.5372549, b: 0, a: 1}
+  levelsLocked: 1
