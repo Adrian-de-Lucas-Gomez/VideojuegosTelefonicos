@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f4610d58e5d83b4fbbf56099b5f0848, type: 3}
+  m_Name: Tower
+  m_EditorClassIdentifier: 
+  title: Tower Pack
+  levelsFile: {fileID: 4900000, guid: decad6ccaadd6aa4684a5b610b03071e, type: 3}
+  skin: {fileID: 11400000, guid: 8bbfdbce4c9e0444c8d770222e0c9f1d, type: 2}
+  groupTitles:
+  - 5x6 - 5x11
+  - 6x7 - 6x12
+  - 7x8 - 7x13
+  - 8x9 - 8x14
+  - 9x10 - 9x15
+  colors:
+  - {r: 0.9843137, g: 0.5372549, b: 0, a: 1}
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0, g: 0.5529412, b: 0, a: 1}
+  - {r: 0.047058824, g: 0.16078432, b: 0.99607843, a: 1}
+  - {r: 0.91764706, g: 0.8784314, b: 0, a: 1}

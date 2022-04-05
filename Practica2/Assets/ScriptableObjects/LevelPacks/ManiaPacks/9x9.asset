@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f4610d58e5d83b4fbbf56099b5f0848, type: 3}
+  m_Name: 9x9
+  m_EditorClassIdentifier: 
+  title: 9x9 Mania
+  levelsFile: {fileID: 4900000, guid: 4b911491ddff24d4bb02b15b04837ce1, type: 3}
+  skin: {fileID: 11400000, guid: 8bbfdbce4c9e0444c8d770222e0c9f1d, type: 2}
+  groupTitles:
+  - 1 - 30
+  - 31 - 60
+  - 61 - 90
+  - 91 - 120
+  - 121 - 150
+  colors:
+  - {r: 0, g: 0.5529412, b: 0, a: 1}
+  - {r: 0.047058824, g: 0.16078432, b: 0.99607843, a: 1}
+  - {r: 0.91764706, g: 0.8784314, b: 0, a: 1}
+  - {r: 0.9843137, g: 0.5372549, b: 0, a: 1}
+  - {r: 1, g: 0, b: 0, a: 1}
