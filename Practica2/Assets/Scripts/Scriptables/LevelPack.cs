@@ -12,8 +12,6 @@ namespace flow
         public string title;
         //Fichero con el conjunto de niveles
         public TextAsset levelsFile;
-        //Colores del tema
-        public ColorSkin skin;
         //Titulos de los grupos de niveles
         public string[] groupTitles;
         //Colores de los grupos de niveles
@@ -22,7 +20,7 @@ namespace flow
         void OnEnable()
         {
 #if UNITY_EDITOR
-            if (title == null || levelsFile == null || skin == null)
+            if (title == null || levelsFile == null)
             {
                 Debug.LogError("LevelPack: faltan variables por asignar en el ScriptableObject.");
                 return;

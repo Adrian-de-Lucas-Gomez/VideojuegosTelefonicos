@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f232b29c415746448b499da7a70266a, type: 3}
   m_Name: Rectangles
   m_EditorClassIdentifier: 
-  title: 
+  title: Rectangles
   packs:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 7a72a617fdd29844db72e9a9743df416, type: 2}
+  - {fileID: 11400000, guid: dab7fef6e0c73d2468a45b29ec832770, type: 2}
+  - {fileID: 11400000, guid: 120b8190e5164f24e9998ed2e9e4fc66, type: 2}
   color: {r: 0.9843137, g: 0.5372549, b: 0, a: 1}
-  levelsLocked: 1
+  levelsLocked: 0
