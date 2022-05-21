@@ -373,7 +373,7 @@ namespace flow
 
                     if (newTile != currentTile && !flows[currentFlow].isClosed()) //Nos hemos movido de casilla
                     {
-                        Direction dir = DirectionUtils.DirectionBetweenTiles(currentTile, newTile, boardWidth);
+                        Direction dir = DirectionUtils.DirectionBetweenTiles(newTile, currentTile, boardWidth);
 
                         if (dir != Direction.None && tiles[newTile].CanBeAccesed(dir)) //Si el movimiento ha sido valido (El movimiento en diagonal es demasiado poderoso)
                         {
