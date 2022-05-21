@@ -25,7 +25,7 @@ namespace flow
         private bool closedInProvisionalCut = false;
         private bool wasSolvedByHint = false;
 
-        private int initialPosition = 0;
+        private List<TileInfo> previousSolution;
         private bool hasChanged = false;
 
         public Flow(int c, Color rc, int boardWidth)
@@ -34,14 +34,15 @@ namespace flow
             _renderColor = rc;
             _boardWidth = boardWidth;
             tiles = new List<TileInfo>();
+            previousSolution = new List<TileInfo>();
         }
 
         //Construcción del camino
 
         public void StartBuildingFlow(Tile tile, int pos)
         {
+            //previousSolution = new List<TileInfo>(tiles);
             if (tiles.Count == 0) tiles.Add(new TileInfo(tile, pos));
-            initialPosition = pos;
             hasChanged = false;
             CloseSmallCircle();
         }
@@ -54,7 +55,22 @@ namespace flow
         public void StopBuldingFlow()
         {
             SetTransparentBackground(true);
-            hasChanged = (initialPosition != tiles[tiles.Count - 1].position);
+            hasChanged = false;
+
+            if (previousSolution.Count == tiles.Count)
+            {
+                if (previousSolution[tiles.Count - 1].position == tiles[0].position && closed) //Se ha cerrado en la dirección contraria
+                {
+                    for (int k = 0; k < tiles.Count; k++) if (tiles[k].position != previousSolution[tiles.Count - 1 - k].position) hasChanged = true;
+                }
+                else
+                {
+                    for (int k = 0; k < tiles.Count; k++) if (tiles[k].position != previousSolution[k].position) hasChanged = true;
+                }
+            }
+            else hasChanged = true;
+
+            //hasChanged = (initialPosition != tiles[tiles.Count - 1].position);
             if (!tiles[tiles.Count - 1].tile.IsOrigin()) tiles[tiles.Count - 1].tile.EnableSmallCircle(true);
             else if (closed) tiles[tiles.Count - 1].tile.PlayFadingCircleAnimation();
         }
@@ -90,6 +106,7 @@ namespace flow
 
         public void CutFlow(int tilePos, out int prevTile)
         {
+            previousSolution = new List<TileInfo>(tiles);
             if(tilePos == tiles[0].position)
             {
                 for (int k = 0; k < tiles.Count; k++)
@@ -219,6 +236,8 @@ namespace flow
             //Busca por la solución y compara con la lista de tiles hasta que la recorre entera
             //o se encuentra un tile que es diferente.
 
+            if (tiles.Count != solution.Count) return false;
+
             //La solución y la lista de tiles siguen el mismo orden
             if (solution[0] == tiles[0].position) 
             {
@@ -273,6 +292,7 @@ namespace flow
 
         public void ClearFlow()
         {
+            previousSolution = new List<TileInfo>(tiles);
             for(int k = 0; k < tiles.Count; k++)
             {
                 tiles[k].tile.HideTransparentBackground();

@@ -79,11 +79,10 @@ namespace flow
             if (closed && !isBuildingFlow)
             {
                 Debug.Log("Flujos cerrados");
-                //j = true;
                 bool correct = true;
                 int flow = 0;
 
-                while (flow < flows.Count)
+                while (flow < flows.Count && correct)
                 {
                     correct = flows[flow].IsSolved(solution[flow]);
                     flow++;
@@ -180,7 +179,7 @@ namespace flow
             int flowsDone = 0;
             for (int i = 0; i < flows.Count; i++)
             {
-                if (flows[i].IsSolved(solution[i]))
+                if (flows[i].isClosed())
                 {
                     flowsDone++;
                 }
@@ -311,21 +310,26 @@ namespace flow
             {
                 if (previousFlow != int.MaxValue)
                 {
-                    flows[previousFlow].CloseSmallCircle();
+                    //flows[previousFlow].CloseSmallCircle();
                 }
 
                 if (currentFlow != int.MaxValue)
                 {
                     for (int k = 0; k < flows.Count; k++) if (k != currentFlow) flows[k].ApplyProvisionalCut();
                     flows[currentFlow].StopBuldingFlow();
-                    if (flows[currentFlow].ChangedInMove() && currentFlow != previousFlow) numMoves++;
+                    if (flows[currentFlow].ChangedInMove() && currentFlow != previousFlow)
+                    {
+                        numMoves++;
+                        previousFlow = currentFlow; //Solo se cambia el flow anterior cuando en el actual se ha producido un cambio.
+                    }
                 }
 
                 pointerIndicator.Hide();
-                previousFlow = currentFlow;
                 currentTile = int.MaxValue;
                 currentFlow = int.MaxValue;
                 isBuildingFlow = false;
+
+                Debug.Log("Current:" + currentFlow + ", Previous:" + previousFlow);
             }
 
             if (IsPosInBoard(worldPos))
