@@ -41,7 +41,6 @@ namespace flow
 
         public void StartBuildingFlow(Tile tile, int pos)
         {
-            //previousSolution = new List<TileInfo>(tiles);
             closed = false;
             if (tiles.Count == 0) tiles.Add(new TileInfo(tile, pos));
             hasChanged = false;
@@ -72,7 +71,6 @@ namespace flow
             }
             else hasChanged = true;
 
-            //hasChanged = (initialPosition != tiles[tiles.Count - 1].position);
             if (!tiles[tiles.Count - 1].tile.IsOrigin()) tiles[tiles.Count - 1].tile.EnableSmallCircle(true);
             else if (closed) tiles[tiles.Count - 1].tile.PlayFadingCircleAnimation();
         }

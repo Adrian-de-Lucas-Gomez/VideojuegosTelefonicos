@@ -67,7 +67,6 @@ namespace flow
         private void CheckFlows()
         {
             int i = 0;
-            //bool j = false;
             bool closed = true;
 
             while (i < flows.Count && closed)
@@ -303,11 +302,6 @@ namespace flow
 
             if (PlayerInput.JustUnpressed()) //Si el usuario acaba de liberar el boton izquierdo 
             {
-                if (previousFlow != int.MaxValue)
-                {
-                    //flows[previousFlow].CloseSmallCircle();
-                }
-
                 if (currentFlow != int.MaxValue)
                 {
                     for (int k = 0; k < flows.Count; k++) if (k != currentFlow) flows[k].ApplyProvisionalCut();
