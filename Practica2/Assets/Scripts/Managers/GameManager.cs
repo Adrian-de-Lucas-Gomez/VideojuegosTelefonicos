@@ -19,24 +19,39 @@ namespace flow
         [SerializeField] int levelIndex = 0; //TODO
         [SerializeField] List<Categories> categories;
 
-        //public Categories selectedCategory { get; set; }
-        //public LevelPack selectedPack { get; set; }
+        //no se si deberiamos tener esto aqui tb?
+        // packStrings = currentPack.levels.text.Split('\n');
+
         public ColorSkin skin;
 
         private static GameManager instance;
 
-        void Awake()
+        //void Awake()
+        //{
+        //    if (instance == null)
+        //    {
+        //        instance = this;
+        //        DontDestroyOnLoad(this.gameObject);
+        //    }
+        //    else
+        //    {
+        //        ////Pillar info del gameManager de esta escena
+        //        //GetGMInfo(levelManager, categories);
+        //        //Destroy(this);
+        //        instance = this;
+        //        DontDestroyOnLoad(gameObject);
+        //    }
+        //}
+
+        private void Awake()
         {
-            if (instance == null)
+            if (instance != null && instance != this)
             {
-                instance = this;
-                DontDestroyOnLoad(this.gameObject);
+                Destroy(gameObject);
+                return;
             }
             else
             {
-                ////Pillar info del gameManager de esta escena
-                //GetGMInfo(levelManager, categories);
-                //Destroy(this);
                 instance = this;
                 DontDestroyOnLoad(gameObject);
             }
@@ -75,7 +90,7 @@ namespace flow
             categoryIndex = 0;
             packIndex = 0;
 
-            SceneManager.LoadSceneAsync("MainMenu");
+            SceneManager.LoadScene("MainMenu");
         }
 
         //Si queremos borrar algo antes de q cierre
@@ -85,15 +100,15 @@ namespace flow
         //}
 
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        //private void GetGMInfo(LevelManager levelManager, Categories[] categories)
-        //{
-        //    instance.categories = categories;
-        //    instance.levelManager = levelManager;
-        //}
 
         public List<Categories> GetCategories()
         {
             return categories;
+        }
+
+        public Categories GetSelectedCategory()
+        {
+            return categories[categoryIndex];
         }
 
         public LevelPack GetSelectedPack()
