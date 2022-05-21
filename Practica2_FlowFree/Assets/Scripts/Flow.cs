@@ -42,6 +42,7 @@ namespace flow
         public void StartBuildingFlow(Tile tile, int pos)
         {
             //previousSolution = new List<TileInfo>(tiles);
+            closed = false;
             if (tiles.Count == 0) tiles.Add(new TileInfo(tile, pos));
             hasChanged = false;
             CloseSmallCircle();
@@ -54,9 +55,10 @@ namespace flow
 
         public void StopBuldingFlow()
         {
+            closed = IsFlowClosed();
+
             SetTransparentBackground(true);
             hasChanged = false;
-
             if (previousSolution.Count == tiles.Count)
             {
                 if (previousSolution[tiles.Count - 1].position == tiles[0].position && closed) //Se ha cerrado en la dirección contraria
@@ -82,6 +84,7 @@ namespace flow
 
         public void AddToFlow(Tile newTile, int pos, Direction dir)
         {
+            Debug.Log("AÑADIDA LA TILE: " + pos);
             tiles[tiles.Count - 1].tile.SetDirection(dir);
             tiles.Add(new TileInfo(newTile, pos));
             newTile.SetDirection(DirectionUtils.GetOppositeDirection(dir));
@@ -89,10 +92,13 @@ namespace flow
             newTile.SetRenderColor(_renderColor);
         }
 
-        public void SetClosed(bool state)
+        public bool AdmitsMove(int newTile) //Cuando el flow está cerrado pero aún no se han aplicado los cambios, solo se admite ir vuelta atrás en el flow por donde se ha expandido..
         {
-            closed = state;
-            closedInProvisionalCut = state;
+            if(tiles.Count > 1 && IsFlowClosed())
+            {
+                return Contains(newTile);
+            }
+            return true;
         }
 
         public void SetHintMarkerVisibility(bool visibility)
@@ -122,7 +128,7 @@ namespace flow
                 TileInfo auxTile = tiles[tiles.Count - 1];
                 if (closed)
                 {
-                    SetClosed(false);
+                    closed = false;
                     SetHintMarkerVisibility(false);
                     //Buscamos la posicion de corte
                     int aux = 0;
@@ -220,7 +226,7 @@ namespace flow
                 closedInProvisionalCut = true;
                 if (provisionalCutPosition < tiles.Count)
                 {
-                    SetClosed(false);
+                    closed = false;
                     for (int k = provisionalCutPosition; k < tiles.Count; k++) tiles[k].tile.HideTransparentBackground();
                     tiles.RemoveRange(provisionalCutPosition, tiles.Count - provisionalCutPosition);
                     if (tiles.Count == 1) tiles[0].tile.HideTransparentBackground();
@@ -274,6 +280,7 @@ namespace flow
 
         public void SetAsSolvedByHint()
         {
+            closed = true;
             wasSolvedByHint = true;
         }
 
@@ -317,14 +324,20 @@ namespace flow
             tiles[tiles.Count - 1].tile.PlayFadingCircleAnimation();
         }
 
+        //Utilizado cuando se está construyendo el flow. El booleano closed se calcula al dejar de construir el flow.
+        private bool IsFlowClosed()
+        {
+            return (tiles[0].position == originAInfo.position || tiles[0].position == originBInfo.position) && (tiles[tiles.Count - 1].position == originAInfo.position || tiles[tiles.Count - 1].position == originBInfo.position);
+        }
+
         //Getters
-        public bool isClosed()
+        public bool GetClosed()
         {
             return closed;
         }
 
         //Setters
-        public void setOrigins(Tile origA, int posOrigA, Tile origB, int posOrigB)
+        public void SetOrigins(Tile origA, int posOrigA, Tile origB, int posOrigB)
         {
             originAInfo.tile = origA;
             originAInfo.position = posOrigA;

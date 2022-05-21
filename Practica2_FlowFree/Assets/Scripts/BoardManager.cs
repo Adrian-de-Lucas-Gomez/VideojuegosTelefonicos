@@ -72,7 +72,7 @@ namespace flow
 
             while (i < flows.Count && closed)
             {
-                closed = flows[i].isClosed();
+                closed = flows[i].GetClosed();
                 i++;
             }
 
@@ -179,7 +179,7 @@ namespace flow
             int flowsDone = 0;
             for (int i = 0; i < flows.Count; i++)
             {
-                if (flows[i].isClosed())
+                if (flows[i].GetClosed())
                 {
                     flowsDone++;
                 }
@@ -272,7 +272,7 @@ namespace flow
                 flows.Add(new Flow(i, colors[i], boardWidth));
 
                 //Asignamos el origen y el final de los caminos
-                flows[i].setOrigins(tiles[solution[i][0]], solution[i][0], tiles[solution[i][solution[i].Count - 1]], solution[i][solution[i].Count - 1]);
+                flows[i].SetOrigins(tiles[solution[i][0]], solution[i][0], tiles[solution[i][solution[i].Count - 1]], solution[i][solution[i].Count - 1]);
 
                 tiles[solution[i][0]].SetRenderColor(colors[i]);
                 tiles[solution[i][solution[i].Count - 1]].SetRenderColor(colors[i]);
@@ -362,7 +362,6 @@ namespace flow
                         flows[currentFlow].StartBuildingFlow(tiles[currentTile], currentTile);
                         pointerIndicator.Show(colors[currentFlow]);
                         pointerIndicator.SetDarkened(false);
-                        flows[currentFlow].SetClosed(false);
                     }
                 }
 
@@ -371,7 +370,7 @@ namespace flow
                     if (tiles[newTile].GetColor() == currentFlow || !tiles[newTile].IsActive()) pointerIndicator.SetDarkened(false);
                     else pointerIndicator.SetDarkened(true);
 
-                    if (newTile != currentTile && !flows[currentFlow].isClosed()) //Nos hemos movido de casilla
+                    if (newTile != currentTile && flows[currentFlow].AdmitsMove(newTile)) //Nos hemos movido de casilla y el flow actual permite el movimiento
                     {
                         Direction dir = DirectionUtils.DirectionBetweenTiles(newTile, currentTile, boardWidth);
 
@@ -400,8 +399,9 @@ namespace flow
                                         if (!flows[currentFlow].Contains(newTile))
                                         {
                                             flows[currentFlow].AddToFlow(tiles[newTile], newTile, DirectionUtils.DirectionBetweenTiles(currentTile, newTile, boardWidth));
-                                            flows[currentFlow].SetClosed(true);
+                                            //flows[currentFlow].SetClosed(true);
                                             flows[currentFlow].SetHintMarkerVisibility(true);
+                                            currentTile = newTile;
                                         }
                                         else
                                         {
@@ -482,7 +482,6 @@ namespace flow
             }
             flows[flowToChange].SetAsSolvedByHint();
             flows[flowToChange].SetTransparentBackground(true);
-            flows[flowToChange].SetClosed(true);
             flows[flowToChange].SetHintMarkerVisibility(true);
             flows[flowToChange].PlayEndingAnimation();
         }
