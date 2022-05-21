@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8259823895226550678}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 200.79742, y: 248.00902, z: -43.583572}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -45,5 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   categoriesParent: {fileID: 0}
   categoryCardPrefab: {fileID: 825910229832983173, guid: 2508e2bccb1c5a6499d3b351eef547fc, type: 3}
-  levelPackCardPrefab: {fileID: 0}
+  levelPackCardPrefab: {fileID: 4208514732001634010, guid: b8736b0106fa06b468ec1a70e8977765, type: 3}
   titleParent: {fileID: 0}

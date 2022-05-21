@@ -14,9 +14,11 @@ namespace flow
     /// </summary>
     public class GameManager : MonoBehaviour
     {
-        [SerializeField] int categoryIndex = -1;
-        [SerializeField] int packIndex = -1;
+        [SerializeField] int categoryIndex = 0;
+        [SerializeField] int packIndex = 0;
+        [SerializeField] int levelIndex = 0; //TODO
         [SerializeField] Categories[] categories;
+
         public Categories selectedCategory { get; set; }
         public LevelPack selectedPack { get; set; }
         public ColorSkin skin;

@@ -275,10 +275,10 @@ RectTransform:
   m_Father: {fileID: 370524495}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 632.396, y: -100}
+  m_SizeDelta: {x: 60.831684, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &128035936
 MonoBehaviour:
@@ -360,10 +360,10 @@ RectTransform:
   m_Father: {fileID: 1477396906}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 200}
+  m_SizeDelta: {x: 1024, y: 200}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &370524496
 MonoBehaviour:
@@ -509,10 +509,10 @@ RectTransform:
   m_Father: {fileID: 370524495}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 375.1287, y: -100}
+  m_SizeDelta: {x: 27.881187, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &764660838
 MonoBehaviour:
@@ -613,7 +613,7 @@ MonoBehaviour:
   m_Elasticity: 0.135
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 70
   m_Viewport: {fileID: 1122019034}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}
@@ -664,10 +664,10 @@ RectTransform:
   m_Father: {fileID: 370524495}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 481.58417, y: -100}
+  m_SizeDelta: {x: 58.29703, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &898670348
 MonoBehaviour:
@@ -870,10 +870,10 @@ RectTransform:
   m_Father: {fileID: 370524495}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 542.41583, y: -100}
+  m_SizeDelta: {x: 63.366337, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1418801875
 MonoBehaviour:
@@ -1212,10 +1212,10 @@ RectTransform:
   m_Father: {fileID: 1477396906}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 100}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 512, y: -250}
+  m_SizeDelta: {x: 1024, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1922071046
 MonoBehaviour:
@@ -1311,10 +1311,10 @@ RectTransform:
   m_Father: {fileID: 370524495}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 420.75247, y: -100}
+  m_SizeDelta: {x: 63.366337, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1933164531
 MonoBehaviour:
@@ -1390,10 +1390,10 @@ RectTransform:
   m_Father: {fileID: 370524495}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 588.0396, y: -100}
+  m_SizeDelta: {x: 27.881187, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2034829575
 MonoBehaviour:
@@ -1557,9 +1557,5 @@ PrefabInstance:
       propertyPath: categoriesParent
       value: 
       objectReference: {fileID: 1477396906}
-    - target: {fileID: 8259823895226550680, guid: d0ca0096abe02e1478f44285c1f53e03, type: 3}
-      propertyPath: levelPackCardPrefab
-      value: 
-      objectReference: {fileID: 4208514732001634010, guid: b8736b0106fa06b468ec1a70e8977765, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0ca0096abe02e1478f44285c1f53e03, type: 3}
