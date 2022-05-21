@@ -17,10 +17,10 @@ namespace flow
         [SerializeField] int categoryIndex = 0;
         [SerializeField] int packIndex = 0;
         [SerializeField] int levelIndex = 0; //TODO
-        [SerializeField] Categories[] categories;
+        [SerializeField] List<Categories> categories;
 
-        public Categories selectedCategory { get; set; }
-        public LevelPack selectedPack { get; set; }
+        //public Categories selectedCategory { get; set; }
+        //public LevelPack selectedPack { get; set; }
         public ColorSkin skin;
 
         private static GameManager instance;
@@ -53,6 +53,37 @@ namespace flow
 #endif
         }
 
+        public void CloseGame()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+        }
+
+        public void LoadLevelMenu(LevelPack pack, Categories packCategory)
+        {
+            categoryIndex = categories.IndexOf(packCategory);
+            packIndex = categories[categoryIndex].packs.IndexOf(pack);
+
+            SceneManager.LoadScene("LevelMenu");
+        }
+
+        public void LoadMainMenu()
+        {
+            categoryIndex = 0;
+            packIndex = 0;
+
+            SceneManager.LoadSceneAsync("MainMenu");
+        }
+
+        //Si queremos borrar algo antes de q cierre
+        //private void OnApplicationQuit()
+        //{
+            
+        //}
+
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         //private void GetGMInfo(LevelManager levelManager, Categories[] categories)
         //{
@@ -60,7 +91,7 @@ namespace flow
         //    instance.levelManager = levelManager;
         //}
 
-        public Categories[] GetCategories()
+        public List<Categories> GetCategories()
         {
             return categories;
         }

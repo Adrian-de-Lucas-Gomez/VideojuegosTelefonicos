@@ -11,7 +11,7 @@ namespace flow
         //Nombre de la categoria
         public string title;
         //Packs de niveles
-        public LevelPack[] packs;
+        public List<LevelPack> packs;
         //Color en el menú
         public Color color;
         //Levels locked
@@ -20,7 +20,7 @@ namespace flow
         void OnEnable()
         {
 #if UNITY_EDITOR
-            if (title == null || packs.Length == 0 || color == null)
+            if (title == null || packs.Count == 0 || color == null)
             {
                 Debug.LogError("Category: faltan variables por asignar en el ScriptableObject.");
                 return;
