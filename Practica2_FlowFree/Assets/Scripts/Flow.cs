@@ -84,7 +84,6 @@ namespace flow
 
         public void AddToFlow(Tile newTile, int pos, Direction dir)
         {
-            Debug.Log("AÑADIDA LA TILE: " + pos);
             tiles[tiles.Count - 1].tile.SetDirection(dir);
             tiles.Add(new TileInfo(newTile, pos));
             newTile.SetDirection(DirectionUtils.GetOppositeDirection(dir));
@@ -94,7 +93,7 @@ namespace flow
 
         public bool AdmitsMove(int newTile) //Cuando el flow está cerrado pero aún no se han aplicado los cambios, solo se admite ir vuelta atrás en el flow por donde se ha expandido..
         {
-            if(tiles.Count > 1 && IsFlowClosed())
+            if(IsFlowClosed())
             {
                 return Contains(newTile);
             }
@@ -270,10 +269,9 @@ namespace flow
         {
             if(provisionalCutPosition > -1) //Si está siendo cortado por otro flow pero no se ha aplicado aún
             {
-                if (closedInProvisionalCut) return tiles.Count - 2; //No cuentan los extremos
+                if (closedInProvisionalCut) return tiles.Count - 1; //No cuenta un extremo
                 else return provisionalCutPosition - 1;
             }
-            if (closed) return tiles.Count - 2;
             if (tiles.Count > 1) return tiles.Count - 1;
             return 0;
         }
@@ -327,7 +325,7 @@ namespace flow
         //Utilizado cuando se está construyendo el flow. El booleano closed se calcula al dejar de construir el flow.
         private bool IsFlowClosed()
         {
-            return (tiles[0].position == originAInfo.position || tiles[0].position == originBInfo.position) && (tiles[tiles.Count - 1].position == originAInfo.position || tiles[tiles.Count - 1].position == originBInfo.position);
+            return tiles.Count > 1 && (tiles[0].position == originAInfo.position || tiles[0].position == originBInfo.position) && (tiles[tiles.Count - 1].position == originAInfo.position || tiles[tiles.Count - 1].position == originBInfo.position);
         }
 
         //Getters

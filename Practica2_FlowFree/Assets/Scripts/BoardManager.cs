@@ -60,11 +60,11 @@ namespace flow
             {
                 HandleInput();
                 GetPercentageFilled();
-                checkFlows();
+                CheckFlows();
             }
         }
 
-        private void checkFlows()
+        private void CheckFlows()
         {
             int i = 0;
             //bool j = false;
@@ -78,7 +78,6 @@ namespace flow
 
             if (closed && !isBuildingFlow)
             {
-                Debug.Log("Flujos cerrados");
                 bool correct = true;
                 int flow = 0;
 
@@ -90,14 +89,11 @@ namespace flow
 
                 if (correct)
                 {
-                    Debug.Log("Menuda leyenda de los flujos estas hecho");
                     finished = true;
+                    numFilledTiles = numFillableTiles;
                     for (int k = 0; k < flows.Count; k++) flows[k].PlayEndingAnimation();
                     //Llamada al onLevelFinished del GameManager para que guarde y avise al Level para que ponga la interfaz correspondiente
                     GameManager.GetInstance().OnLevelFinished(numMoves); //Son los moves usados
-                }
-                else {
-                    Debug.Log("Buen intento pero no");
                 }
             }
         }
@@ -135,8 +131,7 @@ namespace flow
             //Calcular la posicion desde la que se instanciaran las casillas
             posIni = new Vector2(-(float)boardWidth / 2f, (float)boardHeight / 2f);
 
-            numFillableTiles = boardWidth * boardHeight - (nFlows * 2);
-            Debug.Log("Tiles jugables: " + numFillableTiles);
+            numFillableTiles = boardWidth * boardHeight - nFlows;
 
             //auxInfo[4] son los puentes: No se procesan
 
@@ -328,8 +323,6 @@ namespace flow
                 currentTile = int.MaxValue;
                 currentFlow = int.MaxValue;
                 isBuildingFlow = false;
-
-                Debug.Log("Current:" + currentFlow + ", Previous:" + previousFlow);
             }
 
             if (IsPosInBoard(worldPos))
@@ -351,9 +344,7 @@ namespace flow
                         {
                             int prevPos;
                             flows[currentFlow].CutFlow(newTile, out prevPos);
-                            //Debug.Log(prevPos);
                             flows[currentFlow].AddToFlow(tiles[newTile], newTile, DirectionUtils.DirectionBetweenTiles(prevPos, newTile, boardWidth));
-                            numFilledTiles++;
                         }
                         else
                         {
@@ -387,7 +378,6 @@ namespace flow
                                         flows[newFlow].ProvisionalCut(newTile, out prevPos);
                                         tiles[prevPos].ClearDirection(DirectionUtils.DirectionBetweenTiles(prevPos, newTile, boardWidth));
                                         flows[currentFlow].AddToFlow(tiles[newTile], newTile, DirectionUtils.DirectionBetweenTiles(currentTile, newTile, boardWidth));
-                                        numFilledTiles++;
                                         currentTile = newTile;
                                     }
                                 }
@@ -415,7 +405,6 @@ namespace flow
                                     {
                                         flows[currentFlow].CutFlow(newTile, out prevPos);
                                         flows[currentFlow].AddToFlow(tiles[newTile], newTile, DirectionUtils.DirectionBetweenTiles(prevPos, newTile, boardWidth));
-                                        numFilledTiles++;
                                         for (int k = 0; k < flows.Count; k++) if (k != currentFlow) flows[k].RecalculateCut(flows[currentFlow], newTile);
                                         currentTile = newTile;
                                     }
@@ -425,7 +414,6 @@ namespace flow
                             else //La casilla esta vacia
                             {
                                 flows[currentFlow].AddToFlow(tiles[newTile], newTile, DirectionUtils.DirectionBetweenTiles(currentTile, newTile, boardWidth));
-                                numFilledTiles++;
                                 currentTile = newTile;
                             }
                         }
@@ -573,11 +561,6 @@ namespace flow
             if (k < flows.Count)
             {
                 ApplyHint(k);
-                
-            }
-            else
-            {
-                Debug.Log("No hay pistas que completar eres un putisimo crack");
             }
         }
     }
