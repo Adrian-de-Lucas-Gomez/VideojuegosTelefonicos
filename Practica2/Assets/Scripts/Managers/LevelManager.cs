@@ -76,7 +76,7 @@ namespace flow
 
                 ConfigLevelUI(boardSize.Item1, boardSize.Item2);
 
-                gMng.GetAdvertisingManager().ShowIntersticialAd();
+                AdvertisingManager.GetInstance().ShowIntersticialAd();
             }
 
            
@@ -94,7 +94,7 @@ namespace flow
 
                 ConfigLevelUI(boardSize.Item1, boardSize.Item2);
 
-                gMng.GetAdvertisingManager().ShowIntersticialAd();
+                AdvertisingManager.GetInstance().ShowIntersticialAd();
             }
         }
 

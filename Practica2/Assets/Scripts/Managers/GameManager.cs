@@ -17,23 +17,23 @@ namespace flow
         [SerializeField] int categoryIndex = 0;
         [SerializeField] int packIndex = 0;
         [SerializeField] int levelIndex = 0;
-        [SerializeField] List<Categories> categories;
 
-        [SerializeField] AdvertisingManager advertisingManager;
+        [SerializeField] List<Categories> categories;
 
         public ColorSkin skin;
 
         private string[] packStrings = null;
+
+
         private static GameManager instance;
 
         private int nHints = 0;
 
-        private void Awake()
+        void Awake()
         {
             if (instance != null && instance != this)
             {
-                Destroy(gameObject);
-                return;
+                Destroy(this);
             }
             else
             {
@@ -72,7 +72,7 @@ namespace flow
 
             SceneManager.LoadScene("LevelMenu");
 
-            advertisingManager.ShowIntersticialAd();
+            AdvertisingManager.GetInstance().ShowIntersticialAd();
         }
 
         public void LoadMainMenu()
@@ -85,7 +85,7 @@ namespace flow
 
             SceneManager.LoadScene("MainMenu");
 
-            advertisingManager.ShowIntersticialAd();
+            AdvertisingManager.GetInstance().ShowIntersticialAd();
         }
 
         //Si queremos borrar algo antes de q cierre
@@ -161,11 +161,6 @@ namespace flow
         public string GetSelectedLevelString()
         {
             return packStrings[levelIndex];
-        }
-
-        public AdvertisingManager GetAdvertisingManager()
-        {
-            return advertisingManager;
         }
     }
 }

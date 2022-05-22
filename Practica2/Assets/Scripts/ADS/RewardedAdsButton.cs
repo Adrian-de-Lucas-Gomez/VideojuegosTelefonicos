@@ -21,8 +21,11 @@ namespace flow
                 ? _iOSAdUnitId
                 : _androidAdUnitId;
 
-            hintButton.interactable = false;
-            hintButton.onClick.AddListener(ShowAd);
+            if (hintButton != null)
+            {
+                hintButton.interactable = false;
+                hintButton.onClick.AddListener(ShowAd);
+            }
         }
 
         // Load content to the Ad Unit:
@@ -39,7 +42,10 @@ namespace flow
             if (adUnitId.Equals(_adUnitId))
             {
                 Debug.Log("Ad Loaded: " + adUnitId);
-                hintButton.interactable = true;
+                if(hintButton != null)
+                {
+                    hintButton.interactable = true;
+                }
             }
         }
 
