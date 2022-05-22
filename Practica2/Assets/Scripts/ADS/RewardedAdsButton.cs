@@ -12,10 +12,8 @@ namespace flow
         [SerializeField] string _iOSAdUnitId = "Rewarded_iOS";
         string _adUnitId;
 
-        //private bool addedListener = false;
+        private bool addedListener = false;
 
-        //Test
-        public int pistas = 0;
 
         void Awake()
         {
@@ -24,6 +22,7 @@ namespace flow
                 : _androidAdUnitId;
 
             hintButton.interactable = false;
+            hintButton.onClick.AddListener(ShowAd);
         }
 
         // Load content to the Ad Unit:
@@ -37,18 +36,29 @@ namespace flow
         // If the ad successfully loads, add a listener to the button and enable it:
         public void OnUnityAdsAdLoaded(string adUnitId)
         {
-            Debug.Log("Ad Loaded: " + adUnitId);
-
-            hintButton.interactable = true;
-
-            hintButton.onClick.AddListener(ShowAd);
+            if (adUnitId.Equals(_adUnitId))
+            {
+                Debug.Log("Ad Loaded: " + adUnitId);
+                hintButton.interactable = true;
+            }
         }
 
         // Implement a method to execute when the user clicks the button.
         public void ShowAd()
         {
-            Debug.Log("Ad shown with callBack");
-            Advertisement.Show(_adUnitId, this);
+            // Then show the ad:
+            if (!addedListener)
+            {
+                Debug.Log("Ad shown with callBack");
+                Advertisement.Show(_adUnitId, this);
+                addedListener = true;
+            }
+            else
+            {
+                Debug.Log("Ad shown");
+                Advertisement.Show(_adUnitId);
+            }
+
 
             hintButton.interactable = false;
         }
@@ -60,22 +70,22 @@ namespace flow
             {
                 Debug.Log("Unity Ads Rewarded Ad Completed");
                 // Grant a reward.
-                //GameManager.GetInstance().OnHintAdded();
+                GameManager.GetInstance().OnHintAdded();
 
-                pistas++;
+                addedListener = false;
+
+                AdvertisingManager.GetInstance().ShowBannerAd();
+
                 // Load another ad:
-                Advertisement.Load(_adUnitId, this);
+                LoadAd();
             }
         }
 
         //Este si que se llama en el editor
         public void OnUnityAdsShowStart(string adUnitId)
         {
-            //Para probar en el editor
-            //GameManager.GetInstance().OnHintAdded();
-
-            // Load another ad:
-            //Advertisement.Load(_adUnitId, this);
+            //Por si es necesario hacer algo al inicio del anuncio
+            AdvertisingManager.GetInstance().HideBannerAd();
         }
 
         

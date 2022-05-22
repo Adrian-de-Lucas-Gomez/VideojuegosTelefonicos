@@ -75,7 +75,11 @@ namespace flow
                 boardManager.StartLevelTransition();
 
                 ConfigLevelUI(boardSize.Item1, boardSize.Item2);
+
+                gMng.GetAdvertisingManager().ShowIntersticialAd();
             }
+
+           
         }
 
         public void TryPrevLevel()
@@ -89,6 +93,8 @@ namespace flow
                 boardManager.StartLevelTransition();
 
                 ConfigLevelUI(boardSize.Item1, boardSize.Item2);
+
+                gMng.GetAdvertisingManager().ShowIntersticialAd();
             }
         }
 

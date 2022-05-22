@@ -19,10 +19,14 @@ namespace flow
         [SerializeField] int levelIndex = 0;
         [SerializeField] List<Categories> categories;
 
+        [SerializeField] AdvertisingManager advertisingManager;
+
         public ColorSkin skin;
 
         private string[] packStrings = null;
         private static GameManager instance;
+
+        private int nHints = 0;
 
         private void Awake()
         {
@@ -67,6 +71,8 @@ namespace flow
             levelIndex = 0;
 
             SceneManager.LoadScene("LevelMenu");
+
+            advertisingManager.ShowIntersticialAd();
         }
 
         public void LoadMainMenu()
@@ -78,6 +84,8 @@ namespace flow
             packStrings = categories[categoryIndex].packs[0].levelsFile.ToString().Split('\n');
 
             SceneManager.LoadScene("MainMenu");
+
+            advertisingManager.ShowIntersticialAd();
         }
 
         //Si queremos borrar algo antes de q cierre
@@ -104,6 +112,13 @@ namespace flow
                 return --levelIndex;
             }
             return -1; //-1 es que no existe nivel anterior
+        }
+
+        public void OnHintAdded()
+        {
+            //Añadir una pista
+            nHints = nHints + 1;
+            Debug.Log(nHints);
         }
 
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -146,6 +161,11 @@ namespace flow
         public string GetSelectedLevelString()
         {
             return packStrings[levelIndex];
+        }
+
+        public AdvertisingManager GetAdvertisingManager()
+        {
+            return advertisingManager;
         }
     }
 }

@@ -19,6 +19,8 @@ namespace flow
 
         private static AdvertisingManager instance;
 
+        public static AdvertisingManager GetInstance() { return instance; }
+
         private void Awake()
         {
             if (instance != null && instance != this)
@@ -53,6 +55,7 @@ namespace flow
         public void OnInitializationComplete()
         {
             Debug.Log("Unity Ads initialization complete.");
+
             //Llamamos a los distintos tipos de ADS que tenemos
             bannerAd.LoadBanner();
             intersticialAd.LoadAd();
@@ -73,13 +76,28 @@ namespace flow
 
         public void ShowIntersticialAd()
         {
-            intersticialAd.ShowAd();
+            //Probabilidad de que salga un anuncio de este tipo
+            int rand = Random.Range(0, 5);
+
+            if (rand == 1)
+            {
+                //Quitamos el banner para que no se superponga
+                HideBannerAd();
+                //Mostramos el anuncio intersticial
+                intersticialAd.ShowAd();
+            }
+            
         }
 
-        public void ShowRewradedAd()
-        {
-            rewardedAd.ShowAd();
-        }
+        //Este se muestra solo usando el botón
+
+        //public void ShowRewardedAd()
+        //{
+        //    //Quitamos el banner para que no se superponga
+        //    HideBannerAd();
+        //    //Mostramos el anuncio intersticial
+        //    rewardedAd.ShowAd();
+        //}
 
         public void OnInitializationFailed(UnityAdsInitializationError error, string message)
         {

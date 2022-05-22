@@ -159,7 +159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 117}
+  m_AnchoredPosition: {x: 0, y: 82}
   m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &66332873
@@ -1018,7 +1018,6 @@ MonoBehaviour:
   hintButton: {fileID: 580750155}
   _androidAdUnitId: Rewarded_Android
   _iOSAdUnitId: Rewarded_iOS
-  pistas: 0
 --- !u!114 &374262817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3579,6 +3578,10 @@ PrefabInstance:
       propertyPath: levelIndex
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3220183378671700981, guid: 35eafcbeaa99b4a47b9d4b746d19a12d, type: 3}
+      propertyPath: advertisingManager
+      value: 
+      objectReference: {fileID: 2075169572}
     - target: {fileID: 3220183378671700983, guid: 35eafcbeaa99b4a47b9d4b746d19a12d, type: 3}
       propertyPath: m_Name
       value: GameManager
