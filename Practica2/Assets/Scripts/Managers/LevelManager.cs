@@ -39,7 +39,7 @@ namespace flow
 
         public void InitializeLevel(string levelString, LevelPack pack)
         {
-            (int, int) boardSize = boardManager.LoadBoard(levelString, pack.colors, boardScale());
+            (int, int) boardSize = boardManager.LoadBoard(levelString, boardScale());
             boardManager.InitializeBoard();
 
             ConfigLevelUI(boardSize.Item1, boardSize.Item2);
@@ -71,7 +71,7 @@ namespace flow
 
             if(selectedLevel != -1) //Si existe nivel siguiente
             {
-                (int, int) boardSize = boardManager.LoadBoard(gMng.GetSelectedLevelString(), gMng.GetSelectedPack().colors, boardScale());
+                (int, int) boardSize = boardManager.LoadBoard(gMng.GetSelectedLevelString(), boardScale());
                 boardManager.StartLevelTransition();
 
                 ConfigLevelUI(boardSize.Item1, boardSize.Item2);
@@ -85,7 +85,7 @@ namespace flow
 
             if (selectedLevel != -1) //Si existe nivel anterior
             {
-                (int, int) boardSize = boardManager.LoadBoard(gMng.GetSelectedLevelString(), gMng.GetSelectedPack().colors, boardScale());
+                (int, int) boardSize = boardManager.LoadBoard(gMng.GetSelectedLevelString(), boardScale());
                 boardManager.StartLevelTransition();
 
                 ConfigLevelUI(boardSize.Item1, boardSize.Item2);

@@ -162,10 +162,10 @@ namespace flow
             walls = new List<(int, int)>();
         }
 
-        public (int, int) LoadBoard(string level, Color[] skin, float boardScale)
+        public (int, int) LoadBoard(string level, float boardScale)
         {
             Setup();
-            colors = skin;
+            colors = GameManager.GetInstance().GetTheme();
             //Lectura del nivel
             ReadLevel(level, ref emptyTiles, ref walls);
             //El tamanho de un tile en pantalla                 

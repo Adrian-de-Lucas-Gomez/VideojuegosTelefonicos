@@ -64,6 +64,7 @@ namespace flow
             categoryIndex = categories.IndexOf(packCategory);
             packIndex = categories[categoryIndex].packs.IndexOf(pack);
             packStrings = pack.levelsFile.ToString().Split('\n');
+            levelIndex = 0;
 
             SceneManager.LoadScene("LevelMenu");
         }
@@ -87,7 +88,8 @@ namespace flow
 
         public int NextLevel()
         {
-            int levelsInPack = packStrings.Length;
+            int levelsInPack = packStrings.Length - 1;
+
             if (levelIndex + 1 < levelsInPack)
             {
                 return ++levelIndex;
