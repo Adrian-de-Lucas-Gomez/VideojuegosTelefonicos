@@ -13,8 +13,10 @@ namespace flow
     public class BoardManager : MonoBehaviour
     {
         [SerializeField] GameObject tilePrefab;
-        [SerializeField] Transform boardObject;
         [SerializeField] SpriteRenderer pointerIndicatorSprite;
+
+        //Componentes del propio objeto
+        Animator boardAnimator;
 
         //Generacion del nivel
         private int levelNumber;
@@ -27,6 +29,8 @@ namespace flow
         private List<Tile> tiles;
         private PointerIndicator pointerIndicator;
         private Color[] colors;
+        private List<(int, int)> walls;
+        private List<int> emptyTiles;
 
 
         //Logica
@@ -46,12 +50,16 @@ namespace flow
         void Start()
         {
 #if UNITY_EDITOR
-            if (tilePrefab == null || boardObject == null || pointerIndicatorSprite == null)
+            if (tilePrefab == null || pointerIndicatorSprite == null)
             {
                 Debug.LogError("BoardManager: Alguna variable no tiene valor asociado desde el editor.");
                 return;
             }
 #endif
+            boardAnimator = GetComponent<Animator>();
+
+            pointerIndicator = new PointerIndicator();
+            pointerIndicator.SetSprite(pointerIndicatorSprite);
         }
 
         public void Update()
@@ -94,73 +102,6 @@ namespace flow
                     //Llamada al onLevelFinished del GameManager para que guarde y avise al Level para que ponga la interfaz correspondiente
                     //GameManager.GetInstance().OnLevelFinished(numMoves); //Son los moves usados
                 }
-            }
-        }
-
-        public void ReadLevel(string level, ref List<int> emptyTiles, ref List<(int, int)> walls)
-        {
-            string[] levelInfo = level.Split(';');
-            string[] auxInfo;
-
-            //Procesamos la cabecera del nivel
-            auxInfo = levelInfo[0].Split(',');
-            levelNumber = int.Parse(auxInfo[2]);
-            nFlows = int.Parse(auxInfo[3]);
-
-            if (auxInfo[0].Contains(":")) //Ancho y alto
-            { 
-                string[] levelSize = auxInfo[0].Split(':');
-                boardWidth = int.Parse(levelSize[0]);
-                if(levelSize[1].Contains("+")) {
-                    boardHeight = int.Parse(levelSize[1].Split('+')[0]);
-                    isSurroundedByWalls = levelSize[1].Split('+')[1] == "B";
-                }
-                else boardHeight = int.Parse(levelSize[1]);
-            }
-            else
-            {
-                if(auxInfo[0].Contains("+"))
-                {
-                    boardWidth = boardHeight = int.Parse(auxInfo[0].Split('+')[0]);
-                    isSurroundedByWalls = auxInfo[0].Split('+')[1] == "B";
-                }
-                boardWidth = boardHeight = int.Parse(auxInfo[0]);
-            }
-
-            //Calcular la posicion desde la que se instanciaran las casillas
-            posIni = new Vector2(-(float)boardWidth / 2f, (float)boardHeight / 2f);
-
-            numFillableTiles = boardWidth * boardHeight - nFlows;
-
-            //auxInfo[4] son los puentes: No se procesan
-
-            if (auxInfo.Length >= 6) //Celdas huecas (0:6:12:4:17)
-            {
-                string[] listEmpty = auxInfo[5].Split(':');
-
-                for (int i = 0; i < listEmpty.Length; ++i)
-                    emptyTiles.Add(int.Parse(listEmpty[i].Split('_')[0]));
-
-                if (auxInfo.Length >= 7) //Celdas separadas por muros (0|6:12|4:17|3)
-                {
-                    string[] listWalls = auxInfo[6].Split(':'); 
-
-                    for (int i = 0; i < listWalls.Length; ++i) //(0|6)
-                    {
-                        string[] aux = listWalls[i].Split('|');
-                        walls.Add((int.Parse(aux[0]), int.Parse(aux[1])));
-                    }
-                }
-            }
-
-            //Flujos nivel
-            for(int i = 0; i < nFlows; ++i)
-            {
-                auxInfo = levelInfo[i+1].Split(',');
-                solution.Add(new List<int>());
-
-                for (int j = 0; j < auxInfo.Length; ++j)
-                    solution[i].Add(int.Parse(auxInfo[j]));
             }
         }
 
@@ -216,44 +157,124 @@ namespace flow
             numMoves = 0;
             finished = false;
 
-            if(tiles != null)
-            {
-                foreach (Transform child in boardObject.transform)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-            }
-
-            tiles = new List<Tile>();
-            flows = new List<Flow>();
             solution = new List<List<int>>();
-
-            pointerIndicator = new PointerIndicator();
-            pointerIndicator.SetSprite(pointerIndicatorSprite);
+            emptyTiles = new List<int>();
+            walls = new List<(int, int)>();
         }
 
-        public (int, int) GenerateBoard(string level, Color[] skin, float boardScale)
+        public (int, int) LoadBoard(string level, Color[] skin, float boardScale)
         {
             Setup();
             colors = skin;
             //Lectura del nivel
-            List<int> emptyTiles = new List<int>();
-            List<(int, int)> walls = new List<(int, int)>();
             ReadLevel(level, ref emptyTiles, ref walls);
-            //El tamanho de un tile en pantalla
+            //El tamanho de un tile en pantalla                 
             tileSize = Vector2.one;
             //TODO: no funciona el escalado
             //tileSize = new Vector2((int)boardScale / boardWidth, (int)boardScale / boardHeight);
 
-            //Generar nivel
+            return (boardWidth, boardHeight);
+        }
+
+        private void ReadLevel(string level, ref List<int> emptyTiles, ref List<(int, int)> walls)
+        {
+            string[] levelInfo = level.Split(';');
+            string[] auxInfo;
+
+            //Procesamos la cabecera del nivel
+            auxInfo = levelInfo[0].Split(',');
+            levelNumber = int.Parse(auxInfo[2]);
+            nFlows = int.Parse(auxInfo[3]);
+
+            if (auxInfo[0].Contains(":")) //Ancho y alto
+            {
+                string[] levelSize = auxInfo[0].Split(':');
+                boardWidth = int.Parse(levelSize[0]);
+                if (levelSize[1].Contains("+"))
+                {
+                    boardHeight = int.Parse(levelSize[1].Split('+')[0]);
+                    isSurroundedByWalls = levelSize[1].Split('+')[1] == "B";
+                }
+                else boardHeight = int.Parse(levelSize[1]);
+            }
+            else
+            {
+                if (auxInfo[0].Contains("+"))
+                {
+                    boardWidth = boardHeight = int.Parse(auxInfo[0].Split('+')[0]);
+                    isSurroundedByWalls = auxInfo[0].Split('+')[1] == "B";
+                }
+                boardWidth = boardHeight = int.Parse(auxInfo[0]);
+            }
+
+            //Calcular la posicion desde la que se instanciaran las casillas
+            posIni = new Vector2(-(float)boardWidth / 2f, (float)boardHeight / 2f);
+
+            numFillableTiles = boardWidth * boardHeight - nFlows;
+
+            //auxInfo[4] son los puentes: No se procesan
+
+            if (auxInfo.Length >= 6) //Celdas huecas (0:6:12:4:17)
+            {
+                string[] listEmpty = auxInfo[5].Split(':');
+
+                for (int i = 0; i < listEmpty.Length; ++i)
+                    emptyTiles.Add(int.Parse(listEmpty[i].Split('_')[0]));
+
+                if (auxInfo.Length >= 7) //Celdas separadas por muros (0|6:12|4:17|3)
+                {
+                    string[] listWalls = auxInfo[6].Split(':');
+
+                    for (int i = 0; i < listWalls.Length; ++i) //(0|6)
+                    {
+                        string[] aux = listWalls[i].Split('|');
+                        walls.Add((int.Parse(aux[0]), int.Parse(aux[1])));
+                    }
+                }
+            }
+
+            //Solución nivel
+            for (int i = 0; i < nFlows; ++i)
+            {
+                auxInfo = levelInfo[i + 1].Split(',');
+                solution.Add(new List<int>());
+
+                for (int j = 0; j < auxInfo.Length; ++j)
+                    solution[i].Add(int.Parse(auxInfo[j]));
+            }
+        }
+
+        public void StartLevelTransition()
+        {
+            boardAnimator.Play("LevelOut");
+        }
+
+        public void LevelTransitionButtonCallback()
+        {
+            InitializeBoard();
+            boardAnimator.Play("LevelIn");
+        }
+
+        public void InitializeBoard()
+        {
+            if (tiles != null)
+            {
+                foreach (Transform child in transform)
+                {
+                    GameObject.Destroy(child.gameObject);
+                }
+            }
+            tiles = new List<Tile>();
+
+            //Instanciar Tiles
             for (int j = 0; j < boardHeight; ++j)
             {
                 for (int i = 0; i < boardWidth; ++i)
                 {
-                    GameObject t = Instantiate(tilePrefab, new Vector2(posIni.x + tileSize.x / 2 + i * tileSize.x, posIni.y - tileSize.y / 2 - j * tileSize.y),
-                        Quaternion.identity, boardObject);
+                    GameObject t = Instantiate(tilePrefab, transform);
+                    t.transform.localPosition = new Vector2(posIni.x + tileSize.x / 2 + i * tileSize.x, posIni.y - tileSize.y / 2 - j * tileSize.y);
                     t.transform.localScale = tileSize; //Escalamos el tile
-                    
+
                     Tile newTile = t.GetComponent<Tile>();
                     newTile.Initialize();
                     tiles.Add(t.GetComponent<Tile>());
@@ -261,7 +282,8 @@ namespace flow
             }
 
             //Set-up de los caminos
-            for(int i = 0; i < solution.Count; i++)
+            flows = new List<Flow>();
+            for (int i = 0; i < solution.Count; i++)
             {
                 flows.Add(new Flow(i, colors[i], boardWidth));
 
@@ -290,10 +312,7 @@ namespace flow
             }
             if (isSurroundedByWalls) SurrondBoardByWalls();
             SetWallsOnEmptyTiles(emptyTiles);
-
-            return (boardWidth, boardHeight);
         }
-
 
         private void HandleInput()
         {

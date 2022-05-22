@@ -71,7 +71,8 @@ namespace flow
         {
             string[] maps = pack.levelsFile.ToString().Split('\n');
 
-            (int, int) boardSize = boardManager.GenerateBoard(levelString, pack.colors, boardScale()); //TO-DO: Antes se pasaba pack.skin.colors !!!!! Revisar
+            (int, int) boardSize = boardManager.LoadBoard(levelString, pack.colors, boardScale()); //TO-DO: Antes se pasaba pack.skin.colors !!!!! Revisar
+            boardManager.InitializeBoard();
 
             ConfigLevelUI(boardSize.Item1, boardSize.Item2);
         }
@@ -90,7 +91,10 @@ namespace flow
         {
             GameManager auxMan = GameManager.GetInstance();
             //auxMan.NextLevel(); TO-DO
-            //InitializeLevel(auxMan.selectedLevelString, auxMan.GetSelectedPack());
+            (int, int) boardSize = boardManager.LoadBoard(auxMan.GetSelectedPack().levelsFile.ToString().Split('\n')[1], auxMan.GetSelectedPack().colors, boardScale()); //TO-DO: Antes se pasaba pack.skin.colors !!!!! Revisar
+            boardManager.StartLevelTransition();
+            //boardManager.InitializeBoard();
+            ConfigLevelUI(boardSize.Item1, boardSize.Item2);
         }
 
         public void TryPrevLevel()
