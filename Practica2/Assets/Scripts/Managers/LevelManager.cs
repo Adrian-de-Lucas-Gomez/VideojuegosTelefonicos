@@ -10,42 +10,99 @@ namespace flow
     /// Cuando BoardManager termina el puzzle muestra la UI correspondiente al cambio de nivel
     /// Gestiona los botones de anuncios y pistas
     /// </summary>
+    /// 
     public class LevelManager : MonoBehaviour
     {
-        [SerializeField] GameObject winPanel;
+        //[SerializeField] GameObject winPanel;
         [SerializeField] BoardManager boardManager;
 
         [SerializeField] Text levelText;
         [SerializeField] Text levelSizeText;
-        [SerializeField] RectTransform boardViewport;
+        //[SerializeField] RectTransform boardViewport;
         [SerializeField] Text totalFlowsText;
         [SerializeField] Text movesText;
         [SerializeField] Text bestText;
         [SerializeField] Text percentageText;
         [SerializeField] Text nHintsText;
 
+        private int selectedLevel = 0;
+
+        private void ConfigLevelUI(int w, int h)
+        {
+            GameManager gMng = GameManager.GetInstance();
+
+            levelText.text = "level " + (selectedLevel + 1).ToString();
+            levelText.color = gMng.GetSelectedCategory().color;
+            levelSizeText.text = w.ToString() + "x" + h.ToString();
+            //nHintsText.text = GameManager.GetInstance().GetNHints().ToString() + "x"; //TODO
+        }
+
+        public void InitializeLevel(string levelString, LevelPack pack)
+        {
+            (int, int) boardSize = boardManager.LoadBoard(levelString, pack.colors, boardScale());
+            boardManager.InitializeBoard();
+
+            ConfigLevelUI(boardSize.Item1, boardSize.Item2);
+        }
+
         private void Start()
         {
 #if UNITY_EDITOR
-            if (boardManager == null || winPanel == null || boardViewport == null || totalFlowsText == null ||
+            if (boardManager == null /*|| winPanel == null*/ /*|| boardViewport == null*/ || totalFlowsText == null ||
                 movesText == null || bestText == null || percentageText == null || nHintsText == null ||
                 levelText == null || levelSizeText == null)
             {
-                //Debug.LogError("LevelManager: Alguna variable no tiene valor asociado desde el editor.");
-                //return; TO-DO: Descomentar cuando estas cosas existan
+                Debug.LogError("LevelManager: Alguna variable no tiene valor asociado desde el editor.");
+                return;
             }
 #endif      
             //winPanel.SetActive(false);
 
             //Cargamos el nivel con lo que nos diga el GameManager
-            GameManager auxMan = GameManager.GetInstance();
-
-            //TO-DO: Revisar lo de abajo.
-            InitializeLevel(auxMan.GetSelectedPack().levelsFile.ToString().Split('\n')[0], auxMan.GetSelectedPack());
+            GameManager gMng = GameManager.GetInstance();
+            selectedLevel = gMng.GetSelectedLevelId();
+            InitializeLevel(gMng.GetSelectedLevelString(), gMng.GetSelectedPack());
         }
+
+        public void TryNextLevel()
+        {
+            GameManager gMng = GameManager.GetInstance();
+            selectedLevel = gMng.NextLevel(); //Pregunta a gMng si se puede pasar al siguiente nivel
+
+            if(selectedLevel != -1) //Si existe nivel siguiente
+            {
+                (int, int) boardSize = boardManager.LoadBoard(gMng.GetSelectedLevelString(), gMng.GetSelectedPack().colors, boardScale());
+                boardManager.StartLevelTransition();
+
+                ConfigLevelUI(boardSize.Item1, boardSize.Item2);
+            }
+        }
+
+        public void TryPrevLevel()
+        {
+            GameManager gMng = GameManager.GetInstance();
+            selectedLevel = gMng.PrevLevel(); //Pregunta a gMng si se puede pasar al nivel anterior
+
+            if (selectedLevel != -1) //Si existe nivel anterior
+            {
+                (int, int) boardSize = boardManager.LoadBoard(gMng.GetSelectedLevelString(), gMng.GetSelectedPack().colors, boardScale());
+                boardManager.StartLevelTransition();
+
+                ConfigLevelUI(boardSize.Item1, boardSize.Item2);
+            }
+        }
+
+        public void ResetLevel()
+        {
+            boardManager.ResetLevel();
+        }
+
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
         public void Update()
         {
+            //Esto no deberia hacerse en un UPDATE
+
             //totalFlowsText.text = boardManager.GetNumFlows().ToString() + " /" + boardManager.GetTotalFlows().ToString();
             //movesText.text = boardManager.GetNumMoves().ToString();
             //bestText.text = GameManager.GetInstance().GetLevelRecord().ToString(); TO-DO
@@ -65,48 +122,6 @@ namespace flow
 
             //return auxBoardSize;
             return 0; //lol
-        }
-
-        public void InitializeLevel(string levelString, LevelPack pack)
-        {
-            string[] maps = pack.levelsFile.ToString().Split('\n');
-
-            (int, int) boardSize = boardManager.LoadBoard(levelString, pack.colors, boardScale()); //TO-DO: Antes se pasaba pack.skin.colors !!!!! Revisar
-            boardManager.InitializeBoard();
-
-            ConfigLevelUI(boardSize.Item1, boardSize.Item2);
-        }
-
-        private void ConfigLevelUI(int w, int h)
-        {
-            GameManager auxMan = GameManager.GetInstance();
-
-            //levelText.text = "level " + auxMan.ToString();
-            //levelText.color = auxMan.selectedCategory.color;
-            //levelSizeText.text = w.ToString() + "x" + h.ToString();
-            //nHintsText.text = GameManager.GetInstance().GetNHints().ToString() + "x"; TO-DO
-        }
-
-        public void TryNextLevel()
-        {
-            GameManager auxMan = GameManager.GetInstance();
-            //auxMan.NextLevel(); TO-DO
-            (int, int) boardSize = boardManager.LoadBoard(auxMan.GetSelectedPack().levelsFile.ToString().Split('\n')[1], auxMan.GetSelectedPack().colors, boardScale()); //TO-DO: Antes se pasaba pack.skin.colors !!!!! Revisar
-            boardManager.StartLevelTransition();
-            //boardManager.InitializeBoard();
-            ConfigLevelUI(boardSize.Item1, boardSize.Item2);
-        }
-
-        public void TryPrevLevel()
-        {
-            GameManager auxMan = GameManager.GetInstance();
-            //auxMan.PrevLevel(); TO-DO
-            //InitializeLevel(auxMan.selectedLevelString, auxMan.GetSelectedPack());
-        }
-
-        public void ResetLevel()
-        {
-            boardManager.ResetLevel();
         }
 
         public void OnLevelFinished()

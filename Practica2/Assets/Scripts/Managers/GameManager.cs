@@ -16,32 +16,13 @@ namespace flow
     {
         [SerializeField] int categoryIndex = 0;
         [SerializeField] int packIndex = 0;
-        [SerializeField] int levelIndex = 0; //TODO
+        [SerializeField] int levelIndex = 0;
         [SerializeField] List<Categories> categories;
-
-        //no se si deberiamos tener esto aqui tb?
-        // packStrings = currentPack.levels.text.Split('\n');
 
         public ColorSkin skin;
 
+        private string[] packStrings = null;
         private static GameManager instance;
-
-        //void Awake()
-        //{
-        //    if (instance == null)
-        //    {
-        //        instance = this;
-        //        DontDestroyOnLoad(this.gameObject);
-        //    }
-        //    else
-        //    {
-        //        ////Pillar info del gameManager de esta escena
-        //        //GetGMInfo(levelManager, categories);
-        //        //Destroy(this);
-        //        instance = this;
-        //        DontDestroyOnLoad(gameObject);
-        //    }
-        //}
 
         private void Awake()
         {
@@ -66,6 +47,7 @@ namespace flow
                 return;
             }
 #endif
+            packStrings = GetSelectedPack().levelsFile.ToString().Split('\n');
         }
 
         public void CloseGame()
@@ -81,14 +63,18 @@ namespace flow
         {
             categoryIndex = categories.IndexOf(packCategory);
             packIndex = categories[categoryIndex].packs.IndexOf(pack);
+            packStrings = pack.levelsFile.ToString().Split('\n');
 
             SceneManager.LoadScene("LevelMenu");
         }
 
         public void LoadMainMenu()
         {
+            //Al volver al menu principal se les da un valor por defecto
             categoryIndex = 0;
             packIndex = 0;
+            levelIndex = 0;
+            packStrings = categories[categoryIndex].packs[0].levelsFile.ToString().Split('\n');
 
             SceneManager.LoadScene("MainMenu");
         }
@@ -99,7 +85,31 @@ namespace flow
             
         //}
 
+        public int NextLevel()
+        {
+            int levelsInPack = packStrings.Length;
+            if (levelIndex + 1 < levelsInPack)
+            {
+                return ++levelIndex;
+            }                
+            return -1; //-1 es que no existe nivel siguiente
+        }
+
+        public int PrevLevel()
+        {
+            if (levelIndex - 1 >= 0)
+            {
+                return --levelIndex;
+            }
+            return -1; //-1 es que no existe nivel anterior
+        }
+
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        public static GameManager GetInstance()
+        {
+            return instance;
+        }
 
         public List<Categories> GetCategories()
         {
@@ -116,14 +126,24 @@ namespace flow
             return categories[categoryIndex].packs[packIndex];
         }
 
-        public static GameManager GetInstance()
+        public int GetSelectedLevelId()
         {
-            return instance;
+            return levelIndex;
+        }
+
+        public string[] GetSelectedPackStrings()
+        {
+            return packStrings;
         }
 
         public Color[] GetTheme()
         {
             return skin.colors;
+        }
+
+        public string GetSelectedLevelString()
+        {
+            return packStrings[levelIndex];
         }
     }
 }

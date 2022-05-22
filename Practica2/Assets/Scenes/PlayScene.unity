@@ -1313,16 +1313,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 203436facff8bf64f9a3aac790d28f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winPanel: {fileID: 0}
   boardManager: {fileID: 501709598}
-  levelText: {fileID: 0}
-  levelSizeText: {fileID: 0}
-  boardViewport: {fileID: 0}
-  totalFlowsText: {fileID: 0}
-  movesText: {fileID: 0}
-  bestText: {fileID: 0}
-  percentageText: {fileID: 0}
-  nHintsText: {fileID: 0}
+  levelText: {fileID: 982692293}
+  levelSizeText: {fileID: 970108338}
+  totalFlowsText: {fileID: 1461856348}
+  movesText: {fileID: 1817221251}
+  bestText: {fileID: 1752869463}
+  percentageText: {fileID: 194789810}
+  nHintsText: {fileID: 268612346}
 --- !u!4 &631872265
 Transform:
   m_ObjectHideFlags: 0
@@ -3488,6 +3486,10 @@ PrefabInstance:
     - target: {fileID: 3220183378671700980, guid: 35eafcbeaa99b4a47b9d4b746d19a12d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3220183378671700981, guid: 35eafcbeaa99b4a47b9d4b746d19a12d, type: 3}
+      propertyPath: levelIndex
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3220183378671700983, guid: 35eafcbeaa99b4a47b9d4b746d19a12d, type: 3}
       propertyPath: m_Name
