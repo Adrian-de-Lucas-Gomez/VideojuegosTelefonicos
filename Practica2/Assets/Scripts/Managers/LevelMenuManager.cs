@@ -54,7 +54,7 @@ namespace flow
                     LevelButton button = Instantiate(levelButtonPrefab, levelButtonParent);
 
                     bool locked = false;
-                    if (currentCategory.levelsLocked)
+                    if (currentCategory.fullyUnlocked)
                     {
                         locked = true;
                     }

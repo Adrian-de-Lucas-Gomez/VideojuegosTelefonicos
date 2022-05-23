@@ -19,4 +19,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: aaeef0313c9022940bf55d6610a47402, type: 2}
   - {fileID: 11400000, guid: 988166da12547ab408c1605826dbe427, type: 2}
   color: {r: 0, g: 0.5529412, b: 0, a: 1}
-  levelsLocked: 0
+  fullyUnlocked: 1

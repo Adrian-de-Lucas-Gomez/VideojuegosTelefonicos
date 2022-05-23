@@ -7,13 +7,36 @@ using System.Security.Cryptography;
 public class SaveReadWriter
 {
     private string fileName = "SaveFile.json";
-    private string savePath = "Assets/";
+
+    //Directorio permanente en la ubicacion en la que se ha instalado la aplicación en el dispositivo
+    private string savePath;  
+
     SHA256 hashMaker;
     public void Init()
     {
         //Creamos el generador de hash
         hashMaker = SHA256.Create();
+
+#if UNITY_EDITOR
+        savePath = "Assets/SaveData";
+#else
+        //El path persistente para Android
+        savePath = Application.persistentDataPath + "SaveData"; 
+#endif
     }
+
+    public bool DataFilesExist()
+    {
+        if (File.Exists(savePath + fileName))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public void SaveData(in flow.ProgressData data)
     {
         flow.SaveData saveFile = new flow.SaveData();
@@ -44,6 +67,8 @@ public class SaveReadWriter
 
         outStream.Write(aux2, 0, aux2.Length);
         outStream.Close();
+
+        //Debug.Log(savePath + fileName);
     }
 
     public flow.ProgressData LoadData()
@@ -53,7 +78,7 @@ public class SaveReadWriter
 
         dataFromJson = JsonUtility.FromJson<flow.SaveData>(jsonSave);
 
-        if (dataFromJson == null) Debug.Log("Error al desserializar datos de guardado");
+        if (dataFromJson == null) Debug.LogError("Error al desserializar datos de guardado");
 
         //Comprobacion del hash guardado y el que crearemos
         string auxJson = JsonUtility.ToJson(dataFromJson.data);
@@ -70,7 +95,7 @@ public class SaveReadWriter
         if (string.Compare(newHash, oldHash) != 0)
         {
             //Los hash no coinciden y por lo tantose ha modificado externamente
-            Debug.Log("Error: Archivo modificado externamente");
+            Debug.LogError("Error: Archivo modificado externamente");
             return null;
         } 
 

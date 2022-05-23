@@ -24,10 +24,11 @@ namespace flow
 
         private string[] packStrings = null;
 
+        //Progreso y guadado de la partida
+        private ProgressData progress;
+        private SaveReadWriter saveIO;
 
         private static GameManager instance;
-
-        private int nHints = 0;
 
         void Awake()
         {
@@ -52,6 +53,28 @@ namespace flow
             }
 #endif
             packStrings = GetSelectedPack().levelsFile.ToString().Split('\n');
+
+            //Creamos el lector/escritor de los datos de guardado
+            saveIO = new SaveReadWriter();
+            saveIO.Init();
+
+            //Si ya habia datos guardados de antes los debemos cargar
+            if (saveIO.DataFilesExist())
+            {
+                Debug.Log("Cargando datos de guardado desde archivo previo");
+
+                //Tratamos de cargar el estado del archivo de guardado
+                progress = saveIO.LoadData();
+            }
+            else    //En caso contrario se crean datos de guardado nuevo
+            {
+                Debug.Log("Creando datos de guardado desde cero");
+
+                //Creamos los datos de guardado
+                progress = new ProgressData();
+                progress.Init(categories);
+            }
+
         }
 
         public void CloseGame()
@@ -86,6 +109,7 @@ namespace flow
             SceneManager.LoadScene("MainMenu");
 
             AdvertisingManager.GetInstance().ShowIntersticialAd();
+            AdvertisingManager.GetInstance().HideBannerAd();
         }
 
         //Si queremos borrar algo antes de q cierre
@@ -117,8 +141,8 @@ namespace flow
         public void OnHintAdded()
         {
             //Añadir una pista
-            nHints = nHints + 1;
-            Debug.Log(nHints);
+            progress.hints = progress.hints + 1;
+            Debug.Log("Nº pistas actuales: " + progress.hints);
         }
 
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

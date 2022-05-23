@@ -3520,7 +3520,15 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3220183378671700981, guid: 35eafcbeaa99b4a47b9d4b746d19a12d, type: 3}
+      propertyPath: packIndex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3220183378671700981, guid: 35eafcbeaa99b4a47b9d4b746d19a12d, type: 3}
       propertyPath: levelIndex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3220183378671700981, guid: 35eafcbeaa99b4a47b9d4b746d19a12d, type: 3}
+      propertyPath: categoryIndex
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3220183378671700981, guid: 35eafcbeaa99b4a47b9d4b746d19a12d, type: 3}
