@@ -68,19 +68,10 @@ namespace flow
             }
         }
 
-        //public void OnChooseLevel()
-        //{
-        //    if (!_locked)
-        //    {
-        //        GameManager gMng = GameManager.GetInstance();
-        //        gMng.selectedLevel = levelIndex;
-        //        gMng.selectedLevelString = levelString;
-        //        gMng.ChangeScene("GameScene");
-        //    }
-        //    else
-        //    {
-        //        Debug.Log("Nivel no desbloqueado");
-        //    }
-        //}
+        public void OnClick()
+        {
+            //En el nivel van de 1-150 pero logicamente son 0-149
+            GameManager.GetInstance().LoadPlayScene(levelIndex - 1);
+        }
     }
 }

@@ -119,6 +119,13 @@ namespace flow
             AdvertisingManager.GetInstance().HideBannerAd();
         }
 
+        public void LoadPlayScene(int levelIndex)
+        {
+            this.levelIndex = levelIndex;
+
+            SceneManager.LoadScene("PlayScene");
+        }
+
         //Si queremos borrar algo antes de q cierre
         //private void OnApplicationQuit()
         //{
