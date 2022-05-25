@@ -1076,6 +1076,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 3881729661027634210, guid: 91db5f72583662a4bbe0650d3d47b1a2, type: 3}
   pointerIndicatorSprite: {fileID: 1820957491}
+  levelManager: {fileID: 631872264}
 --- !u!1 &518941350
 GameObject:
   m_ObjectHideFlags: 0
@@ -3702,7 +3703,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7457239314674592547, guid: 8cb40a1043012834cb5722b52c855d2a, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7457239314674592547, guid: 8cb40a1043012834cb5722b52c855d2a, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3890,7 +3891,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7457239316637980791, guid: 8cb40a1043012834cb5722b52c855d2a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: TryNextLevelWinPanel
+      value: TryNextLevel
       objectReference: {fileID: 0}
     - target: {fileID: 7457239316637980791, guid: 8cb40a1043012834cb5722b52c855d2a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

@@ -14,6 +14,7 @@ namespace flow
     {
         [SerializeField] GameObject tilePrefab;
         [SerializeField] SpriteRenderer pointerIndicatorSprite;
+        [SerializeField] LevelManager levelManager;
 
         //Componentes del propio objeto
         Animator boardAnimator;
@@ -32,7 +33,6 @@ namespace flow
         private List<(int, int)> walls;
         private List<int> emptyTiles;
 
-
         //Logica
         private Vector2 posIni;
         private Vector2 tileSize;
@@ -50,7 +50,7 @@ namespace flow
         void Start()
         {
 #if UNITY_EDITOR
-            if (tilePrefab == null || pointerIndicatorSprite == null)
+            if (tilePrefab == null || pointerIndicatorSprite == null || levelManager == null)
             {
                 Debug.LogError("BoardManager: Alguna variable no tiene valor asociado desde el editor.");
                 return;
@@ -98,7 +98,11 @@ namespace flow
                 {
                     finished = true;
                     numFilledTiles = numFillableTiles;
-                    for (int k = 0; k < flows.Count; k++) flows[k].PlayEndingAnimation();
+                    for (int k = 0; k < flows.Count; k++)
+                        flows[k].PlayEndingAnimation();
+
+                    levelManager.SetActiveWinPanel();
+
                     //Llamada al onLevelFinished del GameManager para que guarde y avise al Level para que ponga la interfaz correspondiente
                     //GameManager.GetInstance().OnLevelFinished(numMoves); //Son los moves usados
                 }

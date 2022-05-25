@@ -41,6 +41,7 @@ namespace flow
             levelSizeText.text = w.ToString() + "x" + h.ToString();
             //nHintsText.text = GameManager.GetInstance().GetNHints().ToString() + "x"; //TODO
 
+            winPanel.SetActive(false);
             winPanelTopBg.color = winPanelBorderLR.color = winPanelBorderUD.color = gMng.GetSelectedCategory().color;
         }
 
@@ -55,15 +56,15 @@ namespace flow
         private void Start()
         {
 #if UNITY_EDITOR
-            if (boardManager == null /*|| winPanel == null*/ /*|| boardViewport == null*/ || totalFlowsText == null ||
+            if (boardManager == null || winPanel == null /*|| boardViewport == null*/ || totalFlowsText == null ||
                 movesText == null || bestText == null || percentageText == null || nHintsText == null ||
-                levelText == null || levelSizeText == null)
+                levelText == null || levelSizeText == null || winPanelBorderLR == null || winPanelBorderUD == null ||
+                winPanelMovesText == null || winPanelTopBg == null)
             {
                 Debug.LogError("LevelManager: Alguna variable no tiene valor asociado desde el editor.");
                 return;
             }
 #endif      
-            winPanel.SetActive(false);
 
             //Cargamos el nivel con lo que nos diga el GameManager
             GameManager gMng = GameManager.GetInstance();
@@ -71,15 +72,7 @@ namespace flow
             InitializeLevel(gMng.GetSelectedLevelString(), gMng.GetSelectedPack());
         }
 
-        public void TryNextLevelWinPanel()
-        {
-            if(!TryNextLevel()) //Si no puede salir al nivel siguiente te devuelve al menu
-            {
-                GameManager.GetInstance().ExitLevel();
-            }
-        }
-
-        public bool TryNextLevel()
+        public void TryNextLevel()
         {
             GameManager gMng = GameManager.GetInstance();
             selectedLevel = gMng.NextLevel(); //Pregunta a gMng si se puede pasar al siguiente nivel
@@ -92,13 +85,15 @@ namespace flow
                 ConfigLevelUI(boardSize.Item1, boardSize.Item2);
 
                 AdvertisingManager.GetInstance().ShowIntersticialAd();
-
-                return true;
             }
-            return false;
+            else
+            {
+                //Si no puede salir al nivel siguiente te devuelve al menu
+                GameManager.GetInstance().ExitLevel();
+            }
         }
 
-        public bool TryPrevLevel()
+        public void TryPrevLevel()
         {
             GameManager gMng = GameManager.GetInstance();
             selectedLevel = gMng.PrevLevel(); //Pregunta a gMng si se puede pasar al nivel anterior
@@ -111,15 +106,18 @@ namespace flow
                 ConfigLevelUI(boardSize.Item1, boardSize.Item2);
 
                 AdvertisingManager.GetInstance().ShowIntersticialAd();
-
-                return true;
             }
-            return false;
         }
 
         public void ResetLevel()
         {
             boardManager.ResetLevel();
+            winPanel.SetActive(false);
+        }
+
+        public void SetActiveWinPanel()
+        {
+            winPanel.SetActive(true);
         }
 
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -147,11 +145,6 @@ namespace flow
 
             //return auxBoardSize;
             return 0; //lol
-        }
-
-        public void OnLevelFinished()
-        {
-            //winPanel.SetActive(true);
         }
 
         //Al usar una pista se actualiza la UI y el numero de pistas
