@@ -13,6 +13,11 @@ namespace flow
         [SerializeField] Image leftRightLines;
         [SerializeField] Image upDownLines;
 
+        [SerializeField] Image icon;
+        [SerializeField] Sprite lockSprite;
+        [SerializeField] Sprite tickSprite;
+        [SerializeField] Sprite starSprite;
+
         private int levelIndex;
         private string levelString;
         private bool _locked;
@@ -20,7 +25,8 @@ namespace flow
         void Start()
         {
 #if UNITY_EDITOR
-            if (levelNumberText == null || background == null || leftRightLines == null || upDownLines == null)
+            if (levelNumberText == null || background == null || leftRightLines == null || upDownLines == null
+                || icon == null || lockSprite == null || tickSprite == null || starSprite == null)
             {
                 Debug.LogError("LevelButton: Alguna variable no tiene valor asociado desde el editor.");
                 return;
@@ -42,16 +48,23 @@ namespace flow
                 Color aux = color;
                 leftRightLines.color = aux;
                 upDownLines.color = aux;
+                icon.color = aux;
                 aux.a = 110f / 255f;
                 background.color = aux;
+                icon.enabled = false;
+                levelNumberText.enabled = true;
             }
             else
             {
                 Color aux = Color.grey;
                 leftRightLines.color = aux;
                 upDownLines.color = aux;
+                icon.color = aux;
                 aux.a = 110f / 255f;
                 background.color = aux;
+                icon.enabled = true;
+                icon.sprite = lockSprite;
+                levelNumberText.enabled = false;
             }
         }
 
