@@ -386,6 +386,7 @@ MonoBehaviour:
   lockSprite: {fileID: 21300000, guid: 3613d70034b90d240858b660b4ce2026, type: 3}
   tickSprite: {fileID: 21300000, guid: 9cfe431be709fb940a948fd81b011f3d, type: 3}
   starSprite: {fileID: 21300000, guid: fa3a038948e100d4e9f893196b0dde95, type: 3}
+  button: {fileID: 276566822148436433}
 --- !u!1 &7933805272576250093
 GameObject:
   m_ObjectHideFlags: 0
