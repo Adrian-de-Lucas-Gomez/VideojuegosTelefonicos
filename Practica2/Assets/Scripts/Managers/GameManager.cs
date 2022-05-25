@@ -86,6 +86,13 @@ namespace flow
 #endif
         }
 
+        public void ExitLevel()
+        {
+            SceneManager.LoadScene("LevelMenu");
+
+            AdvertisingManager.GetInstance().ShowIntersticialAd();
+        }
+
         public void LoadLevelMenu(LevelPack pack, Categories packCategory)
         {
             categoryIndex = categories.IndexOf(packCategory);

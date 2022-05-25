@@ -270,7 +270,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 85016975}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3220183378671700981, guid: 35eafcbeaa99b4a47b9d4b746d19a12d, type: 3}
+        m_TargetAssemblyTypeName: flow.GameManager, Assembly-CSharp
+        m_MethodName: ExitLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &85016975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1330,7 +1342,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -150}
-  m_SizeDelta: {x: 0, y: 1030}
+  m_SizeDelta: {x: 0, y: 948}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &765302760
 GameObject:
@@ -3521,15 +3533,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3220183378671700981, guid: 35eafcbeaa99b4a47b9d4b746d19a12d, type: 3}
       propertyPath: packIndex
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3220183378671700981, guid: 35eafcbeaa99b4a47b9d4b746d19a12d, type: 3}
       propertyPath: levelIndex
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3220183378671700981, guid: 35eafcbeaa99b4a47b9d4b746d19a12d, type: 3}
       propertyPath: categoryIndex
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3220183378671700981, guid: 35eafcbeaa99b4a47b9d4b746d19a12d, type: 3}
       propertyPath: advertisingManager
