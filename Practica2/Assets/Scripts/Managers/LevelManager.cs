@@ -25,6 +25,10 @@ namespace flow
         [SerializeField] Text nHintsText;
 
         [SerializeField] GameObject winPanel;
+        [SerializeField] Image winPanelTopBg;
+        [SerializeField] Image winPanelBorderLR;
+        [SerializeField] Image winPanelBorderUD;
+        [SerializeField] Text winPanelMovesText;
 
         private int selectedLevel = 0;
 
@@ -36,6 +40,8 @@ namespace flow
             levelText.color = gMng.GetSelectedCategory().color;
             levelSizeText.text = w.ToString() + "x" + h.ToString();
             //nHintsText.text = GameManager.GetInstance().GetNHints().ToString() + "x"; //TODO
+
+            winPanelTopBg.color = winPanelBorderLR.color = winPanelBorderUD.color = gMng.GetSelectedCategory().color;
         }
 
         public void InitializeLevel(string levelString, LevelPack pack)
@@ -57,7 +63,7 @@ namespace flow
                 return;
             }
 #endif      
-            //winPanel.SetActive(false);
+            winPanel.SetActive(false);
 
             //Cargamos el nivel con lo que nos diga el GameManager
             GameManager gMng = GameManager.GetInstance();
@@ -65,7 +71,15 @@ namespace flow
             InitializeLevel(gMng.GetSelectedLevelString(), gMng.GetSelectedPack());
         }
 
-        public void TryNextLevel()
+        public void TryNextLevelWinPanel()
+        {
+            if(!TryNextLevel()) //Si no puede salir al nivel siguiente te devuelve al menu
+            {
+                GameManager.GetInstance().ExitLevel();
+            }
+        }
+
+        public bool TryNextLevel()
         {
             GameManager gMng = GameManager.GetInstance();
             selectedLevel = gMng.NextLevel(); //Pregunta a gMng si se puede pasar al siguiente nivel
@@ -78,12 +92,13 @@ namespace flow
                 ConfigLevelUI(boardSize.Item1, boardSize.Item2);
 
                 AdvertisingManager.GetInstance().ShowIntersticialAd();
-            }
 
-           
+                return true;
+            }
+            return false;
         }
 
-        public void TryPrevLevel()
+        public bool TryPrevLevel()
         {
             GameManager gMng = GameManager.GetInstance();
             selectedLevel = gMng.PrevLevel(); //Pregunta a gMng si se puede pasar al nivel anterior
@@ -96,7 +111,10 @@ namespace flow
                 ConfigLevelUI(boardSize.Item1, boardSize.Item2);
 
                 AdvertisingManager.GetInstance().ShowIntersticialAd();
+
+                return true;
             }
+            return false;
         }
 
         public void ResetLevel()
