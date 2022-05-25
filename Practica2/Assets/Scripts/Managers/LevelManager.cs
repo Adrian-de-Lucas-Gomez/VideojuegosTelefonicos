@@ -13,7 +13,6 @@ namespace flow
     /// 
     public class LevelManager : MonoBehaviour
     {
-        //[SerializeField] GameObject winPanel;
         [SerializeField] BoardManager boardManager;
 
         [SerializeField] Text levelText;
@@ -24,6 +23,8 @@ namespace flow
         [SerializeField] Text bestText;
         [SerializeField] Text percentageText;
         [SerializeField] Text nHintsText;
+
+        [SerializeField] GameObject winPanel;
 
         private int selectedLevel = 0;
 
