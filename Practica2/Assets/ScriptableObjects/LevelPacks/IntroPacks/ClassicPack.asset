@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Classic Pack
   levelsFile: {fileID: 4900000, guid: 42c774728ec6701459ad5afa298522a8, type: 3}
-  skin: {fileID: 11400000, guid: 8bbfdbce4c9e0444c8d770222e0c9f1d, type: 2}
   groupTitles:
   - 5x5 - easy
   - 6x6
@@ -27,3 +26,4 @@ MonoBehaviour:
   - {r: 0.91764706, g: 0.8784314, b: 0, a: 1}
   - {r: 0.9843137, g: 0.5372549, b: 0, a: 1}
   - {r: 1, g: 0, b: 0, a: 1}
+  fullyUnlocked: 1

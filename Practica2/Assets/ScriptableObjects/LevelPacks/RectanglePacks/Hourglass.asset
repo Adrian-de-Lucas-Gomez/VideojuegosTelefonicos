@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Hourglass Pack
   levelsFile: {fileID: 4900000, guid: 98559462970e05a40ab0b5f3d801fe99, type: 3}
-  skin: {fileID: 11400000, guid: 8bbfdbce4c9e0444c8d770222e0c9f1d, type: 2}
   groupTitles:
   - 9x11
   - 9x12
@@ -27,3 +26,4 @@ MonoBehaviour:
   - {r: 0, g: 0.5529412, b: 0, a: 1}
   - {r: 0.047058824, g: 0.16078432, b: 0.99607843, a: 1}
   - {r: 0.91764706, g: 0.8784314, b: 0, a: 1}
+  fullyUnlocked: 1

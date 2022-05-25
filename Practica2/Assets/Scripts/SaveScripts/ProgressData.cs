@@ -69,7 +69,7 @@ namespace flow
 
                     bool levelInPackLocked;
 
-                    if (cat[i].fullyUnlocked) {     //Si todos los niveles estan disponibles
+                    if (cat[i].packs[j].fullyUnlocked) {     //Si todos los niveles estan disponibles
                         levelInPackLocked = false;
                     }
                     else {

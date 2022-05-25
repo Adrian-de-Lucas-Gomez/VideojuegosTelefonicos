@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Rectangle Pack
   levelsFile: {fileID: 4900000, guid: 35d408c9ee713dc40adb2f3d5a44ed66, type: 3}
-  skin: {fileID: 11400000, guid: 8bbfdbce4c9e0444c8d770222e0c9f1d, type: 2}
   groupTitles:
   - 8x10
   - 9x11
@@ -27,3 +26,4 @@ MonoBehaviour:
   - {r: 0, g: 0.5529412, b: 0, a: 1}
   - {r: 0.047058824, g: 0.16078432, b: 0.99607843, a: 1}
   - {r: 0.91764706, g: 0.8784314, b: 0, a: 1}
+  fullyUnlocked: 1

@@ -14,8 +14,6 @@ namespace flow
         public List<LevelPack> packs;
         //Color en el menú
         public Color color;
-        //Levels locked
-        public bool fullyUnlocked;
 
         void OnEnable()
         {

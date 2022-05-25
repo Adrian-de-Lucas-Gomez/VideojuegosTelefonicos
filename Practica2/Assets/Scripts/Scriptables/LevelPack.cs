@@ -16,6 +16,8 @@ namespace flow
         public string[] groupTitles;
         //Colores de los grupos de niveles
         public Color[] colors;
+        //Levels locked
+        public bool fullyUnlocked;
 
         void OnEnable()
         {

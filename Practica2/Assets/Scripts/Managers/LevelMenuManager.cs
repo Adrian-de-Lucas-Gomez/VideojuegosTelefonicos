@@ -41,11 +41,11 @@ namespace flow
                 page.ConfigureLevelPage(i, currentLevelPack);
 
                 levelButtonParent = page.GetButtonsParent();
-                LevelButton buttonOne = Instantiate(levelButtonPrefab, levelButtonParent);
+                LevelButton levelButton = Instantiate(levelButtonPrefab, levelButtonParent);
 
                 int levelIndexAUX = 0 + LEVELS_PER_PAGE * i + 1;
                 string levelButtonStringAux = levelsStrings[0 + LEVELS_PER_PAGE * i];
-                buttonOne.ConfigureLevelButton(levelIndexAUX, currentLevelPack.colors[i], levelButtonStringAux, false);
+                levelButton.ConfigureLevelButton(levelIndexAUX, currentLevelPack.colors[i], levelButtonStringAux, false);
 
                 //Crear LEVELS_PER_PAGE botones
                 for (int j = 1; j < LEVELS_PER_PAGE; ++j)
@@ -54,7 +54,7 @@ namespace flow
                     LevelButton button = Instantiate(levelButtonPrefab, levelButtonParent);
 
                     bool locked = false;
-                    if (currentCategory.fullyUnlocked)
+                    if (!currentLevelPack.fullyUnlocked)
                     {
                         locked = true;
                     }

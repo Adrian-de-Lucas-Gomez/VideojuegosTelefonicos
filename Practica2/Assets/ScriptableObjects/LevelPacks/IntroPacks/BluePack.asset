@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Blue Pack
   levelsFile: {fileID: 4900000, guid: d9e2d77268344c8408d404c10ab1facc, type: 3}
-  skin: {fileID: 11400000, guid: 8bbfdbce4c9e0444c8d770222e0c9f1d, type: 2}
   groupTitles:
   - 5x5 - easy
   - 6x6
@@ -27,3 +26,4 @@ MonoBehaviour:
   - {r: 0.047058824, g: 0.16078432, b: 0.99607843, a: 1}
   - {r: 0.047058824, g: 0.16078432, b: 0.99607843, a: 1}
   - {r: 0.047058824, g: 0.16078432, b: 0.99607843, a: 1}
+  fullyUnlocked: 1

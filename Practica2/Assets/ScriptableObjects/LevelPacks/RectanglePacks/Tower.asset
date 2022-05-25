@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Tower Pack
   levelsFile: {fileID: 4900000, guid: decad6ccaadd6aa4684a5b610b03071e, type: 3}
-  skin: {fileID: 11400000, guid: 8bbfdbce4c9e0444c8d770222e0c9f1d, type: 2}
   groupTitles:
   - 5x6 - 5x11
   - 6x7 - 6x12
@@ -27,3 +26,4 @@ MonoBehaviour:
   - {r: 0, g: 0.5529412, b: 0, a: 1}
   - {r: 0.047058824, g: 0.16078432, b: 0.99607843, a: 1}
   - {r: 0.91764706, g: 0.8784314, b: 0, a: 1}
+  fullyUnlocked: 1
