@@ -40,6 +40,8 @@ namespace flow
             {
                 instance = this;
                 DontDestroyOnLoad(gameObject);
+
+                InitProgress();
             }
         }
 
@@ -54,6 +56,20 @@ namespace flow
 #endif
             packStrings = GetSelectedPack().levelsFile.ToString().Split('\n');
 
+            
+        }
+
+        public void CloseGame()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+        }
+
+        public void InitProgress()
+        {
             //Creamos el lector/escritor de los datos de guardado
             saveIO = new SaveReadWriter();
             saveIO.Init();
@@ -74,15 +90,6 @@ namespace flow
                 progress = new ProgressData();
                 progress.Init(categories);
             }
-        }
-
-        public void CloseGame()
-        {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#else
-            Application.Quit();
-#endif
         }
 
         public void ExitLevel()
@@ -239,6 +246,11 @@ namespace flow
         public PackProgress GetProgressInPack()
         {
             return progress.categories[categoryIndex].packs[packIndex];
+        }
+
+        public ProgressData GetProgress()
+        {
+            return progress;
         }
 
         public int GetTotalHints()

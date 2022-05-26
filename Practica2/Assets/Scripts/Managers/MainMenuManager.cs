@@ -16,7 +16,7 @@ namespace flow
         [SerializeField] LevelPackCard levelPackCardPrefab;
         [SerializeField] GameObject titleParent;
 
-        private void LoadMainMenu()
+        public void LoadMainMenu()
         {
             List<Categories> categories = GameManager.GetInstance().GetCategories();
             //Crear las categorias de niveles
@@ -25,12 +25,20 @@ namespace flow
                 CategoryCard card = Instantiate(categoryCardPrefab, categoriesParent);
                 card.ConfigureCategory(categories[i]);
 
-                //Crear los packs de niveles dentro de cada categoria
-                List<LevelPack> packs = categories[i].packs;
+
+            //Crear los packs de niveles dentro de cada categoria
+            List<LevelPack> packs = categories[i].packs;
                 for (int j = 0; j < packs.Count; ++j)
                 {
                     LevelPackCard pack = Instantiate(levelPackCardPrefab, categoriesParent);
-                    pack.ConfigureLevelPack(packs[j], categories[i]);
+
+                    PackProgress aux = GameManager.GetInstance().GetProgress().categories[i].packs[j];
+
+                    int levelsCompleted = 0;
+
+                    for (int m = 0; m < aux.levels.Length; m++) if (aux.levels[m].completed) levelsCompleted++;
+
+                    pack.ConfigureLevelPack(packs[j], categories[i], levelsCompleted);
                 }
             }
 
