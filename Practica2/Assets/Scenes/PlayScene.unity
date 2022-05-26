@@ -1077,6 +1077,8 @@ MonoBehaviour:
   tilePrefab: {fileID: 3881729661027634210, guid: 91db5f72583662a4bbe0650d3d47b1a2, type: 3}
   pointerIndicatorSprite: {fileID: 1820957491}
   levelManager: {fileID: 631872264}
+  canvas: {fileID: 1704759561}
+  middleCanvas: {fileID: 813758053}
 --- !u!1 &518941350
 GameObject:
   m_ObjectHideFlags: 0
@@ -1611,7 +1613,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 821720193}
+  - component: {fileID: 821720192}
   - component: {fileID: 501709598}
   - component: {fileID: 821720191}
   m_Layer: 0
@@ -1640,8 +1642,8 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!224 &821720193
-RectTransform:
+--- !u!4 &821720192
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1654,11 +1656,6 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &951226839
 GameObject:
   m_ObjectHideFlags: 0

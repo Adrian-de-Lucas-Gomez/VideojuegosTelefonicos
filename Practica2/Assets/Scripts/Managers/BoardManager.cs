@@ -15,9 +15,11 @@ namespace flow
         [SerializeField] GameObject tilePrefab;
         [SerializeField] SpriteRenderer pointerIndicatorSprite;
         [SerializeField] LevelManager levelManager;
+        [SerializeField] RectTransform canvas;
+        [SerializeField] RectTransform middleCanvas;
 
-        //Componentes del propio objeto
-        Animator boardAnimator;
+        //Transición entre niveles
+        private Animator boardAnimator;
 
         //Generacion del nivel
         private int levelNumber;
@@ -35,7 +37,7 @@ namespace flow
 
         //Logica
         private Vector2 posIni;
-        private Vector2 tileSize;
+        private float tileSize;
         private int currentTile = 0;
         private int currentFlow = int.MaxValue;
         private int previousFlow = int.MaxValue;
@@ -50,7 +52,7 @@ namespace flow
         void Start()
         {
 #if UNITY_EDITOR
-            if (tilePrefab == null || pointerIndicatorSprite == null || levelManager == null)
+            if (tilePrefab == null || pointerIndicatorSprite == null || levelManager == null || canvas == null || middleCanvas == null)
             {
                 Debug.LogError("BoardManager: Alguna variable no tiene valor asociado desde el editor.");
                 return;
@@ -173,9 +175,10 @@ namespace flow
             //Lectura del nivel
             ReadLevel(level, ref emptyTiles, ref walls);
             //El tamanho de un tile en pantalla                 
-            tileSize = Vector2.one;
+            //tileSize = Vector2.one;
             //TODO: no funciona el escalado
             //tileSize = new Vector2((int)boardScale / boardWidth, (int)boardScale / boardHeight);
+            CalculateScale();
 
             return (boardWidth, boardHeight);
         }
@@ -210,9 +213,6 @@ namespace flow
                 }
                 boardWidth = boardHeight = int.Parse(auxInfo[0]);
             }
-
-            //Calcular la posicion desde la que se instanciaran las casillas
-            posIni = new Vector2(-(float)boardWidth / 2f, (float)boardHeight / 2f);
 
             numFillableTiles = boardWidth * boardHeight - nFlows;
 
@@ -259,6 +259,20 @@ namespace flow
             boardAnimator.Play("LevelIn");
         }
 
+        private void CalculateScale()
+        {
+            float pxPerUnit = Screen.height / canvas.rect.height; //Cuanto mide una ud. de la UI en píxeles
+
+            float pxScreenHeight = middleCanvas.rect.height * pxPerUnit; //Ancho disponible en píxeles
+            float pxScreenWidth = middleCanvas.rect.width * pxPerUnit; //Alto disponible en píxeles
+            float tilePxWidth = pxScreenHeight / boardHeight; //Cuanto ocuparía cada tile si utilizaramos el ancho disponible
+            float tilePxHeight = pxScreenWidth / boardWidth; //Cuanto ocuparía cada tile si utilizaramos el alto disponible
+
+            float tilePxSize = Mathf.Min(tilePxWidth, tilePxHeight); //Escogemos la disposición que ocupe menos
+
+            tileSize = Camera.main.ScreenToWorldPoint(new Vector3(tilePxSize + Screen.width / 2, tilePxSize + Screen.height / 2, 0)).x; //Se traduce la coordenada de pantalla a coordenada de escena de Unity
+        }
+
         public void InitializeBoard()
         {
             if (tiles != null)
@@ -270,14 +284,17 @@ namespace flow
             }
             tiles = new List<Tile>();
 
+            //Se obtiene la posición inicial donde se empieza a construir el tablero
+            posIni = new Vector2(-(float)boardWidth / 2f * tileSize, (float)boardHeight / 2f * tileSize);
+
             //Instanciar Tiles
             for (int j = 0; j < boardHeight; ++j)
             {
                 for (int i = 0; i < boardWidth; ++i)
                 {
                     GameObject t = Instantiate(tilePrefab, transform);
-                    t.transform.localPosition = new Vector2(posIni.x + tileSize.x / 2 + i * tileSize.x, posIni.y - tileSize.y / 2 - j * tileSize.y);
-                    t.transform.localScale = tileSize; //Escalamos el tile
+                    t.transform.localPosition = new Vector2(posIni.x + tileSize / 2 + i * tileSize, posIni.y - tileSize / 2 - j * tileSize);
+                    t.transform.localScale = new Vector3(tileSize, tileSize, 0); //Escalamos el tile
 
                     Tile newTile = t.GetComponent<Tile>();
                     newTile.Initialize();
@@ -500,8 +517,8 @@ namespace flow
 
         private bool IsPosInBoard(Vector3 pos)
         {
-            if (pos.x >= posIni.x && pos.x < posIni.x + boardWidth * tileSize.x &&
-                pos.y <= posIni.y && pos.y > posIni.y - boardHeight * tileSize.y)
+            if (pos.x >= posIni.x && pos.x < posIni.x + boardWidth * tileSize &&
+                pos.y <= posIni.y && pos.y > posIni.y - boardHeight * tileSize)
                 return true;
 
             return false;
@@ -538,8 +555,8 @@ namespace flow
         private int WorldPosToTile(Vector3 pos)
         {
             Vector2 posBoard = new Vector2(Mathf.Abs(pos.x - posIni.x), Mathf.Abs(pos.y - posIni.y));
-            int col = (int)(posBoard.x / tileSize.x);
-            int row = (int)(posBoard.y / tileSize.y);
+            int col = (int)(posBoard.x / tileSize);
+            int row = (int)(posBoard.y / tileSize);
 
             return (row * boardWidth + col);
         }
