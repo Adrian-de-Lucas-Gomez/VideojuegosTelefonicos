@@ -74,7 +74,6 @@ namespace flow
                 progress = new ProgressData();
                 progress.Init(categories);
             }
-
         }
 
         public void CloseGame()
@@ -139,7 +138,10 @@ namespace flow
             if (levelIndex + 1 < levelsInPack)
             {
                 return ++levelIndex;
-            }                
+            }
+
+            saveIO.SaveData(progress);
+
             return -1; //-1 es que no existe nivel siguiente
         }
 
@@ -157,6 +159,39 @@ namespace flow
             //Añadir una pista
             progress.hints = progress.hints + 1;
             Debug.Log("Nº pistas actuales: " + progress.hints);
+        }
+
+        public void OnHintUsed()
+        {
+            //Se gasta una pista (si se tienen)
+            if(progress.hints > 0)
+            {
+                progress.hints = progress.hints - 1;
+                Debug.Log("Nº pistas actuales: " + progress.hints);
+            }
+            else Debug.Log("No tienes pistas disponibles");
+        }
+
+        public void OnLevelFinished(int numMoves)
+        {
+            LevelProgress levelfinished = progress.categories[categoryIndex].packs[packIndex].levels[levelIndex];
+            levelfinished.completed = true;
+
+            //Si hemos mejorado el record de movimientos previos lo actualizamos
+            if(levelfinished.moveRecord > numMoves)
+            {
+                levelfinished.moveRecord = numMoves;
+            }
+
+            //Si hay otro nivel por delante hay que desbloquearlo
+            if (levelIndex < progress.categories[categoryIndex].packs[packIndex].levels.Length - 1)
+            {
+                progress.categories[categoryIndex].packs[packIndex].levels[levelIndex + 1].locked = false;
+            }
+
+            //Guardamos los datos al fichero
+            saveIO.SaveData(progress);
+            Debug.Log("Progreso guardado");
         }
 
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -199,6 +234,16 @@ namespace flow
         public string GetSelectedLevelString()
         {
             return packStrings[levelIndex];
+        }
+
+        public PackProgress GetProgressInPack()
+        {
+            return progress.categories[categoryIndex].packs[packIndex];
+        }
+
+        public int GetTotalHints()
+        {
+            return progress.hints;
         }
     }
 }
