@@ -39,7 +39,7 @@ namespace flow
             levelText.text = "level " + (selectedLevel + 1).ToString();
             levelText.color = gMng.GetSelectedCategory().color;
             levelSizeText.text = w.ToString() + "x" + h.ToString();
-            //nHintsText.text = GameManager.GetInstance().GetNHints().ToString() + "x"; //TODO
+            nHintsText.text = GameManager.GetInstance().GetTotalHints().ToString() + "x"; //TODO
 
             winPanel.SetActive(false);
             winPanelTopBg.color = winPanelBorderLR.color = winPanelBorderUD.color = gMng.GetSelectedCategory().color;
@@ -150,10 +150,15 @@ namespace flow
         //Al usar una pista se actualiza la UI y el numero de pistas
         public void OnUseHint()
         {
-            //boardManager.UseHint();
+            boardManager.UseHint();
 
-            //GameManager.GetInstance().OnHintUsed(); TO-DO
-            //nHintsText.text = GameManager.GetInstance().GetNHints().ToString() + " x";
+            GameManager.GetInstance().OnHintUsed();
+            nHintsText.text = GameManager.GetInstance().GetTotalHints().ToString() + " x";
+        }
+
+        public void OnLevelFinished(int numMoves)
+        {
+            GameManager.GetInstance().OnLevelFinished(numMoves);
         }
     }
 }

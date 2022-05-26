@@ -26,4 +26,4 @@ MonoBehaviour:
   - {r: 0.91764706, g: 0.8784314, b: 0, a: 1}
   - {r: 0.9843137, g: 0.5372549, b: 0, a: 1}
   - {r: 1, g: 0, b: 0, a: 1}
-  fullyUnlocked: 1
+  fullyUnlocked: 0

@@ -40,28 +40,22 @@ namespace flow
                 LevelPage page = Instantiate(levelPagePrefab, levelPageParent);
                 page.ConfigureLevelPage(i, currentLevelPack);
 
-                levelButtonParent = page.GetButtonsParent();
-                LevelButton levelButton = Instantiate(levelButtonPrefab, levelButtonParent);
-
-                int levelIndexAUX = 0 + LEVELS_PER_PAGE * i + 1;
-                string levelButtonStringAux = levelsStrings[0 + LEVELS_PER_PAGE * i];
-                levelButton.ConfigureLevelButton(levelIndexAUX, currentLevelPack.colors[i], levelButtonStringAux, false);
-
                 //Crear LEVELS_PER_PAGE botones
-                for (int j = 1; j < LEVELS_PER_PAGE; ++j)
+                for (int j = 0; j < LEVELS_PER_PAGE; ++j)
                 {
                     levelButtonParent = page.GetButtonsParent();
                     LevelButton button = Instantiate(levelButtonPrefab, levelButtonParent);
 
+
                     bool locked = false;
-                    if (!currentLevelPack.fullyUnlocked)
+                    if (gMng.GetProgressInPack().levels[j + LEVELS_PER_PAGE * i].locked)
                     {
                         locked = true;
                     }
 
-                    int levelIndex = j + LEVELS_PER_PAGE * i + 1;
+                    int levelIndex = j + 1;
                     string levelButtonString = levelsStrings[j + LEVELS_PER_PAGE * i];
-                    button.ConfigureLevelButton(levelIndex, currentLevelPack.colors[i], levelButtonString, locked);
+                    button.ConfigureLevelButton(levelIndex, currentLevelPack.colors[i], levelButtonString, locked, gMng.GetProgressInPack().levels[j + LEVELS_PER_PAGE * i].completed);
                 }
             }
         }

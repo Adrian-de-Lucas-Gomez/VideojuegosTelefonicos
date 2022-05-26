@@ -18,7 +18,7 @@ public class SaveReadWriter
         hashMaker = SHA256.Create();
 
 #if UNITY_EDITOR
-        savePath = "Assets/SaveData";
+        savePath = "Assets/SaveData/";
 #else
         //El path persistente para Android
         savePath = Application.persistentDataPath + "SaveData"; 

@@ -106,7 +106,7 @@ namespace flow
                     levelManager.SetActiveWinPanel();
 
                     //Llamada al onLevelFinished del GameManager para que guarde y avise al Level para que ponga la interfaz correspondiente
-                    //GameManager.GetInstance().OnLevelFinished(numMoves); //Son los moves usados
+                    levelManager.OnLevelFinished(numMoves); //Son los moves usados
                 }
             }
         }

@@ -28,7 +28,7 @@ namespace flow
 #endif
         }
 
-        private void Configure()
+        private void Configure(int levelsCompleted)
         {
             if (pack == null) return;
 
@@ -43,14 +43,14 @@ namespace flow
             packButton.colors = colors;
 
             nLevels = pack.levelsFile.ToString().Split('\n').Length - 1;
-            nLevelsText.text = "0" + "/" + nLevels.ToString();
+            nLevelsText.text = levelsCompleted.ToString() + "/" + nLevels.ToString();
         }
 
-        public void ConfigureLevelPack(LevelPack pack, Categories category)
+        public void ConfigureLevelPack(LevelPack pack, Categories category, int levelsCompleted)
         {
             this.pack = pack;
             this.category = category;
-            Configure();
+            Configure(levelsCompleted);
         }
 
         public void OnClick()
