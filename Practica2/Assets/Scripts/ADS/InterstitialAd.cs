@@ -57,7 +57,7 @@ namespace flow
         public void OnUnityAdsShowClick(string adUnitId) { }
         public void OnUnityAdsShowComplete(string adUnitId, UnityAdsShowCompletionState showCompletionState) {
             LoadAd();
-            AdvertisingManager.GetInstance().ShowBannerAd();
+            AdvertisingManager.GetInstance().ReloadADS();
         }
     }
 }

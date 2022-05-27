@@ -12,6 +12,7 @@ namespace flow
     /// Gestiona la serializacion/progreso
     /// Es un prefab
     /// </summary>
+    
     public class GameManager : MonoBehaviour
     {
         [SerializeField] int categoryIndex = 0;
@@ -19,6 +20,10 @@ namespace flow
         [SerializeField] int levelIndex = 0;
 
         [SerializeField] List<Categories> categories;
+
+        public enum actualScene { MainMenu, SelectLevel, PlayScene };
+
+        [SerializeField] actualScene scene;
 
         public ColorSkin skin;
 
@@ -34,6 +39,9 @@ namespace flow
         {
             if (instance != null && instance != this)
             {
+                instance.SetInfo(scene);
+                //AdvertisingManager.GetInstance().ReloadADS();   //Avisamos porque puede que se haya cambiado de escena
+
                 Destroy(this);
             }
             else
@@ -43,6 +51,11 @@ namespace flow
 
                 InitProgress();
             }
+        }
+
+        private void SetInfo(actualScene actscene)
+        {
+            scene = actscene;
         }
 
         public void Start()
@@ -138,6 +151,11 @@ namespace flow
             
         //}
 
+        public actualScene GetActualScene()
+        {
+            return scene;
+        }
+
         public int NextLevel()
         {
             int levelsInPack = packStrings.Length - 1;
@@ -147,7 +165,7 @@ namespace flow
                 return ++levelIndex;
             }
 
-            saveIO.SaveData(progress);
+            //saveIO.SaveData(progress);
 
             return -1; //-1 es que no existe nivel siguiente
         }

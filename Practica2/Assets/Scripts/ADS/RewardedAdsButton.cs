@@ -80,7 +80,7 @@ namespace flow
 
                 addedListener = false;
 
-                AdvertisingManager.GetInstance().ShowBannerAd();
+                AdvertisingManager.GetInstance().ReloadADS();
 
                 // Load another ad:
                 LoadAd();

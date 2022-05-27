@@ -31,9 +31,8 @@ namespace flow
             {
                 instance = this;
                 DontDestroyOnLoad(gameObject);
+                InitializeAds();
             }
-
-            InitializeAds();
         }
 
         [SerializeField] string _androidGameId;
@@ -55,12 +54,20 @@ namespace flow
         {
             Debug.Log("Unity Ads initialization complete.");
 
-            //Llamamos a los distintos tipos de ADS que tenemos
+            //Llamamos a los distintos tipos de ADS que tenemos para que carguen el anuncio
             bannerAd.LoadBanner();
             intersticialAd.LoadAd();
             rewardedAd.LoadAd();
 
-            ShowBannerAd();
+            ReloadADS();
+        }
+
+        public void ReloadADS()
+        {
+            if (GameManager.GetInstance().GetActualScene() != GameManager.actualScene.MainMenu) ShowBannerAd();
+
+            else HideBannerAd();
+            
         }
 
         public void ShowBannerAd()
@@ -85,18 +92,22 @@ namespace flow
                 //Mostramos el anuncio intersticial
                 intersticialAd.ShowAd();
             }
+            else
+            {
+                ReloadADS();
+            }
             
         }
 
         //Este se muestra solo usando el botón
 
-        //public void ShowRewardedAd()
-        //{
-        //    //Quitamos el banner para que no se superponga
-        //    HideBannerAd();
-        //    //Mostramos el anuncio intersticial
-        //    rewardedAd.ShowAd();
-        //}
+        public void ShowRewardedAd()
+        {
+            //Quitamos el banner para que no se superponga
+            HideBannerAd();
+            //Mostramos el anuncio intersticial
+            rewardedAd.ShowAd();
+        }
 
         public void OnInitializationFailed(UnityAdsInitializationError error, string message)
         {

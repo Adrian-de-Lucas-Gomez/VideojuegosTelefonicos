@@ -75,7 +75,7 @@ namespace flow
 
             if (completed) {
                 icon.enabled = true;
-                icon.sprite = starSprite;
+                icon.sprite = tickSprite;
             }
         }
 
