@@ -210,8 +210,9 @@ namespace flow
             //Añadir una pista
             progress.hints = progress.hints + 1;
             Debug.Log("Nº pistas actuales: " + progress.hints);
-            //Avisamos al levelManager de la nueva pista
 
+            //Avisamos al levelManager de la nueva pista
+            levelManager.UpdateHintCount(progress.hints);
 
             //Guardamos que se ha usado la pista
             saveIO.SaveData(progress);

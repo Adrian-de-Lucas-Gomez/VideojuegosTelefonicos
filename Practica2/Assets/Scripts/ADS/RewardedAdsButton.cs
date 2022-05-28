@@ -6,8 +6,6 @@ namespace flow
 {
     public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
     {
-        [SerializeField] Button hintButton;
-
         [SerializeField] string _androidAdUnitId = "Rewarded_Android";
         [SerializeField] string _iOSAdUnitId = "Rewarded_iOS";
         string _adUnitId;
@@ -21,11 +19,6 @@ namespace flow
                 ? _iOSAdUnitId
                 : _androidAdUnitId;
 
-            if (hintButton != null)
-            {
-                hintButton.interactable = false;
-                hintButton.onClick.AddListener(ShowAd);
-            }
         }
 
         // Load content to the Ad Unit:
@@ -42,10 +35,6 @@ namespace flow
             if (adUnitId.Equals(_adUnitId))
             {
                 Debug.Log("Ad Loaded: " + adUnitId);
-                if(hintButton != null)
-                {
-                    hintButton.interactable = true;
-                }
             }
         }
 
@@ -64,9 +53,6 @@ namespace flow
                 Debug.Log("Ad shown");
                 Advertisement.Show(_adUnitId);
             }
-
-
-            hintButton.interactable = false;
         }
 
         // Implement the Show Listener's OnUnityAdsShowComplete callback method to determine if the user gets a reward:

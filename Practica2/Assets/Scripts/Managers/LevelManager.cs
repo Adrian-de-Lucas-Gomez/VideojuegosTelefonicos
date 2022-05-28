@@ -145,6 +145,11 @@ namespace flow
             //UpdateUIelements(); //Se que no va aquí, es temporal no me peguen por favor
         }
 
+        public void UpdateHintCount(int hints)
+        {
+            nHintsText.text = hints.ToString() + "x";
+        }
+
         public void UpdateUIelements()
         {
             totalFlowsText.text = boardManager.GetNumFlows().ToString() + " /" + boardManager.GetTotalFlows().ToString();
