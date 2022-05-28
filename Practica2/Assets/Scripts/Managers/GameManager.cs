@@ -21,7 +21,9 @@ namespace flow
 
         [SerializeField] List<Categories> categories;
 
-         public const int LEVELS_PER_PAGE = 30;
+        [SerializeField] LevelManager levelManager;
+
+        public const int LEVELS_PER_PAGE = 30;
 
         public enum actualScene { MainMenu, SelectLevel, PlayScene };
 
@@ -41,8 +43,24 @@ namespace flow
         {
             if (instance != null && instance != this)
             {
-                instance.SetInfo(scene);
-                //AdvertisingManager.GetInstance().ReloadADS();   //Avisamos porque puede que se haya cambiado de escena
+                instance.SetInfo(scene, levelManager);
+
+                switch (instance.scene)
+                {
+                    case actualScene.MainMenu:
+                        AdvertisingManager.GetInstance().HideBannerAd();
+                        break;
+
+                    case actualScene.SelectLevel:
+                        AdvertisingManager.GetInstance().ShowBannerAd();
+                        break;
+
+                    case actualScene.PlayScene:
+                        AdvertisingManager.GetInstance().ShowBannerAd();
+                        instance.InitLevel(instance.GetSelectedLevelId(), instance.GetSelectedPack());
+                        break;
+                }
+                
 
                 Destroy(this);
             }
@@ -56,9 +74,10 @@ namespace flow
             }
         }
 
-        private void SetInfo(actualScene actscene)
+        private void SetInfo(actualScene actscene, LevelManager lvlManager)
         {
             scene = actscene;
+            levelManager = lvlManager;
         }
 
         public void Start()
@@ -141,11 +160,15 @@ namespace flow
             AdvertisingManager.GetInstance().HideBannerAd();
         }
 
-        public void LoadPlayScene(int levelIndex)
+        public void LoadPlayScene(int lvlIndex)
         {
-            this.levelIndex = levelIndex;
-
+            levelIndex = lvlIndex;
             SceneManager.LoadScene("PlayScene");
+        }
+
+        public void InitLevel(int lvlIndex, LevelPack pack)
+        {
+            levelManager.Init(lvlIndex, pack);
         }
 
         //Si queremos borrar algo antes de q cierre
@@ -187,6 +210,9 @@ namespace flow
             //Añadir una pista
             progress.hints = progress.hints + 1;
             Debug.Log("Nº pistas actuales: " + progress.hints);
+            //Avisamos al levelManager de la nueva pista
+
+
             //Guardamos que se ha usado la pista
             saveIO.SaveData(progress);
         }

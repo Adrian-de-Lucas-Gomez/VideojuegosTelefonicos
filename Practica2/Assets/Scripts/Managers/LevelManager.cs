@@ -72,9 +72,17 @@ namespace flow
 #endif      
 
             //Cargamos el nivel con lo que nos diga el GameManager
+            //GameManager gMng = GameManager.GetInstance();
+            //selectedLevel = gMng.GetSelectedLevelId();
+            //InitializeLevel(gMng.GetSelectedLevelString(), gMng.GetSelectedPack());
+        }
+
+        public void Init(int levelID, LevelPack pack)
+        {
+            //Cargamos el nivel con lo que nos diga el GameManager
             GameManager gMng = GameManager.GetInstance();
-            selectedLevel = gMng.GetSelectedLevelId();
-            InitializeLevel(gMng.GetSelectedLevelString(), gMng.GetSelectedPack());
+            selectedLevel = levelID;
+            InitializeLevel(gMng.GetSelectedLevelString(), pack);
         }
 
         public void TryNextLevel()

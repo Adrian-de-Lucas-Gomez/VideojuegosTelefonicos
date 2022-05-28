@@ -19,6 +19,8 @@ namespace flow
 
         private static AdvertisingManager instance;
 
+        private bool activeADS;
+
         public static AdvertisingManager GetInstance() { return instance; }
 
         private void Awake()
@@ -32,6 +34,7 @@ namespace flow
                 instance = this;
                 DontDestroyOnLoad(gameObject);
                 InitializeAds();
+                activeADS = true;
             }
         }
 
