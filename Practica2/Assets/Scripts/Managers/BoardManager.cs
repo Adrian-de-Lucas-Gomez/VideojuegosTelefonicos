@@ -131,7 +131,7 @@ namespace flow
         {
             return numMoves;
         }
-        public float GetPercentage()    //TO DO (deberia de comprobar el estado de los flujos no como de lleno está el tablero)
+        public float GetPercentage()
         {
             float aux = numFilledTiles;
             return (aux / numFillableTiles) * 100;
@@ -174,10 +174,8 @@ namespace flow
             colors = GameManager.GetInstance().GetTheme();
             //Lectura del nivel
             ReadLevel(level, ref emptyTiles, ref walls);
-            //El tamanho de un tile en pantalla                 
-            //tileSize = Vector2.one;
-            //TODO: no funciona el escalado
-            //tileSize = new Vector2((int)boardScale / boardWidth, (int)boardScale / boardHeight);
+            
+            //Calculamos el tamaño que deben de tener los tiles para adaptarse correctammete a la pantalla
             CalculateScale();
 
             return (boardWidth, boardHeight);
@@ -350,7 +348,7 @@ namespace flow
                     {
                         numMoves++;
                         previousFlow = currentFlow; //Solo se cambia el flow anterior cuando en el actual se ha producido un cambio.
-                        //TEST
+
                         levelManager.UpdateUIelements();
                     }
                 }

@@ -191,18 +191,25 @@ namespace flow
             saveIO.SaveData(progress);
         }
 
-        public void OnHintUsed()
+        public bool OnHintUsed()    //True si se ha canjeado la pista, false si no
         {
             //Se gasta una pista (si se tienen)
-            if(progress.hints > 0)
+            if (progress.hints > 0)
             {
                 progress.hints = progress.hints - 1;
                 Debug.Log("Nº pistas actuales: " + progress.hints);
-            }
-            else Debug.Log("No tienes pistas disponibles");
+                //Guardamos que se ha usado la pista
+                saveIO.SaveData(progress);
 
-            //Guardamos que se ha usado la pista
-            saveIO.SaveData(progress);
+                return true;
+            }
+            else
+            {
+                Debug.Log("No tienes pistas disponibles");
+                return false;
+            }
+
+            
         }
 
         public void OnLevelFinished(int numMoves, int numFlows)

@@ -168,10 +168,13 @@ namespace flow
         //Al usar una pista se actualiza la UI y el numero de pistas
         public void OnUseHint()
         {
-            boardManager.UseHint();
-
-            GameManager.GetInstance().OnHintUsed();
-            nHintsText.text = GameManager.GetInstance().GetTotalHints().ToString() + " x";
+            //Miramos si podemos gastar pistas
+            if (GameManager.GetInstance().OnHintUsed())
+            {
+                boardManager.UseHint();
+                nHintsText.text = GameManager.GetInstance().GetTotalHints().ToString() + " x";
+            }
+            //No se hace nada si no hay pistas
         }
 
         public void PlayAddForHint()
@@ -184,6 +187,7 @@ namespace flow
 
         public void OnLevelFinished(int numMoves, int numFlows)
         {
+            winPanelMovesText.text = "You completed the level in " + numMoves.ToString() + " moves.";
             GameManager.GetInstance().OnLevelFinished(numMoves, numFlows);
         }
     }
