@@ -19,7 +19,7 @@ namespace flow
 
         private static AdvertisingManager instance;
 
-        private bool activeADS;
+        private static bool activeADS;
 
         public static AdvertisingManager GetInstance() { return instance; }
 
@@ -34,27 +34,32 @@ namespace flow
             {
                 instance = this;
                 DontDestroyOnLoad(gameObject);
-                InitializeAds();
-                activeADS = true;
             }
+        }
+
+        private void Start()
+        {
+            InitializeAds();
         }
 
         private void DecideADS()
         {
+            if (!activeADS) return;
+
             GameManager.actualScene actScene = GameManager.GetInstance().GetActualScene();
 
             switch (actScene)
             {
                 case GameManager.actualScene.MainMenu:
-                    AdvertisingManager.GetInstance().HideBannerAd();
+                    instance.HideBannerAd();
                     break;
 
                 case GameManager.actualScene.SelectLevel:
-                    AdvertisingManager.GetInstance().ShowBannerAd();
+                    instance.ShowBannerAd();
                     break;
 
                 case GameManager.actualScene.PlayScene:
-                    AdvertisingManager.GetInstance().ShowBannerAd();
+                    instance.ShowBannerAd();
                     break;
             }
         }
@@ -74,9 +79,16 @@ namespace flow
             Debug.Log("Unity Ads initialization called.");
         }
 
+        public static void DeactivateADS()
+        {
+            activeADS = false;
+            Debug.Log("Anuncios desactivados");
+        }
+
         public void OnInitializationComplete()
         {
             Debug.Log("Unity Ads initialization complete.");
+            activeADS = true;
 
             //Llamamos a los distintos tipos de ADS que tenemos para que carguen el anuncio
             bannerAd.LoadBanner();
@@ -88,6 +100,8 @@ namespace flow
 
         public void ReloadADS()
         {
+            if (!activeADS) return;
+
             if (GameManager.GetInstance().GetActualScene() != GameManager.actualScene.MainMenu) ShowBannerAd();
 
             else HideBannerAd();
@@ -96,16 +110,19 @@ namespace flow
 
         public void ShowBannerAd()
         {
+            if (!activeADS) return;
             bannerAd.ShowAd();
         }
 
         public void HideBannerAd()
         {
+            if (!activeADS) return;
             bannerAd.HideAd();
         }
 
         public void ShowIntersticialAd()
         {
+            if (!activeADS) return;
             //Probabilidad de que salga un anuncio de este tipo
             int rand = Random.Range(0, 5);
 
