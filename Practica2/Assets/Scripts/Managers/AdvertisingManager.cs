@@ -27,6 +27,7 @@ namespace flow
         {
             if (instance != null && instance != this)
             {
+                DecideADS();
                 Destroy(gameObject);
             }
             else
@@ -35,6 +36,26 @@ namespace flow
                 DontDestroyOnLoad(gameObject);
                 InitializeAds();
                 activeADS = true;
+            }
+        }
+
+        private void DecideADS()
+        {
+            GameManager.actualScene actScene = GameManager.GetInstance().GetActualScene();
+
+            switch (actScene)
+            {
+                case GameManager.actualScene.MainMenu:
+                    AdvertisingManager.GetInstance().HideBannerAd();
+                    break;
+
+                case GameManager.actualScene.SelectLevel:
+                    AdvertisingManager.GetInstance().ShowBannerAd();
+                    break;
+
+                case GameManager.actualScene.PlayScene:
+                    AdvertisingManager.GetInstance().ShowBannerAd();
+                    break;
             }
         }
 

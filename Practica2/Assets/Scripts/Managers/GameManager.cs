@@ -41,26 +41,10 @@ namespace flow
 
         void Awake()
         {
+
             if (instance != null && instance != this)
             {
                 instance.SetInfo(scene, levelManager);
-
-                switch (instance.scene)
-                {
-                    case actualScene.MainMenu:
-                        AdvertisingManager.GetInstance().HideBannerAd();
-                        break;
-
-                    case actualScene.SelectLevel:
-                        AdvertisingManager.GetInstance().ShowBannerAd();
-                        break;
-
-                    case actualScene.PlayScene:
-                        AdvertisingManager.GetInstance().ShowBannerAd();
-                        instance.InitLevel(instance.GetSelectedLevelId(), instance.GetSelectedPack());
-                        break;
-                }
-                
 
                 Destroy(this);
             }
@@ -72,6 +56,8 @@ namespace flow
 
                 InitProgress();
             }
+
+            
         }
 
         private void SetInfo(actualScene actscene, LevelManager lvlManager)
@@ -143,7 +129,7 @@ namespace flow
 
             SceneManager.LoadScene("LevelMenu");
 
-            AdvertisingManager.GetInstance().ShowIntersticialAd();
+            //AdvertisingManager.GetInstance().ShowIntersticialAd();
         }
 
         public void LoadMainMenu()
@@ -156,8 +142,8 @@ namespace flow
 
             SceneManager.LoadScene("MainMenu");
 
-            AdvertisingManager.GetInstance().ShowIntersticialAd();
-            AdvertisingManager.GetInstance().HideBannerAd();
+            //AdvertisingManager.GetInstance().ShowIntersticialAd();
+            //AdvertisingManager.GetInstance().HideBannerAd();
         }
 
         public void LoadPlayScene(int lvlIndex)
@@ -166,10 +152,10 @@ namespace flow
             SceneManager.LoadScene("PlayScene");
         }
 
-        public void InitLevel(int lvlIndex, LevelPack pack)
-        {
-            levelManager.Init(lvlIndex, pack);
-        }
+        //public void InitLevel(int lvlIndex, LevelPack pack)
+        //{
+        //    levelManager.Init(lvlIndex, pack);
+        //}
 
         //Si queremos borrar algo antes de q cierre
         //private void OnApplicationQuit()
