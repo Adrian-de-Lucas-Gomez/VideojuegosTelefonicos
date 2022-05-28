@@ -35,12 +35,12 @@ namespace flow
 #endif
         }
 
-        public void ConfigureLevelButton(int id, Color color, string levelString, bool locked, bool completed)
+        public void ConfigureLevelButton(int id, int interfaceID, Color color, string levelString, bool locked, bool completed)
         {
             levelIndex = id;
             this.levelString = levelString;
 
-            levelNumberText.text = levelIndex.ToString();
+            levelNumberText.text = interfaceID.ToString();
 
             _locked = locked;
 

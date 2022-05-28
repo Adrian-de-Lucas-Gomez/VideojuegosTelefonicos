@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: 6x6 Mania
   levelsFile: {fileID: 4900000, guid: 56bdee8151ce7c949baf84675bb6283a, type: 3}
-  skin: {fileID: 11400000, guid: 8bbfdbce4c9e0444c8d770222e0c9f1d, type: 2}
   groupTitles:
   - 1 - 30
   - 31 - 60
@@ -27,3 +26,4 @@ MonoBehaviour:
   - {r: 0.91764706, g: 0.8784314, b: 0, a: 1}
   - {r: 0.9843137, g: 0.5372549, b: 0, a: 1}
   - {r: 1, g: 0, b: 0, a: 1}
+  fullyUnlocked: 0

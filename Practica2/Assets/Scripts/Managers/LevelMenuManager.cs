@@ -7,7 +7,7 @@ namespace flow
 {
     public class LevelMenuManager : MonoBehaviour
     {
-        const int LEVELS_PER_PAGE = 30;
+        //const int LEVELS_PER_PAGE = 30;
 
         [SerializeField] Transform levelPageParent;
         [SerializeField] Text levelsMenuTitle;
@@ -31,7 +31,7 @@ namespace flow
             //Crear las paginas de niveles
             string[] levelsStrings = currentLevelPack.levelsFile.ToString().Split('\n');
             int nLevels = levelsStrings.Length - 1;
-            int nPages = nLevels / LEVELS_PER_PAGE;
+            int nPages = nLevels / GameManager.LEVELS_PER_PAGE;
 
             //ProgressData data = GameManager.GetInstance().GetData();
 
@@ -41,21 +41,26 @@ namespace flow
                 page.ConfigureLevelPage(i, currentLevelPack);
 
                 //Crear LEVELS_PER_PAGE botones
-                for (int j = 0; j < LEVELS_PER_PAGE; ++j)
+                for (int j = 0; j < GameManager.LEVELS_PER_PAGE; ++j)
                 {
                     levelButtonParent = page.GetButtonsParent();
                     LevelButton button = Instantiate(levelButtonPrefab, levelButtonParent);
 
 
                     bool locked = false;
-                    if (gMng.GetProgressInPack().levels[j + LEVELS_PER_PAGE * i].locked)
+                    if (gMng.GetProgressInPack().levels[j + GameManager.LEVELS_PER_PAGE * i].locked)
                     {
                         locked = true;
                     }
+                    //Numero real del nivel
+                    int levelIndex = j + GameManager.LEVELS_PER_PAGE * i + 1;
+                    //Numero del nivel en la página
+                    int buttonNumber = levelIndex % GameManager.LEVELS_PER_PAGE;
+                    if (buttonNumber == 0) buttonNumber = GameManager.LEVELS_PER_PAGE;
 
-                    int levelIndex = j + 1;
-                    string levelButtonString = levelsStrings[j + LEVELS_PER_PAGE * i];
-                    button.ConfigureLevelButton(levelIndex, currentLevelPack.colors[i], levelButtonString, locked, gMng.GetProgressInPack().levels[j + LEVELS_PER_PAGE * i].completed);
+                    string levelButtonString = levelsStrings[j + GameManager.LEVELS_PER_PAGE * i];
+
+                    button.ConfigureLevelButton(levelIndex, buttonNumber, currentLevelPack.colors[i], levelButtonString, locked, gMng.GetProgressInPack().levels[j + GameManager.LEVELS_PER_PAGE * i].completed);
                 }
             }
         }

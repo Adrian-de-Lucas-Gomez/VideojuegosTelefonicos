@@ -21,6 +21,8 @@ namespace flow
 
         [SerializeField] List<Categories> categories;
 
+         public const int LEVELS_PER_PAGE = 30;
+
         public enum actualScene { MainMenu, SelectLevel, PlayScene };
 
         [SerializeField] actualScene scene;
@@ -46,6 +48,7 @@ namespace flow
             }
             else
             {
+                //Es la primera instancia del GameManager
                 instance = this;
                 DontDestroyOnLoad(gameObject);
 

@@ -36,7 +36,9 @@ namespace flow
         {
             GameManager gMng = GameManager.GetInstance();
 
-            levelText.text = "level " + (selectedLevel + 1).ToString();
+            int levelNumber = selectedLevel % GameManager.LEVELS_PER_PAGE;
+
+            levelText.text = "level " + (levelNumber + 1).ToString();
             levelText.color = gMng.GetSelectedCategory().color;
             levelSizeText.text = w.ToString() + "x" + h.ToString();
             nHintsText.text = GameManager.GetInstance().GetTotalHints().ToString() + "x"; //TODO
