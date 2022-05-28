@@ -1285,7 +1285,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 580750152}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 631872264}
+        m_TargetAssemblyTypeName: flow.LevelManager, Assembly-CSharp
+        m_MethodName: PlayAddForHint
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &631872264 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6083274427275605979, guid: 90b9ff4b183f144419fbc7c95d74d313, type: 3}
@@ -1415,7 +1427,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 765302763}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 631872264}
+        m_TargetAssemblyTypeName: flow.LevelManager, Assembly-CSharp
+        m_MethodName: OnUseHint
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &765302763
 MonoBehaviour:
   m_ObjectHideFlags: 0

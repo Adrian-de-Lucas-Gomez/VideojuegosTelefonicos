@@ -35,7 +35,7 @@ namespace flow
 #endif
         }
 
-        public void ConfigureLevelButton(int id, int interfaceID, Color color, string levelString, bool locked, bool completed)
+        public void ConfigureLevelButton(int id, int interfaceID, Color color, string levelString, bool locked, bool completed, bool perfect)
         {
             levelIndex = id;
             this.levelString = levelString;
@@ -76,6 +76,11 @@ namespace flow
             if (completed) {
                 icon.enabled = true;
                 icon.sprite = tickSprite;
+            }
+            if (perfect)
+            {
+                icon.enabled = true;
+                icon.sprite = starSprite;
             }
         }
 

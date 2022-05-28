@@ -74,10 +74,6 @@ namespace flow
         {
             if (placementId.Equals(_adUnitId) && showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
             {
-                Debug.Log("Unity Ads Rewarded Ad Completed");
-                // Grant a reward.
-                GameManager.GetInstance().OnHintAdded();
-
                 addedListener = false;
 
                 AdvertisingManager.GetInstance().ReloadADS();
@@ -92,6 +88,10 @@ namespace flow
         {
             //Por si es necesario hacer algo al inicio del anuncio
             AdvertisingManager.GetInstance().HideBannerAd();
+
+            Debug.Log("Unity Ads Rewarded Ad Completed");
+            // Grant a reward.
+            GameManager.GetInstance().OnHintAdded();
         }
 
         

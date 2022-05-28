@@ -30,6 +30,9 @@ namespace flow
         [SerializeField] Image winPanelBorderUD;
         [SerializeField] Text winPanelMovesText;
 
+        [SerializeField] Button hintButton;
+        //[SerializeField] Button hintButton;
+
         private int selectedLevel = 0;
 
         private void ConfigLevelUI(int w, int h)
@@ -41,7 +44,7 @@ namespace flow
             levelText.text = "level " + (levelNumber + 1).ToString();
             levelText.color = gMng.GetSelectedCategory().color;
             levelSizeText.text = w.ToString() + "x" + h.ToString();
-            nHintsText.text = GameManager.GetInstance().GetTotalHints().ToString() + "x"; //TODO
+            nHintsText.text = GameManager.GetInstance().GetTotalHints().ToString() + "x";
 
             winPanel.SetActive(false);
             winPanelTopBg.color = winPanelBorderLR.color = winPanelBorderUD.color = gMng.GetSelectedCategory().color;
@@ -85,6 +88,7 @@ namespace flow
                 boardManager.StartLevelTransition();
 
                 ConfigLevelUI(boardSize.Item1, boardSize.Item2);
+                UpdateUIelements();
 
                 AdvertisingManager.GetInstance().ShowIntersticialAd();
             }
@@ -106,6 +110,7 @@ namespace flow
                 boardManager.StartLevelTransition();
 
                 ConfigLevelUI(boardSize.Item1, boardSize.Item2);
+                UpdateUIelements();
 
                 AdvertisingManager.GetInstance().ShowIntersticialAd();
             }
@@ -113,6 +118,7 @@ namespace flow
 
         public void ResetLevel()
         {
+            UpdateUIelements();
             boardManager.ResetLevel();
             winPanel.SetActive(false);
         }
@@ -128,10 +134,20 @@ namespace flow
         {
             //Esto no deberia hacerse en un UPDATE
 
-            //totalFlowsText.text = boardManager.GetNumFlows().ToString() + " /" + boardManager.GetTotalFlows().ToString();
-            //movesText.text = boardManager.GetNumMoves().ToString();
-            //bestText.text = GameManager.GetInstance().GetLevelRecord().ToString(); TO-DO
-            //percentageText.text = ((int)boardManager.GetPercentage()).ToString() + "%";
+            //UpdateUIelements(); //Se que no va aquí, es temporal no me peguen por favor
+        }
+
+        public void UpdateUIelements()
+        {
+            totalFlowsText.text = boardManager.GetNumFlows().ToString() + " /" + boardManager.GetTotalFlows().ToString();
+            movesText.text = boardManager.GetNumMoves().ToString();
+            string recordText = "-";
+            if (GameManager.GetInstance().GetProgressInPack().levels[GameManager.GetInstance().GetSelectedLevelId()].moveRecord > 0)
+            {
+                bestText.text = GameManager.GetInstance().GetProgressInPack().levels[GameManager.GetInstance().GetSelectedLevelId()].moveRecord.ToString();
+            }
+            else bestText.text = recordText;
+            percentageText.text = ((int)boardManager.GetPercentage()).ToString() + "%";
         }
 
         //Calculamos el tamanho de un tile
@@ -158,9 +174,17 @@ namespace flow
             nHintsText.text = GameManager.GetInstance().GetTotalHints().ToString() + " x";
         }
 
-        public void OnLevelFinished(int numMoves)
+        public void PlayAddForHint()
         {
-            GameManager.GetInstance().OnLevelFinished(numMoves);
+            //Hacemos play del anuncio para obtener una pista
+            AdvertisingManager.GetInstance().ShowRewardedAd();
+            //Actualizamos el número de pistas disponibles
+            nHintsText.text = GameManager.GetInstance().GetTotalHints().ToString() + " x";
+        }
+
+        public void OnLevelFinished(int numMoves, int numFlows)
+        {
+            GameManager.GetInstance().OnLevelFinished(numMoves, numFlows);
         }
     }
 }

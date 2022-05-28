@@ -60,7 +60,8 @@ namespace flow
 
                     string levelButtonString = levelsStrings[j + GameManager.LEVELS_PER_PAGE * i];
 
-                    button.ConfigureLevelButton(levelIndex, buttonNumber, currentLevelPack.colors[i], levelButtonString, locked, gMng.GetProgressInPack().levels[j + GameManager.LEVELS_PER_PAGE * i].completed);
+                    button.ConfigureLevelButton(levelIndex, buttonNumber, currentLevelPack.colors[i], levelButtonString, locked, 
+                        gMng.GetProgressInPack().levels[j + GameManager.LEVELS_PER_PAGE * i].completed, gMng.GetProgressInPack().levels[j + GameManager.LEVELS_PER_PAGE * i].perfect);
                 }
             }
         }

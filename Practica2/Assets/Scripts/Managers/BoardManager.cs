@@ -106,7 +106,7 @@ namespace flow
                     levelManager.SetActiveWinPanel();
 
                     //Llamada al onLevelFinished del GameManager para que guarde y avise al Level para que ponga la interfaz correspondiente
-                    levelManager.OnLevelFinished(numMoves); //Son los moves usados
+                    levelManager.OnLevelFinished(numMoves, flows.Count); //Son los moves usados y  el número de tuberías
                 }
             }
         }
@@ -131,7 +131,7 @@ namespace flow
         {
             return numMoves;
         }
-        public float GetPercentage()
+        public float GetPercentage()    //TO DO (deberia de comprobar el estado de los flujos no como de lleno está el tablero)
         {
             float aux = numFilledTiles;
             return (aux / numFillableTiles) * 100;
@@ -350,6 +350,8 @@ namespace flow
                     {
                         numMoves++;
                         previousFlow = currentFlow; //Solo se cambia el flow anterior cuando en el actual se ha producido un cambio.
+                        //TEST
+                        levelManager.UpdateUIelements();
                     }
                 }
 

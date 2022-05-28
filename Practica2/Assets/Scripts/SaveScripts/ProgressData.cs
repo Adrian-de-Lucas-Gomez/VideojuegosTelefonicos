@@ -24,6 +24,7 @@ namespace flow
     public class LevelProgress
     {
         public int moveRecord;
+        public bool perfect;
         public bool completed;
         public bool locked;
     }

@@ -187,6 +187,8 @@ namespace flow
             //Añadir una pista
             progress.hints = progress.hints + 1;
             Debug.Log("Nº pistas actuales: " + progress.hints);
+            //Guardamos que se ha usado la pista
+            saveIO.SaveData(progress);
         }
 
         public void OnHintUsed()
@@ -198,18 +200,25 @@ namespace flow
                 Debug.Log("Nº pistas actuales: " + progress.hints);
             }
             else Debug.Log("No tienes pistas disponibles");
+
+            //Guardamos que se ha usado la pista
+            saveIO.SaveData(progress);
         }
 
-        public void OnLevelFinished(int numMoves)
+        public void OnLevelFinished(int numMoves, int numFlows)
         {
             LevelProgress levelfinished = progress.categories[categoryIndex].packs[packIndex].levels[levelIndex];
             levelfinished.completed = true;
 
-            //Si hemos mejorado el record de movimientos previos lo actualizamos
-            if(levelfinished.moveRecord > numMoves)
+            //Si no habia record previo o hemos mejorado el record de movimientos previo lo actualizamos
+            if(levelfinished.moveRecord <= 0 || levelfinished.moveRecord > numMoves)
             {
                 levelfinished.moveRecord = numMoves;
             }
+
+            //Miramos si se ha hecho perfecto el nivel
+            if(numMoves == numFlows) levelfinished.perfect = true;
+            else levelfinished.perfect = false;
 
             //Si hay otro nivel por delante hay que desbloquearlo
             if (levelIndex < progress.categories[categoryIndex].packs[packIndex].levels.Length - 1)
