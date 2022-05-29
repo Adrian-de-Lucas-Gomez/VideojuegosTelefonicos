@@ -295,6 +295,7 @@ namespace flow
 
         public void ClearFlow()
         {
+            closed = false;
             previousSolution = new List<TileInfo>(tiles);
             for(int k = 0; k < tiles.Count; k++)
             {

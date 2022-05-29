@@ -56,8 +56,6 @@ namespace flow
 
                 InitProgress();
             }
-
-            
         }
 
         private void SetInfo(actualScene actscene, LevelManager lvlManager)
@@ -76,8 +74,6 @@ namespace flow
             }
 #endif
             packStrings = GetSelectedPack().levelsFile.ToString().Split('\n');
-
-            
         }
 
         public void CloseGame()
@@ -128,8 +124,6 @@ namespace flow
             levelIndex = 0;
 
             SceneManager.LoadScene("LevelMenu");
-
-            //AdvertisingManager.GetInstance().ShowIntersticialAd();
         }
 
         public void LoadMainMenu()
@@ -141,9 +135,6 @@ namespace flow
             packStrings = categories[categoryIndex].packs[0].levelsFile.ToString().Split('\n');
 
             SceneManager.LoadScene("MainMenu");
-
-            //AdvertisingManager.GetInstance().ShowIntersticialAd();
-            //AdvertisingManager.GetInstance().HideBannerAd();
         }
 
         public void LoadPlayScene(int lvlIndex)
@@ -177,8 +168,6 @@ namespace flow
                 return ++levelIndex;
             }
 
-            //saveIO.SaveData(progress);
-
             return -1; //-1 es que no existe nivel siguiente
         }
 
@@ -186,7 +175,8 @@ namespace flow
         {
             //Si hay otro nivel por delante hay que desbloquearlo
             if (levelIndex + 1 < progress.categories[categoryIndex].packs[packIndex].levels.Length - 1 &&
-                !progress.categories[categoryIndex].packs[packIndex].levels[levelIndex + 1].locked)
+                !progress.categories[categoryIndex].packs[packIndex].levels[levelIndex + 1].locked || 
+                levelIndex + 1 == progress.categories[categoryIndex].packs[packIndex].levels.Length - 1)    //Caso especial si es el último nivel del pack
             {
                 return true;
             }

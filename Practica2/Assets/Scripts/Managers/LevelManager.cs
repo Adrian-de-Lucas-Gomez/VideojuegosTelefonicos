@@ -51,17 +51,17 @@ namespace flow
 
             LevelProgress levelProgress = GameManager.GetInstance().GetProgressInPack().levels[GameManager.GetInstance().GetSelectedLevelId()];
 
-            if (levelProgress.perfect)
+            if (levelProgress.perfect)  //Nivel completado con el numero minimo de pasos
             {
                 icon.enabled = true;
                 icon.sprite = starSprite;
             }
-            else if (levelProgress.completed)
+            else if (levelProgress.completed)   //Nivel completado de forma no optima
             {
                 icon.enabled = true;
                 icon.sprite = checkSprite;
             }
-            else { icon.enabled = false; }
+            else { icon.enabled = false; }  //Nivel no completado todavia
 
             winPanel.SetActive(false);
             winPanelTopBg.color = winPanelBorderLR.color = winPanelBorderUD.color = gMng.GetSelectedCategory().color;
@@ -95,6 +95,8 @@ namespace flow
             selectedLevel = gMng.GetSelectedLevelId();
             InitializeLevel(gMng.GetSelectedLevelString(), gMng.GetSelectedPack());
             hintButton.onClick.AddListener(PlayAddForHint);
+
+            UpdateUIelements();
         }
 
         //public void Init(int levelID, LevelPack pack)
@@ -103,6 +105,8 @@ namespace flow
         //    GameManager gMng = GameManager.GetInstance();
         //    selectedLevel = levelID;
         //    InitializeLevel(gMng.GetSelectedLevelString(), pack);
+        //    hintButton.onClick.AddListener(PlayAddForHint);
+        //    UpdateUIelements();
         //}
 
         public void TryNextLevel()
@@ -151,9 +155,9 @@ namespace flow
 
         public void ResetLevel()
         {
-            UpdateUIelements();
             boardManager.ResetLevel();
             winPanel.SetActive(false);
+            UpdateUIelements();
         }
 
         public void SetActiveWinPanel()
