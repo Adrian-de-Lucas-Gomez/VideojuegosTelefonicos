@@ -348,8 +348,6 @@ namespace flow
                     {
                         numMoves++;
                         previousFlow = currentFlow; //Solo se cambia el flow anterior cuando en el actual se ha producido un cambio.
-
-                        levelManager.UpdateUIelements();
                     }
                 }
 
@@ -357,6 +355,8 @@ namespace flow
                 currentTile = int.MaxValue;
                 currentFlow = int.MaxValue;
                 isBuildingFlow = false;
+
+                levelManager.UpdateUIelements();
             }
 
             if (IsPosInBoard(worldPos))
@@ -452,6 +452,8 @@ namespace flow
                             }
                         }
                     }
+
+                    levelManager.UpdateUIelements();
                 }
             }
             else
