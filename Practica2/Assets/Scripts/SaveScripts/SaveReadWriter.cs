@@ -94,7 +94,7 @@ public class SaveReadWriter
 
         if (string.Compare(newHash, oldHash) != 0)
         {
-            //Los hash no coinciden y por lo tantose ha modificado externamente
+            //Los hash no coinciden y por lo tanto se ha modificado externamente
             Debug.LogError("Error: Archivo modificado externamente");
             return null;
         } 

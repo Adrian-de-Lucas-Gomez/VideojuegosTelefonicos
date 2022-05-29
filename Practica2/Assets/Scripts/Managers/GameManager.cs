@@ -98,6 +98,14 @@ namespace flow
 
                 //Tratamos de cargar el estado del archivo de guardado
                 progress = saveIO.LoadData();
+
+                if (progress == null)   //El archivo se ha tocado externamente o se ha corrompido
+                {
+                    //Creamos los datos de guardado de nuevo
+                    Debug.Log("Creando datos de guardado nuevos por pirata ;) ");
+                    progress = new ProgressData();
+                    progress.Init(categories);
+                }
             }
             else    //En caso contrario se crean datos de guardado nuevo
             {
@@ -107,6 +115,9 @@ namespace flow
                 progress = new ProgressData();
                 progress.Init(categories);
             }
+
+            //Guardamos el progreso para generar el archivo (o sobreescribirlo si estaba)
+            saveIO.SaveData(progress);
         }
 
         public void ExitLevel()
