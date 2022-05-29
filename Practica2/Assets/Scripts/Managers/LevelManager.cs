@@ -17,6 +17,9 @@ namespace flow
 
         [SerializeField] Text levelText;
         [SerializeField] Text levelSizeText;
+        [SerializeField] Image icon;
+        [SerializeField] Sprite starSprite;
+        [SerializeField] Sprite checkSprite;
         //[SerializeField] RectTransform boardViewport;
         [SerializeField] Text totalFlowsText;
         [SerializeField] Text movesText;
@@ -46,8 +49,24 @@ namespace flow
             levelSizeText.text = w.ToString() + "x" + h.ToString();
             nHintsText.text = GameManager.GetInstance().GetTotalHints().ToString() + "x";
 
+            LevelProgress levelProgress = GameManager.GetInstance().GetProgressInPack().levels[GameManager.GetInstance().GetSelectedLevelId()];
+
+            if (levelProgress.perfect)
+            {
+                icon.enabled = true;
+                icon.sprite = starSprite;
+            }
+            else if (levelProgress.completed)
+            {
+                icon.enabled = true;
+                icon.sprite = checkSprite;
+            }
+            else { icon.enabled = false; }
+
             winPanel.SetActive(false);
             winPanelTopBg.color = winPanelBorderLR.color = winPanelBorderUD.color = gMng.GetSelectedCategory().color;
+
+
         }
 
         public void InitializeLevel(string levelString, LevelPack pack)
@@ -61,10 +80,10 @@ namespace flow
         private void Start()
         {
 #if UNITY_EDITOR
-            if (boardManager == null || winPanel == null /*|| boardViewport == null*/ || totalFlowsText == null ||
+            if (boardManager == null || winPanel == null || icon == null || starSprite == null || checkSprite == null /*|| boardViewport == null*/ || totalFlowsText == null ||
                 movesText == null || bestText == null || percentageText == null || nHintsText == null ||
                 levelText == null || levelSizeText == null || winPanelBorderLR == null || winPanelBorderUD == null ||
-                winPanelMovesText == null || winPanelTopBg == null)
+                winPanelMovesText == null || winPanelTopBg == null || hintButton == null)
             {
                 Debug.LogError("LevelManager: Alguna variable no tiene valor asociado desde el editor.");
                 return;
@@ -75,6 +94,7 @@ namespace flow
             GameManager gMng = GameManager.GetInstance();
             selectedLevel = gMng.GetSelectedLevelId();
             InitializeLevel(gMng.GetSelectedLevelString(), gMng.GetSelectedPack());
+            hintButton.onClick.AddListener(PlayAddForHint);
         }
 
         //public void Init(int levelID, LevelPack pack)
@@ -88,6 +108,11 @@ namespace flow
         public void TryNextLevel()
         {
             GameManager gMng = GameManager.GetInstance();
+
+            if (!gMng.NextLevelAvailable()) return; //Si el siguente no está desbloqueado no se pasa
+
+            LevelProgress levelProgress = gMng.GetProgressInPack().levels[gMng.GetSelectedLevelId()];
+
             selectedLevel = gMng.NextLevel(); //Pregunta a gMng si se puede pasar al siguiente nivel
 
             if(selectedLevel != -1) //Si existe nivel siguiente
@@ -102,7 +127,7 @@ namespace flow
             }
             else
             {
-                //Si no puede salir al nivel siguiente te devuelve al menu
+                //Si no hay siguiente siguiente nivel en el pack te devuelve al menu de seleccion de nivel
                 GameManager.GetInstance().ExitLevel();
             }
         }

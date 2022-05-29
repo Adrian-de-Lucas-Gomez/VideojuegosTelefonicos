@@ -182,6 +182,26 @@ namespace flow
             return -1; //-1 es que no existe nivel siguiente
         }
 
+        public bool NextLevelAvailable()
+        {
+            //Si hay otro nivel por delante hay que desbloquearlo
+            if (levelIndex + 1 < progress.categories[categoryIndex].packs[packIndex].levels.Length - 1 &&
+                !progress.categories[categoryIndex].packs[packIndex].levels[levelIndex + 1].locked)
+            {
+                return true;
+            }
+            else return false;
+        }
+
+        public bool PrevLevelAvailable()
+        {
+            if (levelIndex - 1 >= 0)
+            {
+                return true;
+            }
+            else return false;
+        }
+
         public int PrevLevel()
         {
             if (levelIndex - 1 >= 0)
