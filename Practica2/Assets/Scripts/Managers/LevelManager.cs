@@ -51,6 +51,8 @@ namespace flow
 
             LevelProgress levelProgress = GameManager.GetInstance().GetProgressInPack().levels[GameManager.GetInstance().GetSelectedLevelId()];
 
+            icon.color = gMng.GetSelectedCategory().color;
+
             if (levelProgress.perfect)  //Nivel completado con el numero minimo de pasos
             {
                 icon.enabled = true;
@@ -121,10 +123,8 @@ namespace flow
 
             if(selectedLevel != -1) //Si existe nivel siguiente
             {
-                (int, int) boardSize = boardManager.LoadBoard(gMng.GetSelectedLevelString(), boardScale());
                 boardManager.StartLevelTransition();
-
-                ConfigLevelUI(boardSize.Item1, boardSize.Item2);
+                InitializeLevel(gMng.GetSelectedLevelString(), gMng.GetSelectedPack());
                 UpdateUIelements();
 
                 AdvertisingManager.GetInstance().ShowIntersticialAd();
@@ -143,10 +143,8 @@ namespace flow
 
             if (selectedLevel != -1) //Si existe nivel anterior
             {
-                (int, int) boardSize = boardManager.LoadBoard(gMng.GetSelectedLevelString(), boardScale());
                 boardManager.StartLevelTransition();
-
-                ConfigLevelUI(boardSize.Item1, boardSize.Item2);
+                InitializeLevel(gMng.GetSelectedLevelString(), gMng.GetSelectedPack());
                 UpdateUIelements();
 
                 AdvertisingManager.GetInstance().ShowIntersticialAd();
