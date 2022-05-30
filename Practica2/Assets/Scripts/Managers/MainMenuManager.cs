@@ -16,6 +16,8 @@ namespace flow
         [SerializeField] LevelPackCard levelPackCardPrefab;
         [SerializeField] GameObject titleParent;
 
+        [SerializeField] Button adsDesactivationButton;
+
         public void LoadMainMenu()
         {
             List<Categories> categories = GameManager.GetInstance().GetCategories();
@@ -56,13 +58,23 @@ namespace flow
         void Start()
         {
 #if UNITY_EDITOR
-            if (categoriesParent == null || categoryCardPrefab == null || levelPackCardPrefab == null || titleParent == null)
+            if (categoriesParent == null || categoryCardPrefab == null || levelPackCardPrefab == null || titleParent == null || adsDesactivationButton == null)
             {
                 Debug.LogError("MenuManager: Alguna variable no tiene valor asociado desde el editor.");
                 return;
             }
 #endif
             LoadMainMenu();
+
+            adsDesactivationButton.onClick.AddListener(DeactivateADS);
+
+            if (!AdvertisingManager.GetInstance().AreADSenabled()) adsDesactivationButton.gameObject.SetActive(false); 
+        }
+
+        private void DeactivateADS()
+        {
+            GameManager.GetInstance().DeactivateADS();
+            adsDesactivationButton.gameObject.SetActive(false);
         }
     }
 }

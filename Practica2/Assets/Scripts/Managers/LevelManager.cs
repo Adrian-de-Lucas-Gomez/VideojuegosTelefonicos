@@ -67,14 +67,12 @@ namespace flow
 
             winPanel.SetActive(false);
             winPanelTopBg.color = winPanelBorderLR.color = winPanelBorderUD.color = gMng.GetSelectedCategory().color;
-
-
         }
 
         public void InitializeLevel(string levelString, LevelPack pack)
         {
             (int, int) boardSize = boardManager.LoadBoard(levelString, boardScale());
-            boardManager.InitializeBoard();
+            //boardManager.InitializeBoard();
 
             ConfigLevelUI(boardSize.Item1, boardSize.Item2);
         }
@@ -93,23 +91,25 @@ namespace flow
 #endif      
 
             //Cargamos el nivel con lo que nos diga el GameManager
-            GameManager gMng = GameManager.GetInstance();
-            selectedLevel = gMng.GetSelectedLevelId();
-            InitializeLevel(gMng.GetSelectedLevelString(), gMng.GetSelectedPack());
-            hintButton.onClick.AddListener(PlayAddForHint);
+            //GameManager gMng = GameManager.GetInstance();
+            //selectedLevel = gMng.GetSelectedLevelId();
+            //InitializeLevel(gMng.GetSelectedLevelString(), gMng.GetSelectedPack());
+            //hintButton.onClick.AddListener(PlayAddForHint);
 
-            UpdateUIelements();
+            //UpdateUIelements();
         }
 
-        //public void Init(int levelID, LevelPack pack)
-        //{
-        //    //Cargamos el nivel con lo que nos diga el GameManager
-        //    GameManager gMng = GameManager.GetInstance();
-        //    selectedLevel = levelID;
-        //    InitializeLevel(gMng.GetSelectedLevelString(), pack);
-        //    hintButton.onClick.AddListener(PlayAddForHint);
-        //    UpdateUIelements();
-        //}
+        public void Init(int levelID, LevelPack pack)
+        {
+            //Cargamos el nivel con lo que nos diga el GameManager
+            GameManager gMng = GameManager.GetInstance();
+            selectedLevel = levelID;
+            InitializeLevel(gMng.GetSelectedLevelString(), pack);
+            //Arrancamos el board
+            boardManager.InitializeBoard();
+            hintButton.onClick.AddListener(PlayAddForHint);
+            UpdateUIelements();
+        }
 
         public void TryNextLevel()
         {
@@ -167,9 +167,6 @@ namespace flow
 
         public void Update()
         {
-            //Esto no deberia hacerse en un UPDATE
-
-            //UpdateUIelements(); //Se que no va aquí, es temporal no me peguen por favor
         }
 
         public void UpdateHintCount(int hints)

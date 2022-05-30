@@ -19,7 +19,7 @@ namespace flow
 
         private static AdvertisingManager instance;
 
-        private static bool activeADS;
+        private static bool activeADS = true;
 
         public static AdvertisingManager GetInstance() { return instance; }
 
@@ -85,6 +85,11 @@ namespace flow
             Debug.Log("Anuncios desactivados");
         }
 
+        public bool AreADSenabled()
+        {
+            return activeADS;
+        }
+
         public void OnInitializationComplete()
         {
             Debug.Log("Unity Ads initialization complete.");
@@ -105,7 +110,6 @@ namespace flow
             if (GameManager.GetInstance().GetActualScene() != GameManager.actualScene.MainMenu) ShowBannerAd();
 
             else HideBannerAd();
-            
         }
 
         public void ShowBannerAd()
@@ -141,7 +145,6 @@ namespace flow
         }
 
         //Este se muestra solo usando el botón
-
         public void ShowRewardedAd()
         {
             //Quitamos el banner para que no se superponga

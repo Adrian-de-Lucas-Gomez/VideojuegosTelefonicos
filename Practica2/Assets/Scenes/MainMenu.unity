@@ -1713,5 +1713,9 @@ PrefabInstance:
       propertyPath: categoriesParent
       value: 
       objectReference: {fileID: 1477396906}
+    - target: {fileID: 8259823895226550680, guid: d0ca0096abe02e1478f44285c1f53e03, type: 3}
+      propertyPath: adsDesactivationButton
+      value: 
+      objectReference: {fileID: 1922071049}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0ca0096abe02e1478f44285c1f53e03, type: 3}
