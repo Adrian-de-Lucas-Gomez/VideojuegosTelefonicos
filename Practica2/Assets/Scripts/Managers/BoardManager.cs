@@ -22,7 +22,6 @@ namespace flow
         private Animator boardAnimator;
 
         //Generacion del nivel
-        private int levelNumber;
         private int nFlows;
         private bool isSurroundedByWalls = false;
         private int boardWidth;
@@ -188,7 +187,6 @@ namespace flow
 
             //Procesamos la cabecera del nivel
             auxInfo = levelInfo[0].Split(',');
-            levelNumber = int.Parse(auxInfo[2]);
             nFlows = int.Parse(auxInfo[3]);
 
             if (auxInfo[0].Contains(":")) //Ancho y alto
@@ -596,6 +594,7 @@ namespace flow
 
             if (k < flows.Count)
             {
+                numMoves++;
                 ApplyHint(k);
             }
         }
