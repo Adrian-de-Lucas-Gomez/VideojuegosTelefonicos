@@ -16,7 +16,7 @@ namespace flow
     {
         public string packName;
         public LevelProgress[] levels;
-        public int levelsCompleted;
+        //public int levelsCompleted;
         //public int levelsUnlocked;
     }
 
@@ -59,7 +59,6 @@ namespace flow
                     pack[j] = new PackProgress();
 
                     pack[j].packName = cat[i].packs[j].title;
-                    pack[j].levelsCompleted = 0;
 
                     //Hacemos el split para saber el número de niveles que hay en el pack
                     int numLevels = cat[i].packs[j].levelsFile.ToString().Split('\n').Length;
@@ -102,7 +101,7 @@ namespace flow
 
 
         //Métodos para modificar el progeso en el juego
-        public void OnLevelCompleted(int nCat, int nPack, int nLevel, int nMoves)
+        public void OnLevelCompleted(int nCat, int nPack, int nLevel, int nMoves, int nFlows)
         {
             LevelProgress levelProgress = categories[nCat].packs[nPack].levels[nLevel];
             //En el progreso del propio nivel
@@ -126,14 +125,16 @@ namespace flow
                 //En el progreso del pack
                 PackProgress actualPack = categories[nCat].packs[nPack];
 
-                actualPack.levelsCompleted++;
-
                 //Si hay siguiente nivel a jugar el en pack lo desbloqueamos
                 if (nLevel + 1 < actualPack.levels.Length)
                 {
                     categories[nCat].packs[nPack].levels[nLevel + 1].locked = false;
                 }
             }
+
+            //Miramos si se ha hecho perfecto el nivel
+            if (nMoves == nFlows) levelProgress.perfect = true;
+            else levelProgress.perfect = false;
         }
 
         public void OnHintUsed()

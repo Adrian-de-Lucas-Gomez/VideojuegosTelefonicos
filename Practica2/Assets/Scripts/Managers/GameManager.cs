@@ -121,6 +121,8 @@ namespace flow
                 progress.Init(categories);
             }
 
+
+
             //Guardamos el progreso para generar el archivo (o sobreescribirlo si estaba)
             saveIO.SaveData(progress);
         }
@@ -235,7 +237,7 @@ namespace flow
         public void OnHintAdded()
         {
             //Añadir una pista
-            progress.hints = progress.hints + 1;
+            progress.OnHintAdded();
             Debug.Log("Nº pistas actuales: " + progress.hints);
 
             //Avisamos al levelManager de la nueva pista
@@ -250,7 +252,7 @@ namespace flow
             //Se gasta una pista (si se tienen)
             if (progress.hints > 0)
             {
-                progress.hints = progress.hints - 1;
+                progress.OnHintUsed();
                 Debug.Log("Nº pistas actuales: " + progress.hints);
                 //Guardamos que se ha usado la pista
                 saveIO.SaveData(progress);
@@ -268,24 +270,26 @@ namespace flow
 
         public void OnLevelFinished(int numMoves, int numFlows)
         {
-            LevelProgress levelfinished = progress.categories[categoryIndex].packs[packIndex].levels[levelIndex];
-            levelfinished.completed = true;
+            progress.OnLevelCompleted(categoryIndex,packIndex,levelIndex, numMoves, numFlows);
 
-            //Si no habia record previo o hemos mejorado el record de movimientos previo lo actualizamos
-            if(levelfinished.moveRecord <= 0 || levelfinished.moveRecord > numMoves)
-            {
-                levelfinished.moveRecord = numMoves;
-            }
+            //LevelProgress levelfinished = progress.categories[categoryIndex].packs[packIndex].levels[levelIndex];
+            //levelfinished.completed = true;
 
-            //Miramos si se ha hecho perfecto el nivel
-            if(numMoves == numFlows) levelfinished.perfect = true;
-            else levelfinished.perfect = false;
+            ////Si no habia record previo o hemos mejorado el record de movimientos previo lo actualizamos
+            //if(levelfinished.moveRecord <= 0 || levelfinished.moveRecord > numMoves)
+            //{
+            //    levelfinished.moveRecord = numMoves;
+            //}
 
-            //Si hay otro nivel por delante hay que desbloquearlo
-            if (levelIndex < progress.categories[categoryIndex].packs[packIndex].levels.Length - 1)
-            {
-                progress.categories[categoryIndex].packs[packIndex].levels[levelIndex + 1].locked = false;
-            }
+            ////Miramos si se ha hecho perfecto el nivel
+            //if(numMoves == numFlows) levelfinished.perfect = true;
+            //else levelfinished.perfect = false;
+
+            ////Si hay otro nivel por delante hay que desbloquearlo
+            //if (levelIndex < progress.categories[categoryIndex].packs[packIndex].levels.Length - 1)
+            //{
+            //    progress.categories[categoryIndex].packs[packIndex].levels[levelIndex + 1].locked = false;
+            //}
 
             //Guardamos los datos al fichero
             saveIO.SaveData(progress);
