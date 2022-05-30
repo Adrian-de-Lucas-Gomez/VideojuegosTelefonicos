@@ -132,7 +132,7 @@ namespace flow
             if (scene == actualScene.PlayScene && levelManager != null)
             {
                 packStrings = GetSelectedPack().levelsFile.ToString().Split('\n');
-                levelManager.Init(levelIndex, GetSelectedPack());
+                levelManager.LoadLevel(levelIndex, GetSelectedPack());
             }
             //Si no es la escena o no hay level manager se ignora la orden
         }
@@ -173,7 +173,7 @@ namespace flow
 
         public void InitLevel(int lvlIndex, LevelPack pack)
         {
-            levelManager.Init(lvlIndex, pack);
+            levelManager.LoadLevel(lvlIndex, pack);
         }
 
         public void DeactivateADS()
@@ -271,25 +271,6 @@ namespace flow
         public void OnLevelFinished(int numMoves, int numFlows)
         {
             progress.OnLevelCompleted(categoryIndex,packIndex,levelIndex, numMoves, numFlows);
-
-            //LevelProgress levelfinished = progress.categories[categoryIndex].packs[packIndex].levels[levelIndex];
-            //levelfinished.completed = true;
-
-            ////Si no habia record previo o hemos mejorado el record de movimientos previo lo actualizamos
-            //if(levelfinished.moveRecord <= 0 || levelfinished.moveRecord > numMoves)
-            //{
-            //    levelfinished.moveRecord = numMoves;
-            //}
-
-            ////Miramos si se ha hecho perfecto el nivel
-            //if(numMoves == numFlows) levelfinished.perfect = true;
-            //else levelfinished.perfect = false;
-
-            ////Si hay otro nivel por delante hay que desbloquearlo
-            //if (levelIndex < progress.categories[categoryIndex].packs[packIndex].levels.Length - 1)
-            //{
-            //    progress.categories[categoryIndex].packs[packIndex].levels[levelIndex + 1].locked = false;
-            //}
 
             //Guardamos los datos al fichero
             saveIO.SaveData(progress);

@@ -36,6 +36,9 @@ namespace flow
         [SerializeField] Button hintButton;
         //[SerializeField] Button hintButton;
 
+        int levelIDtemp;
+        LevelPack packtemp;
+
         private int selectedLevel = 0;
 
         private void ConfigLevelUI(int w, int h)
@@ -91,24 +94,21 @@ namespace flow
 #endif      
 
             //Cargamos el nivel con lo que nos diga el GameManager
-            //GameManager gMng = GameManager.GetInstance();
-            //selectedLevel = gMng.GetSelectedLevelId();
-            //InitializeLevel(gMng.GetSelectedLevelString(), gMng.GetSelectedPack());
-            //hintButton.onClick.AddListener(PlayAddForHint);
-
-            //UpdateUIelements();
-        }
-
-        public void Init(int levelID, LevelPack pack)
-        {
-            //Cargamos el nivel con lo que nos diga el GameManager
             GameManager gMng = GameManager.GetInstance();
-            selectedLevel = levelID;
-            InitializeLevel(gMng.GetSelectedLevelString(), pack);
+            selectedLevel = levelIDtemp;
+            InitializeLevel(gMng.GetSelectedLevelString(), packtemp);
             //Arrancamos el board
             boardManager.InitializeBoard();
             hintButton.onClick.AddListener(PlayAddForHint);
             UpdateUIelements();
+        }
+
+        public void LoadLevel(int levelID, LevelPack pack)
+        {
+            //Identificador
+            levelIDtemp = levelID;
+            //Pack al que pertenece
+            packtemp = pack;
         }
 
         public void TryNextLevel()
