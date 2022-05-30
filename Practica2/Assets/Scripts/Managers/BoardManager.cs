@@ -596,6 +596,7 @@ namespace flow
             {
                 numMoves++;
                 ApplyHint(k);
+                previousFlow = k;
             }
         }
     }

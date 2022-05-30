@@ -45,6 +45,8 @@ namespace flow
             if (tiles.Count == 0) tiles.Add(new TileInfo(tile, pos));
             hasChanged = false;
             CloseSmallCircle();
+            SetHintMarkerVisibility(false);
+            previousSolution = new List<TileInfo>(tiles);
         }
 
         public void CloseSmallCircle()
@@ -58,6 +60,7 @@ namespace flow
 
             SetTransparentBackground(true);
             hasChanged = false;
+
             if (previousSolution.Count == tiles.Count)
             {
                 if (previousSolution[tiles.Count - 1].position == tiles[0].position && closed) //Se ha cerrado en la dirección contraria
@@ -100,17 +103,18 @@ namespace flow
 
         public void SetHintMarkerVisibility(bool visibility)
         {
+            if (visibility) Debug.Log("Visible");
+            else Debug.Log("Invisible");
             if (wasSolvedByHint)
             {
-                tiles[0].tile.setHintMarker(visibility);
-                tiles[tiles.Count - 1].tile.setHintMarker(visibility);
+                originAInfo.tile.setHintMarker(visibility);
+                originBInfo.tile.setHintMarker(visibility);
             }
         }
 
         public void CutFlow(int tilePos, out int prevTile)
         {
-            previousSolution = new List<TileInfo>(tiles);
-            if(tilePos == tiles[0].position)
+            if (tilePos == tiles[0].position)
             {
                 for (int k = 0; k < tiles.Count; k++)
                 {
@@ -119,14 +123,12 @@ namespace flow
                 tiles.RemoveRange(1, tiles.Count - 1);
                 prevTile = tiles[0].position;
             }
-
             else
             {
                 TileInfo auxTile = tiles[tiles.Count - 1];
                 if (closed)
                 {
                     closed = false;
-                    SetHintMarkerVisibility(false);
                     //Buscamos la posicion de corte
                     int aux = 0;
                     while (auxTile.position != tilePos)
