@@ -76,13 +76,13 @@ namespace flow
                 : _androidGameId;
 
             Advertisement.Initialize(_gameId, _testMode, this);
-            Debug.Log("Unity Ads initialization called.");
+            //Debug.Log("Unity Ads initialization called.");
         }
 
         public static void DeactivateADS()
         {
             activeADS = false;
-            Debug.Log("Anuncios desactivados");
+            //Debug.Log("Anuncios desactivados");
         }
 
         public bool AreADSenabled()
@@ -92,7 +92,7 @@ namespace flow
 
         public void OnInitializationComplete()
         {
-            Debug.Log("Unity Ads initialization complete.");
+            //Debug.Log("Unity Ads initialization complete.");
             activeADS = true;
 
             //Llamamos a los distintos tipos de ADS que tenemos para que carguen el anuncio
@@ -155,11 +155,8 @@ namespace flow
 
         public void OnInitializationFailed(UnityAdsInitializationError error, string message)
         {
-            Debug.Log($"Unity Ads Initialization Failed: {error.ToString()} - {message}");
+            Debug.LogError($"Unity Ads Initialization Failed: {error.ToString()} - {message}");
         }
-
-
-
     }
 }
 

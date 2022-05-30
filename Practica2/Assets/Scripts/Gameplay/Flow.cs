@@ -103,8 +103,6 @@ namespace flow
 
         public void SetHintMarkerVisibility(bool visibility)
         {
-            if (visibility) Debug.Log("Visible");
-            else Debug.Log("Invisible");
             if (wasSolvedByHint)
             {
                 originAInfo.tile.setHintMarker(visibility);

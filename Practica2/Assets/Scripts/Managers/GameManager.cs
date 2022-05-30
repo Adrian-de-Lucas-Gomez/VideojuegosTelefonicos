@@ -99,7 +99,7 @@ namespace flow
             //Si ya habia datos guardados de antes los debemos cargar
             if (saveIO.DataFilesExist())
             {
-                Debug.Log("Cargando datos de guardado desde archivo previo");
+                //Debug.Log("Cargando datos de guardado desde archivo previo");
 
                 //Tratamos de cargar el estado del archivo de guardado
                 progress = saveIO.LoadData();
@@ -107,14 +107,14 @@ namespace flow
                 if (progress == null)   //El archivo se ha tocado externamente o se ha corrompido
                 {
                     //Creamos los datos de guardado de nuevo
-                    Debug.Log("Creando datos de guardado nuevos por pirata ;) ");
+                    //Debug.Log("Creando datos de guardado nuevos por pirata ;) ");
                     progress = new ProgressData();
                     progress.Init(categories);
                 }
             }
             else    //En caso contrario se crean datos de guardado nuevo
             {
-                Debug.Log("Creando datos de guardado desde cero");
+                //Debug.Log("Creando datos de guardado desde cero");
 
                 //Creamos los datos de guardado
                 progress = new ProgressData();
@@ -238,7 +238,7 @@ namespace flow
         {
             //Añadir una pista
             progress.OnHintAdded();
-            Debug.Log("Nº pistas actuales: " + progress.hints);
+            //Debug.Log("Nº pistas actuales: " + progress.hints);
 
             //Avisamos al levelManager de la nueva pista
             levelManager.UpdateHintCount(progress.hints);
@@ -253,7 +253,7 @@ namespace flow
             if (progress.hints > 0)
             {
                 progress.OnHintUsed();
-                Debug.Log("Nº pistas actuales: " + progress.hints);
+                //Debug.Log("Nº pistas actuales: " + progress.hints);
                 //Guardamos que se ha usado la pista
                 saveIO.SaveData(progress);
 
@@ -261,7 +261,8 @@ namespace flow
             }
             else
             {
-                Debug.Log("No tienes pistas disponibles");
+                //
+                //("No tienes pistas disponibles");
                 return false;
             }
 
@@ -274,7 +275,7 @@ namespace flow
 
             //Guardamos los datos al fichero
             saveIO.SaveData(progress);
-            Debug.Log("Progreso guardado");
+            //Debug.Log("Progreso guardado");
         }
 
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

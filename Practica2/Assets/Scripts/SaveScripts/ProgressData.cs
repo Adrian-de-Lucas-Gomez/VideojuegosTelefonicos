@@ -108,16 +108,16 @@ namespace flow
             
             if (levelProgress.completed)  //Si lo estamos rejugando
             {
-                Debug.Log("Rejugado");
+                //Debug.Log("Rejugado");
                 if (nMoves < levelProgress.moveRecord)  //Si mejoramos el record previo
                 {
-                    Debug.Log("Nuevo record");
+                    //Debug.Log("Nuevo record");
                     levelProgress.moveRecord = nMoves;
                 }
             }
             else    //Si es la primera vez que lo jugamos (Desbloqueamos el siguiente nivel tambien)
             {
-                Debug.Log("Nueva entrada");
+                //Debug.Log("Nueva entrada");
 
                 levelProgress.completed = true;
                 levelProgress.moveRecord = nMoves;

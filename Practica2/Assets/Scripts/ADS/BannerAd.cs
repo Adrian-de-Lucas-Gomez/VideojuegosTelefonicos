@@ -40,7 +40,7 @@ namespace flow
         // Implement code to execute when the loadCallback event triggers:
         void OnBannerLoaded()
         {
-            Debug.Log("Banner loaded");
+            //Debug.Log("Banner loaded");
 
             //Test
             //ShowBannerAd();
@@ -49,7 +49,7 @@ namespace flow
         // Implement code to execute when the load errorCallback event triggers:
         void OnBannerError(string message)
         {
-            Debug.Log($"Banner Error: {message}");
+            Debug.LogError($"Banner Error: {message}");
             // Optionally execute additional code, such as attempting to load another ad.
         }
 

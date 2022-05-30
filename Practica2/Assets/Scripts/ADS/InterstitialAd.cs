@@ -23,7 +23,7 @@ namespace flow
         public void LoadAd()
         {
             // IMPORTANT! Only load content AFTER initialization (in this example, initialization is handled in a different script).
-            Debug.Log("Loading Ad: " + _adUnitId);
+            //Debug.Log("Loading Ad: " + _adUnitId);
             Advertisement.Load(_adUnitId, this);
         }
 
@@ -31,7 +31,7 @@ namespace flow
         public void ShowAd()
         {
             // Note that if the ad content wasn't previously loaded, this method will fail
-            Debug.Log("Showing Ad: " + _adUnitId);
+            //Debug.Log("Showing Ad: " + _adUnitId);
             Advertisement.Show(_adUnitId, this);
         }
 
@@ -43,13 +43,13 @@ namespace flow
 
         public void OnUnityAdsFailedToLoad(string adUnitId, UnityAdsLoadError error, string message)
         {
-            Debug.Log($"Error loading Ad Unit: {adUnitId} - {error.ToString()} - {message}");
+            Debug.LogError($"Error loading Ad Unit: {adUnitId} - {error.ToString()} - {message}");
             // Optionally execute code if the Ad Unit fails to load, such as attempting to try again.
         }
 
         public void OnUnityAdsShowFailure(string adUnitId, UnityAdsShowError error, string message)
         {
-            Debug.Log($"Error showing Ad Unit {adUnitId}: {error.ToString()} - {message}");
+            Debug.LogError($"Error showing Ad Unit {adUnitId}: {error.ToString()} - {message}");
             // Optionally execute code if the Ad Unit fails to show, such as loading another ad.
         }
 
