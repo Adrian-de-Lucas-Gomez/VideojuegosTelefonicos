@@ -1,6 +1,5 @@
 package com.example.logic;
 
-import com.example.engine.Button;
 import com.example.engine.Font;
 import com.example.engine.Graphics;
 import com.example.engine.Image;
@@ -324,6 +323,24 @@ public class Board{
                 _tiles[randomTile.getY()][randomTile.getX()].setValue(0);
             }
         }
+
+        _numPlayeableTiles = 0;
+
+        for(int k = 0; k < _size; k++){
+            for(int l = 0; l < _size; l++){
+
+                if(_tiles[k][l].getType() == TileType.Unknown) {
+                    _numPlayeableTiles++;
+                }
+            }
+        }
+
+        //System.out.println(_numPlayeableTiles + " TILES");
+
+        numTilesFilled = 0;
+
+        _moves.clear();
+
         copyBoard(_tiles, _empty);
     }
 
@@ -383,6 +400,9 @@ public class Board{
      */
     public int getPercentageFilled(){
         if(_solved) return 100;
+
+        //System.out.println(numTilesFilled + " TILES");
+
         float percentageFilled = (float)numTilesFilled / _numPlayeableTiles * 100;
         double fractionalPart = percentageFilled % 1;
         return (int)(percentageFilled - fractionalPart);

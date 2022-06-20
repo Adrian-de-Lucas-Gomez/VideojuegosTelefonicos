@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace flow
         [SerializeField] Text levelPackTitle;
         [SerializeField] Text nLevelsText;
         [SerializeField] Button packButton;
+        [SerializeField] Button directLevelButton;
 
         private int nLevels;
         private LevelPack pack; //El scriptable
@@ -51,6 +53,17 @@ namespace flow
             this.pack = pack;
             this.category = category;
             Configure(levelsCompleted);
+            directLevelButton.onClick.AddListener(NextUnperfectLevel);
+
+            if (GameManager.GetInstance().GetNextLevelNotPerfect() == -1) //Si no hay niveles para saltar
+            {
+                directLevelButton.interactable = false;
+            }
+        }
+
+        private void NextUnperfectLevel()
+        {
+            GameManager.GetInstance().NextLevelNotPerfectMenu(category, pack);
         }
 
         public void OnClick()

@@ -1,4 +1,6 @@
-package com.example.engine;
+package com.example.logic;
+
+import com.example.engine.Image;
 
 public class Button {
     private Image _img = null;

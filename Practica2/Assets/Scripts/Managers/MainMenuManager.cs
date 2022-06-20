@@ -76,5 +76,6 @@ namespace flow
             GameManager.GetInstance().DeactivateADS();
             adsDesactivationButton.gameObject.SetActive(false);
         }
+
     }
 }

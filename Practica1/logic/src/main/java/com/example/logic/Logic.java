@@ -1,7 +1,6 @@
 package com.example.logic;
 
 import com.example.engine.Application;
-import com.example.engine.Button;
 import com.example.engine.Engine;
 import com.example.engine.Font;
 import com.example.engine.Graphics;
@@ -21,7 +20,11 @@ public class Logic implements Application {
     private Graphics _graphics;
     private Input _input;
 
-    private int _clearColor, _black, _red, _lightgrey, _grey, _blue, _white;
+    private int _clearColor, _black, /*_red,*/ _lightgrey, _grey, /*_blue,*/ _white;
+
+    private ColorPalette[] colorPalettes;
+
+    private int paletteIndex;
 
     private GameState currentState;
     /*
@@ -35,6 +38,8 @@ public class Logic implements Application {
     private Font _josefinSansTitle;
     private Font _josefinSansText;
 
+
+
     //Menu state
     private Image _q43Img;
     private Button _playButton;
@@ -43,8 +48,10 @@ public class Logic implements Application {
     private Button _goBackButton;
     private Button[] _chooseSizeButtons;
     private boolean justSolvedBoard = false;
+    private Button _SwapPaletteButton;
 
     //Game state
+    private float timer = 0.0f;
     private int boardSize = 0;
     private Board _board;
     private Image _lockImg;
@@ -70,12 +77,22 @@ public class Logic implements Application {
         _graphics = _engine.getGraphics();
         _input = _engine.getInput();
 
+        colorPalettes = new ColorPalette[6];
+        colorPalettes[0] = new ColorPalette(0xE63247, 0x60C1E0);
+        colorPalettes[1] = new ColorPalette(0x9300FF, 0xFF8700);
+        colorPalettes[2] = new ColorPalette(0x11B800, 0xF114CF);
+        colorPalettes[3] = new ColorPalette(0xF11E14, 0xECEC1A);
+        colorPalettes[4] = new ColorPalette(0x1AECDF, 0xEB78FF);
+        colorPalettes[5] = new ColorPalette(0xA7C664, 0x6479C6);
+
+        paletteIndex = 0;
+
         _clearColor = 0xFFFFFF;
         _black = 0x333333;
-        _red = 0xE63247;
+        //_red = colorPalettes[paletteIndex].redValue;
         _lightgrey = 0xEEEEEE;
         _grey = 0xAAAAB2;
-        _blue = 0x60C1E0;
+        //_blue = colorPalettes[paletteIndex].blueValue;
         _white = 0xFFFFFF;
 
         hasBeenGenerated = new boolean[GameState.values().length];
@@ -84,6 +101,8 @@ public class Logic implements Application {
         _josefinSansTitle = _graphics.newFont("JosefinSans-Bold", 50.0f, true);
         _josefinSansText = _graphics.newFont("JosefinSans-Bold", 20.0f, false);
         setState(GameState.MainMenu);
+
+        timer = 0.0f;
     }
 
     @Override
@@ -101,6 +120,7 @@ public class Logic implements Application {
                 int pointerY = e.posY;
 
                 if(e.eventType == TouchEvent.EventType.buttonPressed){
+
                     if(currentState == GameState.MainMenu){
                         if(_playButton.isPressed(pointerX, pointerY)) transitionTowardsState(GameState.BoardSizeMenu);
                     }
@@ -108,6 +128,10 @@ public class Logic implements Application {
                         if (_goBackButton.isPressed(pointerX, pointerY)) {
                             transitionTowardsState(GameState.MainMenu);
                             _goBackButton.activateAnimation();
+                        }
+                        else if(_SwapPaletteButton.isPressed(pointerX, pointerY)) {
+                            NextPalette();
+                            _SwapPaletteButton.activateAnimation();
                         }
                         else{
                             for(int k = 0; k < _chooseSizeButtons.length; k++){
@@ -148,6 +172,7 @@ public class Logic implements Application {
 
     @Override
     public void onUpdate(double deltaTime) {
+
         //Si está cambiando de estado, se aplica una animación de transición en la que disminuye el alpha de toda la escena para subir de nuevo.
         if(isTransitioning){
             currentTimeToTransition += deltaTime;
@@ -173,10 +198,15 @@ public class Logic implements Application {
         if(currentState == GameState.BoardSizeMenu) {
             _goBackButton.update(deltaTime);
             for(Button b : _chooseSizeButtons) b.update(deltaTime);
+
+            _SwapPaletteButton.update(deltaTime);
         }
 
         //Actualización de las animaciones de los elementos del estado de juego.
         else if(currentState == GameState.Game) {
+
+            timer += deltaTime;
+
             _board.onUpdate(deltaTime);
             _reverseButton.update(deltaTime);
             _hintButton.update(deltaTime);
@@ -243,14 +273,19 @@ public class Logic implements Application {
             _graphics.translate(0, 320);
             _graphics.drawImage(_goBackButton.getImage(), _goBackButton.getWidth() * _goBackButton.getScale(), _goBackButton.getHeight() * _goBackButton.getScale(),  _goBackButton.getAlpha(), true);
 
+            _graphics.translate(100, 0);
+            _graphics.drawImage(_SwapPaletteButton.getImage(), _SwapPaletteButton.getWidth() * _SwapPaletteButton.getScale(),
+                    _SwapPaletteButton.getHeight() * _SwapPaletteButton.getScale(), _SwapPaletteButton.getAlpha(), true);
+
+
             //Botones de eleccion de tamaño de tablero
             _graphics.restore();
             _graphics.translate(100, 300);
             _graphics.save();
             _graphics.setFont(_josefinSansTitle);
             for(int k = 0; k < 3; k++) {
-                if(k % 2 == 0) _graphics.setColor(_red);
-                else _graphics.setColor(_blue);
+                if(k % 2 == 0) _graphics.setColor(colorPalettes[paletteIndex].redValue);
+                else _graphics.setColor(colorPalettes[paletteIndex].blueValue);
                 _graphics.fillCircle(0, 0,30 * _chooseSizeButtons[k].getScale(), 1.0f);
                 _graphics.setColor(_clearColor);
                 _graphics.drawText(Integer.toString(k + 4), 0,12, true, false);
@@ -259,8 +294,8 @@ public class Logic implements Application {
             graphics.restore();
             graphics.translate(0, 70);
             for(int k = 0; k < 3; k++) {
-                if(k % 2 == 1) _graphics.setColor(_red);
-                else _graphics.setColor(_blue);
+                if(k % 2 == 1) _graphics.setColor(colorPalettes[paletteIndex].redValue);
+                else _graphics.setColor(colorPalettes[paletteIndex].blueValue);
                 _graphics.fillCircle(0, 0,30 * _chooseSizeButtons[k + 3].getScale(), 1.0f);
                 _graphics.setColor(_clearColor);
                 _graphics.drawText((Integer.toString(k + 7)),0, 12, true, false);
@@ -277,9 +312,14 @@ public class Logic implements Application {
             }
             else{
                 String feedbackText = _board.get_boardFeedbackText();
+
                 if(!feedbackText.isEmpty()){
                     _graphics.setFont(_josefinSansText);
                     _graphics.drawText(feedbackText, 0, 0, true, false);
+                }
+                else if (Integer.toString(_board.getPercentageFilled()).equals("100")){
+                    _graphics.setFont(_josefinSansTitle);
+                    _graphics.drawText("No está bien", 0, 0, true, false);
                 }
                 else {
                     feedbackText = Integer.toString(boardSize) + " x " + Integer.toString(boardSize);
@@ -294,6 +334,13 @@ public class Logic implements Application {
             _graphics.translate(200, 485);
             String percentageFilled = Integer.toString(_board.getPercentageFilled()) + "%";
             _graphics.drawText(percentageFilled, 0, 0, true, false);
+
+            _graphics.translate(0, 80);
+
+            _graphics.drawText(updateTimer(), 0, 0, true, false);
+
+            _graphics.restore();
+
             _graphics.restore();
 
             _graphics.translate(20, 100);
@@ -306,7 +353,24 @@ public class Logic implements Application {
             _graphics.drawImage(_goBackButton.getImage(), _goBackButton.getWidth() * _goBackButton.getScale(), _goBackButton.getHeight() * _goBackButton.getScale(),  _goBackButton.getAlpha(), true);
             _graphics.translate(100, 0);
             _graphics.drawImage(_reverseButton.getImage(), _reverseButton.getWidth() * _reverseButton.getScale(), _reverseButton.getHeight() * _reverseButton.getScale(),  _reverseButton.getAlpha(), true);
+
+
         }
+    }
+
+    private String updateTimer(){
+        String auxTimerText= "";
+
+        int minutes = (int)timer / 60;
+        int seconds = (int)timer % 60;
+
+        if (seconds < 10){
+            auxTimerText = minutes + ":0" + seconds;
+        }
+        else{
+            auxTimerText = minutes + ":" + seconds;
+        }
+        return auxTimerText;
     }
 
     private void transitionTowardsState(GameState newState){
@@ -322,6 +386,7 @@ public class Logic implements Application {
         if(currentState == GameState.Game) {
             justSolvedBoard = false;
             _board.clear();
+            timer = 0.0f;
         }
 
         //Cambiamos de estado
@@ -336,12 +401,18 @@ public class Logic implements Application {
             else if(newState == GameState.BoardSizeMenu){
                 _goBackButton = new Button(180, 500, 40, 40, _graphics.newImage("close.png"), 0.5f, 1);
                 _goBackButton.setScalingAnimation(1f, 1.1f, 0.3f, 1);
+
+                _SwapPaletteButton = new Button(280, 500, 40, 40, _graphics.newImage("palette.png"), 1.0f, 1);
+                _SwapPaletteButton.setScalingAnimation(1f, 1.1f, 0.3f, 1);
+                //_SwapPaletteButton.setAnimationAlpha(0f, 0.5f, 0.3f);
+
                 int buttonHorizontalOffset = 40, buttonVerticalOffset = 70, buttonSize = 60;
                 _chooseSizeButtons = new Button[6];
                 for(int k = 0; k < 6; k++){
                     _chooseSizeButtons[k] = new Button(100 + (k % 3) * (buttonHorizontalOffset + buttonSize) - buttonSize/2, 300 +(k/3) * buttonVerticalOffset - buttonSize/2, buttonSize, buttonSize, _graphics.newImage("close.png"), 1, 1);
                     _chooseSizeButtons[k].setScalingAnimation(1f, 1.1f, 0.3f, 1);
                 }
+
             }
             else{
                 if(_goBackButton == null){ //Se genera en el estado anterior pero lo dejo por si al modificar la práctica hay que saltar del primer estado al juego.
@@ -349,7 +420,7 @@ public class Logic implements Application {
                     _goBackButton.setScalingAnimation(1f, 1.1f, 0.3f, 1);
                 }
                 _board = new Board(_graphics, 360);
-                _board.setPaintColors(_blue, _red, _lightgrey, _white, _black);
+                _board.setPaintColors(colorPalettes[paletteIndex].blueValue, colorPalettes[paletteIndex].redValue, _lightgrey, _white, _black);
                 _lockImg = _graphics.newImage("lock.png");
 
                 _hintButton = new Button(80, 500, 40, 40, _graphics.newImage("eye.png"), 0.5f, 1);
@@ -370,5 +441,11 @@ public class Logic implements Application {
             _board.setButtons(20, 100);
         }
         hasBeenGenerated[currentState.ordinal()] = true;
+    }
+
+    public void NextPalette(){
+
+        if (paletteIndex + 1 >= colorPalettes.length) paletteIndex = 0;
+        else paletteIndex++;
     }
 }

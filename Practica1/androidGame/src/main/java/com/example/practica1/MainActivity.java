@@ -2,7 +2,7 @@ package com.example.practica1;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-
+import android.view.Window;
 import com.example.androidengine.AndroidEngine;
 import com.example.logic.Logic;
 
@@ -13,16 +13,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getSupportActionBar().hide();
+
         //Creamos el motor con resolicion lógica de 400x600
         engine =  new AndroidEngine(this, 400, 600);
         //Creamos la logica que deriva de la interfaz Application
         com.example.engine.Application logic = new Logic(engine);
         logic.init();
+
+        engine.resume();
         //Ponemos la referencia de la aplicacion en el motor
         engine.setApplication(logic);
-        
+
         //Indicamos el surface que debe mostrar en pantalla
         setContentView(engine.getSurfaceView());
+
     }
 
     //Si habiamos perdido el foco y volvemos al juego se vuelve a lanzar la hebra del bucle principal

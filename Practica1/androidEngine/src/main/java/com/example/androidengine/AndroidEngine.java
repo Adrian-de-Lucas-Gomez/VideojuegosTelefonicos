@@ -30,7 +30,7 @@ public class AndroidEngine implements Engine, Runnable {
         surfaceView.setOnTouchListener(input); //Para que escuche los eventos que da el surface
 
         //Ponemos el juego a funcionar
-        resume();
+        //resume();
     }
 
     //Getters de los modulos y el surfaceView
@@ -59,7 +59,7 @@ public class AndroidEngine implements Engine, Runnable {
 
         graphics.setSurfaceView(surfaceView);
 
-        while(logic == null) {/*Esperamos al thread principal para que haga el setApplication*/}
+        //while(logic == null) {/*Esperamos al thread principal para que haga el setApplication*/}
 
         while(_running) {
             //Detectar cambios en el input

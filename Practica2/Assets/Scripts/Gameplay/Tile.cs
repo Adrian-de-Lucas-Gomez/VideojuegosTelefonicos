@@ -48,10 +48,12 @@ namespace flow
 #endif
         }
 
-        public void Initialize()
+        public void Initialize(Color wallColor)
         {
             renderColor = Color.white;
             renderColor.a = 1;
+
+            wallColor.a = 1;
 
             //Lista de muros
             walls = new List<bool>();
@@ -60,9 +62,13 @@ namespace flow
                 walls.Add(false);
             }
             wallsSprites = new List<SpriteRenderer>();
+            upWall.color = wallColor;
             wallsSprites.Add(upWall);
+            downWall.color = wallColor;
             wallsSprites.Add(downWall);
+            leftWall.color = wallColor;
             wallsSprites.Add(leftWall);
+            rightWall.color = wallColor;
             wallsSprites.Add(rightWall);
         }
 

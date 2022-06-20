@@ -167,7 +167,7 @@ namespace flow
             walls = new List<(int, int)>();
         }
 
-        public (int, int) LoadBoard(string level, float boardScale)
+        public (int, int) LoadBoard(string level)
         {
             Setup();
             colors = GameManager.GetInstance().GetTheme();
@@ -251,7 +251,7 @@ namespace flow
 
         public void LevelTransitionButtonCallback()
         {
-            InitializeBoard();
+            InitializeBoard(GameManager.GetInstance().GetWallColorFromPack());
             boardAnimator.Play("LevelIn");
         }
 
@@ -269,7 +269,7 @@ namespace flow
             tileSize = Camera.main.ScreenToWorldPoint(new Vector3(tilePxSize + Screen.width / 2, tilePxSize + Screen.height / 2, 0)).x; //Se traduce la coordenada de pantalla a coordenada de escena de Unity
         }
 
-        public void InitializeBoard()
+        public void InitializeBoard(Color auxColor)
         {
             if (tiles != null)
             {
@@ -293,7 +293,7 @@ namespace flow
                     t.transform.localScale = new Vector3(tileSize, tileSize, 0); //Escalamos el tile
 
                     Tile newTile = t.GetComponent<Tile>();
-                    newTile.Initialize();
+                    newTile.Initialize(auxColor);
                     tiles.Add(t.GetComponent<Tile>());
                 }
             }

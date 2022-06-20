@@ -34,7 +34,11 @@ namespace flow
         [SerializeField] Text winPanelMovesText;
 
         [SerializeField] Button hintButton;
-        //[SerializeField] Button hintButton;
+        [SerializeField] Button nextNotPerfectButton;
+        [SerializeField] Button cheatButton;
+        private int pushButtonCounter = 0;
+        private float cheatCounter = 0.0f;
+        private bool cheatingTime = false;
 
         int levelIDtemp;
         LevelPack packtemp;
@@ -74,8 +78,7 @@ namespace flow
 
         public void InitializeLevel(string levelString, LevelPack pack)
         {
-            (int, int) boardSize = boardManager.LoadBoard(levelString, boardScale());
-            //boardManager.InitializeBoard();
+            (int, int) boardSize = boardManager.LoadBoard(levelString);
 
             ConfigLevelUI(boardSize.Item1, boardSize.Item2);
         }
@@ -98,9 +101,13 @@ namespace flow
             selectedLevel = levelIDtemp;
             InitializeLevel(gMng.GetSelectedLevelString(), packtemp);
             //Arrancamos el board
-            boardManager.InitializeBoard();
+            boardManager.InitializeBoard(gMng.GetWallColorFromPack());
             hintButton.onClick.AddListener(PlayAddForHint);
+            cheatButton.onClick.AddListener(Cheat);
+
             UpdateUIelements();
+
+            gMng.SaveLevelPlaying();
         }
 
         public void LoadLevel(int levelID, LevelPack pack)
@@ -111,14 +118,14 @@ namespace flow
             packtemp = pack;
         }
 
+
         public void TryNextLevel()
         {
             GameManager gMng = GameManager.GetInstance();
 
-            if (!gMng.NextLevelAvailable()) return; //Si el siguente no está desbloqueado no se pasa
+            //if (!gMng.NextLevelAvailable()) return; //Si el siguente no está desbloqueado no se pasa
 
-            LevelProgress levelProgress = gMng.GetProgressInPack().levels[gMng.GetSelectedLevelId()];
-
+            //gMng.SetLevelIndex(selectedLevel);
             selectedLevel = gMng.NextLevel(); //Pregunta a gMng si se puede pasar al siguiente nivel
 
             if(selectedLevel != -1) //Si existe nivel siguiente
@@ -127,7 +134,30 @@ namespace flow
                 InitializeLevel(gMng.GetSelectedLevelString(), gMng.GetSelectedPack());
                 UpdateUIelements();
 
+                gMng.SaveLevelPlaying();
+
                 AdvertisingManager.GetInstance().ShowIntersticialAd();
+            }
+            else
+            {
+                //Si no hay siguiente siguiente nivel en el pack te devuelve al menu de seleccion de nivel
+                GameManager.GetInstance().ExitLevel();
+            }
+        }
+
+        public void TryNextNotPerfectLevel()
+        {
+            GameManager gMng = GameManager.GetInstance();
+
+            selectedLevel = gMng.GetNextLevelNotPerfect();
+
+            if (selectedLevel != -1) //Si existe nivel siguiente
+            {
+                boardManager.StartLevelTransition();
+                InitializeLevel(gMng.GetSelectedLevelString(), gMng.GetSelectedPack());
+                UpdateUIelements();
+
+                gMng.SaveLevelPlaying();
             }
             else
             {
@@ -139,6 +169,8 @@ namespace flow
         public void TryPrevLevel()
         {
             GameManager gMng = GameManager.GetInstance();
+
+            //gMng.SetLevelIndex(selectedLevel);
             selectedLevel = gMng.PrevLevel(); //Pregunta a gMng si se puede pasar al nivel anterior
 
             if (selectedLevel != -1) //Si existe nivel anterior
@@ -146,6 +178,8 @@ namespace flow
                 boardManager.StartLevelTransition();
                 InitializeLevel(gMng.GetSelectedLevelString(), gMng.GetSelectedPack());
                 UpdateUIelements();
+
+                gMng.SaveLevelPlaying();
 
                 AdvertisingManager.GetInstance().ShowIntersticialAd();
             }
@@ -167,6 +201,14 @@ namespace flow
 
         public void Update()
         {
+            if (cheatingTime) cheatCounter += Time.deltaTime;
+
+            if (cheatCounter > 1.0f)
+            {
+                cheatCounter = 0.0f;
+                pushButtonCounter = 0;
+                cheatingTime = false;
+            }
         }
 
         public void UpdateHintCount(int hints)
@@ -176,30 +218,27 @@ namespace flow
 
         public void UpdateUIelements()
         {
+            GameManager gMng = GameManager.GetInstance();
+
             totalFlowsText.text = boardManager.GetNumFlows().ToString() + " /" + boardManager.GetTotalFlows().ToString();
             movesText.text = boardManager.GetNumMoves().ToString();
             string recordText = "-";
-            if (GameManager.GetInstance().GetProgressInPack().levels[GameManager.GetInstance().GetSelectedLevelId()].moveRecord > 0)
+            if (gMng.GetProgressInPack().levels[GameManager.GetInstance().GetSelectedLevelId()].moveRecord > 0)
             {
-                bestText.text = GameManager.GetInstance().GetProgressInPack().levels[GameManager.GetInstance().GetSelectedLevelId()].moveRecord.ToString();
+                bestText.text = gMng.GetProgressInPack().levels[GameManager.GetInstance().GetSelectedLevelId()].moveRecord.ToString();
             }
             else bestText.text = recordText;
             percentageText.text = ((int)boardManager.GetPercentage()).ToString() + "%";
+
+            if(!gMng.IsThereNextLevelNotPerfect() || selectedLevel == gMng.GetSelectedLevelId()) //Si no hay niveles para saltar
+            {
+                nextNotPerfectButton.interactable = false;
+            }
         }
 
-        //Calculamos el tamanho de un tile
-        private float boardScale()
+        public void BackButton()
         {
-            //TODO: esta mal
-            //float aspect = boardViewport.rect.height / Screen.height;
-            //float auxBoardWidth = boardViewport.rect.width / aspect;
-            //float auxBoardHeight = boardViewport.rect.height / aspect;
-
-            //El menor porque es el que se ajusta a la pantalla sin salirse
-            //float auxBoardSize = Mathf.Min(auxBoardWidth, auxBoardHeight);
-
-            //return auxBoardSize;
-            return 0; //lol
+            GameManager.GetInstance().ExitLevel();
         }
 
         //Al usar una pista se actualiza la UI y el numero de pistas
@@ -226,6 +265,28 @@ namespace flow
         {
             winPanelMovesText.text = "You completed the level in " + numMoves.ToString() + " moves.";
             GameManager.GetInstance().OnLevelFinished(numMoves, numFlows);
+        }
+
+        public void Cheat()
+        {
+            if (!cheatingTime)
+            {
+                cheatingTime = true;
+            }
+
+            pushButtonCounter++;
+
+            if (pushButtonCounter >= 3)
+            {
+                for(int i=0; i<boardManager.GetTotalFlows(); i++) boardManager.UseHint();
+                OnLevelFinished(boardManager.GetTotalFlows(), boardManager.GetTotalFlows());
+            }
+            else
+            {
+                Debug.Log("En " + (3 - pushButtonCounter) + " pulsaciones acabas el trucazo");
+            }
+            
+            
         }
     }
 }

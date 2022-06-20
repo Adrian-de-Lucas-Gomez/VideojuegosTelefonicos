@@ -13,10 +13,13 @@ namespace flow
         [SerializeField] Text levelsMenuTitle;
         [SerializeField] LevelPage levelPagePrefab;
         [SerializeField] LevelButton levelButtonPrefab;
+        [SerializeField] ScrollRect scroll;
+        [SerializeField] RectTransform scrollRect;
 
         private Categories currentCategory = null;
         private LevelPack currentLevelPack = null;
         private Transform levelButtonParent;
+
 
         private void LoadLevelMenu()
         {
@@ -33,7 +36,6 @@ namespace flow
             int nLevels = levelsStrings.Length - 1;
             int nPages = nLevels / GameManager.LEVELS_PER_PAGE;
 
-            //ProgressData data = GameManager.GetInstance().GetData();
 
             for (int i = 0; i < nPages; i++)
             {
@@ -63,6 +65,7 @@ namespace flow
                     button.ConfigureLevelButton(levelIndex, buttonNumber, currentLevelPack.colors[i], levelButtonString, locked, 
                         gMng.GetProgressInPack().levels[j + GameManager.LEVELS_PER_PAGE * i].completed, gMng.GetProgressInPack().levels[j + GameManager.LEVELS_PER_PAGE * i].perfect);
                 }
+
             }
         }
 
@@ -75,7 +78,25 @@ namespace flow
                 return;
             }
 #endif
+
+            
             LoadLevelMenu();
+            
+            scroll.horizontalNormalizedPosition = GameManager.GetInstance().GetPosInLevelSelection();
+            Canvas.ForceUpdateCanvases();
+
+            scroll.onValueChanged.AddListener(SetScrollValue);
+        }
+        public void SetScrollValue(Vector2 value)
+        {
+            GameManager.GetInstance().SetPosInLevelSelection(value.x);
+        }
+
+        public void BackButton()
+        {
+            GameManager.GetInstance().LoadMainMenu();
         }
     }
+
+    
 }
